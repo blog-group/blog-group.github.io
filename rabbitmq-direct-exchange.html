@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>消息队列RabbitMQ的Direct类型消息消费 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="消息队列RabbitMQ的Direct类型消息消费">
+<meta name="keywords" content="rabbitmq,springboot,消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息队列RabbitMQ的Direct类型消息消费">
+<meta property="og:url" content="https://blog.yuqiyu.com/rabbitmq-direct-exchange.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="消息队列RabbitMQ的Direct类型消息消费">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2020-06-22T02:08:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="消息队列RabbitMQ的Direct类型消息消费">
+<meta name="twitter:description" content="消息队列RabbitMQ的Direct类型消息消费">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">消息队列RabbitMQ的Direct类型消息消费</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-09-29</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
+                
+              
+                
+              
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>消息队列目前流行的有KafKa、RabbitMQ、ActiveMQ等，它们的诞生无非不是为了解决消息的分布式消费，完成项目、服务之间的解耦动作。消息队列提供者与消费者之间完全采用异步通信方式，极力的提高了系统的响应能力，从而提高系统的网络请求吞吐量。<br>每一种的消息队列都有它在设计上的独一无二的优势，在实际的项目技术选型时根据项目的需求来确定。</p>
+<a id="more"></a>
+<h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><p>基于<code>SpringBoot</code>项目整合<code>RabbitMQ</code>消息队列，完成<code>DirectExchange（路由键）</code>分布式消息消费。</p>
+<h1 id="Exchange"><a href="#Exchange" class="headerlink" title="Exchange"></a>Exchange</h1><p>在<code>RabbitMQ</code>中有三种常用的转发方式，分别是：</p>
+<p><code>DirectExchange</code>：路由键方式转发消息。<br><code>FanoutExchange</code>：广播方式转发消息。<br><code>TopicExchange</code>：主题匹配方式转发消息。</p>
+<p>我们本章先来讲解<code>DirectExchange</code>路由键方式，根据设置的路由键的值进行完全匹配时转发，下面我们来看一张图，形象的介绍了转发消息匹配流程，如下图所示：<br><img src="/images/post/rabbitmq-direct-exchange-1.png" alt="DirectExchange"></p>
+<p>我们可以看到上图，当消息被提供者发送到<code>RabbitMQ</code>后，会根据配置队列的交换以及绑定实例进行转发消息，上图只会将消息转发路由键为<code>KEY</code>的队列消费者对应的实现方法逻辑中，从而完成消息的消费过程。</p>
+<h2 id="安装RabbitMQ"><a href="#安装RabbitMQ" class="headerlink" title="安装RabbitMQ"></a>安装RabbitMQ</h2><p>因为<code>RabbitMQ</code>是跨平台的分布式消息队列服务，可以部署在任意的操作系统上，下面我们分别介绍在不同的系统下该怎么去安装<code>RabbitMQ</code>服务。</p>
+<p>我们本章采用的环境版本如下：</p>
+<ul>
+<li>RabbitMQ Server 3.6.14</li>
+<li>Erlang/OTP_X64 20.1</li>
+</ul>
+<h3 id="Windows下安装"><a href="#Windows下安装" class="headerlink" title="Windows下安装"></a>Windows下安装</h3><p>我们先去<code>RabbitMQ</code>官方网站下载最新版的安装包，下载地址：<code>https://www.rabbitmq.com/download.html</code>，可以根据不同的操作系统选择下载。<br>我们在安装<code>RabbitMQ</code>服务端时需要<code>Erlang</code>环境的支持，所以我们需要先安装<code>Erlang</code>。</p>
+<ol>
+<li><p>我们通过<code>Erlang</code>官方网站<code>http://www.erlang.org/downloads</code>下载最新的安装包</p>
+</li>
+<li><p>我们访问<code>RabiitmQ</code>官方下载地址<code>https://www.rabbitmq.com/download.html</code>下载最新安装包。</p>
+</li>
+</ol>
+<blockquote>
+<p>因为是国外的网站所以下载比较慢，大家下载时会浪费时间，我已经将安装包分享到了百度网盘，下载地址：<a href="https://pan.baidu.com/s/1pLkNXWn" target="_blank" rel="noopener">安装包下载地址</a>，密码：<code>pexf</code></p>
+</blockquote>
+<ol start="3">
+<li><p>运行安装<code>Erlang</code></p>
+</li>
+<li><p>运行安装<code>RabbitMQ</code></p>
+</li>
+</ol>
+<p>5.检查服务是否安装完成，<code>RabbitMQ</code>安装完成后会以服务的形式创建，并且随着开机启动，如下所示：<br><img src="/images/post/rabbitmq-direct-exchange-2.png" alt="Rabbit服务"></p>
+<h3 id="Mac-OS-X-安装"><a href="#Mac-OS-X-安装" class="headerlink" title="Mac OS X 安装"></a>Mac OS X 安装</h3><p>在Mac OS X中我们使用<code>brew</code>工具可以很简单的安装<code>RabbitMQ</code>服务端，步骤如下：</p>
+<ol>
+<li><code>brew</code>更新到最新版本，执行：<code>brew update</code></li>
+<li>接下来我们安装<code>Erlang</code>，执行：<code>brew install erlang</code></li>
+<li>最后安装<code>RabbitMQ</code>，执行：<code>brew install rabbitmq</code></li>
+</ol>
+<p>我们通过上面的步骤安装后，<code>RabbitMQ</code>会被自动安装到<code>/usr/local/Cellar/rabbitmq/</code>目录下，下面我们进入<code>cd sbin</code>目录执行：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./rabbitmq-server</span><br></pre></td></tr></table></figure>
+
+<p>可以直接启动<code>RabbitMQ</code>服务。</p>
+<h3 id="Ubuntu-安装"><a href="#Ubuntu-安装" class="headerlink" title="Ubuntu 安装"></a>Ubuntu 安装</h3><p>在<code>Ubuntu</code>操作系统中，我们可以直接使用<code>APT</code>仓库进行安装，我使用的系统版本是<code>16.04</code>，系统版本并不影响安装。</p>
+<ol>
+<li><p>安装<code>Erlang</code>，执行命令：<code>sudo apt-get install erlang</code></p>
+</li>
+<li><p>下面我们需要将<code>RabbitMQ</code>的安装源配置信息写入到系统的<code>/etc/apt/sources.list.d</code>配置文件内，执行如下命令：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;deb http://www.rabbitmq.com/debian/ testing main&apos; | sudo tee /etc/apt/sources.list.d/rabbitmq.list</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下面我们更新<code>APT</code>本地仓库的安装包列表，执行命令：<code>sudo apt-get update</code></p>
+</li>
+<li><p>最后安装<code>RabbitMQ</code>服务，执行命令：<code>sudo apt-get install rabbitmq-server</code></p>
+</li>
+</ol>
+<h2 id="启用界面管理插件"><a href="#启用界面管理插件" class="headerlink" title="启用界面管理插件"></a>启用界面管理插件</h2><p><code>RabbitMQ</code>提供了界面管理的<code>web</code>插件，我们只需要启用指定的插件就可以了，下面我们来看看<code>Windows</code>操作系统下该怎么启动界面管理插件。<br>我们使用<code>CMD</code>进入<code>RabbitMQ</code>安装目录<code>C:\Program Files\RabbitMQ Server\rabbitmq_server-3.6.14</code>，然后我们进入<code>sbin</code>目录，可以看到目录内存在很多个<code>bat</code>脚本程序，我们找到<code>rabbitmq-plugins.bat</code>，这个脚本程序可以控制<code>RabbitMQ</code>插件启用禁用，我们执行如下脚本命令来启用界面管理插件：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins.bat enable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<p>命令行输出内容如下所示：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">The following plugins have been enabled:</span><br><span class="line">  amqp_client</span><br><span class="line">  cowlib</span><br><span class="line">  cowboy</span><br><span class="line">  rabbitmq_web_dispatch</span><br><span class="line">  rabbitmq_management_agent</span><br><span class="line">  rabbitmq_management</span><br><span class="line"></span><br><span class="line">Applying plugin configuration to rabbit@yuqiyu... started 6 plugins.</span><br></pre></td></tr></table></figure>
+
+<p>可以看到输出的内容<code>RabbitMQ</code>自动启动了6个插件，我们现在访问<a href="http://127.0.0.1:15672" target="_blank" rel="noopener">http://127.0.0.1:15672</a>地址可以直接打开<code>RabbitMQ</code>的界面管理平台，而默认的用户名/密码分别为：<code>guest/guest</code>，通过该用户可以直接登录管理平台。</p>
+<h3 id="禁用界面管理插件"><a href="#禁用界面管理插件" class="headerlink" title="禁用界面管理插件"></a>禁用界面管理插件</h3><p>我们同样可以禁用<code>RabbitMQ</code>指定插件，执行如下命令：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins.bat disable rabbitmq_management</span><br></pre></td></tr></table></figure>
+
+<p>命令创建输出内容则是相关停止插件的日志，如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">The following plugins have been disabled:</span><br><span class="line">  amqp_client</span><br><span class="line">  cowlib</span><br><span class="line">  cowboy</span><br><span class="line">  rabbitmq_web_dispatch</span><br><span class="line">  rabbitmq_management_agent</span><br><span class="line">  rabbitmq_management</span><br><span class="line"></span><br><span class="line">Applying plugin configuration to rabbit@yuqiyu... stopped 6 plugins.</span><br></pre></td></tr></table></figure>
+
+<p>这样我们再访问<a href="http://127.0.0.1:15672" target="_blank" rel="noopener">http://127.0.0.1:15672</a>就会发现我们无法访问到界面。</p>
+<h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>我们使用<code>idea</code>开发工具创建一个<code>SpringBoot</code>项目，添加依赖，pom.xml配置文件如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--rabbitmq依赖--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--web依赖--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--lombok依赖--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--fastjson依赖--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.40<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--测试依赖--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们本章来模拟用户注册完成后，将注册用户的编号通过<code>Provider</code>模块发送到<code>RabbitMQ</code>，然后<code>RabbitMQ</code>根据配置的<code>DirectExchange</code>的路由键进行异步转发。</p>
+<h4 id="初始化用户表"><a href="#初始化用户表" class="headerlink" title="初始化用户表"></a>初始化用户表</h4><p>下面我们先来创建所需要的<code>用户基本信息表</code>，建表SQL如下所示：</p>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`user_info`</span> (</span><br><span class="line">  <span class="hljs-string">`UI_ID`</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'用户编号'</span>,</span><br><span class="line">  <span class="hljs-string">`UI_USER_NAME`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'用户名称'</span>,</span><br><span class="line">  <span class="hljs-string">`UI_NAME`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'真实姓名'</span>,</span><br><span class="line">  <span class="hljs-string">`UI_AGE`</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'用户年龄'</span>,</span><br><span class="line">  <span class="hljs-string">`UI_BALANCE`</span> <span class="hljs-built_in">decimal</span>(<span class="hljs-number">10</span>,<span class="hljs-number">0</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'用户余额'</span></span><br><span class="line">) <span class="hljs-keyword">ENGINE</span>=<span class="hljs-keyword">InnoDB</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CHARSET</span>=utf8 <span class="hljs-keyword">COMMENT</span>=<span class="hljs-string">'用户基本信息表'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="构建-rabbitmq-provider-项目"><a href="#构建-rabbitmq-provider-项目" class="headerlink" title="构建 rabbitmq-provider 项目"></a>构建 rabbitmq-provider 项目</h3><p>基于我们上述的项目创建一个<code>Maven</code>子模块，命名为：<code>rabbitmq-provider</code>，因为是直接创建的<code>Module</code>项目，<code>IDEA</code>并没有给我创建<code>SpringApplication</code>启用类。</p>
+<h5 id="创建入口类"><a href="#创建入口类" class="headerlink" title="创建入口类"></a>创建入口类</h5><p>下面我们自行创建一个<code>Provider</code>项目启动入口程序，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息队列消息提供者启动入口</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:14</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@SpringBootApplication</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RabbitmqProviderApplication</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">static</span> Logger logger = LoggerFactory.getLogger(RabbitmqProviderApplication.class);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息队列提供者启动入口</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> args</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        SpringApplication.run(RabbitmqProviderApplication.class,args);</span><br><span class="line"></span><br><span class="line">        logger.info(<span class="hljs-string">"【【【【【消息队列-消息提供者启动成功.】】】】】"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="application-properties配置文件"><a href="#application-properties配置文件" class="headerlink" title="application.properties配置文件"></a>application.properties配置文件</h5><p>下面我们在<code>src/main/resource</code>目录下创建<code>application.properties</code>并将对应<code>RabbitMQ</code>以及<code>Druid</code>的配置加入，如下所示：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#用户名</span><br><span class="line">spring.rabbitmq.username=guest</span><br><span class="line">#密码</span><br><span class="line">spring.rabbitmq.password=guest</span><br><span class="line">#服务器ip</span><br><span class="line">spring.rabbitmq.host=localhost</span><br><span class="line">#虚拟空间地址</span><br><span class="line">spring.rabbitmq.virtual-host=/</span><br><span class="line">#端口号</span><br><span class="line">spring.rabbitmq.port=5672</span><br><span class="line">#配置发布消息确认回调</span><br><span class="line">spring.rabbitmq.publisher-confirms=true</span><br><span class="line"></span><br><span class="line">#数据源配置</span><br><span class="line">spring.datasource.druid.driver-class-name=com.mysql.jdbc.Driver</span><br><span class="line">spring.datasource.druid.url=jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</span><br><span class="line">spring.datasource.druid.username=root</span><br><span class="line">spring.datasource.druid.password=123456</span><br></pre></td></tr></table></figure>
+
+<p>在<code>RabbitMQ</code>内有个<code>virtual-host</code>即虚拟主机的概念，一个<code>RabbitMQ</code>服务可以配置多个虚拟主机，每一个虚拟机主机之间是相互隔离，相互独立的，授权用户到指定的<code>virtual-host</code>就可以发送消息到指定队列。</p>
+<h5 id="用户实体"><a href="#用户实体" class="headerlink" title="用户实体"></a>用户实体</h5><p>本章数据库操作采用<code>spring-data-jpa</code>，相关文章请访问：<a href="http://www.jianshu.com/p/9d5bf0e4943f" target="_blank" rel="noopener">第十三章：SpringBoot实战SpringDataJPA</a>，我们基于<code>user_info</code>数据表对应创建实体，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Data</span></span><br><span class="line"><span class="hljs-meta">@Table</span>(name = <span class="hljs-string">"user_info"</span>)</span><br><span class="line"><span class="hljs-meta">@Entity</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserEntity</span></span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户编号</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Id</span></span><br><span class="line">    <span class="hljs-meta">@GeneratedValue</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"UI_ID"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> Long id;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户名称</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"UI_USER_NAME"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> String userName;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 姓名</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"UI_NAME"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> String name;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 年龄</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"UI_AGE"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 余额</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"UI_BALANCE"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> BigDecimal balance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="用户数据接口"><a href="#用户数据接口" class="headerlink" title="用户数据接口"></a>用户数据接口</h5><p>创建<code>UserRepository</code>用户数据操作接口，并继承<code>JpaRepository</code>获得<code>spring-data-jpa</code>相关的接口定义方法。如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户数据接口定义</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:35</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UserRepository</span></span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-keyword">extends</span> <span class="hljs-title">JpaRepository</span>&lt;<span class="hljs-title">UserEntity</span>,<span class="hljs-title">Long</span>&gt;</span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="用户业务逻辑实现"><a href="#用户业务逻辑实现" class="headerlink" title="用户业务逻辑实现"></a>用户业务逻辑实现</h5><p>本章只是简单完成了数据的添加，代码如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户业务逻辑实现类</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:37</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Service</span></span><br><span class="line"><span class="hljs-meta">@Transactional</span>(rollbackFor = Exception.class)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> UserRepository userRepository;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息队列业务逻辑实现</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> QueueMessageService queueMessageService;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 保存用户</span></span><br><span class="line"><span class="hljs-comment">     * 并写入消息队列</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userEntity</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Long <span class="hljs-title">save</span><span class="hljs-params">(UserEntity userEntity)</span> <span class="hljs-keyword">throws</span> Exception</span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">         * 保存用户</span></span><br><span class="line"><span class="hljs-comment">         */</span></span><br><span class="line">        userRepository.save(userEntity);</span><br><span class="line">        <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">         * 将消息写入消息队列</span></span><br><span class="line"><span class="hljs-comment">         */</span></span><br><span class="line">        queueMessageService.send(userEntity.getId(), ExchangeEnum.USER_REGISTER, QueueEnum.USER_REGISTER);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> userEntity.getId();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面业务逻辑实现类内出现了一个名为<code>QueueMessageService</code>消息队列实现类，该类是我们定义的用于发送消息到消息队列的统一入口，在下面我们会详细讲解。</p>
+<h5 id="用户控制器"><a href="#用户控制器" class="headerlink" title="用户控制器"></a>用户控制器</h5><p>创建一个名为<code>UserController</code>的控制器类，对应编写一个添加用户的请求方法，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户控制器</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:41</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/user"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户业务逻辑</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 保存用户基本信息</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userEntity</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/save"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> UserEntity <span class="hljs-title">save</span><span class="hljs-params">(UserEntity userEntity)</span> <span class="hljs-keyword">throws</span> Exception</span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        userService.save(userEntity);</span><br><span class="line">        <span class="hljs-keyword">return</span> userEntity;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这我们添加用户的流程已经编写完成了，那么我们就来看下消息队列<code>QueueMessageService</code>接口的定义以及实现类的定义。</p>
+<h5 id="消息队列方法定义接口"><a href="#消息队列方法定义接口" class="headerlink" title="消息队列方法定义接口"></a>消息队列方法定义接口</h5><p>创建一个名为<code>QueueMessageService</code>的接口并且继承了<code>RabbitTemplate.ConfirmCallback</code>接口，而<code>RabbitTemplate.ConfirmCallback</code>接口是用来回调消息发送成功后的方法，当一个消息被成功写入到<code>RabbitMQ</code>服务端时，就会自动的回调<code>RabbitTemplate.ConfirmCallback</code>接口内的<code>confirm</code>方法完成通知，<code>QueueMessageService</code>接口如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息队列业务</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:50</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">QueueMessageService</span></span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-keyword">extends</span> <span class="hljs-title">RabbitTemplate</span>.<span class="hljs-title">ConfirmCallback</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 发送消息到rabbitmq消息队列</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> message 消息内容</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> exchangeEnum 交换配置枚举</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> queueEnum 队列配置枚举</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">send</span><span class="hljs-params">(Object message, ExchangeEnum exchangeEnum, QueueEnum queueEnum)</span> <span class="hljs-keyword">throws</span> Exception</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们需要实现该接口内的所有方法，并做出一些业务逻辑的处理。</p>
+<h5 id="消息队列业务实现"><a href="#消息队列业务实现" class="headerlink" title="消息队列业务实现"></a>消息队列业务实现</h5><p>创建名为<code>QueueMessageServiceSupport</code>实体类实现<code>QueueMessageService</code>接口，并实现接口内的所有方法，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息队列业务逻辑实现</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:52</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QueueMessageServiceSupport</span></span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">QueueMessageService</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息队列模板</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">send</span><span class="hljs-params">(Object message, ExchangeEnum exchangeEnum, QueueEnum queueEnum)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//设置回调为当前类对象</span></span><br><span class="line">        rabbitTemplate.setConfirmCallback(<span class="hljs-keyword">this</span>);</span><br><span class="line">        <span class="hljs-comment">//构建回调id为uuid</span></span><br><span class="line">        CorrelationData correlationId = <span class="hljs-keyword">new</span> CorrelationData(UUID.randomUUID().toString());</span><br><span class="line">        <span class="hljs-comment">//发送消息到消息队列</span></span><br><span class="line">        rabbitTemplate.convertAndSend(exchangeEnum.getValue(),queueEnum.getRoutingKey(),message,correlationId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息回调确认方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> correlationData 请求数据对象</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> ack 是否发送成功</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> cause</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">confirm</span><span class="hljs-params">(CorrelationData correlationData, <span class="hljs-keyword">boolean</span> ack, String cause)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="hljs-string">" 回调id:"</span> + correlationData.getId());</span><br><span class="line">        <span class="hljs-keyword">if</span> (ack) &#123;</span><br><span class="line">            System.out.println(<span class="hljs-string">"消息发送成功"</span>);</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="hljs-string">"消息发送失败:"</span> + cause);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>convertAndSend</code>方法用于将<code>Object</code>类型的消息转换后发送到<code>RabbitMQ</code>服务端，发送是的消息类型要与消息消费者方法参数保持一致。</p>
+<p>在<code>confirm</code>方法内，我们仅仅打印了消息发送时的<code>id</code>，根据<code>ack</code>参数输出消息发送状态。</p>
+<blockquote>
+<p>在上面代码中我们注入了<code>RabbitTemplate</code>消息队列模板实例，而通过该实例我们可以将消息发送到<code>RabbitMQ</code>服务端。那么这个实例具体在什么地方定义的呢？我们带着这个疑问来创建下面的模块，我们需要将<code>RabbitMQ</code>相关的配置抽取出来作为一个单独的<code>Module</code>存在。</p>
+</blockquote>
+<h3 id="构建-rabbitmq-common-项目"><a href="#构建-rabbitmq-common-项目" class="headerlink" title="构建 rabbitmq-common 项目"></a>构建 rabbitmq-common 项目</h3><p>该模块项目很简单，只是添加<code>RabbitMQ</code>相关的配置信息，由于<code>Module</code>是一个子模块所以继承了<code>parent</code>所有的依赖，当然我们用到的<code>RabbitMQ</code>相关依赖也不例外。</p>
+<h5 id="配置rabbitmq"><a href="#配置rabbitmq" class="headerlink" title="配置rabbitmq"></a>配置rabbitmq</h5><p>在创建配置类之前，我们先来定义两个枚举，分别存放了队列的交换信息、队列路由信息，</p>
+<ul>
+<li><p>ExchangeEnum (存放了队列交换配置信息)</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * rabbitmq交换配置枚举</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：13:56</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Getter</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> ExchangeEnum</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户注册交换配置枚举</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    USER_REGISTER(<span class="hljs-string">"user.register.topic.exchange"</span>)</span><br><span class="line">    ;</span><br><span class="line">    <span class="hljs-keyword">private</span> String value;</span><br><span class="line"></span><br><span class="line">    ExchangeEnum(String value) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>QueueEnum (存放了队列信息以及队列的路由配置信息)</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 队列配置枚举</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:05</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Getter</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> QueueEnum</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户注册枚举</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    USER_REGISTER(<span class="hljs-string">"user.register.queue"</span>,<span class="hljs-string">"user.register"</span>)</span><br><span class="line">    ;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 队列名称</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String name;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 队列路由键</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String routingKey;</span><br><span class="line"></span><br><span class="line">    QueueEnum(String name, String routingKey) &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">        <span class="hljs-keyword">this</span>.routingKey = routingKey;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>创建名为<code>UserRegisterQueueConfiguration</code>的实体类用于配置本章用到的用户注册队列信息，如果你得项目中使用多个队列，建议每一个业务逻辑创建一个配置类，分开维护，这样不容易出错。配置信息如下：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户注册消息队列配置</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：16:58</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Configuration</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRegisterQueueConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 配置路由交换对象实例</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> DirectExchange <span class="hljs-title">userRegisterDirectExchange</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> DirectExchange(ExchangeEnum.USER_REGISTER.getValue());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 配置用户注册队列对象实例</span></span><br><span class="line"><span class="hljs-comment">     * 并设置持久化队列</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Queue <span class="hljs-title">userRegisterQueue</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Queue(QueueEnum.USER_REGISTER.getName(),<span class="hljs-keyword">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 将用户注册队列绑定到路由交换配置上并设置指定路由键进行转发</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Binding <span class="hljs-title">userRegisterBinding</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> BindingBuilder.bind(userRegisterQueue()).to(userRegisterDirectExchange()).with(QueueEnum.USER_REGISTER.getRoutingKey());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该配置类大致分为如下三部分：</p>
+<ul>
+<li><p>配置交换实例<br>配置<code>DirectExchange</code>实例对象，为交换设置一个名称，引用<code>ExchangeEnum</code>枚举配置的交换名称，消息提供者与消息消费者的交换名称必须一致才具备的第一步的通讯基础。</p>
+</li>
+<li><p>配置队列实例<br>配置<code>Queue</code>实例对象，为消息队列设置一个名称，引用<code>QueueEnum</code>枚举配置的队列名称，当然队列的名称同样也是提供者与消费者之间的通讯基础。</p>
+</li>
+<li><p>绑定队列实例到交换实例<br>配置<code>Binding</code>实例对象，消息绑定的目的就是将<code>Queue</code>实例绑定到<code>Exchange</code>上，并且通过设置的路由<code>Key</code>进行消息转发，配置了路由<code>Key</code>后，只有符合该路由配置的消息才会被转发到绑定交换上的消息队列。</p>
+</li>
+</ul>
+<p>我们的<code>rabbitmq-common</code>模块已经编写完成。</p>
+<h5 id="添加-rabbitmq-provider-依赖-rabbitmq-common"><a href="#添加-rabbitmq-provider-依赖-rabbitmq-common" class="headerlink" title="添加 rabbitmq-provider 依赖 rabbitmq-common"></a>添加 rabbitmq-provider 依赖 rabbitmq-common</h5><p>下面我们回到<code>rabbitmq-provider</code>模块，修改pom.xml配置文件，如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="hljs-comment">&lt;!--添加common模块依赖--&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.hengyu<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>rabbitmq-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-comment">&lt;!--mysql依赖--&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-comment">&lt;!--druid数据源依赖--&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.5<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-comment">&lt;!--data jpa依赖--&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到我们将<code>rabbitmq-common</code>模块添加到了<code>rabbitmq-provider</code>模块的<code>pom</code>配置文件内，完成了模块之间的相互依赖，这样我们<code>rabbitmq-provider</code>就自动添加了对应的消息队列配置。</p>
+<h3 id="构建rabbitmq-consumer"><a href="#构建rabbitmq-consumer" class="headerlink" title="构建rabbitmq-consumer"></a>构建rabbitmq-consumer</h3><p>我们再来创建一个<code>rabbitmq-consumer</code>队列消息消费者模块，用于接受消费用户注册消息。</p>
+<h5 id="创建入口类-1"><a href="#创建入口类-1" class="headerlink" title="创建入口类"></a>创建入口类</h5><p>同样我们先来创建一个<code>SpringApplication</code>入口启动类，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息队列消息消费者入口</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：15:15</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@SpringBootApplication</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RabbitmqConsumerApplication</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">static</span> Logger logger = LoggerFactory.getLogger(RabbitmqConsumerApplication.class);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * rabbitmq消费者启动入口</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> args</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        SpringApplication.run(RabbitmqConsumerApplication.class,args);</span><br><span class="line"></span><br><span class="line">        logger.info(<span class="hljs-string">"【【【【【消息队列-消息消费者启动成功.】】】】】"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="application-properties配置文件-1"><a href="#application-properties配置文件-1" class="headerlink" title="application.properties配置文件"></a>application.properties配置文件</h5><p>配置文件的消息队列配置信息要与<code>rabbitmq-provider</code>配置文件一致，如下所示：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=rabbitmq-consumer</span><br><span class="line">#启动端口</span><br><span class="line">server.port=1111</span><br><span class="line">#用户名</span><br><span class="line">spring.rabbitmq.username=guest</span><br><span class="line">#密码</span><br><span class="line">spring.rabbitmq.password=guest</span><br><span class="line">#服务器ip</span><br><span class="line">spring.rabbitmq.host=localhost</span><br><span class="line">#虚拟空间地址</span><br><span class="line">spring.rabbitmq.virtual-host=/</span><br><span class="line">#端口号</span><br><span class="line">spring.rabbitmq.port=5672</span><br><span class="line">#配置发布消息确认回调</span><br><span class="line">spring.rabbitmq.publisher-confirms=true</span><br></pre></td></tr></table></figure>
+
+<p>我们修改了程序启动的端口号，为了我们下面进行测试的时候不出现端口占用的情况。</p>
+<blockquote>
+<p>如果<code>RabbitMQ</code>配置信息与<code>rabbitmq-provider</code>不一致，就不会收到消费消息。</p>
+</blockquote>
+<h5 id="用户注册消息消费者"><a href="#用户注册消息消费者" class="headerlink" title="用户注册消息消费者"></a>用户注册消息消费者</h5><p>创建名为<code>UserConsumer</code>类，用于完成消息监听，并且实现消息消费，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户注册消息消费者</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：15:20</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-meta">@RabbitListener</span>(queues = <span class="hljs-string">"user.register.queue"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserConsumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@RabbitHandler</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(Long userId)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="hljs-string">"用户："</span> + userId+<span class="hljs-string">"，完成了注册"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//...//自行业务逻辑处理</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在消息消费者类内，有两个陌生的注解：</p>
+<ul>
+<li>@RabbitListener<br><code>RabbitMQ</code>队列消息监听注解，该注解配置监听<code>queues</code>内的队列名称列表，可以配置多个。队列名称对应本章<code>rabbitmq-common</code>模块内<code>QueueEnum</code>枚举<code>name</code>属性。</li>
+<li>@RabbitHandler<br><code>RabbitMQ</code>消息处理方法，该方法的参数要与<code>rabbitmq-provider</code>发送消息时的类型保持一致，否则无法自动调用消费方法，也就无法完成消息的消费。</li>
+</ul>
+<p>#运行测试<br>我们接下来在<code>rabbitmq-provider</code>模块<code>src/test/java</code>下创建一个测试用例，访问用户注册控制器请求路径，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="hljs-meta">@SpringBootTest</span>(classes = RabbitmqProviderApplication.class)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserTester</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 模拟mvc测试对象</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> MockMvc mockMvc;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * web项目上下文</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> WebApplicationContext webApplicationContext;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 所有测试方法执行之前执行该方法</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Before</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">before</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//获取mockmvc对象实例</span></span><br><span class="line">        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 测试添加用户</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Test</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testUserAdd</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception</span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        mockMvc.perform(MockMvcRequestBuilders.post(<span class="hljs-string">"/user/save"</span>)</span><br><span class="line">                .param(<span class="hljs-string">"userName"</span>,<span class="hljs-string">"yuqiyu"</span>)</span><br><span class="line">                .param(<span class="hljs-string">"name"</span>,<span class="hljs-string">"恒宇少年"</span>)</span><br><span class="line">                .param(<span class="hljs-string">"age"</span>,<span class="hljs-string">"23"</span>)</span><br><span class="line">        )</span><br><span class="line">                .andDo(MockMvcResultHandlers.log())</span><br><span class="line">                .andReturn();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用测试用例时会自动将参数保存到数据库，并且将用户编号发送到<code>RabbitMQ</code>服务端，而<code>RabbitMQ</code>根据交换配置以及队列配置转发消息到消费者实例。</p>
+<h5 id="启动-rabbitmq-consumer"><a href="#启动-rabbitmq-consumer" class="headerlink" title="启动 rabbitmq-consumer"></a>启动 rabbitmq-consumer</h5><p>我们先来把<code>rabbitmq-consumer</code>项目启动，控制台输出启动日志如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.....</span><br><span class="line">51.194  INFO 2340 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name <span class="hljs-string">'rabbitConnectionFactory'</span> has been autodetected <span class="hljs-keyword">for</span> JMX exposure</span><br><span class="line">2017-12-03 16:58:51.196  INFO 2340 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Located managed bean <span class="hljs-string">'rabbitConnectionFactory'</span>: registering with JMX server as MBean [org.springframework.amqp.rabbit.connection:name=rabbitConnectionFactory,<span class="hljs-built_in">type</span>=CachingConnectionFactory]</span><br><span class="line">2017-12-03 16:58:51.216  INFO 2340 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans <span class="hljs-keyword">in</span> phase 2147483647</span><br><span class="line">2017-12-03 16:58:51.237  INFO 2340 --- [cTaskExecutor-1] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory<span class="hljs-comment">#443ff8ef:0/SimpleConnection@4369ac5c [delegate=amqp://guest@127.0.0.1:5672/, localPort= 62107]</span></span><br><span class="line">2017-12-03 16:58:51.287  INFO 2340 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 1111 (http)</span><br><span class="line">2017-12-03 16:58:51.290  INFO 2340 --- [           main] c.h.r.c.RabbitmqConsumerApplication      : Started RabbitmqConsumerApplication <span class="hljs-keyword">in</span> 2.354 seconds (JVM running <span class="hljs-keyword">for</span> 3.026)</span><br><span class="line">2017-12-03 16:58:51.290  INFO 2340 --- [           main] c.h.r.c.RabbitmqConsumerApplication      : 【【【【【消息队列-消息消费者启动成功.】】】】】</span><br></pre></td></tr></table></figure>
+
+<p>该部分启动日志就是我们配置的<code>RabbitMQ</code>初始化信息，我们可以看到项目启动时会自动与配置的<code>RabbitMQ</code>进行关联：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[delegate=amqp://guest@127.0.0.1:5672/, localPort= 62107]</span><br></pre></td></tr></table></figure>
+
+<h5 id="运行测试用例"><a href="#运行测试用例" class="headerlink" title="运行测试用例"></a>运行测试用例</h5><p>接下来我们执行<code>rabbitmq-provider</code>项目的测试用例，来查看控制台的输出内容如下所示：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line"> 回调id:e08f6d82-57bc-4c3f-9899-31c4b990c5be</span><br><span class="line">消息发送成功</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<p>已经可以正常的将消息发送到<code>RabbitMQ</code>服务端，并且接收到了回调通知，那么我们的<code>rabbitmq-consumer</code>项目是不是已经执行了消息的消费呢？我们打开<code>rabbitmq-consumer</code>控制台查看输出内容如下所示：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户：2，完成了注册</span><br></pre></td></tr></table></figure>
+
+<p>看以看到已经可以成功的执行<code>UserConsumer</code>消息监听类内的监听方法逻辑，到这里消息队列路由一对一的方式已经讲解完了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本章主要讲解了<code>RabbitMQ</code>在不同操作系统下的安装方式，以及通过三个子模块形象的展示了消息的分布式处理，整体流程：rabbitmq-provider -&gt; <code>RabbitMQ</code>服务端 -&gt; rabbitmq-consumer，消息的转发是非常快的，<code>RabbitMQ</code>在收到消息后就会检索当前服务端是否存在该消息的消费者，如果存在将会马上将消息转发。</p>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>, <a class="has-link-grey-link" href="/tags/消息队列/">消息队列</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/rabbitmq-direct-exchange-cluster.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：消息队列RabbitMQ的Direct类型消息多节点集群消费</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/quartz-cluster-node.html">
+          <span class="level-item">下一篇：Quartz分布式集群多节点实现任务漂移</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '13f4460adc36a60f71c1003e06ed5fb7',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2021
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

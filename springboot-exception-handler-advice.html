@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>使用ControllerAdvice完成异常统一处理 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="使用ControllerAdvice完成异常统一处理">
+<meta name="keywords" content="advice,exception,springboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用ControllerAdvice完成异常统一处理">
+<meta property="og:url" content="https://blog.yuqiyu.com/springboot-exception-handler-advice.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="使用ControllerAdvice完成异常统一处理">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2020-06-22T02:15:36.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用ControllerAdvice完成异常统一处理">
+<meta name="twitter:description" content="使用ControllerAdvice完成异常统一处理">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">使用ControllerAdvice完成异常统一处理</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-09-29</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
+                
+              
+                
+              
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>在我们平时的项目研发过程中，异常一般都是程序员最为头疼的问题，异常的抛出、捕获、处理等既涉及事务回滚，还会涉及返回前端消息提醒信息。那么我们怎么设计可以解决上面的两个的痛点呢？我们可不可以统一处理业务逻辑然后给出前端对应的异常提醒内容呢？</p>
+<a id="more"></a>
+<h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><p>基于<code>SpringBoot</code>平台构建业务逻辑异常统一处理，异常消息内容格式化。</p>
+<h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>我们将逻辑异常核心处理部分提取出来作为单独的<code>jar</code>供其他模块引用，创建项目在<code>parent</code>项目<code>pom.xml</code>添加公共使用的依赖，配置内容如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--Lombok--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--测试模块依赖--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--web依赖--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>项目创建完成后除了<code>.idea</code>、<code>iml</code>、<code>pom.xml</code>保留，其他的都删除。</p>
+<h3 id="异常处理核心子模块"><a href="#异常处理核心子模块" class="headerlink" title="异常处理核心子模块"></a>异常处理核心子模块</h3><p>我们创建一个名为<code>springboot-core-exception</code>的子模块，在该模块内自定义一个<code>LogicException</code>运行时异常类，继承<code>RuntimeException</code>并重写构造函数，代码如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 自定义业务逻辑异常类</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午2:38</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogicException</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RuntimeException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 日志对象</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> Logger logger = LoggerFactory.getLogger(LogicException.class);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 错误消息内容</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> String errMsg;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 错误码</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> String errCode;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 格式化错误码时所需参数列表</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">protected</span> String[] params;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 获取错误消息内容</span></span><br><span class="line"><span class="hljs-comment">     * 根据errCode从redis内获取未被格式化的错误消息内容</span></span><br><span class="line"><span class="hljs-comment">     * 并通过String.format()方法格式化错误消息以及参数</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getErrMsg</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> errMsg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 获取错误码</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getErrCode</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> errCode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 获取异常参数列表</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> String[] getParams() &#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> params;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 构造函数设置错误码以及错误参数列表</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> errCode 错误码</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> params  错误参数列表</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">LogicException</span><span class="hljs-params">(String errCode, String... params)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.errCode = errCode;</span><br><span class="line">        <span class="hljs-keyword">this</span>.params = params;</span><br><span class="line">        <span class="hljs-comment">//获取格式化后的异常消息内容</span></span><br><span class="line">        <span class="hljs-keyword">this</span>.errMsg = ErrorMessageTools.getErrorMessage(errCode, params);</span><br><span class="line">        <span class="hljs-comment">//错误信息</span></span><br><span class="line">        logger.error(<span class="hljs-string">"系统遇到如下异常，异常码：&#123;&#125;&gt;&gt;&gt;异常信息：&#123;&#125;"</span>, errCode, errMsg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在重写的构造函数内需要传递两个参数<code>errCode</code>、<code>params</code>，其目的是为了初始化类内的全局变量。</p>
+<ul>
+<li><code>errCode</code>：该字段是对应的异常码，我们在后续文章内容中创建一个存放异常错误码的枚举，而<code>errCode</code>就是枚举对应的字符串的值。</li>
+<li><code>params</code>：这里是对应<code>errCode</code>字符串含义描述时所需要的参数列表。</li>
+<li><code>errMsg</code>：格式化后的业务逻辑异常消息描述，我们在构造函数内可以看到调用了<code>ErrorMessageTools.getErrorMessage(errCode,params);</code>，这个方法作用是通过异常码在数据库内获取未格式化的异常描述，通过传递的参数进行格式化异常消息描述。</li>
+</ul>
+<blockquote>
+<p>创建异常核心包的目的就是让其他模块直接添加依赖，那异常描述内容该怎么获取呢？</p>
+</blockquote>
+<h4 id="定义异常消息获取接口"><a href="#定义异常消息获取接口" class="headerlink" title="定义异常消息获取接口"></a>定义异常消息获取接口</h4><p>我们在<code>springboot-exception-core</code>模块内添加一个接口<code>LogicExceptionMessage</code>，该接口提供通过异常码获取未格式化的异常消息描述内容方法，接口定义如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 逻辑异常接口定义</span></span><br><span class="line"><span class="hljs-comment"> * 使用项目需要实现该接口方法并提供方法实现</span></span><br><span class="line"><span class="hljs-comment"> * errCode对应逻辑异常码</span></span><br><span class="line"><span class="hljs-comment"> * getMessage返回字符串为逻辑异常消息内容</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午2:41</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">LogicExceptionMessage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 获取异常消息内容</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> errCode 错误码</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getMessage</span><span class="hljs-params">(String errCode)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在需要加载<code>springboot-exception-core</code>依赖的项目中，创建实体类实现<code>LogicExceptionMessage</code>接口并重写<code>getMessage(String errCode)</code>方法我们就可以通过<code>spring IOC</code>获取实现类实例进行操作获取数据，下面我们在编写使用异常模块时会涉及到。</p>
+<h4 id="格式化异常消息工具类"><a href="#格式化异常消息工具类" class="headerlink" title="格式化异常消息工具类"></a>格式化异常消息工具类</h4><p>下面我们再回头看看构造函数格式化异常消息工具类<code>ErrorMessageTools</code>，该工具类内提供<code>getErrorMessage</code>方法用于获取格式化后的异常消息描述，代码实现如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 异常消息描述格式化工具类</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午2:40</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ErrorMessageTools</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 异常消息获取</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> errCode 异常消息码</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> params  格式化异常参数所需参数列表</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title">getErrorMessage</span><span class="hljs-params">(String errCode, Object... params)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//获取业务逻辑消息实现</span></span><br><span class="line">        LogicExceptionMessage logicExceptionMessage = SpringBeanTools.getBean(LogicExceptionMessage.class);</span><br><span class="line">        <span class="hljs-keyword">if</span> (ObjectUtils.isEmpty(logicExceptionMessage)) &#123;</span><br><span class="line">            <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Exception(<span class="hljs-string">"请配置实现LogicExceptionMessage接口并设置实现类被SpringIoc所管理。"</span>);</span><br><span class="line">            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//获取错误消息内容</span></span><br><span class="line">        String errMsg = logicExceptionMessage.getMessage(errCode);</span><br><span class="line">        <span class="hljs-comment">//格式化错误消息内容</span></span><br><span class="line">        <span class="hljs-keyword">return</span> ObjectUtils.isEmpty(params) ? errMsg : String.format(errMsg, params);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：由于我们的工具类都是静态方法调用方式，所以无法直接使用<code>Spring IOC</code>注解注入的方式获取<code>LogicExceptionMessage</code>实例。</p>
+</blockquote>
+<p>由于无法注入实例，在<code>getErrorMessage</code>方法内，我们通过工具类<code>SpringBeanTools</code>来获取<code>ApplicationContext</code>上下文实例，再通过上下文来获取指定类型的<code>Bean</code>；获取到<code>LogicExceptionMessage</code>实例后调用<code>getMessage</code>方法，根据传入的<code>errCode</code>就可以直接从接口实现类实例中获取到未格式化的异常描述！</p>
+<blockquote>
+<p>当然实现类可以是以<code>Redis</code>、<code>Map集合</code>、<code>数据库</code>、<code>文本</code>作为数据来源。</p>
+</blockquote>
+<p>获取到未格式化的异常描述后通过<code>String.format</code>方法以及传递的参数直接就可以获取格式化后的字符串，如：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">未格式化异常消息 =&gt; 用户：%s已被冻结，无法操作.</span><br><span class="line">格式化代码 =&gt; String.format(&quot;%s已被冻结，无法操作.&quot;,&quot;恒宇少年&quot;);</span><br><span class="line">格式化后效果 =&gt; 用户：恒宇少年已被冻结，无法操作.</span><br></pre></td></tr></table></figure>
+
+<p>具体的格式化特殊字符含义可以去查看<code>String.format</code>文档，如何获取<code>ApplicationContext</code>上下文对象，请访问<a href="https://www.jianshu.com/p/3cd2d4e73eb7" target="_blank" rel="noopener">第三十二章：如何获取SpringBoot项目的applicationContext对象</a>查看。</p>
+<p>我们再回到<code>LogicException</code>构造函数内，这时<code>errMsg</code>字段对应的值就会是格式化后的异常消息描述，在外部我们调用<code>getErrMsg</code>方法就可以直接得到异常描述。</p>
+<p>到目前为止，我们已经将<code>springboot-exception-core</code>模块代码编码完成，下面我们来看下怎么来使用我们自定义的业务逻辑异常并且获取格式化后的异常消息描述。</p>
+<h3 id="异常示例模块"><a href="#异常示例模块" class="headerlink" title="异常示例模块"></a>异常示例模块</h3><p>基于<code>parent</code>我们来创建一个名为<code>springboot-exception-example</code>的子模块项目，项目内需要添加一些额外的配置依赖，当然也需要将我们的<code>springboot-exception-core</code>依赖添加进入，<code>pom.xml</code>配置文件内容如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="hljs-comment">&lt;!--异常核心依赖--&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.hengyu<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>springboot-exception-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">      <span class="hljs-comment">&lt;!--spring data jpa依赖--&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">      <span class="hljs-comment">&lt;!--数据库驱动--&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>runtime<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">      <span class="hljs-comment">&lt;!--druid依赖--&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.6<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面我们来配置下我们示例项目<code>application.yml</code>文件需要的配置，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line"><span class="hljs-attr">  application:</span></span><br><span class="line"><span class="hljs-attr">    name:</span> <span class="hljs-string">springboot-exception-core</span></span><br><span class="line">    <span class="hljs-comment">#数据源配置</span></span><br><span class="line"><span class="hljs-attr">  datasource:</span></span><br><span class="line"><span class="hljs-attr">    druid:</span></span><br><span class="line"><span class="hljs-attr">      url:</span> <span class="hljs-attr">jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true</span></span><br><span class="line"><span class="hljs-attr">      username:</span> <span class="hljs-string">root</span></span><br><span class="line"><span class="hljs-attr">      password:</span> <span class="hljs-number">123456</span></span><br><span class="line"><span class="hljs-attr">      driver-class-name:</span> <span class="hljs-string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="hljs-attr">  jpa:</span></span><br><span class="line"><span class="hljs-attr">    properties:</span></span><br><span class="line"><span class="hljs-attr">      hibernate:</span></span><br><span class="line">        <span class="hljs-comment">#配置显示sql</span></span><br><span class="line"><span class="hljs-attr">        show_sql:</span> <span class="hljs-literal">true</span></span><br><span class="line">        <span class="hljs-comment">#配置格式化sql</span></span><br><span class="line"><span class="hljs-attr">        format_sql:</span> <span class="hljs-literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面我们有讲到<code>LogicExceptionMessage</code>获取的内容可以从很多种数据源中读取，我们还是采用数据库来进行读取，建议正式环境放到<code>redis</code>缓存内！！！</p>
+<h4 id="异常信息表"><a href="#异常信息表" class="headerlink" title="异常信息表"></a>异常信息表</h4><p>接下来在数据库内创建异常信息表<code>sys_exception_info</code>，语句如下：</p>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">EXISTS</span> <span class="hljs-string">`sys_exception_info`</span>;</span><br><span class="line"><span class="hljs-comment">/*!40101 SET @saved_cs_client     = @@character_set_client */</span>;</span><br><span class="line"><span class="hljs-comment">/*!40101 SET character_set_client = utf8 */</span>;</span><br><span class="line"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`sys_exception_info`</span> (</span><br><span class="line">  <span class="hljs-string">`EI_ID`</span> <span class="hljs-built_in">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> AUTO_INCREMENT <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'主键自增'</span>,</span><br><span class="line">  <span class="hljs-string">`EI_CODE`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'异常码'</span>,</span><br><span class="line">  <span class="hljs-string">`EI_MESSAGE`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'异常消息内容'</span>,</span><br><span class="line">  PRIMARY <span class="hljs-keyword">KEY</span> (<span class="hljs-string">`EI_ID`</span>)</span><br><span class="line">) <span class="hljs-keyword">ENGINE</span>=<span class="hljs-keyword">InnoDB</span> AUTO_INCREMENT=<span class="hljs-number">3</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CHARSET</span>=utf8 <span class="hljs-keyword">COMMENT</span>=<span class="hljs-string">'系统异常基本信息'</span>;</span><br><span class="line"><span class="hljs-comment">/*!40101 SET character_set_client = @saved_cs_client */</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">--</span></span><br><span class="line"><span class="hljs-comment">-- Dumping data for table `sys_exception_info`</span></span><br><span class="line"><span class="hljs-comment">--</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">LOCK</span> <span class="hljs-keyword">TABLES</span> <span class="hljs-string">`sys_exception_info`</span> WRITE;</span><br><span class="line"><span class="hljs-comment">/*!40000 ALTER TABLE `sys_exception_info` DISABLE KEYS */</span>;</span><br><span class="line"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-string">`sys_exception_info`</span> <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">1</span>,<span class="hljs-string">'USER_NOT_FOUND'</span>,<span class="hljs-string">'用户不存在.'</span>),(<span class="hljs-number">2</span>,<span class="hljs-string">'USER_STATUS_FAILD'</span>,<span class="hljs-string">'用户状态异常.'</span>);</span><br><span class="line"><span class="hljs-comment">/*!40000 ALTER TABLE `sys_exception_info` ENABLE KEYS */</span>;</span><br><span class="line"><span class="hljs-keyword">UNLOCK</span> <span class="hljs-keyword">TABLES</span>;</span><br></pre></td></tr></table></figure>
+
+<p>我们通过<code>spring-data-jpa</code>来实现数据读取，下面对应数据表创建对应的<code>Entity</code>。</p>
+<h4 id="异常信息实体"><a href="#异常信息实体" class="headerlink" title="异常信息实体"></a>异常信息实体</h4><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 系统异常基本信息实体</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午3:35</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Data</span></span><br><span class="line"><span class="hljs-meta">@Entity</span></span><br><span class="line"><span class="hljs-meta">@Table</span>(name = <span class="hljs-string">"sys_exception_info"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExceptionInfoEntity</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 异常消息编号</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Id</span></span><br><span class="line">    <span class="hljs-meta">@GeneratedValue</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"EI_ID"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> Integer id;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 异常消息错误码</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"EI_CODE"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> String code;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 异常消息内容</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Column</span>(name = <span class="hljs-string">"EI_MESSAGE"</span>)</span><br><span class="line">    <span class="hljs-keyword">private</span> String message;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="异常信息数据接口"><a href="#异常信息数据接口" class="headerlink" title="异常信息数据接口"></a>异常信息数据接口</h4><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 异常数据接口定义</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午3:34</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ExceptionRepository</span></span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-keyword">extends</span> <span class="hljs-title">JpaRepository</span>&lt;<span class="hljs-title">ExceptionInfoEntity</span>,<span class="hljs-title">Integer</span>&gt;</span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 根据异常码获取异常配置信息</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> code 异常码</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function">ExceptionInfoEntity <span class="hljs-title">findTopByCode</span><span class="hljs-params">(String code)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在数据接口内通过<code>spring-data-jpa</code>方法查询方式，通过<code>errCode</code>读取异常信息实体内容。</p>
+<p>在开发过程中异常跑出时所用到的<code>errCode</code>一般存放在枚举类型或者常量接口内，在这里我们选择可扩展相对来说比较强的<code>枚举类型</code>，代码如下：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 错误码枚举类型</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午3:25</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> ErrorCodeEnum &#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户不存在.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    USER_NOT_FOUND,</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户状态异常.</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    USER_STATUS_FAILD,</span><br><span class="line">    <span class="hljs-comment">//...添加其他错误码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>异常码枚举内容项是需要根据数据库异常信息表对应变动的，能够保证我们在抛出异常时，在数据库内有对应的信息。  </p>
+<h4 id="LogicExceptionMessage实现类定义"><a href="#LogicExceptionMessage实现类定义" class="headerlink" title="LogicExceptionMessage实现类定义"></a>LogicExceptionMessage实现类定义</h4><p>我们在<code>springboot-exception-core</code>核心模块内添加了<code>LogicExceptionMessage</code>接口定义，需要我们实现该接口的<code>getMessage</code>方法核心模块，这样才可以获取数据库内对应的异常信息，实现类如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 业务逻辑异常消息获取实现类</span></span><br><span class="line"><span class="hljs-comment"> * - 消息可以从数据库内获取</span></span><br><span class="line"><span class="hljs-comment"> * - 消息可从Redis内获取</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午3:16</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LogicExceptionMessageSupport</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">LogicExceptionMessage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 异常数据接口</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> ExceptionRepository exceptionRepository;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 根据错误码获取错误信息</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> errCode 错误码</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getMessage</span><span class="hljs-params">(String errCode)</span> </span>&#123;</span><br><span class="line">        ExceptionInfoEntity exceptionInfoEntity = exceptionRepository.findTopByCode(errCode);</span><br><span class="line">        <span class="hljs-keyword">if</span>(!ObjectUtils.isEmpty(exceptionInfoEntity)) &#123;</span><br><span class="line">            <span class="hljs-keyword">return</span> exceptionInfoEntity.getMessage();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"系统异常"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>getMessage</code>方法内通过<code>ExceptionRepository</code>数据接口定义的<code>findTopByCode</code>方法获取指定异常吗的异常信息，当存在异常信息时返回未格式化的异常描述。</p>
+<h4 id="统一返回实体定义"><a href="#统一返回实体定义" class="headerlink" title="统一返回实体定义"></a>统一返回实体定义</h4><p>对于接口项目（包括前后分离项目）在处理返回统一格式时，我们通常会采用固定实体的方式，这样对于前端调用接口的开发者来说解析内容是比较方便的，同样在开发过程中会约定遇到系统异常、业务逻辑异常时返回的格式内容，当然这跟请求接口正确返回的格式是一样的，只不过字段内容有差异。<br>统一返回实体<code>ApiResponseEntity&lt;T extends Object&gt;</code>如下：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 接口响应实体</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/9</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午3:04</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Data</span></span><br><span class="line"><span class="hljs-meta">@Builder</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApiResponseEntity</span>&lt;<span class="hljs-title">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Object</span>&gt; </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 错误消息</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String errorMsg;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 数据内容</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> T data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>ApiResponseEntity</code>实体内，采用了<code>Lombok</code>的构造者设计模式<code>@Builder</code>注解，配置该注解的实体会自动在<code>.class</code>文件内添加内部类实现设计模式，部分自动生成代码如下：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// ...</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApiResponseEntityBuilder</span>&lt;<span class="hljs-title">T</span>&gt; </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">private</span> String errorMsg;</span><br><span class="line">        <span class="hljs-keyword">private</span> T data;</span><br><span class="line"></span><br><span class="line">        ApiResponseEntityBuilder() &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">public</span> ApiResponseEntity.<span class="hljs-function">ApiResponseEntityBuilder&lt;T&gt; <span class="hljs-title">errorMsg</span><span class="hljs-params">(String errorMsg)</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.errorMsg = errorMsg;</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">public</span> ApiResponseEntity.<span class="hljs-function">ApiResponseEntityBuilder&lt;T&gt; <span class="hljs-title">data</span><span class="hljs-params">(T data)</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.data = data;</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> ApiResponseEntity&lt;T&gt; <span class="hljs-title">build</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ApiResponseEntity(<span class="hljs-keyword">this</span>.errorMsg, <span class="hljs-keyword">this</span>.data);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-string">"ApiResponseEntity.ApiResponseEntityBuilder(errorMsg="</span> + <span class="hljs-keyword">this</span>.errorMsg + <span class="hljs-string">", data="</span> + <span class="hljs-keyword">this</span>.data + <span class="hljs-string">")"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-comment">// ...</span></span><br><span class="line">```  </span><br><span class="line">到目前为止，我们并未添加全局异常相关的配置，而全局异常配置这块，我们采用之前章节讲到的`<span class="hljs-meta">@ControllerAdvice</span>`来实现，`<span class="hljs-meta">@ControllerAdvice</span>`相关的内容请访问[第二十一章：SpringBoot项目中的全局异常处理](https:<span class="hljs-comment">//www.jianshu.com/p/1c6207d8ee9d)。</span></span><br><span class="line"></span><br><span class="line">#### 全局异常通知定义</span><br><span class="line">我们本章节仅仅添加业务逻辑异常的处理，具体编码如下所示：</span><br><span class="line">```java</span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 控制器异常通知类</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午5:30</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@ControllerAdvice</span>(annotations = RestController.class)</span><br><span class="line"><span class="hljs-meta">@ResponseBody</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExceptionAdvice</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * logback new instance</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    Logger logger = LoggerFactory.getLogger(<span class="hljs-keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 处理业务逻辑异常</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> e 业务逻辑异常对象实例</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 逻辑异常消息内容</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@ExceptionHandler</span>(LogicException.class)</span><br><span class="line">    <span class="hljs-meta">@ResponseStatus</span>(code = HttpStatus.OK)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> ApiResponseEntity&lt;String&gt; <span class="hljs-title">logicException</span><span class="hljs-params">(LogicException e)</span> </span>&#123;</span><br><span class="line">        logger.error(<span class="hljs-string">"遇到业务逻辑异常：【&#123;&#125;】"</span>, e.getErrCode());</span><br><span class="line">        <span class="hljs-comment">// 返回响应实体内容</span></span><br><span class="line">        <span class="hljs-keyword">return</span> ApiResponseEntity.&lt;String&gt;builder().errorMsg(e.getErrMsg()).build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>最近技术群内有同学问我，既然我们用的是<code>@RestController</code>为什么这里还需要配置<code>@ResponseBody</code>？这里给大家一个解释，我们控制器通知确实是监听的<code>@RestController</code>，而<code>@RestController</code>注解的控制器统一都是返回<code>JSON</code>格式的数据。那么我们在遇到异常后，请求已经不再控制器内了，已经交付给控制器通知类，那么我们通知类如果同样想返回<code>JSON</code>数据，这里就需要配置<code>@ResponseBody</code>注解来实现。</p>
+</blockquote>
+<p>我们来看上面<code>logicException()</code>方法，该方法返回值是我们定义的统一返回实体，目的是为了遇到业务逻辑异常时同样返回与正确请求一样的格式。</p>
+<ul>
+<li><code>@ ExceptionHandler</code>配置了将要处理<code>LogicException</code>类型的异常，也就是只要系统遇到<code>LogicException</code>异常并且抛给了控制器，就会调用该方法。</li>
+<li><code>@ResponseStatus</code>配置了返回的状态值，因为我们遇到业务逻辑异常前端肯定需要的不是500错误，而是一个200状态的<code>JSON</code>业务异常描述。</li>
+</ul>
+<p>在方法返回时使用<code>构造者设计模式</code>并将异常消息传递给<code>errorMsg()</code>方法，这样就实现了字段<code>errorMsg</code>的赋值。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>异常相关的编码完成，下面我们来创建一个测试的控制器模拟业务逻辑发生时，系统是怎么做出的返回？<br>测试控制内容如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 测试控制器</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/1/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午3:12</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IndexController</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 首页方法</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/index"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> ApiResponseEntity&lt;String&gt; <span class="hljs-title">index</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> LogicException </span>&#123;</span><br><span class="line">        <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">         * 模拟用户不存在</span></span><br><span class="line"><span class="hljs-comment">         * 抛出业务逻辑异常</span></span><br><span class="line"><span class="hljs-comment">         */</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">true</span>) &#123;</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> LogicException(ErrorCodeEnum.USER_STATUS_FAILD.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> ApiResponseEntity.&lt;String&gt;builder().data(<span class="hljs-string">"this is index mapping"</span>).build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据上面代码含义，当我们在访问<code>/index</code>时就会发生<code>USER_STATUS_FAILD</code>业务逻辑异常，按照我们之前的全局异常配置以及统一返回实体实例化，访问后会出现<code>ApiResponseEntity</code>格式<code>JSON</code>数据，下面我们运行项目访问查看效果。<br>界面输出内容如下所示：</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"errorMsg"</span>: <span class="hljs-string">"用户状态异常."</span>,</span><br><span class="line">    <span class="hljs-attr">"data"</span>: <span class="hljs-literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而在控制台由于我们编写了日志信息，也同样有对应的输出，如下所示：</p>
+<figure class="highlight sql hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Hibernate: </span><br><span class="line">    <span class="hljs-keyword">select</span></span><br><span class="line">        exceptioni0_.ei_id <span class="hljs-keyword">as</span> ei_id1_0_,</span><br><span class="line">        exceptioni0_.ei_code <span class="hljs-keyword">as</span> ei_code2_0_,</span><br><span class="line">        exceptioni0_.ei_message <span class="hljs-keyword">as</span> ei_messa3_0_ </span><br><span class="line">    <span class="hljs-keyword">from</span></span><br><span class="line">        sys_exception_info exceptioni0_ </span><br><span class="line">    <span class="hljs-keyword">where</span></span><br><span class="line">        exceptioni0_.ei_code=? <span class="hljs-keyword">limit</span> ?</span><br><span class="line"><span class="hljs-number">2018</span><span class="hljs-number">-01</span><span class="hljs-number">-09</span> <span class="hljs-number">18</span>:<span class="hljs-number">54</span>:<span class="hljs-number">00.647</span> <span class="hljs-keyword">ERROR</span> <span class="hljs-number">2024</span> <span class="hljs-comment">--- [nio-8080-exec-1] c.h.s.exception.core.LogicException      : 系统遇到如下异常，异常码：USER_STATUS_FAILD&gt;&gt;&gt;异常信息：用户状态异常.</span></span><br><span class="line"><span class="hljs-number">2018</span><span class="hljs-number">-01</span><span class="hljs-number">-09</span> <span class="hljs-number">18</span>:<span class="hljs-number">54</span>:<span class="hljs-number">00.649</span> <span class="hljs-keyword">ERROR</span> <span class="hljs-number">2024</span> <span class="hljs-comment">--- [nio-8080-exec-1] c.h.s.e.c.advice.ExceptionAdvice         : 遇到业务逻辑异常：【USER_STATUS_FAILD】</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果业务逻辑异常在<code>Service</code>层时，我们根本不需要去操心事务回滚的问题，因为<code>LogicException</code>本身就是运行时异常，而项目中抛出运行时异常时事务就会自动回滚。</p>
+</blockquote>
+<p>我们把业务逻辑异常屏蔽掉，把<code>true</code>改成<code>false</code>查看正确时返回的格式，如下所示：</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"errorMsg"</span>: <span class="hljs-literal">null</span>,</span><br><span class="line">    <span class="hljs-attr">"data"</span>: <span class="hljs-string">"this is index mapping"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果想把对应的<code>null</code>改成空字符串，请访问查看<a href="https://www.jianshu.com/p/14df78573cb2" target="_blank" rel="noopener">第五章：配置使用FastJson返回Json视图</a>。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本章将之前章节的部分内容进行了整合，主要是全局异常、统一格式返回等；这种方式是目前我们公司产品中正在使用的方式，已经可以满足平时的业务逻辑异常定义以及返回，将异常消息存放到<code>数据库</code>中我们可以随时更新提示内容，这一点还是比较易用的。</p>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/ControllerAdvice/">ControllerAdvice</a>, <a class="has-link-grey-link" href="/tags/ExceptionHandler/">ExceptionHandler</a>, <a class="has-link-grey-link" href="/tags/Spring/">Spring</a>, <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/rabbitmq-delay-consumer.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：消息队列RabbitMQ消息延时消费</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/aop-resource-load.html">
+          <span class="level-item">下一篇：资源与业务分离Aop的实现方式</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: 'ba9cf63db2e85b1286451697b9cf7c0e',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2021
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

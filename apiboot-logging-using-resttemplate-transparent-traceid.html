@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>ApiBoot Logging使用RestTemplate透传链路信息 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="ApiBoot Logging使用RestTemplate透传链路信息">
+<meta name="keywords" content="apiboot,resttemplate,logging">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ApiBoot Logging使用RestTemplate透传链路信息">
+<meta property="og:url" content="https://blog.yuqiyu.com/apiboot-logging-using-resttemplate-transparent-traceid.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="ApiBoot Logging使用RestTemplate透传链路信息">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2020-06-22T01:53:16.757Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ApiBoot Logging使用RestTemplate透传链路信息">
+<meta name="twitter:description" content="ApiBoot Logging使用RestTemplate透传链路信息">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">ApiBoot Logging使用RestTemplate透传链路信息</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-11-06</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/apiboot-all-articles.html">ApiBoot</a>&nbsp;
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>在上一篇文章【<a href="/apiboot-logging-using-openfeign-transparent-traceid.html" title="ApiBoot Logging使用SpringCloud Openfeign透传链路信息">ApiBoot Logging使用SpringCloud Openfeign透传链路信息</a>】中我们详细的讲解了<code>ApiBoot Logging</code>整合<code>SpringCloud</code>通过<code>Openfeign</code>进行透传链路信息，包括<code>traceId</code>（链路编号）、<code>parentSpanId</code>（上级单元编号）等信息。<br><code>ApiBoot Logging</code>不仅仅可以使用<code>Openfeign</code>传递链路信息，还支持<code>RestTemplate</code>方式，本篇文章来详细的讲解下具体的使用方式。</p>
+<a id="more"></a>
+<h2 id="搭建Logging-Admin"><a href="#搭建Logging-Admin" class="headerlink" title="搭建Logging Admin"></a>搭建Logging Admin</h2><p>我们需要搭建<code>Logging Admin</code>服务，用于接收<code>业务服务</code>上报的请求日志信息，请参考【<a href="/apiboot-report-logs-by-logging-to-admin.html" title="将ApiBoot Logging采集的日志上报到Admin">将ApiBoot Logging采集的日志上报到Admin</a>】文章内容.</p>
+<h2 id="添加ApiBoot统一版本"><a href="#添加ApiBoot统一版本" class="headerlink" title="添加ApiBoot统一版本"></a>添加ApiBoot统一版本</h2><p>由于本章采用是<code>Maven 多模块</code>的方式构建源码，所以我们只需要将<code>ApiBoot</code>统一版本的依赖配置在<code>root</code>项目的<code>pom.xml</code>内，如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--ApiBoot版本号--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">api.boot.version</span>&gt;</span>2.1.5.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">api.boot.version</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.minbox.framework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>api-boot-dependencies<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;api.boot.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>import<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来我们营造本篇文章的<code>模拟场景</code>，<strong>查询用户基本信息时一并查询出用户的账号余额</strong>。</p>
+<h2 id="创建账户服务"><a href="#创建账户服务" class="headerlink" title="创建账户服务"></a>创建账户服务</h2><p>创建一个名为<code>account-service</code>的<code>SpringBoot</code>项目。</p>
+<h3 id="添加相关依赖"><a href="#添加相关依赖" class="headerlink" title="添加相关依赖"></a>添加相关依赖</h3><p>在项目<code>pom.xml</code>配置文件内添加相关依赖，如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--SpringBoot Web--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--ApiBoot Logging--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.minbox.framework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>api-boot-starter-logging<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置上报的Logging-Admin"><a href="#配置上报的Logging-Admin" class="headerlink" title="配置上报的Logging Admin"></a>配置上报的Logging Admin</h3><p>在<code>application.yml</code>配置文件内添加请求日志上报的<code>Logging Admin</code>地址，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line"><span class="hljs-attr">  application:</span></span><br><span class="line"><span class="hljs-attr">    name:</span> <span class="hljs-string">account-service</span></span><br><span class="line"><span class="hljs-attr">server:</span></span><br><span class="line"><span class="hljs-attr">  port:</span> <span class="hljs-number">9090</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">api:</span></span><br><span class="line"><span class="hljs-attr">  boot:</span></span><br><span class="line"><span class="hljs-attr">    logging:</span></span><br><span class="line">      <span class="hljs-comment"># 控制台打印请求日志</span></span><br><span class="line"><span class="hljs-attr">      show-console-log:</span> <span class="hljs-literal">true</span></span><br><span class="line">      <span class="hljs-comment"># 美化请求日志</span></span><br><span class="line"><span class="hljs-attr">      format-console-log-json:</span> <span class="hljs-literal">true</span></span><br><span class="line">      <span class="hljs-comment"># Logging Admin地址</span></span><br><span class="line"><span class="hljs-attr">      admin:</span></span><br><span class="line"><span class="hljs-attr">        server-address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:8081</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：<code>server-address</code>配置参数不需要添加<code>http://</code>前缀</p>
+</blockquote>
+<h3 id="启用Logging-Client"><a href="#启用Logging-Client" class="headerlink" title="启用Logging Client"></a>启用Logging Client</h3><p>添加完成依赖后我们通过<code>@EnableLoggingClient</code>注解来启用<code>ApiBoot Logging</code>，在<code>AccountServiceApplication</code>类上添加如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 账户服务</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@SpringBootApplication</span></span><br><span class="line"><span class="hljs-meta">@EnableLoggingClient</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AccountServiceApplication</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * logger instance</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">static</span> Logger logger = LoggerFactory.getLogger(AccountServiceApplication.class);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(AccountServiceApplication.class, args);</span><br><span class="line">        logger.info(<span class="hljs-string">"&#123;&#125;服务启动成功."</span>, <span class="hljs-string">"账户"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>@EnableLoggingClient</code>注解就实例化部分<code>ApiBoot Logging</code>内部所需要的类，将实例放置到<code>Spring IOC</code>容器内。</p>
+</blockquote>
+<h3 id="查询账户余额代码实现"><a href="#查询账户余额代码实现" class="headerlink" title="查询账户余额代码实现"></a>查询账户余额代码实现</h3><p>我们创建一个名为<code>AccountController</code>的控制器来提供查询账户的余额信息，代码实现如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 账户服务实现</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/account"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AccountController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 示例，内存账户列表</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> HashMap&lt;Integer, Double&gt; ACCOUNTS = <span class="hljs-keyword">new</span> HashMap() &#123;&#123;</span><br><span class="line">        put(<span class="hljs-number">1</span>, <span class="hljs-number">1233.22</span>);</span><br><span class="line">        put(<span class="hljs-number">2</span>, <span class="hljs-number">69269.22</span>);</span><br><span class="line">    &#125;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 获取指定账户的余额</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> accountId</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@GetMapping</span>(value = <span class="hljs-string">"/&#123;accountId&#125;"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Double <span class="hljs-title">getBalance</span><span class="hljs-params">(@PathVariable(<span class="hljs-string">"accountId"</span>)</span> Integer accountId) </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> ACCOUNTS.get(accountId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>至此我们的账户服务已经编写完成，下面我们来编写<code>用户服务</code>。</p>
+</blockquote>
+<h2 id="创建用户服务"><a href="#创建用户服务" class="headerlink" title="创建用户服务"></a>创建用户服务</h2><p>我们来创建一个名为<code>user-service</code>的<code>SpringBoot</code>项目。</p>
+<h3 id="添加相关依赖-1"><a href="#添加相关依赖-1" class="headerlink" title="添加相关依赖"></a>添加相关依赖</h3><p>在项目<code>pom.xml</code>配置文件内添加相关依赖，如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--SpringBoot Web--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-comment">&lt;!--ApiBoot Logging--&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.minbox.framework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>api-boot-starter-logging<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置上报的Logging-Admin-1"><a href="#配置上报的Logging-Admin-1" class="headerlink" title="配置上报的Logging Admin"></a>配置上报的Logging Admin</h3><p>本章我们使用指定<code>Logging Admin</code>地址的方式配置，修改<code>application.yml</code>配置文件如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line"><span class="hljs-attr">  application:</span></span><br><span class="line"><span class="hljs-attr">    name:</span> <span class="hljs-string">user-service</span></span><br><span class="line"><span class="hljs-attr">server:</span></span><br><span class="line"><span class="hljs-attr">  port:</span> <span class="hljs-number">9091</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-attr">api:</span></span><br><span class="line"><span class="hljs-attr">  boot:</span></span><br><span class="line"><span class="hljs-attr">    logging:</span></span><br><span class="line">      <span class="hljs-comment"># 控制台打印请求日志</span></span><br><span class="line"><span class="hljs-attr">      show-console-log:</span> <span class="hljs-literal">true</span></span><br><span class="line">      <span class="hljs-comment"># 美化请求日志</span></span><br><span class="line"><span class="hljs-attr">      format-console-log-json:</span> <span class="hljs-literal">true</span></span><br><span class="line">      <span class="hljs-comment"># Logging Admin地址</span></span><br><span class="line"><span class="hljs-attr">      admin:</span></span><br><span class="line"><span class="hljs-attr">        server-address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span><span class="hljs-string">:8081</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="启用Logging-Client-1"><a href="#启用Logging-Client-1" class="headerlink" title="启用Logging Client"></a>启用Logging Client</h3><p>添加完依赖后我们需要在<code>XxxApplication</code>入口类上添加<code>@EnableLoggingClient</code>注解来启用<code>ApiBoot Logging</code>，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户服务</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@SpringBootApplication</span></span><br><span class="line"><span class="hljs-meta">@EnableLoggingClient</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserServiceApplication</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * logger instance</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">static</span> Logger logger = LoggerFactory.getLogger(UserServiceApplication.class);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(UserServiceApplication.class, args);</span><br><span class="line">        logger.info(<span class="hljs-string">"&#123;&#125;服务启动成功."</span>, <span class="hljs-string">"用户"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实例化RestTemplate对象"><a href="#实例化RestTemplate对象" class="headerlink" title="实例化RestTemplate对象"></a>实例化RestTemplate对象</h3><p>在<code>user-service</code>需要访问<code>账户服务</code>获取当前用户的余额，所以我们需要在<code>user-service</code>内实例化<code>RestTemplate</code>，这样我们才可以通过<code>RestTemplate</code>访问获取用户账户余额信息，我们直接在<code>UserServiceApplication</code>类内添加实例，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 实例化RestTemplate</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> RestTemplate&#125;</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Bean</span></span><br><span class="line"><span class="hljs-meta">@ConditionalOnMissingBean</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title">restTemplate</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestTemplate();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注解解释：</strong></p>
+<ul>
+<li><code>@ConditionalOnMissingBean</code>：这是<code>SpringBoot</code>条件注入其中的一个注解，表示当<code>IOC</code>容器内不存在<code>RestTemplate</code>类型的实例时才会去执行<code>restTemplate()</code>方法创建对象。</li>
+</ul>
+<h3 id="查询用户信息代码实现"><a href="#查询用户信息代码实现" class="headerlink" title="查询用户信息代码实现"></a>查询用户信息代码实现</h3><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户基本信息控制器</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/user"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 示例，用户列表</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> HashMap&lt;Integer, User&gt; USERS = <span class="hljs-keyword">new</span> HashMap() &#123;&#123;</span><br><span class="line">        put(<span class="hljs-number">1</span>, <span class="hljs-keyword">new</span> User(<span class="hljs-number">1</span>, <span class="hljs-string">"恒宇少年"</span>));</span><br><span class="line">        put(<span class="hljs-number">2</span>, <span class="hljs-keyword">new</span> User(<span class="hljs-number">2</span>, <span class="hljs-string">"于起宇"</span>));</span><br><span class="line">    &#125;&#125;;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 注入RestTemplate</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 获取用户基本信息</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userId 用户编号</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@GetMapping</span>(value = <span class="hljs-string">"/&#123;userId&#125;"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">getUserInfo</span><span class="hljs-params">(@PathVariable(<span class="hljs-string">"userId"</span>)</span> Integer userId) </span>&#123;</span><br><span class="line">        ResponseEntity&lt;Double&gt; responseEntity = restTemplate.getForEntity(<span class="hljs-string">"http://localhost:9090/account/&#123;accountId&#125;"</span>, Double.class, userId);</span><br><span class="line">        Double balance = responseEntity.getBody();</span><br><span class="line">        User user = USERS.get(userId);</span><br><span class="line">        <span class="hljs-keyword">if</span> (ObjectUtils.isEmpty(user)) &#123;</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"用户："</span> + userId + <span class="hljs-string">"，不存在."</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        user.setBalance(balance);</span><br><span class="line">        <span class="hljs-keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Data</span></span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">private</span> Integer id;</span><br><span class="line">        <span class="hljs-keyword">private</span> String name;</span><br><span class="line">        <span class="hljs-keyword">private</span> Double balance;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">User</span><span class="hljs-params">(Integer id, String name)</span> </span>&#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.id = id;</span><br><span class="line">            <span class="hljs-keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们所需要的两个服务都已经编写完成，下面我们来测试<code>RestTemplate</code>是可以透传<code>ApiBoot Logging</code>的链路信息？</p>
+<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><p>依次启动<code>logging-admin</code> &gt; <code>user-service</code> &gt; <code>account-service</code>。</p>
+<h3 id="测试点：透传链路信息"><a href="#测试点：透传链路信息" class="headerlink" title="测试点：透传链路信息"></a>测试点：透传链路信息</h3><p>我们使用<code>curl</code>命令访问<code>user-service</code>提供的地址<code>/user</code>，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜ ~ curl http://localhost:9091/user/1</span><br><span class="line">&#123;<span class="hljs-string">"id"</span>:1,<span class="hljs-string">"name"</span>:<span class="hljs-string">"恒宇少年"</span>,<span class="hljs-string">"balance"</span>:1233.22&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面我看来看下<code>logging-admin</code>控制台接收到的请求日志。</p>
+<p><strong>接收user-service请求日志</strong></p>
+<figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Receiving Service: 【user-service -&gt; 127.0.0.1】, Request Log Report，Logging Content：[</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="hljs-attr">"endTime"</span>:<span class="hljs-number">1573032865311</span>,</span><br><span class="line">		<span class="hljs-attr">"httpStatus"</span>:<span class="hljs-number">200</span>,</span><br><span class="line">		<span class="hljs-attr">"requestBody"</span>:<span class="hljs-string">""</span>,</span><br><span class="line">		<span class="hljs-attr">"requestHeaders"</span>:&#123;</span><br><span class="line">			<span class="hljs-attr">"host"</span>:<span class="hljs-string">"localhost:9091"</span>,</span><br><span class="line">			<span class="hljs-attr">"user-agent"</span>:<span class="hljs-string">"curl/7.64.1"</span>,</span><br><span class="line">			<span class="hljs-attr">"accept"</span>:<span class="hljs-string">"*/*"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="hljs-attr">"requestIp"</span>:<span class="hljs-string">"0:0:0:0:0:0:0:1"</span>,</span><br><span class="line">		<span class="hljs-attr">"requestMethod"</span>:<span class="hljs-string">"GET"</span>,</span><br><span class="line">		<span class="hljs-attr">"requestParam"</span>:<span class="hljs-string">"&#123;&#125;"</span>,</span><br><span class="line">		<span class="hljs-attr">"requestUri"</span>:<span class="hljs-string">"/user/1"</span>,</span><br><span class="line">		<span class="hljs-attr">"responseBody"</span>:<span class="hljs-string">"&#123;\"id\":1,\"name\":\"恒宇少年\",\"balance\":1233.22&#125;"</span>,</span><br><span class="line">		<span class="hljs-attr">"responseHeaders"</span>:&#123;&#125;,</span><br><span class="line">		<span class="hljs-attr">"serviceId"</span>:<span class="hljs-string">"user-service"</span>,</span><br><span class="line">		<span class="hljs-attr">"serviceIp"</span>:<span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">		<span class="hljs-attr">"servicePort"</span>:<span class="hljs-string">"9091"</span>,</span><br><span class="line">		<span class="hljs-attr">"spanId"</span>:<span class="hljs-string">"f8cff018-42d5-481f-98df-c19b7196b3c3"</span>,</span><br><span class="line">		<span class="hljs-attr">"startTime"</span>:<span class="hljs-number">1573032865130</span>,</span><br><span class="line">		<span class="hljs-attr">"timeConsuming"</span>:<span class="hljs-number">181</span>,</span><br><span class="line">		<span class="hljs-attr">"traceId"</span>:<span class="hljs-string">"16ad1dd4-beaa-4110-b4b7-fc7d952d9a57"</span></span><br><span class="line">	&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p><strong>接收account-service请求日志</strong></p>
+<figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Receiving Service: 【account-service -&gt; 127.0.0.1】, Request Log Report，Logging Content：[</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="hljs-attr">"endTime"</span>:<span class="hljs-number">1573032865309</span>,</span><br><span class="line">		<span class="hljs-attr">"httpStatus"</span>:<span class="hljs-number">200</span>,</span><br><span class="line">		<span class="hljs-attr">"parentSpanId"</span>:<span class="hljs-string">"f8cff018-42d5-481f-98df-c19b7196b3c3"</span>,</span><br><span class="line">		<span class="hljs-attr">"requestBody"</span>:<span class="hljs-string">""</span>,</span><br><span class="line">		<span class="hljs-attr">"requestHeaders"</span>:&#123;</span><br><span class="line">			<span class="hljs-attr">"minbox-logging-x-parent-span-id"</span>:<span class="hljs-string">"f8cff018-42d5-481f-98df-c19b7196b3c3"</span>,</span><br><span class="line">			<span class="hljs-attr">"minbox-logging-x-trace-id"</span>:<span class="hljs-string">"16ad1dd4-beaa-4110-b4b7-fc7d952d9a57"</span>,</span><br><span class="line">			<span class="hljs-attr">"host"</span>:<span class="hljs-string">"localhost:9090"</span>,</span><br><span class="line">			<span class="hljs-attr">"connection"</span>:<span class="hljs-string">"keep-alive"</span>,</span><br><span class="line">			<span class="hljs-attr">"accept"</span>:<span class="hljs-string">"application/json, application/*+json"</span>,</span><br><span class="line">			<span class="hljs-attr">"user-agent"</span>:<span class="hljs-string">"Java/1.8.0_211"</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="hljs-attr">"requestIp"</span>:<span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">		<span class="hljs-attr">"requestMethod"</span>:<span class="hljs-string">"GET"</span>,</span><br><span class="line">		<span class="hljs-attr">"requestParam"</span>:<span class="hljs-string">"&#123;&#125;"</span>,</span><br><span class="line">		<span class="hljs-attr">"requestUri"</span>:<span class="hljs-string">"/account/1"</span>,</span><br><span class="line">		<span class="hljs-attr">"responseBody"</span>:<span class="hljs-string">"1233.22"</span>,</span><br><span class="line">		<span class="hljs-attr">"responseHeaders"</span>:&#123;&#125;,</span><br><span class="line">		<span class="hljs-attr">"serviceId"</span>:<span class="hljs-string">"account-service"</span>,</span><br><span class="line">		<span class="hljs-attr">"serviceIp"</span>:<span class="hljs-string">"127.0.0.1"</span>,</span><br><span class="line">		<span class="hljs-attr">"servicePort"</span>:<span class="hljs-string">"9090"</span>,</span><br><span class="line">		<span class="hljs-attr">"spanId"</span>:<span class="hljs-string">"63b18b40-5718-431c-972f-78956ce78380"</span>,</span><br><span class="line">		<span class="hljs-attr">"startTime"</span>:<span class="hljs-number">1573032865307</span>,</span><br><span class="line">		<span class="hljs-attr">"timeConsuming"</span>:<span class="hljs-number">2</span>,</span><br><span class="line">		<span class="hljs-attr">"traceId"</span>:<span class="hljs-string">"16ad1dd4-beaa-4110-b4b7-fc7d952d9a57"</span></span><br><span class="line">	&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当我们访问<code>user-service</code>服务内的<code>/user</code>路径时，因为是第一次访问<code>ApiBoot Logging</code>会主动创建<code>traceId</code>（链路编号）、<code>spanId</code>（单元编号），因为没有<code>上级单元</code>所以<code>parentSpanId</code>为<code>null</code>.</li>
+<li>而通过查看<code>account-service</code>服务上报的请求日志时，可以看到<code>ApiBoot Logging</code>相关的链路信息是通过<code>HttpHeader</code>的方式进行传递的<ul>
+<li><code>minbox-logging-x-trace-id</code> -&gt; <code>链路编号</code></li>
+<li><code>minbox-logging-x-parent-span-id</code> -&gt; <code>上级单元编号</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="敲黑板，划重点"><a href="#敲黑板，划重点" class="headerlink" title="敲黑板，划重点"></a>敲黑板，划重点</h2><p><code>ApiBoot Logging</code>在内部自动化实现了<code>RestTemplate</code>的拦截器配置，所以我们只需要创建实例就可以，而不需要主动去配置拦截器信息，具体源码请访问<code>org.minbox.framework.logging.client.http.rest.LoggingRestTemplateInterceptor</code>查看。</p>
+<p>不管你一次请求跨度几个服务，都可以将<code>请求入口</code>生成的<code>链路信息</code>进行依次传递，而上下级关系则是根据<code>parentSpanId</code>、<code>spanId</code>进行绑定的。</p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>如果您喜欢本篇文章请为源码仓库点个<code>Star</code>，谢谢！！！<br>本篇文章示例源码可以通过以下途径获取，目录为<code>apiboot-logging-using-resttemplate-transparent-traceid</code>：</p>
+<ul>
+<li>Gitee：<a href="https://gitee.com/minbox-projects/api-boot-chapter" target="_blank" rel="noopener">https://gitee.com/minbox-projects/api-boot-chapter</a></li>
+</ul>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/ApiBoot/">ApiBoot</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/apiboot-logging-admin-visual-interface-management-log.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：ApiBoot Logging Admin可视化界面管理日志</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/apiboot-logging-using-openfeign-transparent-traceid.html">
+          <span class="level-item">下一篇：ApiBoot Logging使用SpringCloud Openfeign透传链路信息</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '4d97c8873d036cac42d6aff51dfe6f40',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="https://my.openwrite.cn/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2021
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

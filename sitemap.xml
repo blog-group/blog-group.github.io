@@ -149,13 +149,6 @@
   </url>
   
   <url>
-    <loc>https://blog.yuqiyu.com/apiboot-quartz-job-storage-away.html</loc>
-    
-    <lastmod>2020-07-02T09:02:51.577Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.yuqiyu.com/apiboot-security-customize-select-user.html</loc>
     
     <lastmod>2020-07-02T09:02:51.577Z</lastmod>
@@ -163,14 +156,7 @@
   </url>
   
   <url>
-    <loc>https://blog.yuqiyu.com/apiboot-security-oauth-use-jwt.html</loc>
-    
-    <lastmod>2020-07-02T09:02:51.577Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.yuqiyu.com/apiboot-security-open-paths-without-intercept.html</loc>
+    <loc>https://blog.yuqiyu.com/apiboot-quartz-job-storage-away.html</loc>
     
     <lastmod>2020-07-02T09:02:51.577Z</lastmod>
     
@@ -184,7 +170,21 @@
   </url>
   
   <url>
+    <loc>https://blog.yuqiyu.com/apiboot-security-oauth-use-jwt.html</loc>
+    
+    <lastmod>2020-07-02T09:02:51.577Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.yuqiyu.com/apiboot-security-oauth-zero-code-integration.html</loc>
+    
+    <lastmod>2020-07-02T09:02:51.577Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.yuqiyu.com/apiboot-swagger-describe-the-interface.html</loc>
     
     <lastmod>2020-07-02T09:02:51.577Z</lastmod>
     
@@ -198,7 +198,7 @@
   </url>
   
   <url>
-    <loc>https://blog.yuqiyu.com/apiboot-swagger-describe-the-interface.html</loc>
+    <loc>https://blog.yuqiyu.com/apiboot-security-open-paths-without-intercept.html</loc>
     
     <lastmod>2020-07-02T09:02:51.577Z</lastmod>
     
@@ -905,14 +905,14 @@
   </url>
   
   <url>
-    <loc>https://blog.yuqiyu.com/about/index.html</loc>
+    <loc>https://blog.yuqiyu.com/friends-link/index.html</loc>
     
     <lastmod>2019-12-27T14:06:45.062Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.yuqiyu.com/friends-link/index.html</loc>
+    <loc>https://blog.yuqiyu.com/about/index.html</loc>
     
     <lastmod>2019-12-27T14:06:45.062Z</lastmod>
     

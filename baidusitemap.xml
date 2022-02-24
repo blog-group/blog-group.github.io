@@ -61,28 +61,28 @@
     <loc>https://blog.yuqiyu.com/apiboot-oauth-set-token-expire-time.html</loc>
     <lastmod>2020-07-02</lastmod>
   </url>  <url>
-    <loc>https://blog.yuqiyu.com/apiboot-quartz-job-storage-away.html</loc>
-    <lastmod>2020-07-02</lastmod>
-  </url>  <url>
     <loc>https://blog.yuqiyu.com/apiboot-security-customize-select-user.html</loc>
     <lastmod>2020-07-02</lastmod>
   </url>  <url>
-    <loc>https://blog.yuqiyu.com/apiboot-security-oauth-use-jwt.html</loc>
-    <lastmod>2020-07-02</lastmod>
-  </url>  <url>
-    <loc>https://blog.yuqiyu.com/apiboot-security-open-paths-without-intercept.html</loc>
+    <loc>https://blog.yuqiyu.com/apiboot-quartz-job-storage-away.html</loc>
     <lastmod>2020-07-02</lastmod>
   </url>  <url>
     <loc>https://blog.yuqiyu.com/apiboot-security-oauth-custom-certification-user.html</loc>
     <lastmod>2020-07-02</lastmod>
   </url>  <url>
+    <loc>https://blog.yuqiyu.com/apiboot-security-oauth-use-jwt.html</loc>
+    <lastmod>2020-07-02</lastmod>
+  </url>  <url>
     <loc>https://blog.yuqiyu.com/apiboot-security-oauth-zero-code-integration.html</loc>
+    <lastmod>2020-07-02</lastmod>
+  </url>  <url>
+    <loc>https://blog.yuqiyu.com/apiboot-swagger-describe-the-interface.html</loc>
     <lastmod>2020-07-02</lastmod>
   </url>  <url>
     <loc>https://blog.yuqiyu.com/apiboot-swagger-integrated-oauth.html</loc>
     <lastmod>2020-07-02</lastmod>
   </url>  <url>
-    <loc>https://blog.yuqiyu.com/apiboot-swagger-describe-the-interface.html</loc>
+    <loc>https://blog.yuqiyu.com/apiboot-security-open-paths-without-intercept.html</loc>
     <lastmod>2020-07-02</lastmod>
   </url>  <url>
     <loc>https://blog.yuqiyu.com/your-microservice-can-deploy-single.html</loc>

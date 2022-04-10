@@ -1,3 +1,5 @@
+https://blog.yuqiyu.com/spring-config-import-use-aways.html
+https://blog.yuqiyu.com/technical-talk.html
 https://blog.yuqiyu.com/fish-fast-switch-jdk.html
 https://blog.yuqiyu.com/postgresql-vs-mysql.html
 https://blog.yuqiyu.com/oauth2-always-create-token.html
@@ -16,5 +18,3 @@ https://blog.yuqiyu.com/spring-boot-basic-configure-binding-away.html
 https://blog.yuqiyu.com/interview-strategy.html
 https://blog.yuqiyu.com/spring-boot-basic-using-yaml-instead-of-properties.html
 https://blog.yuqiyu.com/spring-boot-basic-placeholders-in-config-file.html
-https://blog.yuqiyu.com/spring-boot-basic-load-order-of-config-files.html
-https://blog.yuqiyu.com/github-app-release.html

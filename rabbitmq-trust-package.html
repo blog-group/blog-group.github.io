@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>消息队列RabbitMQ设置信任package - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="消息队列RabbitMQ设置信任package">
+<meta name="keywords" content="rabbitmq,springboot,消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息队列RabbitMQ设置信任package">
+<meta property="og:url" content="https://blog.yuqiyu.com/rabbitmq-trust-package.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="消息队列RabbitMQ设置信任package">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2022-04-09T11:17:26.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="消息队列RabbitMQ设置信任package">
+<meta name="twitter:description" content="消息队列RabbitMQ设置信任package">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">消息队列RabbitMQ设置信任package</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-09-29</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
+                
+              
+                
+              
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>在这次<code>SpringBoot</code>升级后，之前的系统内使用实体传输受到了限制，如果使用<code>SpringBoot</code>默认的序列化方式不会出现<code>信任package</code>的问题，之所以出现这个问题是因为项目使用<code>fastjson</code>方式进行类的<code>序列化</code>已经<code>反序列化</code>，在之前<code>SpringBoot 1.5.10</code>版本的时候 <code>RabbitMQ</code>依赖内的<code>DefaultClassMapper</code>类在构造函数内配置<code>*</code>，表示信任项目内的所有<code>package</code>，在<code>SpringBoot 2.0.0</code>版本时，<code>DefaultClassMapper</code>类源码构造函数进行了修改，不再信任全部<code>package</code>而是仅仅信任<code>java.util</code>、<code>java.lang</code>。</p>
+<a id="more"></a>
+<h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><p>基于<code>SpringBoot2.0</code>使用<code>RabbitMQ</code>自定义<code>MessageConverter</code>配置信任指定<code>package</code>或者全部<code>package</code>。</p>
+<h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>创建项目添加对应依赖，<code>pom.xml</code>配置文件如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--消息队列依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--web相关依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--fastjson依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.44<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--lombok依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--测试依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="消息队列配置文件"><a href="#消息队列配置文件" class="headerlink" title="消息队列配置文件"></a>消息队列配置文件</h4><p>我们需要在<code>application.properties</code>配置文件内添加<code>RabbitMQ</code>相应的配置信息，如下所示：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring.rabbitmq.host=localhost</span><br><span class="line">spring.rabbitmq.username=admin</span><br><span class="line">spring.rabbitmq.password=admin</span><br><span class="line">spring.rabbitmq.virtual-host=/hengyu</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>具体消息队列的连接配置信息需要根据实际情况填写。</p>
+</blockquote>
+<h4 id="队列常量配置"><a href="#队列常量配置" class="headerlink" title="队列常量配置"></a>队列常量配置</h4><p>我们之前的文章都是采用的<code>Enum</code>方式来配置队列相关的<code>Exchange</code>、<code>Name</code>、 <code>RouteKey</code>等相关的信息，使用枚举有个弊端，无法在注解内作为属性的值使用，所以我们之前的<code>Consumer</code>类配置监听的队列时都是字符串的形式，这样后期修改时还要修改多个地方（当然队列信息很少变动），我们本章使用<code>Constants</code>常量的形式进行配置，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 队列常量配置</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午10:10</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">QueueConstants</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息交换</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    String MESSAGE_EXCHANGE = <span class="hljs-string">"message.direct.exchange"</span>;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息队列名称</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    String MESSAGE_QUEUE_NAME = <span class="hljs-string">"message.queue"</span>;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息路由键</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    String MESSAGE_ROUTE_KEY = <span class="hljs-string">"message.send"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例消息队列JavaConfig配置"><a href="#示例消息队列JavaConfig配置" class="headerlink" title="示例消息队列JavaConfig配置"></a>示例消息队列JavaConfig配置</h4><p>本章是为了设置信任<code>package</code>，所以这里使用消息中心队列来模拟，配置代码如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息队列配置类</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/7</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午10:07</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Configuration</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageRabbitMqConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 交换配置</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> DirectExchange <span class="hljs-title">messageDirectExchange</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> (DirectExchange) ExchangeBuilder.directExchange(QueueConstants.MESSAGE_EXCHANGE)</span><br><span class="line">                .durable(<span class="hljs-keyword">true</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息队列声明</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Queue <span class="hljs-title">messageQueue</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> QueueBuilder.durable(QueueConstants.MESSAGE_QUEUE_NAME)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息绑定</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Binding <span class="hljs-title">messageBinding</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> BindingBuilder.bind(messageQueue())</span><br><span class="line">                .to(messageDirectExchange())</span><br><span class="line">                .with(QueueConstants.MESSAGE_ROUTE_KEY);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面配置类内添加<code>Exchange</code>、<code>Queue</code>、<code>Binding</code>等配置，将<code>messageQueue</code>使用<code>message.send</code>路由键与<code>messageDirectExchange</code>交换配置进行绑定。</p>
+<p>我们在之前说了只有传递实体类时才会出现信任<code>package</code>问题，下面我们需要创建一个简单的消息传输实体，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息实体</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/11</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午5:18</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Data</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageEntity</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息内容</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>该实体类仅添加了一个<code>content</code>字段，这样足够模拟我们的场景了，到这里我们的配置已经处理完，下面就是我们的队列的<code>Provider</code>以及<code>Consumer</code>的相关实体类编写。</p>
+<h4 id="消息提供者"><a href="#消息提供者" class="headerlink" title="消息提供者"></a>消息提供者</h4><p>为队列<code>message.queue</code>添加<code>Provider</code>的代码实现，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息队列 - 消息提供者</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/11</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午6:16</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageProvider</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * logger instance</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">static</span> Logger logger = LoggerFactory.getLogger(MessageProvider.class);</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息队列模板</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> AmqpTemplate amqpTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sendMessage</span><span class="hljs-params">(Object object)</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="hljs-string">"写入消息队列内容：&#123;&#125;"</span>, JSON.toJSONString(object));</span><br><span class="line">        amqpTemplate.convertAndSend(QueueConstants.MESSAGE_EXCHANGE, QueueConstants.MESSAGE_ROUTE_KEY, object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="消息消费者"><a href="#消息消费者" class="headerlink" title="消息消费者"></a>消息消费者</h4><p>当然我们有了<code>Provider</code>必然要有对应的<code>Consumer</code>，消费者代码实现如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息队列 - 消息消费者</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/11</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午5:32</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-meta">@RabbitListener</span>(queues = QueueConstants.MESSAGE_QUEUE_NAME)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageConsumer</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * logger instance</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">static</span> Logger logger = LoggerFactory.getLogger(MessageConsumer.class);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@RabbitHandler</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">handler</span><span class="hljs-params">(@Payload MessageEntity messageEntity)</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="hljs-string">"消费内容：&#123;&#125;"</span>, JSON.toJSONString(messageEntity));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建测试控制器"><a href="#创建测试控制器" class="headerlink" title="创建测试控制器"></a>创建测试控制器</h4><p>我们采用控制器发送<code>Get</code>请求的方式进行发送消息，创建名为<code>TestController</code>的控制器，并添加测试方法，如下代码所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 测试控制器</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/11</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午5:43</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息队列 - 消息提供者 注入</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> MessageProvider messageProvider;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 测试发送消息队列方法</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> messageEntity 发送消息实体内容</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/index"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">index</span><span class="hljs-params">(MessageEntity messageEntity)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// 将实体实例写入消息队列</span></span><br><span class="line">        messageProvider.sendMessage(messageEntity);</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"Success"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试RabbitMQ默认实体传输"><a href="#测试RabbitMQ默认实体传输" class="headerlink" title="测试RabbitMQ默认实体传输"></a>测试RabbitMQ默认实体传输</h4><blockquote>
+<p>下面我们启动项目，首先先来测试<code>RabbitMQ</code>默认的实体类方式，当然这种默认的方式不会产生信任<code>package</code>的情况。</p>
+</blockquote>
+<p>我们为了证实这一点，来访问(<a href="http://localhost:8080/index?content=admin)[http://localhost:8080/index?content=admin]，我们传递`content`的值为`admin`，访问效果控制台输出内容如下：" target="_blank" rel="noopener">http://localhost:8080/index?content=admin)[http://localhost:8080/index?content=admin]，我们传递`content`的值为`admin`，访问效果控制台输出内容如下：</a></p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2018-03-13 21:59:08.844  INFO 16047 --- [nio-8080-exec-1] c.h.chapter48.provider.MessageProvider   : 写入消息队列内容：&#123;<span class="hljs-string">"content"</span>:<span class="hljs-string">"admin"</span>&#125;</span><br><span class="line">2018-03-13 21:59:08.898  INFO 16047 --- [cTaskExecutor-1] c.h.chapter48.consumer.MessageConsumer   : 消费内容：&#123;<span class="hljs-string">"content"</span>:<span class="hljs-string">"admin"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到控制台的输出内容，直接完成了消息的消费，是没有任何问题的，下面我们对<code>RabbitMQ</code>添加自定义<code>MessageConverter</code>的配置，使用<code>fastjson</code>替代默认转换方式。</p>
+<h4 id="MessageConverter"><a href="#MessageConverter" class="headerlink" title="MessageConverter"></a>MessageConverter</h4><p>我们先来创建一个转换的实现类，只需要继承抽象类<code>AbstractMessageConverter</code>并实现内部的<code>createMessage</code>、<code>fromMessage</code>两个方法就可以完成实体类的<code>序列化</code>与<code>反序列化</code>的转换，代码如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 自定义消息转换器</span></span><br><span class="line"><span class="hljs-comment"> * 采用FastJson完成消息转换</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with Eclipse.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/10/26</span></span><br><span class="line"><span class="hljs-comment"> * Time：19:28</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RabbitMqFastJsonConverter</span></span></span><br><span class="line"><span class="hljs-class">        <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractMessageConverter</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 日志对象实例</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> Logger logger = LoggerFactory.getLogger(RabbitMqFastJsonConverter.class);</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 消息类型映射对象</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ClassMapper classMapper = <span class="hljs-keyword">new</span> DefaultClassMapper();</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 默认字符集</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String DEFAULT_CHART_SET = <span class="hljs-string">"UTF-8"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 创建消息</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> o                 消息对象</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> messageProperties 消息属性</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">protected</span> Message <span class="hljs-title">createMessage</span><span class="hljs-params">(Object o, MessageProperties messageProperties)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">byte</span>[] bytes = <span class="hljs-keyword">null</span>;</span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            String jsonString = JSON.toJSONString(o);</span><br><span class="line">            bytes = jsonString.getBytes(DEFAULT_CHART_SET);</span><br><span class="line">        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> MessageConversionException(</span><br><span class="line">                    <span class="hljs-string">"Failed to convert Message content"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">        messageProperties.setContentType(MessageProperties.CONTENT_TYPE_JSON);</span><br><span class="line">        messageProperties.setContentEncoding(DEFAULT_CHART_SET);</span><br><span class="line">        <span class="hljs-keyword">if</span> (bytes != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            messageProperties.setContentLength(bytes.length);</span><br><span class="line">        &#125;</span><br><span class="line">        classMapper.fromClass(o.getClass(), messageProperties);</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Message(bytes, messageProperties);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 转换消息为对象</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> message 消息对象</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> MessageConversionException</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Object <span class="hljs-title">fromMessage</span><span class="hljs-params">(Message message)</span> <span class="hljs-keyword">throws</span> MessageConversionException </span>&#123;</span><br><span class="line">        Object content = <span class="hljs-keyword">null</span>;</span><br><span class="line">        MessageProperties properties = message.getMessageProperties();</span><br><span class="line">        <span class="hljs-keyword">if</span> (properties != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            String contentType = properties.getContentType();</span><br><span class="line">            <span class="hljs-keyword">if</span> (contentType != <span class="hljs-keyword">null</span> &amp;&amp; contentType.contains(<span class="hljs-string">"json"</span>)) &#123;</span><br><span class="line">                String encoding = properties.getContentEncoding();</span><br><span class="line">                <span class="hljs-keyword">if</span> (encoding == <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                    encoding = DEFAULT_CHART_SET;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                    Class&lt;?&gt; targetClass = classMapper.toClass(</span><br><span class="line">                            message.getMessageProperties());</span><br><span class="line"></span><br><span class="line">                    content = convertBytesToObject(message.getBody(),</span><br><span class="line">                            encoding, targetClass);</span><br><span class="line">                &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> MessageConversionException(</span><br><span class="line">                            <span class="hljs-string">"Failed to convert Message content"</span>, e);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                logger.warn(<span class="hljs-string">"Could not convert incoming message with content-type ["</span></span><br><span class="line">                        + contentType + <span class="hljs-string">"]"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span> (content == <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            content = message.getBody();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 将字节数组转换成实例对象</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> body     Message对象主体字节数组</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> encoding 字符集</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> clazz    类型</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> UnsupportedEncodingException</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">private</span> Object <span class="hljs-title">convertBytesToObject</span><span class="hljs-params">(<span class="hljs-keyword">byte</span>[] body, String encoding,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">                                        Class&lt;?&gt; clazz)</span> <span class="hljs-keyword">throws</span> UnsupportedEncodingException </span>&#123;</span><br><span class="line">        String contentAsString = <span class="hljs-keyword">new</span> String(body, encoding);</span><br><span class="line">        <span class="hljs-keyword">return</span> JSON.parseObject(contentAsString, clazz);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在该转换类内我们使用了<code>DefaultClassMapper</code>来作为类的映射，我们可以先来看下该类相关信任<code>package</code>的源码，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DefaultClassMapper</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ClassMapper</span>, <span class="hljs-title">InitializingBean</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String DEFAULT_CLASSID_FIELD_NAME = <span class="hljs-string">"__TypeId__"</span>;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String DEFAULT_HASHTABLE_TYPE_ID = <span class="hljs-string">"Hashtable"</span>;</span><br><span class="line">    <span class="hljs-comment">// 默认信任的package列表</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> List&lt;String&gt; TRUSTED_PACKAGES = Arrays.asList(<span class="hljs-string">"java.util"</span>, <span class="hljs-string">"java.lang"</span>);</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Set&lt;String&gt; trustedPackages;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Map&lt;String, Class&lt;?&gt;&gt; idClassMapping;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Map&lt;Class&lt;?&gt;, String&gt; classIdMapping;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Class&lt;?&gt; defaultMapClass;</span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Class&lt;?&gt; defaultType;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DefaultClassMapper</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// 构造函数初始化信任的package为默认的pakcage列表</span></span><br><span class="line">        <span class="hljs-comment">// 仅支持java.util、java.lang两个package</span></span><br><span class="line">        <span class="hljs-keyword">this</span>.trustedPackages = <span class="hljs-keyword">new</span> LinkedHashSet(TRUSTED_PACKAGES);</span><br><span class="line">        <span class="hljs-keyword">this</span>.idClassMapping = <span class="hljs-keyword">new</span> HashMap();</span><br><span class="line">        <span class="hljs-keyword">this</span>.classIdMapping = <span class="hljs-keyword">new</span> HashMap();</span><br><span class="line">        <span class="hljs-keyword">this</span>.defaultMapClass = LinkedHashMap.class;</span><br><span class="line">        <span class="hljs-keyword">this</span>.defaultType = LinkedHashMap.class;</span><br><span class="line">    &#125;</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<h4 id="RabbitMqConfiguration"><a href="#RabbitMqConfiguration" class="headerlink" title="RabbitMqConfiguration"></a>RabbitMqConfiguration</h4><p>下面我们需要将该转换设置到<code>RabbitTemplate</code>、<code>SimpleRabbitListenerContainerFactory</code>内，让<code>RabbitMQ</code>支持自定义的消息转换，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * rabbitmq 相关配置</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/11</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午5:42</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Configuration</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RabbitMqConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 配置消息队列模版</span></span><br><span class="line"><span class="hljs-comment">     * 并且设置MessageConverter为自定义FastJson转换器</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> connectionFactory</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> RabbitTemplate <span class="hljs-title">rabbitTemplate</span><span class="hljs-params">(ConnectionFactory connectionFactory)</span> </span>&#123;</span><br><span class="line">        RabbitTemplate template = <span class="hljs-keyword">new</span> RabbitTemplate(connectionFactory);</span><br><span class="line">        template.setMessageConverter(<span class="hljs-keyword">new</span> RabbitMqFastJsonConverter());</span><br><span class="line">        <span class="hljs-keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 自定义队列容器工厂</span></span><br><span class="line"><span class="hljs-comment">     * 并且设置MessageConverter为自定义FastJson转换器</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> connectionFactory</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> SimpleRabbitListenerContainerFactory <span class="hljs-title">rabbitListenerContainerFactory</span><span class="hljs-params">(ConnectionFactory connectionFactory)</span> </span>&#123;</span><br><span class="line">        SimpleRabbitListenerContainerFactory factory = <span class="hljs-keyword">new</span> SimpleRabbitListenerContainerFactory();</span><br><span class="line">        factory.setConnectionFactory(connectionFactory);</span><br><span class="line">        factory.setMessageConverter(<span class="hljs-keyword">new</span> RabbitMqFastJsonConverter());</span><br><span class="line">        factory.setDefaultRequeueRejected(<span class="hljs-keyword">false</span>);</span><br><span class="line">        <span class="hljs-keyword">return</span> factory;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="重启测试"><a href="#重启测试" class="headerlink" title="重启测试"></a>重启测试</h4><p>上面的代码配置我们已经把<code>MessageConverter</code>改成了<code>fastjson</code>，重启项目，再次访问<a href="http://localhost:8080/index?content=admin" target="_blank" rel="noopener">http://localhost:8080/index?content=admin</a>路径，看下控制台输出日志内容如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.lang.IllegalArgumentException: The class <span class="hljs-string">'com.hengyu.chapter48.entity.MessageEntity'</span> is not <span class="hljs-keyword">in</span> the trusted packages: [java.util, java.lang]. If you believe this class is safe to deserialize, please provide its name. If the serialization is only <span class="hljs-keyword">done</span> by a trusted <span class="hljs-built_in">source</span>, you can also <span class="hljs-built_in">enable</span> trust all (*).</span><br><span class="line">	at org.springframework.amqp.support.converter.DefaultClassMapper.toClass(DefaultClassMapper.java:211) ~[spring-amqp-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	at org.springframework.amqp.support.converter.DefaultClassMapper.toClass(DefaultClassMapper.java:199) ~[spring-amqp-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	at com.hengyu.chapter48.RabbitMqFastJsonConverter.fromMessage(RabbitMqFastJsonConverter.java:88) ~[classes/:na]</span><br><span class="line">	at org.springframework.amqp.rabbit.listener.adapter.AbstractAdaptableMessageListener.extractMessage(AbstractAdaptableMessageListener.java:246) ~[spring-rabbit-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter<span class="hljs-variable">$MessagingMessageConverterAdapter</span>.extractPayload(MessagingMessageListenerAdapter.java:266) ~[spring-rabbit-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	at org.springframework.amqp.support.converter.MessagingMessageConverter.fromMessage(MessagingMessageConverter.java:118) ~[spring-amqp-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.toMessagingMessage(MessagingMessageListenerAdapter.java:168) ~[spring-rabbit-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	at org.springframework.amqp.rabbit.listener.adapter.MessagingMessageListenerAdapter.onMessage(MessagingMessageListenerAdapter.java:115) ~[spring-rabbit-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	at org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer.doInvokeListener(AbstractMessageListenerContainer.java:1414) ~[spring-rabbit-2.0.2.RELEASE.jar:2.0.2.RELEASE]</span><br><span class="line">	... 8 common frames omitted</span><br></pre></td></tr></table></figure>
+
+<p>可以看到控制台已经输出了不信任<code>com.hengyu.chapter48.entity.MessageEntity</code>实体的错误信息，也表明了仅信任<code>java.util</code>、<code>java.lang</code>两个<code>package</code>，下面我们就需要继承<code>DefaultClassMapper</code>来重写构造函数完成信任指定的<code>package</code>。</p>
+<h4 id="重写DefaultClassMapper构造函数"><a href="#重写DefaultClassMapper构造函数" class="headerlink" title="重写DefaultClassMapper构造函数"></a>重写DefaultClassMapper构造函数</h4><p>创建一个名为<code>RabbitMqFastJsonClassMapper</code>的类并且继承<code>DefaultClassMapper</code>，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * fastjson 转换映射</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/13</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午10:17</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RabbitMqFastJsonClassMapper</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">DefaultClassMapper</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 构造函数初始化信任所有pakcage</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RabbitMqFastJsonClassMapper</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">super</span>();</span><br><span class="line">        setTrustedPackages(<span class="hljs-string">"*"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面构造函数内我们设置了信任全部的<code>package</code>，添加了<code>RabbitMqFastJsonClassMapper</code>类后，需要让<code>MessageConverter</code>使用该类作为映射，修改<code>RabbitMqFastJsonConverter</code>部分代码如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 消息类型映射对象</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ClassMapper classMapper = <span class="hljs-keyword">new</span> DefaultClassMapper();</span><br><span class="line">&gt;&gt;&gt; 修改为 &gt;&gt;&gt;</span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">* 消息类型映射对象</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ClassMapper classMapper = <span class="hljs-keyword">new</span> RabbitMqFastJsonClassMapper();</span><br></pre></td></tr></table></figure>
+
+<h4 id="再次重启测试"><a href="#再次重启测试" class="headerlink" title="再次重启测试"></a>再次重启测试</h4><p>我们再次重启项目后，仍然访问<a href="http://localhost:8080/index?content=admin" target="_blank" rel="noopener">http://localhost:8080/index?content=admin</a>路径，查看控制台日志如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2018-03-13 22:23:35.414  INFO 16121 --- [nio-8080-exec-1] c.h.chapter48.provider.MessageProvider   : 写入消息队列内容：&#123;<span class="hljs-string">"content"</span>:<span class="hljs-string">"admin"</span>&#125;</span><br><span class="line">2018-03-13 22:23:35.493  INFO 16121 --- [cTaskExecutor-1] c.h.chapter48.consumer.MessageConsumer   : 消费内容：&#123;<span class="hljs-string">"content"</span>:<span class="hljs-string">"admin"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据日志输出已经证明可以正常的完成消息的消费。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>如果使用<code>RabbitMQ</code>默认的转换方式，并不会涉及到本章遇到的信任<code>package</code>问题，如果想自定义消息转换并且使用<code>DefaultClassMapper</code>作为映射，肯定会出现信任<code>package</code>的问题，所以如果需要自定义转换的小伙伴，记住要设置<code>trustedPackages</code>。</p>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/RabbitMQ/">RabbitMQ</a>, <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/springboot-mvc-configurer.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：SpringBoot2.x内配置WebMvc</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/quartz-springboot2-starter.html">
+          <span class="level-item">下一篇：Quartz在SpringBoot2.x内的自动化配置</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '3eda3ce860b3ea4617d5bca7eda7a4c7',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>使用Gitbook创建文档并导出PDF - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="使用Gitbook创建文档并导出PDF">
+<meta name="keywords" content="gitbook,导出pdf,markdown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Gitbook创建文档并导出PDF">
+<meta property="og:url" content="https://blog.yuqiyu.com/use-gitbook-export-pdf.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="使用Gitbook创建文档并导出PDF">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2022-04-09T11:17:26.360Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Gitbook创建文档并导出PDF">
+<meta name="twitter:description" content="使用Gitbook创建文档并导出PDF">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">使用Gitbook创建文档并导出PDF</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-11-29</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/technical-talk.html">技术杂谈</a>&nbsp;
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>导出<code>PDF</code>的方式有很多种，之前使用过<code>马克飞象</code>的导出功能，不过只是简单的导出并不能添加目录，因为源文件是<code>markdown</code>编写的，经过筛选后采用了<code>gitbook</code>的方式进行编写文档并且使用<code>gitbook pdf .</code>的方式导出为<code>PDF</code>文件。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>注意：本机需要有<code>NodeJs</code>环境。</p>
+</blockquote>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>想要使用<code>gitbook</code>，那么我们本机需要进行安装，通过<code>npm</code>命令可以很方便的安装。</p>
+<h3 id="安装GitBook"><a href="#安装GitBook" class="headerlink" title="安装GitBook"></a>安装GitBook</h3><p>通过<code>npm</code>的方式进行安装<code>gitbook</code>环境，命令如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gitbook -g</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装calibre-amp-ebook-convert"><a href="#安装calibre-amp-ebook-convert" class="headerlink" title="安装calibre &amp; ebook-convert"></a>安装calibre &amp; ebook-convert</h3><p>使用<code>gitbook</code>的导出功能，需要第三方插件<code>ebook</code>的支持，下面针对两种不同的操作系统进行配置环境。</p>
+<h4 id="Linux系统"><a href="#Linux系统" class="headerlink" title="Linux系统"></a>Linux系统</h4><p>下载地址：<a href="https://calibre-ebook.com/download_linux" target="_blank" rel="noopener">https://calibre-ebook.com/download_linux</a></p>
+<ul>
+<li><p>下载并安装</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -v &amp;&amp; wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置软链接</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/bin/nodejs /usr/bin/node</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h4 id="Mac系统"><a href="#Mac系统" class="headerlink" title="Mac系统"></a>Mac系统</h4><p>下载地址：<a href="https://calibre-ebook.com/download_osx" target="_blank" rel="noopener">https://calibre-ebook.com/download_osx</a></p>
+<ul>
+<li><p>下载并安装</p>
+<p>下载的为<code>dmg</code>文件直接双击安装即可。</p>
+</li>
+<li><p>配置软链接</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s ~/Applications/calibre.app/Contents/MacOS/ebook-convert /usr/bin</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="测试安装"><a href="#测试安装" class="headerlink" title="测试安装"></a>测试安装</h3><p>安装完成后通过如下命令进行测试是否已经生效。</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ebook-convert --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成文档"><a href="#生成文档" class="headerlink" title="生成文档"></a>生成文档</h2><p>一个新的<code>gitbook</code>文档有两个文件组成，分别是<code>README.md</code>、<code>SUMMARY.md</code>（可自行创建文件夹，在文件夹内创建这两个文件）。</p>
+<ul>
+<li><code>README.md</code>：关于当前文档的详细描述</li>
+<li><code>SUMMARY.md</code>：当前文档的目录层级关系配置，通过初始化命令可直接生成<code>markdown</code>文件以及文件夹。</li>
+</ul>
+<h3 id="编写Summary"><a href="#编写Summary" class="headerlink" title="编写Summary"></a>编写Summary</h3><p>下面是一个示例文档的层级关系：</p>
+<figure class="highlight markdown hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-section"># Summary</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-bullet">- </span>第一级目录</span><br><span class="line"><span class="hljs-bullet">  - </span>[<span class="hljs-string">第一级目录的子目录</span>](<span class="hljs-link">one/first.md</span>)</span><br><span class="line"><span class="hljs-bullet">- </span>第二级目录</span><br><span class="line"><span class="hljs-bullet">  - </span>[<span class="hljs-string">第二级目录的子目录</span>](<span class="hljs-link">two/first.md</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="GitBook初始化"><a href="#GitBook初始化" class="headerlink" title="GitBook初始化"></a>GitBook初始化</h3><p><code>gitbook</code>内部提供了一个初始化的命令，自动根据<code>SUMMARY.md</code>文件的层级内容生成对应的<code>md</code>文件以及文件夹，执行如下命令：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜ gitbook-example gitbook init</span><br><span class="line">info: create one/first.md </span><br><span class="line">info: create two/first.md </span><br><span class="line">info: create SUMMARY.md </span><br><span class="line">info: initialization is finished</span><br></pre></td></tr></table></figure>
+
+<p>控制台的输出信息已经告诉我们成功创建了<code>one/first.md</code>、<code>two/first.md</code>这两个文件。</p>
+<h3 id="配置语言"><a href="#配置语言" class="headerlink" title="配置语言"></a>配置语言</h3><p><code>gitbook</code>默认使用的并不是<code>中文汉子</code>，我们需要通过配置<code>book.json</code>文件来修改默认语言方式（<code>book.json</code>文件创建在<code>SUMMARY.md</code>同级目录下）如下所示：</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="hljs-attr">"language"</span>: <span class="hljs-string">"zh-hans"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="导出文档"><a href="#导出文档" class="headerlink" title="导出文档"></a>导出文档</h2><p><code>gitbook</code>导出文档的方式有多种，下面简单介绍几种导出的方式。</p>
+<h3 id="导出为PDF"><a href="#导出为PDF" class="headerlink" title="导出为PDF"></a>导出为PDF</h3><p>在<code>SUMMARY.md</code>文件的同级目录执行<code>gitbook pdf .</code>命令进行导出<code>PDF</code>文件，执行日志如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜ gitbook-example gitbook pdf .</span><br><span class="line">info: 7 plugins are installed </span><br><span class="line">info: 6 explicitly listed </span><br><span class="line">info: loading plugin <span class="hljs-string">"highlight"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"search"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"lunr"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"sharing"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"fontsettings"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"theme-default"</span>... OK </span><br><span class="line">info: found 3 pages </span><br><span class="line">info: found 0 asset files </span><br><span class="line">info: &gt;&gt; generation finished with success <span class="hljs-keyword">in</span> 5.7s ! </span><br><span class="line">info: &gt;&gt; 1 file(s) generated</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果想要自定义生成的<code>pdf</code>文件名称，可以使用<code>gitbook pdf . ./xxxx.pdf</code>命令。</p>
+</blockquote>
+<h3 id="导出为epub"><a href="#导出为epub" class="headerlink" title="导出为epub"></a>导出为epub</h3><p>在<code>SUMMARY.md</code>文件的同级目录执行<code>gitbook epub .</code>命令进行导出<code>epub</code>文件，执行日志如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜ gitbook-example gitbook epub .</span><br><span class="line">info: 7 plugins are installed </span><br><span class="line">info: 6 explicitly listed </span><br><span class="line">info: loading plugin <span class="hljs-string">"highlight"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"search"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"lunr"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"sharing"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"fontsettings"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"theme-default"</span>... OK </span><br><span class="line">info: found 3 pages </span><br><span class="line">info: found 2 asset files </span><br><span class="line">info: &gt;&gt; generation finished with success <span class="hljs-keyword">in</span> 2.4s ! </span><br><span class="line">info: &gt;&gt; 1 file(s) generated</span><br></pre></td></tr></table></figure>
+
+<h3 id="导出为mobi"><a href="#导出为mobi" class="headerlink" title="导出为mobi"></a>导出为mobi</h3><p>在<code>SUMMARY.md</code>文件的同级目录执行<code>gitbook mobi .</code>命令进行导出<code>mobi</code>文件，执行日志如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜ gitbook-example gitbook mobi .</span><br><span class="line">info: 7 plugins are installed </span><br><span class="line">info: 6 explicitly listed </span><br><span class="line">info: loading plugin <span class="hljs-string">"highlight"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"search"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"lunr"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"sharing"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"fontsettings"</span>... OK </span><br><span class="line">info: loading plugin <span class="hljs-string">"theme-default"</span>... OK </span><br><span class="line">info: found 3 pages </span><br><span class="line">info: found 3 asset files </span><br><span class="line">info: &gt;&gt; generation finished with success <span class="hljs-keyword">in</span> 1.9s ! </span><br><span class="line">info: &gt;&gt; 1 file(s) generated</span><br></pre></td></tr></table></figure>
+
+<h2 id="导出日志查看"><a href="#导出日志查看" class="headerlink" title="导出日志查看"></a>导出日志查看</h2><p>如果你在导出过程中遇到了问题，你可以在执行导出命令时添加<code>--log=debug</code>命令参数，这样导出时就可以看到完整的日志信息在控制台输出，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜ gitbook-example gitbook pdf . ./example.pdf --<span class="hljs-built_in">log</span>=debug</span><br><span class="line">debug: readme found at README.md </span><br><span class="line">debug: summary file found at SUMMARY.md </span><br><span class="line">debug: cleanup folder <span class="hljs-string">"/var/folders/c1/5mrhntb13_zfrnjg4grnf8zr0000gn/T/tmp-2291a4Jd8P8oNX4l"</span> </span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>使用<code>gitbook</code>可以用来编写公司的接口使用文档、项目设计文档等等，功能远不止如此，它还可以通过<code>gitbook build</code>命令来生成静态<code>html</code>文件，可以部署到<code>Nginx</code>、<code>阿里云OSS</code>等静态页面托管的地方。</p>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/技术杂谈/">技术杂谈</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/apiboot-security-customize-select-user.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/customize-eureka-manage-page.html">
+          <span class="level-item">下一篇：自定义你自己的Eureka管理界面</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: 'a543887186018f60eef4d89559741830',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

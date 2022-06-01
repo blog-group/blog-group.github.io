@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Git托管项目的.git目录下都有什么？ - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="git-chapter-core-directory">
+<meta name="keywords" content="学习Git基本知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git托管项目的.git目录下都有什么？">
+<meta property="og:url" content="https://blog.yuqiyu.com/git-chapter-core-directory.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="git-chapter-core-directory">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2022-06-01T02:33:26.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git托管项目的.git目录下都有什么？">
+<meta name="twitter:description" content="git-chapter-core-directory">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">Git托管项目的.git目录下都有什么？</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2022-05-29</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/technical-talk.html">技术杂谈</a>&nbsp;
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>我们在使用<code>git</code>托管项目代码时，如果是新建项目需要通过<code>git init</code>命令在项目根目录下初始化<code>.git</code>目录来实现后续的代码托管管理，如果直接从代码仓库拉取代码则会自动创建<code>.git</code>目录与远程仓库进行绑定。</p>
+<h2 id="git目录结构"><a href="#git目录结构" class="headerlink" title=".git目录结构"></a>.git目录结构</h2><p>首先我们先来看看<code>.git</code>这个目录的结构是什么样子的，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">⋊&gt; ~/s/g/.git on master ⨯ <span class="hljs-built_in">pwd</span>                                                                                                                                                                                                                                                                          10:24:08</span><br><span class="line">/Users/yuqiyu/study/git-chapter/.git</span><br><span class="line">⋊&gt; ~/s/g/.git on master ⨯ ll                                                                                                                                                                                                                                                                           10:24:09</span><br><span class="line">total 64</span><br><span class="line">-rw-r--r--    1 yuqiyu  staff    16B May 26 13:51 COMMIT_EDITMSG</span><br><span class="line">-rw-r--r--    1 yuqiyu  staff    91B May 27 11:20 FETCH_HEAD</span><br><span class="line">-rw-r--r--    1 yuqiyu  staff    23B May 26 13:33 HEAD</span><br><span class="line">-rw-r--r--    1 yuqiyu  staff    41B May 26 13:50 ORIG_HEAD</span><br><span class="line">drwxr-xr-x    2 yuqiyu  staff    64B May 19 09:07 branches/</span><br><span class="line">-rw-r--r--    1 yuqiyu  staff   361B May 29 09:31 config</span><br><span class="line">-rw-r--r--    1 yuqiyu  staff    73B May 19 09:07 description</span><br><span class="line">drwxr-xr-x   13 yuqiyu  staff   416B May 19 09:07 hooks/</span><br><span class="line">-rw-r--r--    1 yuqiyu  staff   751B May 26 13:51 index</span><br><span class="line">drwxr-xr-x    3 yuqiyu  staff    96B May 19 09:07 info/</span><br><span class="line">drwxr-xr-x    4 yuqiyu  staff   128B May 19 09:08 logs/</span><br><span class="line">drwxr-xr-x  127 yuqiyu  staff   4.0K May 27 11:20 objects/</span><br><span class="line">drwxr-xr-x    6 yuqiyu  staff   192B May 25 16:17 refs/</span><br><span class="line">-rw-r--r--@   1 yuqiyu  staff   174B May 27 11:20 sourcetreeconfig</span><br><span class="line">⋊&gt; ~/s/g/.git on master ⨯</span><br></pre></td></tr></table></figure>
+
+<h3 id="HEAD文件"><a href="#HEAD文件" class="headerlink" title="HEAD文件"></a>HEAD文件</h3><p><code>HEAD</code>是当前活动分支的游标指向，我们可以查看下该文件的内容：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">⋊&gt; ~/s/g/.git on master ⨯ cat HEAD                                                                                                                                                                                                                                                                     11:17:22</span><br><span class="line">ref: refs/heads/master</span><br></pre></td></tr></table></figure>
+
+<p>可以看到<code>HEAD</code>文件目前指向<code>master</code>分支，而<code>master</code>分支则位于<code>refs/heads</code>目录下，我们接下来可以去<code>refs</code>目录下看看都有哪些内容。</p>
+<h3 id="refs目录"><a href="#refs目录" class="headerlink" title="refs目录"></a>refs目录</h3><p><code>refs</code>目录存储了一些引用指向，我们在使用<code>branch</code>、<code>tag</code>时大多数都是引用到该目录下，然后再指向具体的<code>objects</code>。</p>
+<p><code>refs</code>目录结构如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">⋊&gt; ~/s/g/.g/refs on master ⨯ <span class="hljs-built_in">pwd</span>                                                                                                                                                                                                                                                                       11:26:27</span><br><span class="line">/Users/yuqiyu/study/git-chapter/.git/refs</span><br><span class="line">⋊&gt; ~/s/g/.g/refs on master ⨯ ll                                                                                                                                                                                                                                                                        11:26:28</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x  3 yuqiyu  staff    96B May 26 13:51 heads/</span><br><span class="line">drwxr-xr-x  3 yuqiyu  staff    96B May 25 16:17 remotes/</span><br><span class="line">-rw-r--r--  1 yuqiyu  staff    41B May 19 10:12 stash</span><br><span class="line">drwxr-xr-x  3 yuqiyu  staff    96B May 29 09:36 tags/</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>refs</code>内全部目录的文件都是存储的<code>objects</code>引用，我们下面以<code>heads</code>目录为例</p>
+</blockquote>
+<h4 id="heads"><a href="#heads" class="headerlink" title="heads"></a>heads</h4><p>该目录下存放该项目在本地全部的分支，每个分支文件存储了<code>commit id</code>，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">⋊&gt; ~/s/g/.g/refs on master ⨯ <span class="hljs-built_in">cd</span> heads/                                                                                                                                                                                                                                                                 09:01:37</span><br><span class="line">⋊&gt; ~/s/g/.g/r/heads on master ⨯ ls                                                                                                                                                                                                                                                                     09:03:13</span><br><span class="line">master</span><br><span class="line">⋊&gt; ~/s/g/.g/r/heads on master ⨯ cat master                                                                                                                                                                                                                                                             09:03:13</span><br><span class="line">33248b733e36a495ea3691f2d1291c5e77633229</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>cat master</code>命令我们可以查看该文件的内容，发现该文件的内容是一长串的字符编号，如果想要知道这个一长串字符编号是什么我们可以通过<code>git cat-file</code>命令来查看类型以及详细内容，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment"># -t 参数查看文件的类型</span></span><br><span class="line">⋊&gt; ~/s/g/.g/r/heads on master ⨯ git cat-file -t 33248b733e36a495ea3691f2d1291c5e77633229                                                                                                                                                                                                               09:32:11</span><br><span class="line">commit</span><br><span class="line"><span class="hljs-comment"># -p 参数查看该文件的详细内容</span></span><br><span class="line">⋊&gt; ~/s/g/.g/r/heads on master ⨯ git cat-file -p 33248b733e36a495ea3691f2d1291c5e77633229                                                                                                                                                                                                               09:59:48</span><br><span class="line">tree 026567e8fe35ef942c1ea7f833799f26027d964f</span><br><span class="line">parent d78e592e663b2a34da826810303bd75f671a84af</span><br><span class="line">author 恒宇少年 &lt;39233436+hengboy@users.noreply.github.com&gt; 1653544281 +0800</span><br><span class="line">committer 恒宇少年 &lt;39233436+hengboy@users.noreply.github.com&gt; 1653544281 +0800</span><br><span class="line"></span><br><span class="line">添加默认值</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>git cat-file -t</code>命令我们发现<code>33248b733e36a495ea3691f2d1291c5e77633229</code>文件是一个<code>commit</code>类型的<code>objects</code>，通过<code>git cat-file -p</code>命令就可以查看该文件的详细内容了。</p>
+<p>我们从文件内容来看可以猜测出该文件应该是对应的<code>master</code>分支的最后一次提交的<code>commit</code>，我们可以通过<code>git branch -av</code>命令来查看每个分支的情况，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">⋊&gt; ~/s/g/.g/r/heads on master ⨯ git branch -av                                                                                                                                                                                                                                                         09:07:59</span><br><span class="line">* master                33248b7 添加默认值</span><br><span class="line">  remotes/origin/master 33248b7 添加默认值</span><br></pre></td></tr></table></figure>
+
+<p>发现本地<code>master</code>分支指向了<code>33248b7</code>，也就是我们刚才<code>cat master</code>内容<code>33248b733e36a495ea3691f2d1291c5e77633229</code>的缩写，这样我们就明白了，<code>master</code>文件内存储了最新提交的指向。</p>
+<h4 id="tags"><a href="#tags" class="headerlink" title="tags"></a>tags</h4><p>该目录下存储了全部的tag文件，每个tag文件也是存储了<code>objects</code>指向，一般<code>tag</code>是基于<code>commit</code>来打的所以指向跟<code>commit</code>一致。</p>
+<p>我们项目中有个<code>temp</code>的<code>tag</code>，我们可以查看下该文件的类型以及内容：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">⋊&gt; ~/s/g/.g/refs on master ⨯ <span class="hljs-built_in">cd</span> tags/                                                                                                                                                                                                                                                                  10:13:42</span><br><span class="line">⋊&gt; ~/s/g/.g/r/tags on master ⨯ ls                                                                                                                                                                                                                                                                      10:13:43</span><br><span class="line">temp</span><br><span class="line">⋊&gt; ~/s/g/.g/r/tags on master ⨯ cat temp                                                                                                                                                                                                                                                                10:13:44</span><br><span class="line">33248b733e36a495ea3691f2d1291c5e77633229</span><br><span class="line">⋊&gt; ~/s/g/.g/r/tags on master ⨯ git cat-file -t 33248b733e36a495ea3691f2d1291c5e77633229                                                                                                                                                                                                                10:13:46</span><br><span class="line">commit</span><br></pre></td></tr></table></figure>
+
+<p>我们发现<code>temp</code>分支文件内存储的指向也是<code>33248b733e36a495ea3691f2d1291c5e77633229</code>，<code>temp</code>标签是基于<code>master</code>分支最新<code>commit</code>打的，所以<code>tag</code>的<code>objects</code>指向与<code>master</code>分支的指向是一致的。</p>
+<h3 id="config文件"><a href="#config文件" class="headerlink" title="config文件"></a>config文件</h3><p>在<code>.git</code>目录下有个<code>config</code>文件，存放了该仓库的配置信息，内容如下：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[core]</span><br><span class="line">        repositoryformatversion = 0</span><br><span class="line">        filemode = true</span><br><span class="line">        bare = false</span><br><span class="line">        logallrefupdates = true</span><br><span class="line">        ignorecase = true</span><br><span class="line">        precomposeunicode = true</span><br><span class="line">[remote &quot;origin&quot;]</span><br><span class="line">        url = git@gitee.com:hengboy/git-chapter.git</span><br><span class="line">        fetch = +refs/heads/*:refs/remotes/origin/*</span><br><span class="line">[branch &quot;master&quot;]</span><br><span class="line">        remote = origin</span><br><span class="line">        merge = refs/heads/master</span><br></pre></td></tr></table></figure>
+
+<p>该文件内定义了一些核心参数配置、远程分支信息、本地分支列表等，我们通过<code>git config  --local</code> 也可以为该仓库配置参数，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --<span class="hljs-built_in">local</span> user.name <span class="hljs-string">'恒宇少年'</span></span><br><span class="line">git config --<span class="hljs-built_in">local</span> user.email <span class="hljs-string">'jnyuqy@gmail.com'</span></span><br></pre></td></tr></table></figure>
+
+<p>通过上面命令配置后再<code>.git/config</code>文件内就会添加对应的配置内容：</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">        name = 恒宇少年</span><br><span class="line">        email = jnyuqy@gmail.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>git</code>远比我们想的强大，本文章是一个入门篇，应对工作中遇到的各种问题后续针对<code>git</code>还回详谈，熟练的运用<code>git</code>让我们在协同开发过程中不再有<strong>冲突恐惧症</strong>。</p>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/技术杂谈/">技术杂谈</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/spring-config-import-use-aways.html">
+          <span class="level-item">下一篇：SpringBoot使用spring.config.import多种方式导入配置文件</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '059ad449aaae1e3f2d6a6f6d3585199d',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

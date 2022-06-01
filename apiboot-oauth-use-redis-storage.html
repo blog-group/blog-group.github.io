@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>OAuth2使用Redis来存储客户端信息以及AccessToken - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="OAuth2使用Redis来存储客户端信息以及AccessToken">
+<meta name="keywords" content="oauth,redis,apiboot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OAuth2使用Redis来存储客户端信息以及AccessToken">
+<meta property="og:url" content="https://blog.yuqiyu.com/apiboot-oauth-use-redis-storage.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="OAuth2使用Redis来存储客户端信息以及AccessToken">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2022-04-09T11:17:26.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OAuth2使用Redis来存储客户端信息以及AccessToken">
+<meta name="twitter:description" content="OAuth2使用Redis来存储客户端信息以及AccessToken">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">OAuth2使用Redis来存储客户端信息以及AccessToken</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-12-11</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/apiboot-all-articles.html">ApiBoot</a>&nbsp;
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>使用<code>Redis</code>来存储<code>OAuth2</code>相关的客户端信息以及生成的<code>AccessToken</code>是一个不错的选择，<code>Redis</code>与生俱来的的高效率、集群部署是比较出色的功能，如果用来作为<code>服务认证中心</code>的数据存储，可以大大的提高响应效率。</p>
+<p><code>Redis</code>还支持超时自动删除功能，<code>OAuth2</code>所生成的<code>AccessToken</code>相关的数据在超过配置的<code>有效时间</code>后就会自动被清除，这样也隐形的提高了接口的安全性。</p>
+<p>既然<code>Redis</code>可以做到这么好，我们该怎么实现代码逻辑呢？</p>
+<a id="more"></a>
+
+<p><code>ApiBoot OAuth2</code>是支持使用<code>Redis</code>来存储<code>AccessToken</code>的，只需要修改<code>application.yml</code>一个配置就可以实现，相关的使用也可以通过查看文档了解。</p>
+<ul>
+<li><a href="https://apiboot.minbox.org/zh-cn/docs/api-boot-oauth.html" target="_blank" rel="noopener">ApiBoot OAuth 官方文档</a></li>
+</ul>
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>我们使用<code>IDEA</code>开发工具创建一个<code>SpringBoot</code>项目，在项目的<code>pom.xml</code>添加我们需要的<code>ApiBoot</code>的<code>统一版本</code>依赖以及<code>安全组件</code>依赖，如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.minbox.framework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>api-boot-starter-security-oauth-jwt<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.minbox.framework<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>api-boot-dependencies<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.0.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>import<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加Redis支持"><a href="#添加Redis支持" class="headerlink" title="添加Redis支持"></a>添加Redis支持</h2><p>既然我们本章需要用到<code>Redis</code>，我们需要在项目内添加相关的依赖，<code>SpringBoot</code>已经为我们提供了封装好的依赖，在<code>pom.xml</code>文件内<code>dependencies</code>节点下添加，如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置Redis连接信息"><a href="#配置Redis连接信息" class="headerlink" title="配置Redis连接信息"></a>配置Redis连接信息</h3><p><code>SpringBoot</code>对<code>Redis</code>的连接、数据操作都做了封装，我们只需要在<code>application.yml</code>配置文件内添加响应的<code>Redis</code>连接信息即可。</p>
+<p><code>spring-boot-starter-data-redis</code>依赖所需要的配置都是由<code>RedisProperties</code>类提供，该类内有部分配置字段存在默认值，部分源码如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@ConfigurationProperties</span>(prefix = <span class="hljs-string">"spring.redis"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RedisProperties</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">	 * Database index used by the connection factory.</span></span><br><span class="line"><span class="hljs-comment">	 */</span></span><br><span class="line">	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> database = <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">	 * Connection URL. Overrides host, port, and password. User is ignored. Example:</span></span><br><span class="line"><span class="hljs-comment">	 * redis://user:password@example.com:6379</span></span><br><span class="line"><span class="hljs-comment">	 */</span></span><br><span class="line">	<span class="hljs-keyword">private</span> String url;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">	 * Redis server host.</span></span><br><span class="line"><span class="hljs-comment">	 */</span></span><br><span class="line">	<span class="hljs-keyword">private</span> String host = <span class="hljs-string">"localhost"</span>;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">	 * Login password of the redis server.</span></span><br><span class="line"><span class="hljs-comment">	 */</span></span><br><span class="line">	<span class="hljs-keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">	 * Redis server port.</span></span><br><span class="line"><span class="hljs-comment">	 */</span></span><br><span class="line">	<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> port = <span class="hljs-number">6379</span>;</span><br><span class="line">  <span class="hljs-comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>默认配置下连接<code>Redis</code>只需要在<code>application.yml</code>配置<code>spring.redis.password</code>，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-comment"># 配置Redis连接信息</span></span><br><span class="line"><span class="hljs-attr">  redis:</span></span><br><span class="line"><span class="hljs-attr">    password:</span> <span class="hljs-number">123123</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>password</code>是连接<code>Redis</code>所需要的密码，在<code>redis.conf</code>文件内配置。</p>
+</blockquote>
+<p>相关配置解释：</p>
+<ul>
+<li><code>spring.redis.database</code>：如果你使用的<code>Redis DataBase</code>并不是默认的<code>0</code>索引，需要修改该配置</li>
+<li><code>spring.redis.host</code>：默认为<code>localhost</code>，如果不是本地使用，需要修改该配置</li>
+<li><code>spring.redis.url</code>：这是一个连接字符串，如天配置了会自动覆盖<code>database</code>、<code>host</code>、<code>port</code>等三个配置信息</li>
+<li><code>spring.redis.port</code>：默认为<code>Redis</code>的端口号<code>6379</code>，如已修改<code>Redis</code>的监听端口号，需要修改该配置</li>
+</ul>
+<h2 id="启用ApiBoot-OAuth-Redis"><a href="#启用ApiBoot-OAuth-Redis" class="headerlink" title="启用ApiBoot OAuth Redis"></a>启用ApiBoot OAuth Redis</h2><p><code>ApiBoot OAuth</code>提供了<code>redis</code>配置选项，在<code>application.yml</code>文件内通过<code>api.boot.oauth.away</code>配置参数指定，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">api:</span></span><br><span class="line"><span class="hljs-attr">  boot:</span></span><br><span class="line"><span class="hljs-attr">    security:</span></span><br><span class="line">      <span class="hljs-comment"># 配置内存安全用户列表</span></span><br><span class="line"><span class="hljs-attr">      users:</span></span><br><span class="line"><span class="hljs-attr">        - username:</span> <span class="hljs-string">yuqiyu</span></span><br><span class="line"><span class="hljs-attr">          password:</span> <span class="hljs-number">123123</span></span><br><span class="line"><span class="hljs-attr">    oauth:</span></span><br><span class="line">      <span class="hljs-comment"># 配置使用Redis存储OAuth2相关数据</span></span><br><span class="line"><span class="hljs-attr">      away:</span> <span class="hljs-string">redis</span></span><br><span class="line">      <span class="hljs-comment"># 配置客户端列表</span></span><br><span class="line"><span class="hljs-attr">      clients:</span></span><br><span class="line"><span class="hljs-attr">        - clientId:</span> <span class="hljs-string">minbox</span></span><br><span class="line"><span class="hljs-attr">          clientSecret:</span> <span class="hljs-string">chapter</span></span><br></pre></td></tr></table></figure>
+
+<p>为了方便演示，我们使用<code>ApiBoot Security</code>的内存方式配置了一个用户<code>yuqiyu</code>，而且还修改了默认<code>client</code>信息，新加了<code>minbox</code>客户端。</p>
+<p>如果对<code>ApiBoot Security</code>用户配置或者<code>ApiBoot OAuth</code>的客户端配置不了解，可以查看官方文档：</p>
+<ul>
+<li><a href="https://apiboot.minbox.org/zh-cn/docs/api-boot-security.html" target="_blank" rel="noopener">ApiBoot Security</a></li>
+<li><a href="https://apiboot.minbox.org/zh-cn/docs/api-boot-oauth.html" target="_blank" rel="noopener">ApiBoot OAuth</a></li>
+</ul>
+<p>或者你可以查看我编写的<code>ApiBoot</code>系列的文章：<a href="https://blog.yuqiyu.com/apiboot-all-articles.html">ApiBoot开源框架各个组件的系列使用文章汇总</a></p>
+<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><p>在运行测试之前我们添加一个名为<code>ApiController</code>的控制器用来测试，代码如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 测试Api控制器</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/api"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApiController</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 测试请求，需携带令牌访问</span></span><br><span class="line"><span class="hljs-comment">     *</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@GetMapping</span>(value = <span class="hljs-string">"/index"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">index</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"this is index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试点：查看Redis存储的AccessToken"><a href="#测试点：查看Redis存储的AccessToken" class="headerlink" title="测试点：查看Redis存储的AccessToken"></a>测试点：查看Redis存储的AccessToken</h3><p>预计效果是当我们发送获取<code>AccessToken</code>的请求时，会自动将生成的<code>AccessToken</code>存储到<code>Redis</code>。</p>
+<p>下面我们使用<code>CURL</code>命令来尝试获取下<code>AccessToken</code>，如下所示：</p>
+<figure class="highlight json hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜ ~ curl minbox:chapter@localhost:9090/oauth/token -d 'grant_type=password&amp;username=yuqiyu&amp;password=123123'</span><br><span class="line">&#123;<span class="hljs-attr">"access_token"</span>:<span class="hljs-string">"38a7ee20-2fad-43c5-a349-31e6f0ee0f29"</span>,<span class="hljs-attr">"token_type"</span>:<span class="hljs-string">"bearer"</span>,<span class="hljs-attr">"refresh_token"</span>:<span class="hljs-string">"f469b1e8-f63c-4be9-8564-2603f8458024"</span>,<span class="hljs-attr">"expires_in"</span>:<span class="hljs-number">7199</span>,<span class="hljs-attr">"scope"</span>:<span class="hljs-string">"api"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面我们使用<code>redis-cli</code>来看下是否已经将<code>AccessToken</code>存储到<code>Redis</code>，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">➜ ~ redis-cli </span><br><span class="line">127.0.0.1:6379&gt; auth 123123</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379&gt; keys *</span><br><span class="line"> 1) <span class="hljs-string">"uname_to_access:minbox:yuqiyu"</span></span><br><span class="line"> 2) <span class="hljs-string">"refresh_to_access:f469b1e8-f63c-4be9-8564-2603f8458024"</span></span><br><span class="line"> 3) <span class="hljs-string">"access_to_refresh:1ea8e5cd-ea63-4a73-969f-9e7767f25f30"</span></span><br><span class="line"> 4) <span class="hljs-string">"auth:38a7ee20-2fad-43c5-a349-31e6f0ee0f29"</span></span><br><span class="line"> 5) <span class="hljs-string">"refresh_auth:6898bef4-f4a7-4fa9-858b-a4c62a1567d8"</span></span><br><span class="line"> 6) <span class="hljs-string">"refresh:6898bef4-f4a7-4fa9-858b-a4c62a1567d8"</span></span><br><span class="line"> 7) <span class="hljs-string">"refresh_auth:f469b1e8-f63c-4be9-8564-2603f8458024"</span></span><br><span class="line"> 8) <span class="hljs-string">"access:38a7ee20-2fad-43c5-a349-31e6f0ee0f29"</span></span><br><span class="line"> 9) <span class="hljs-string">"refresh_to_access:6898bef4-f4a7-4fa9-858b-a4c62a1567d8"</span></span><br><span class="line">1)  <span class="hljs-string">"auth_to_access:f02ceb5faa4577222082842b82a57067"</span></span><br><span class="line">2)  <span class="hljs-string">"refresh:f469b1e8-f63c-4be9-8564-2603f8458024"</span></span><br><span class="line">3)  <span class="hljs-string">"access_to_refresh:38a7ee20-2fad-43c5-a349-31e6f0ee0f29"</span></span><br><span class="line">4)  <span class="hljs-string">"client_id_to_access:minbox"</span></span><br></pre></td></tr></table></figure>
+
+<p>结果往往让人感觉惊喜，看到这里我们已经成功的把<code>OAuth2</code>生成的<code>AccessToken</code>存储到了<code>Redis</code>，如果<code>AccessToken</code>对应的数据超过了<code>expires_in</code>时间，就会自动被清除。</p>
+<h3 id="测试点：携带AccessToken访问接口"><a href="#测试点：携带AccessToken访问接口" class="headerlink" title="测试点：携带AccessToken访问接口"></a>测试点：携带AccessToken访问接口</h3><p>我们可以拿着生成的<code>AccessToken</code>来访问在上面添加的测试<code>ApiController</code>内的接口，如下所示：</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜ ~ curl -H <span class="hljs-string">'Authorization: Bearer 38a7ee20-2fad-43c5-a349-31e6f0ee0f29'</span> http://localhost:9090/api/index</span><br><span class="line">this is index</span><br></pre></td></tr></table></figure>
+
+<p>我们可以拿到接口的返回的接口，这也证明了一点，<code>AccessToken</code>的验证是没有问题的，<code>OAuth2</code>拿着请求携带的<code>AccessToken</code>去<code>Redis</code>验证通过。</p>
+<h2 id="敲黑板，划重点"><a href="#敲黑板，划重点" class="headerlink" title="敲黑板，划重点"></a>敲黑板，划重点</h2><p><code>ApiBoot OAuth</code>所支持的<code>3种</code>存储方式都已经通过文章的方式告知大家，每一种方式都做到了精简，简单的配置，添加相关的依赖，就能够实现在之前让很多人头疼的集成。</p>
+<blockquote>
+<p>如果在生产环境中数据量较大，建议使用<code>Redis</code>集群来解决存储<code>AccessToken</code>的问题。</p>
+</blockquote>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>如果您喜欢本篇文章请为源码仓库点个<code>Star</code>，谢谢！！！<br>本篇文章示例源码可以通过以下途径获取，目录为<code>apiboot-oauth-use-redis-storage</code>：</p>
+<ul>
+<li>Gitee：<a href="https://gitee.com/minbox-projects/api-boot-chapter" target="_blank" rel="noopener">https://gitee.com/minbox-projects/api-boot-chapter</a></li>
+</ul>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/ApiBoot/">ApiBoot</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/apiboot-logging-use-global-log.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：ApiBoot接口服务框架的又一新特性GlobalLog全局日志的使用详解</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/apiboot-oauth-set-token-expire-time.html">
+          <span class="level-item">下一篇：来看看OAuth2怎么设置AccessToken有效期时间时长</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '4a39c8f590b2a46514b6d11c3b8b6807',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

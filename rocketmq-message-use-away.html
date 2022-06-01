@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>深入理解RocketMq普通消息和顺序消息使用，原理，优化 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="最近一直再做一些系统上的压测，并对一些问题做了优化，从这些里面收获了一些很多好的优化经验，后续的文章都会以这方面为主。">
+<meta name="keywords" content="springboot,rocketmq,消息队列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解RocketMq普通消息和顺序消息使用，原理，优化">
+<meta property="og:url" content="https://blog.yuqiyu.com/rocketmq-message-use-away.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="最近一直再做一些系统上的压测，并对一些问题做了优化，从这些里面收获了一些很多好的优化经验，后续的文章都会以这方面为主。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.yuqiyu.com/images/og_image.png">
+<meta property="og:updated_time" content="2022-04-09T11:17:26.352Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解RocketMq普通消息和顺序消息使用，原理，优化">
+<meta name="twitter:description" content="最近一直再做一些系统上的压测，并对一些问题做了优化，从这些里面收获了一些很多好的优化经验，后续的文章都会以这方面为主。">
+<meta name="twitter:image" content="https://blog.yuqiyu.com/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">深入理解RocketMq普通消息和顺序消息使用，原理，优化</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #a9800a;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            转载</span>
+          
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-10-29</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">咖啡拿铁</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/technical-talk.html">技术杂谈</a>&nbsp;
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>最近一直再做一些系统上的压测，并对一些问题做了优化，从这些里面收获了一些很多好的优化经验，后续的文章都会以这方面为主。</p>
+<a id="more"></a>
+<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>这次打压的过程中收获比较的大的是，对RocketMq的一些优化。最开始我们公司使用的是RabbitMq,再一些流量高峰的场景下，发现队列堆积比较严重，导致RabbitMq挂了。为了应对这个场景，最终我们引入了阿里云的RocketMq，RocketMq可以处理可以处理很多消息堆积，并且服务的稳定不挂也可以由阿里云保证。引入了RocketMq了之后，的确解决了队列堆积导致消息队列宕机的问题。<br>本来以为使用了RocketMq之后，可以万事无忧，但是其实在打压过程中发现了不少问题，这里先提几个问题，大家带着这几个问题在文中去寻找答案：</p>
+<ol>
+<li>在RocketMq中,如果消息队列发生堆积，consumer会发生什么样的影响？</li>
+<li>在RocketMq中，普通消息和顺序消息有没有什么办法提升消息消费速度？</li>
+<li>消息失败重试次数怎么设置较为合理？顺序消息和普通消息有不同吗？</li>
+</ol>
+<h2 id="2-普通消息-VS-顺序消息"><a href="#2-普通消息-VS-顺序消息" class="headerlink" title="2. 普通消息 VS 顺序消息"></a>2. 普通消息 VS 顺序消息</h2><p>在RocketMq中提供了多种消息类型让我们进行配置：</p>
+<ul>
+<li>普通消息：没有特殊功能的消息。</li>
+<li>分区顺序消息：以分区纬度保持顺序进行消费的消息。</li>
+<li>全局顺序消息：全局顺序消息可以看作是只分一个区，始终再同一个分区上进行消费。</li>
+<li>定时/延时消息：消息可以延迟一段特定时间进行消费。</li>
+<li>事务消息：二阶段事务消息，先进行prepare投递消息，此时不能进行消息消费，当二阶段发出commit或者rollback的时候才会进行消息的消费或者回滚。</li>
+</ul>
+<p>虽然配置种类比较繁多，但是使用得还是普通消息和分区顺序消息。后续主要讲得也是这两种消息。</p>
+<h2 id="2-1-发送消息"><a href="#2-1-发送消息" class="headerlink" title="2.1 发送消息"></a>2.1 发送消息</h2><h3 id="2-1-1-普通消息"><a href="#2-1-1-普通消息" class="headerlink" title="2.1.1 普通消息"></a>2.1.1 普通消息</h3><p> 普通消息的发送的代码比较简单，如下所示：<br> <figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> MQClientException, InterruptedException </span>&#123;</span><br><span class="line">    DefaultMQProducer producer = <span class="hljs-keyword">new</span> DefaultMQProducer(<span class="hljs-string">"test_group_producer"</span>);</span><br><span class="line">    producer.setNamesrvAddr(<span class="hljs-string">"127.0.0.1:9876"</span>);</span><br><span class="line">    producer.start();</span><br><span class="line">    </span><br><span class="line">    Message msg =</span><br><span class="line">            <span class="hljs-keyword">new</span> Message(<span class="hljs-string">"Test_Topic"</span>, <span class="hljs-string">"test_tag"</span>, (<span class="hljs-string">"Hello World"</span>).getBytes(RemotingHelper.DEFAULT_CHARSET));</span><br><span class="line">    SendResult sendResult = producer.send(msg);</span><br><span class="line">    System.out.printf(<span class="hljs-string">"%s%n"</span>, sendResult);</span><br><span class="line">    producer.shutdown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其内部核心代码为：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">private</span> SendResult <span class="hljs-title">sendDefaultImpl</span><span class="hljs-params">(Message msg, <span class="hljs-keyword">final</span> CommunicationMode communicationMode, <span class="hljs-keyword">final</span> SendCallback sendCallback, <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> timeout</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">)</span> <span class="hljs-keyword">throws</span> MQClientException, RemotingException, MQBrokerException, InterruptedException </span>&#123;</span><br><span class="line">    <span class="hljs-comment">// 1. 根据 topic找到publishInfo</span></span><br><span class="line">    TopicPublishInfo topicPublishInfo = <span class="hljs-keyword">this</span>.tryToFindTopicPublishInfo(msg.getTopic());</span><br><span class="line">    <span class="hljs-keyword">if</span> (topicPublishInfo != <span class="hljs-keyword">null</span> &amp;&amp; topicPublishInfo.ok()) &#123;</span><br><span class="line">        <span class="hljs-keyword">boolean</span> callTimeout = <span class="hljs-keyword">false</span>;</span><br><span class="line">        MessageQueue mq = <span class="hljs-keyword">null</span>;</span><br><span class="line">        Exception exception = <span class="hljs-keyword">null</span>;</span><br><span class="line">        SendResult sendResult = <span class="hljs-keyword">null</span>;</span><br><span class="line">        <span class="hljs-comment">// 如果是同步 就三次 否则就1次</span></span><br><span class="line">        <span class="hljs-keyword">int</span> timesTotal = communicationMode == CommunicationMode.SYNC ? <span class="hljs-number">1</span> + <span class="hljs-keyword">this</span>.defaultMQProducer.getRetryTimesWhenSendFailed() : <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> times = <span class="hljs-number">0</span>;</span><br><span class="line">        String[] brokersSent = <span class="hljs-keyword">new</span> String[timesTotal];</span><br><span class="line">        <span class="hljs-comment">// 循环</span></span><br><span class="line">        <span class="hljs-keyword">for</span> (; times &lt; timesTotal; times++) &#123;</span><br><span class="line">            String lastBrokerName = <span class="hljs-keyword">null</span> == mq ? <span class="hljs-keyword">null</span> : mq.getBrokerName();</span><br><span class="line">            MessageQueue mqSelected = <span class="hljs-keyword">this</span>.selectOneMessageQueue(topicPublishInfo, lastBrokerName);</span><br><span class="line">            <span class="hljs-keyword">if</span> (mqSelected != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                mq = mqSelected;</span><br><span class="line">                brokersSent[times] = mq.getBrokerName();</span><br><span class="line">                <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">                    beginTimestampPrev = System.currentTimeMillis();</span><br><span class="line">                    <span class="hljs-keyword">if</span> (times &gt; <span class="hljs-number">0</span>) &#123;</span><br><span class="line">                        <span class="hljs-comment">//Reset topic with namespace during resend.</span></span><br><span class="line">                        msg.setTopic(<span class="hljs-keyword">this</span>.defaultMQProducer.withNamespace(msg.getTopic()));</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">long</span> costTime = beginTimestampPrev - beginTimestampFirst;</span><br><span class="line">                    <span class="hljs-keyword">if</span> (timeout &lt; costTime) &#123;</span><br><span class="line">                        callTimeout = <span class="hljs-keyword">true</span>;</span><br><span class="line">                        <span class="hljs-keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    sendResult = <span class="hljs-keyword">this</span>.sendKernelImpl(msg, mq, communicationMode, sendCallback, topicPublishInfo, timeout - costTime);</span><br><span class="line">                    endTimestamp = System.currentTimeMillis();</span><br><span class="line">                    <span class="hljs-comment">// 更新延迟</span></span><br><span class="line">                    <span class="hljs-keyword">this</span>.updateFaultItem(mq.getBrokerName(), endTimestamp - beginTimestampPrev, <span class="hljs-keyword">false</span>);</span><br><span class="line">                    <span class="hljs-keyword">switch</span> (communicationMode) &#123;</span><br><span class="line">                        <span class="hljs-keyword">case</span> ASYNC:</span><br><span class="line">                            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">                        <span class="hljs-keyword">case</span> ONEWAY:</span><br><span class="line">                            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">                        <span class="hljs-keyword">case</span> SYNC:</span><br><span class="line">                            <span class="hljs-keyword">if</span> (sendResult.getSendStatus() != SendStatus.SEND_OK) &#123;</span><br><span class="line">                                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.defaultMQProducer.isRetryAnotherBrokerWhenNotStoreOK()) &#123;</span><br><span class="line">                                    <span class="hljs-keyword">continue</span>;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">                            <span class="hljs-keyword">return</span> sendResult;</span><br><span class="line">                        <span class="hljs-keyword">default</span>:</span><br><span class="line">                            <span class="hljs-keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; </span><br><span class="line">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="hljs-comment">// 省略</span></span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主要流程如下：</p>
+<ul>
+<li>Step 1： 根据Topic 获取TopicPublishInfo，TopicPublishInfo中有我们的Topic发布消息的信息()，这个数据先从本地获取如果本地没有，则从NameServer去拉取，并且定时每隔20s会去获取TopicPublishInfo。</li>
+<li>Step 2： 获取总共执行次数(用于重试)，如果发送方式是同步，那么总共次数会有3次，其他情况只会有1次。</li>
+<li>Step 3: 从MessageQueue中选取一个进行发送，MessageQueue的概念可以等同于Kafka的partion分区，看作发送消息的最小粒度。这个选择有两种方式：<ul>
+<li>根据发送延迟进行选择，如果上一次发送的Broker是可用的，则从当前Broker选择遍历循环选择一个，如果不可用那么需要选择一个延迟最低的Broker从当前Broker上选择MessageQueue。</li>
+<li>通过轮训的方式进行选择MessageQueue。</li>
+</ul>
+</li>
+<li>Step 4: 将Message发送至选择出来的MessageQueue上的Broker。</li>
+<li>Step 5: 更新Broker的延迟。</li>
+<li>Step 6: 根据不同的发送方式来处理结果：<ul>
+<li>Async: 异步发送，通过callBack关心结果，所以这里不进行处理。</li>
+<li>OneWay: 顾名思义，就是单向发送，只需要发给broker，不需要关心结果，这里连callback都不需要。</li>
+<li>Sync: 同步发送，需要关心结果，根据结果判断是否需要进行重试，然后回到Step3。</li>
+</ul>
+</li>
+</ul>
+<p>可以看见Rocketmq发送普通消息的流程比较清晰简单，下面来看看顺序消息。</p>
+<h3 id="2-1-2-顺序消息"><a href="#2-1-2-顺序消息" class="headerlink" title="2.1.2 顺序消息"></a>2.1.2 顺序消息</h3><p>顺序消息分为分区顺序消息和全局顺序消息，全局顺序消息比较容易理解，也就是哪条消息先进入，哪条消息就会先被消费，符合我们的FIFO，很多时候全局消息的实现代价很大，所以就出现了分区顺序消息。分区顺序消息的概念可以如下图所示:<br><img src="/images/post/rocketmq-message-use-away-1.png" alt><br>我们通过对消息的key，进行hash，相同hash的消息会被分配到同一个分区里面，当然如果要做全局顺序消息，我们的分区只需要一个即可，所以全局顺序消息的代价是比较大的。<br>对RocketMq熟悉的小伙伴会发现，它其实并没有提供顺序消息发送相关的API,但是在阿里云的RocketMq版本提供了顺序消息的API，原理比较简单，其实也是对现有API的一个封装：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SendResult sendResultRMQ = <span class="hljs-keyword">this</span>.defaultMQProducer.send(msgRMQ, <span class="hljs-keyword">new</span> MessageQueueSelector() &#123;</span><br><span class="line">                <span class="hljs-meta">@Override</span></span><br><span class="line">                <span class="hljs-function"><span class="hljs-keyword">public</span> MessageQueue <span class="hljs-title">select</span><span class="hljs-params">(List&lt;MessageQueue&gt; mqs, Message msg,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">                    Object shardingKey)</span> </span>&#123;</span><br><span class="line">                    <span class="hljs-keyword">int</span> select = Math.abs(shardingKey.hashCode());</span><br><span class="line">                    <span class="hljs-keyword">if</span> (select &lt; <span class="hljs-number">0</span>) &#123;</span><br><span class="line">                        select = <span class="hljs-number">0</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">return</span> mqs.get(select % mqs.size());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, shardingKey);</span><br></pre></td></tr></table></figure>
+
+<p>可以看见顺序消息将MessageQueue的选择交由我们发送方去做，所以我们直接利用我们shardingKey的hashCode进行发送分区。</p>
+<h2 id="3-1-消费消息"><a href="#3-1-消费消息" class="headerlink" title="3.1 消费消息"></a>3.1 消费消息</h2><h3 id="3-1-1-普通消息"><a href="#3-1-1-普通消息" class="headerlink" title="3.1.1 普通消息"></a>3.1.1 普通消息</h3><p>普通消息使用比较简单，如下面代码所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException, MQClientException </span>&#123;</span><br><span class="line">    DefaultMQPushConsumer consumer = <span class="hljs-keyword">new</span> DefaultMQPushConsumer(<span class="hljs-string">"Test_Consumer"</span>);</span><br><span class="line">    consumer.subscribe(<span class="hljs-string">"TopicTest"</span>, <span class="hljs-string">"*"</span>);</span><br><span class="line">    consumer.setNamesrvAddr(<span class="hljs-string">"127.0.0.1:9876"</span>);</span><br><span class="line">    consumer.registerMessageListener(<span class="hljs-keyword">new</span> MessageListenerConcurrently() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-meta">@Override</span></span><br><span class="line">        <span class="hljs-function"><span class="hljs-keyword">public</span> ConsumeConcurrentlyStatus <span class="hljs-title">consumeMessage</span><span class="hljs-params">(List&lt;MessageExt&gt; msgs, ConsumeConcurrentlyContext context)</span> </span>&#123;</span><br><span class="line">            System.out.printf(<span class="hljs-string">"%s Receive New Messages: %s %n"</span>, Thread.currentThread().getName(), msgs);</span><br><span class="line">            <span class="hljs-keyword">return</span> ConsumeConcurrentlyStatus.CONSUME_SUCCESS;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    consumer.setConsumeThreadMin(<span class="hljs-number">10</span>);</span><br><span class="line">    consumer.setConsumeThreadMax(<span class="hljs-number">10</span>);</span><br><span class="line">    consumer.start();</span><br><span class="line">    System.out.printf(<span class="hljs-string">"Consumer Started.%n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Step1：首先新建一个DefaultMQPushConsumer，并注册对应的Topic和NameServer的信息。</li>
+<li>Step2: 注册消息监听器，再RocketMq中有两种消息监听器，一个是MessageListenerConcurrently，用于我们普通消息并发消费，还有一个是MessageListenerOrderly，用于我们顺序消息。这里我们使用的MessageListenerConcurrently。</li>
+<li>Step3: 设置ConsumeThread大小，用于控制我们的线程池去消费他。</li>
+<li>Step4: 启动Consumer。</li>
+</ul>
+<p>启动Consumer之后，我们就开始真正的从Broker去进行消费了，但是我们如何从Broker去消费的呢？首先在我们的第一步里面我们订阅了一个Topic，我们就会定时去刷新Topic的相关信息比如MessageQueue的变更，然后将对应的MessageQueue分配给当前Consumer:</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">// 这个数据 是10s更新一次 从内存中获取</span></span><br><span class="line">Set&lt;MessageQueue&gt; mqSet = <span class="hljs-keyword">this</span>.topicSubscribeInfoTable.get(topic);</span><br><span class="line"><span class="hljs-comment">// 这个数据实时去拉取</span></span><br><span class="line">List&lt;String&gt; cidAll = <span class="hljs-keyword">this</span>.mQClientFactory.findConsumerIdList(topic, consumerGroup);</span><br><span class="line"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> == mqSet) &#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (!topic.startsWith(MixAll.RETRY_GROUP_TOPIC_PREFIX)) &#123;</span><br><span class="line">        log.warn(<span class="hljs-string">"doRebalance, &#123;&#125;, but the topic[&#123;&#125;] not exist."</span>, consumerGroup, topic);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">if</span> (<span class="hljs-keyword">null</span> == cidAll) &#123;</span><br><span class="line">    log.warn(<span class="hljs-string">"doRebalance, &#123;&#125; &#123;&#125;, get consumer id list failed"</span>, consumerGroup, topic);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">if</span> (mqSet != <span class="hljs-keyword">null</span> &amp;&amp; cidAll != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">    List&lt;MessageQueue&gt; mqAll = <span class="hljs-keyword">new</span> ArrayList&lt;MessageQueue&gt;();</span><br><span class="line">    mqAll.addAll(mqSet);</span><br><span class="line"></span><br><span class="line">    Collections.sort(mqAll);</span><br><span class="line">    Collections.sort(cidAll);</span><br><span class="line"></span><br><span class="line">    AllocateMessageQueueStrategy strategy = <span class="hljs-keyword">this</span>.allocateMessageQueueStrategy;</span><br><span class="line"></span><br><span class="line">    List&lt;MessageQueue&gt; allocateResult = <span class="hljs-keyword">null</span>;</span><br><span class="line">    <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">    <span class="hljs-comment">//通过默认的分配策略进行分配</span></span><br><span class="line">        allocateResult =</span><br><span class="line">                strategy.allocate(<span class="hljs-keyword">this</span>.consumerGroup, <span class="hljs-keyword">this</span>.mQClientFactory.getClientId(), mqAll,</span><br><span class="line">                        cidAll);</span><br><span class="line">    &#125; <span class="hljs-keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">        log.error(</span><br><span class="line">                <span class="hljs-string">"AllocateMessageQueueStrategy.allocate Exception. allocateMessageQueueStrategyName=&#123;&#125;"</span>,</span><br><span class="line">                strategy.getName(), e);</span><br><span class="line">        <span class="hljs-keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Set&lt;MessageQueue&gt; allocateResultSet = <span class="hljs-keyword">new</span> HashSet&lt;MessageQueue&gt;();</span><br><span class="line">    <span class="hljs-keyword">if</span> (allocateResult != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">        allocateResultSet.addAll(allocateResult);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">boolean</span> changed = <span class="hljs-keyword">this</span>.updateProcessQueueTableInRebalance(topic, allocateResultSet, isOrder);</span><br></pre></td></tr></table></figure>
+
+<p>这里首先向Broker拿到当前消费所有的ConsumerId默认是对应机器的Ip+实例名字，Broker中的ConsumerId信息是Consumer通过心跳定时进行上报得来的，然后根据消费分配策略将消息分配给Consumer,这里默认是平均分配，将我们分配到的消息队列，记录在<br>processQueueTable中，如果出现了新增，那么我们需要创建一个PullRequst代表这拉取消息的请求，异步去处理：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">List&lt;PullRequest&gt; pullRequestList = <span class="hljs-keyword">new</span> ArrayList&lt;PullRequest&gt;();</span><br><span class="line"><span class="hljs-keyword">for</span> (MessageQueue mq : mqSet) &#123;</span><br><span class="line">    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.processQueueTable.containsKey(mq)) &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (isOrder &amp;&amp; !<span class="hljs-keyword">this</span>.lock(mq)) &#123;</span><br><span class="line">            log.warn(<span class="hljs-string">"doRebalance, &#123;&#125;, add a new mq failed, &#123;&#125;, because lock failed"</span>, consumerGroup, mq);</span><br><span class="line">            <span class="hljs-keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">this</span>.removeDirtyOffset(mq);</span><br><span class="line">        ProcessQueue pq = <span class="hljs-keyword">new</span> ProcessQueue();</span><br><span class="line">        <span class="hljs-comment">// 这里就是获取我们第一次应该拿什么offset</span></span><br><span class="line">        <span class="hljs-keyword">long</span> nextOffset = <span class="hljs-keyword">this</span>.computePullFromWhere(mq);</span><br><span class="line">        <span class="hljs-keyword">if</span> (nextOffset &gt;= <span class="hljs-number">0</span>) &#123;</span><br><span class="line">            ProcessQueue pre = <span class="hljs-keyword">this</span>.processQueueTable.putIfAbsent(mq, pq);</span><br><span class="line">            <span class="hljs-keyword">if</span> (pre != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                log.info(<span class="hljs-string">"doRebalance, &#123;&#125;, mq already exists, &#123;&#125;"</span>, consumerGroup, mq);</span><br><span class="line">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                log.info(<span class="hljs-string">"doRebalance, &#123;&#125;, add a new mq, &#123;&#125;"</span>, consumerGroup, mq);</span><br><span class="line">                PullRequest pullRequest = <span class="hljs-keyword">new</span> PullRequest();</span><br><span class="line">                pullRequest.setConsumerGroup(consumerGroup);</span><br><span class="line">                pullRequest.setNextOffset(nextOffset);</span><br><span class="line">                pullRequest.setMessageQueue(mq);</span><br><span class="line">                pullRequest.setProcessQueue(pq);</span><br><span class="line">                pullRequestList.add(pullRequest);</span><br><span class="line">                changed = <span class="hljs-keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            log.warn(<span class="hljs-string">"doRebalance, &#123;&#125;, add new mq failed, &#123;&#125;"</span>, consumerGroup, mq);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">this</span>.dispatchPullRequest(pullRequestList);</span><br></pre></td></tr></table></figure>
+
+<p>在PullService中会不断的从PullRequestQueue拿取数据，然后进行拉取数据。</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">while</span> (!<span class="hljs-keyword">this</span>.isStopped()) &#123;</span><br><span class="line">    <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">        <span class="hljs-comment">// rebalance 之后第一次向这个队列放数据 后续消费的时候会继续放</span></span><br><span class="line">        PullRequest pullRequest = <span class="hljs-keyword">this</span>.pullRequestQueue.take();</span><br><span class="line">        <span class="hljs-keyword">this</span>.pullMessage(pullRequest);</span><br><span class="line">    &#125; <span class="hljs-keyword">catch</span> (InterruptedException ignored) &#123;</span><br><span class="line">    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        log.error(<span class="hljs-string">"Pull Message Service Run Method exception"</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>拉取数据之后，这里会给PullCallBack进行响应：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">PullCallback pullCallback = <span class="hljs-keyword">new</span> PullCallback() &#123;</span><br><span class="line">            <span class="hljs-meta">@Override</span></span><br><span class="line">            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onSuccess</span><span class="hljs-params">(PullResult pullResult)</span> </span>&#123;</span><br><span class="line">                <span class="hljs-keyword">if</span> (pullResult != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                    pullResult = DefaultMQPushConsumerImpl.<span class="hljs-keyword">this</span>.pullAPIWrapper.processPullResult(pullRequest.getMessageQueue(), pullResult,</span><br><span class="line">                        subscriptionData);</span><br><span class="line"></span><br><span class="line">                    <span class="hljs-keyword">switch</span> (pullResult.getPullStatus()) &#123;</span><br><span class="line">                        <span class="hljs-keyword">case</span> FOUND:</span><br><span class="line">                                firstMsgOffset = pullResult.getMsgFoundList().get(<span class="hljs-number">0</span>).getQueueOffset();</span><br><span class="line">                                <span class="hljs-keyword">boolean</span> dispatchToConsume = processQueue.putMessage(pullResult.getMsgFoundList());</span><br><span class="line">                                DefaultMQPushConsumerImpl.<span class="hljs-keyword">this</span>.consumeMessageService.submitConsumeRequest(</span><br><span class="line">                                    pullResult.getMsgFoundList(),</span><br><span class="line">                                    processQueue,</span><br><span class="line">                                    pullRequest.getMessageQueue(),</span><br><span class="line">                                    dispatchToConsume);</span><br><span class="line"></span><br><span class="line">                                <span class="hljs-keyword">if</span> (DefaultMQPushConsumerImpl.<span class="hljs-keyword">this</span>.defaultMQPushConsumer.getPullInterval() &gt; <span class="hljs-number">0</span>) &#123;</span><br><span class="line">                                    DefaultMQPushConsumerImpl.<span class="hljs-keyword">this</span>.executePullRequestLater(pullRequest,</span><br><span class="line">                                        DefaultMQPushConsumerImpl.<span class="hljs-keyword">this</span>.defaultMQPushConsumer.getPullInterval());</span><br><span class="line">                                &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                                    DefaultMQPushConsumerImpl.<span class="hljs-keyword">this</span>.executePullRequestImmediately(pullRequest);</span><br><span class="line">                                &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果这里成功拉取到消息的话，我们首先将拉取的消息存入到我们的ProcessQueue中,ProcessQueue用于我们消费者处理的状态以及待处理的消息，然后提交到我们的Consumer线程池中进行真正的业务逻辑消费，然后再提交一个PullRequest用于我们下次消费。<br>大家看到这里有没有发现这个模式和我们的netty中的单线程accpet，多个线程来处理业务逻辑很相似，其原理都是一样，由一个线程不断的去拉取，然后由我们业务上定义的线程池进行处理。如下图所示：</p>
+<p><img src="/images/post/rocketmq-message-use-away-2.png" alt></p>
+<p>我们发现我们拉取消息其实是一个循环的过程，这里就来到了第一个问题，如果消息队列消费的速度跟不上消息发送的速度，那么就会出现消息堆积，很多同学根据过程来看可能会以为，我们的拉取消息一直在进行，由于我们的消费速度比较慢，会有很多message以队列的形式存在于我们的内存中，那么会导致我们的JVM出现OOM也就是内存溢出。<br>那么到底会不会出现OOM呢？其实是不会的，RocketMq对安全性方面做得很好，有下面两段代码:</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span> (cachedMessageCount &gt; <span class="hljs-keyword">this</span>.defaultMQPushConsumer.getPullThresholdForQueue()) &#123;</span><br><span class="line">    System.out.println(cachedMessageCount + <span class="hljs-string">":"</span>+pullRequest);</span><br><span class="line">    <span class="hljs-keyword">this</span>.executePullRequestLater(pullRequest, PULL_TIME_DELAY_MILLS_WHEN_FLOW_CONTROL);</span><br><span class="line">    <span class="hljs-keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">if</span> (cachedMessageSizeInMiB &gt; <span class="hljs-keyword">this</span>.defaultMQPushConsumer.getPullThresholdSizeForQueue()) &#123;</span><br><span class="line">    <span class="hljs-keyword">this</span>.executePullRequestLater(pullRequest, PULL_TIME_DELAY_MILLS_WHEN_FLOW_CONTROL);</span><br><span class="line">    <span class="hljs-keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先是会判断当前内存缓存的Message数量是否大于限制的值默认是1000，如果大于则延迟一段时间再次提交pullRequest。<br>然后判断当前内存缓存的Size大小是否大于了某个值，默认是100M，如果大于也会延迟一段时间再次提交pullRequest。<br>所以在我们consumer上如果出现消息堆积，基本也没有什么影响。</p>
+<p>那我们想想第二个问题应该怎么解决呢？再普通消息的场景下，如何提升消费速度？</p>
+<ul>
+<li>首先肯定是需要提升我们本身的处理速度，处理速度提升，消费速度自然就会提升。</li>
+<li>其次是要设置一个合理大小的consumer线程池，太小的话机器的资源得不到充分利用，太大的话线程的上下文切换可能会很快,一般来说根据消费者的业务来判断，如果是cpu密集型线程设置cpu大小就好，如果是io密集型设置两倍cpu大小。</li>
+<li>还有个就是MessageQueue,细心的同学肯定在上面看见我们消费者消费消息之前，会被分配MessageQueue来进行获取消费，所以自然而然就会想到，如果多分配一点MessageQueue数量是不是就会加快我们的消费速度，其实MessageQueue对于我们的普通消息消费提升帮助是很小的，因为所有的消费请求会被提交到线程池里面去消费，MessageQueue再多也无济于事，除非当我们的Consumer机器很多的时候，MessageQueue数量小于Consumer机器的时候，这个时候增加MessageQueue才会有提升效果，正所谓让我们的机器雨露均沾嘛。</li>
+</ul>
+<h4 id="3-1-1-1普通消息-消费结果处理"><a href="#3-1-1-1普通消息-消费结果处理" class="headerlink" title="3.1.1.1普通消息-消费结果处理"></a>3.1.1.1普通消息-消费结果处理</h4><p>在rocketmq中对消息的消费结果处理也比较重要，这里还是先提三个问题：</p>
+<ul>
+<li><p>我们的普通消息是怎么处理结果的呢？</p>
+</li>
+<li><p>如果消费失败会怎么办呢？</p>
+</li>
+<li><p>在普通消息消费的时候，是并发处理，如果出现offset靠后的消息先被消费完，但是我们的offset靠前的还没有被消费完，这个时候出现了宕机，我们的offset靠前的这部分数据是否会丢失呢？也就是下次消费的时候是否会从offset靠后的没有被消费的开始消费呢？如果不是的话，rocketmq是怎么做到的呢？<br>首先我们来看第一个问题，怎么处理消费结果，在processResult中有如下代码：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processConsumeResult</span><span class="hljs-params">(</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> ConsumeConcurrentlyStatus status,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> ConsumeConcurrentlyContext context,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> ConsumeRequest consumeRequest</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">    )</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> ackIndex = context.getAckIndex();</span><br><span class="line">        <span class="hljs-keyword">switch</span> (status) &#123;</span><br><span class="line">            <span class="hljs-keyword">case</span> CONSUME_SUCCESS:</span><br><span class="line">                <span class="hljs-keyword">int</span> ok = ackIndex + <span class="hljs-number">1</span>;</span><br><span class="line">                <span class="hljs-keyword">int</span> failed = consumeRequest.getMsgs().size() - ok;</span><br><span class="line">                <span class="hljs-keyword">this</span>.getConsumerStatsManager().incConsumeOKTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(), ok);</span><br><span class="line">                <span class="hljs-keyword">this</span>.getConsumerStatsManager().incConsumeFailedTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(), failed);</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            <span class="hljs-keyword">case</span> RECONSUME_LATER:</span><br><span class="line">                ackIndex = -<span class="hljs-number">1</span>;</span><br><span class="line">                <span class="hljs-keyword">this</span>.getConsumerStatsManager().incConsumeFailedTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(),</span><br><span class="line">                    consumeRequest.getMsgs().size());</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            <span class="hljs-keyword">default</span>:</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">switch</span> (<span class="hljs-keyword">this</span>.defaultMQPushConsumer.getMessageModel()) &#123;</span><br><span class="line">            <span class="hljs-keyword">case</span> BROADCASTING:</span><br><span class="line">                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = ackIndex + <span class="hljs-number">1</span>; i &lt; consumeRequest.getMsgs().size(); i++) &#123;</span><br><span class="line">                    MessageExt msg = consumeRequest.getMsgs().get(i);</span><br><span class="line">                    log.warn(<span class="hljs-string">"BROADCASTING, the message consume failed, drop it, &#123;&#125;"</span>, msg.toString());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            <span class="hljs-keyword">case</span> CLUSTERING:</span><br><span class="line">                List&lt;MessageExt&gt; msgBackFailed = <span class="hljs-keyword">new</span> ArrayList&lt;MessageExt&gt;(consumeRequest.getMsgs().size());</span><br><span class="line">                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = ackIndex + <span class="hljs-number">1</span>; i &lt; consumeRequest.getMsgs().size(); i++) &#123;</span><br><span class="line">                    MessageExt msg = consumeRequest.getMsgs().get(i);</span><br><span class="line">                    <span class="hljs-keyword">boolean</span> result = <span class="hljs-keyword">this</span>.sendMessageBack(msg, context);</span><br><span class="line">                    <span class="hljs-keyword">if</span> (!result) &#123;</span><br><span class="line">                        msg.setReconsumeTimes(msg.getReconsumeTimes() + <span class="hljs-number">1</span>);</span><br><span class="line">                        msgBackFailed.add(msg);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="hljs-keyword">if</span> (!msgBackFailed.isEmpty()) &#123;</span><br><span class="line">                    consumeRequest.getMsgs().removeAll(msgBackFailed);</span><br><span class="line"></span><br><span class="line">                    <span class="hljs-keyword">this</span>.submitConsumeRequestLater(msgBackFailed, consumeRequest.getProcessQueue(), consumeRequest.getMessageQueue());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            <span class="hljs-keyword">default</span>:</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">long</span> offset = consumeRequest.getProcessQueue().removeMessage(consumeRequest.getMsgs());</span><br><span class="line">        <span class="hljs-keyword">if</span> (offset &gt;= <span class="hljs-number">0</span> &amp;&amp; !consumeRequest.getProcessQueue().isDropped()) &#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.defaultMQPushConsumerImpl.getOffsetStore().updateOffset(consumeRequest.getMessageQueue(), offset, <span class="hljs-keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Step 1: 首先获取ackIndex，即确认成功的数量，默认是int的最大数，代表着全部成功。</p>
+</li>
+<li><p>Step 2: 获取 ConsumeConcurrentlyStatus，根据不同的状态进行处理，ConsumeConcurrentlyStatus有两个：</p>
+<ul>
+<li>CONSUME_SUCCESS: 代表着消费成功，记录成功的TPS和失败的TPS。</li>
+<li>RECONSUME_LATER: 代表着需要重新消费，一般是失败才会返回这个状态，记录失败的TPS。</li>
+</ul>
+</li>
+<li><p>Step 3: 然后根据消息类型，进行不同的逻辑重试，消息消费类型有两种：</p>
+<ul>
+<li>BROADCASTING: 广播消费，广播消费不会进行重试，这里会直接打一个warn日志然后丢弃。</li>
+<li>CLUSTERING：集群消费，这里会首先将失败的消息发送回当前的topic，如果发送失败，这里会继续进行本地消费重试。如果在Broker中发现这个消息重试次数已经达到上限，就会将这个消息发送至RetryTopic，然后由RetryTopic发送至死信队列。</li>
+</ul>
+</li>
+<li><p>Step 4: 获取message的offset,更新当前消费进度</p>
+</li>
+</ul>
+<p>在上面的第四步中，如果不深入进去看内部逻辑，这里会误以为，他会将当前消息的offset给更新到最新的消费进度，那问题三中说的中间的offset是有可能被丢失的，但实际上是不会发生的，具体的逻辑保证在removeMessage中：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> <span class="hljs-title">removeMessage</span><span class="hljs-params">(<span class="hljs-keyword">final</span> List&lt;MessageExt&gt; msgs)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">long</span> result = -<span class="hljs-number">1</span>;</span><br><span class="line">    <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> now = System.currentTimeMillis();</span><br><span class="line">    <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.lockTreeMap.writeLock().lockInterruptibly();</span><br><span class="line">        <span class="hljs-keyword">this</span>.lastConsumeTimestamp = now;</span><br><span class="line">        <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (!msgTreeMap.isEmpty()) &#123;</span><br><span class="line">                result = <span class="hljs-keyword">this</span>.queueOffsetMax + <span class="hljs-number">1</span>;</span><br><span class="line">                <span class="hljs-keyword">int</span> removedCnt = <span class="hljs-number">0</span>;</span><br><span class="line">                <span class="hljs-keyword">for</span> (MessageExt msg : msgs) &#123;</span><br><span class="line">                    MessageExt prev = msgTreeMap.remove(msg.getQueueOffset());</span><br><span class="line">                    <span class="hljs-keyword">if</span> (prev != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                        removedCnt--;</span><br><span class="line">                        msgSize.addAndGet(<span class="hljs-number">0</span> - msg.getBody().length);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                msgCount.addAndGet(removedCnt);</span><br><span class="line"></span><br><span class="line">                <span class="hljs-keyword">if</span> (!msgTreeMap.isEmpty()) &#123;</span><br><span class="line">                    result = msgTreeMap.firstKey();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="hljs-keyword">finally</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.lockTreeMap.writeLock().unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="hljs-keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">        log.error(<span class="hljs-string">"removeMessage exception"</span>, t);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在removeMessage中通过msgTreeMap去做了一个保证，msgTreeMap是一个TreeMap，根据offset升序排序，如果treeMap中有值的话，他返回的offset就会是当前msgTreeMap中的firstKey，而不是当前的offset，从而就解决了问题三。</p>
+<p>上面的过程总结为下图所示：<br><img src="/images/post/rocketmq-message-use-away-3.png" alt></p>
+<h3 id="3-1-2-顺序消息"><a href="#3-1-2-顺序消息" class="headerlink" title="3.1.2 顺序消息"></a>3.1.2 顺序消息</h3><p>顺序消息的消费前面过程和普通消息基本一样，这里我们需要关注的是将消息丢给我们消费线程池之后的逻辑：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">final</span> Object objLock = messageQueueLock.fetchLockObject(<span class="hljs-keyword">this</span>.messageQueue);</span><br><span class="line"><span class="hljs-keyword">synchronized</span> (objLock) &#123;</span><br><span class="line">    <span class="hljs-comment">// 省略</span></span><br><span class="line">    List&lt;MessageExt&gt; msgs = <span class="hljs-keyword">this</span>.processQueue.takeMessags(consumeBatchSize);</span><br><span class="line">    status = messageListener.consumeMessage(Collections.unmodifiableList(msgs), context);</span><br><span class="line">    <span class="hljs-comment">// 省略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现这里比普通消息多了一个步骤，那就是加锁，这里会获取到以messageQueue为纬度去加锁，然后去我们的processQueue中获取到我们的Message, 这里也是用的我们的msgTreeMap, 获取的最小offset的Message。<br>所以我们之前的线程池提高并发速度的策略在这里没有用了，那么应该怎么办呢？既然我们加锁是以messageQueue为纬度，那么增加MessageQueue就好了，所以这里的提升消费速度刚好和普通消息相反，再普通消息中提升Messagequeue可能效果并没有那么大，但是在顺序消息的消费中提升就很大了。<br>我们在压测的时候，发现顺序消息消费很慢，消息堆积很严重，经过调试发现阿里云上的rocketmq默认读写队列为16，我们consumer机器有10台，每个consumer线程池大小为10，理论并发应该有100，但是由于顺序消息的原因导致实际并发只有16，最后找阿里的技术人员将读写队列扩至100，这样充分利用我们的资源，极大的增加了顺序消息消费的速度，消息基本不会再堆积。</p>
+<h4 id="3-1-2-1-顺序消息-消费结果处理"><a href="#3-1-2-1-顺序消息-消费结果处理" class="headerlink" title="3.1.2.1 顺序消息-消费结果处理"></a>3.1.2.1 顺序消息-消费结果处理</h4><p>顺序消息的结果处理和普通消息的处理流程，稍有不同，代码如下：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">processConsumeResult</span><span class="hljs-params">(</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> List&lt;MessageExt&gt; msgs,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> ConsumeOrderlyStatus status,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> ConsumeOrderlyContext context,</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">        <span class="hljs-keyword">final</span> ConsumeRequest consumeRequest</span></span></span><br><span class="line"><span class="hljs-function"><span class="hljs-params">    )</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">boolean</span> continueConsume = <span class="hljs-keyword">true</span>;</span><br><span class="line">        <span class="hljs-keyword">long</span> commitOffset = -<span class="hljs-number">1L</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> (context.isAutoCommit()) &#123;</span><br><span class="line">            <span class="hljs-keyword">switch</span> (status) &#123;</span><br><span class="line">                <span class="hljs-keyword">case</span> SUCCESS:</span><br><span class="line">                    commitOffset = consumeRequest.getProcessQueue().commit();</span><br><span class="line">                    <span class="hljs-keyword">this</span>.getConsumerStatsManager().incConsumeOKTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(), msgs.size());</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                <span class="hljs-keyword">case</span> SUSPEND_CURRENT_QUEUE_A_MOMENT:</span><br><span class="line">                    <span class="hljs-keyword">this</span>.getConsumerStatsManager().incConsumeFailedTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(), msgs.size());</span><br><span class="line">                    <span class="hljs-keyword">if</span> (checkReconsumeTimes(msgs)) &#123;</span><br><span class="line">                        consumeRequest.getProcessQueue().makeMessageToCosumeAgain(msgs);</span><br><span class="line">                        <span class="hljs-keyword">this</span>.submitConsumeRequestLater(</span><br><span class="line">                            consumeRequest.getProcessQueue(),</span><br><span class="line">                            consumeRequest.getMessageQueue(),</span><br><span class="line">                            context.getSuspendCurrentQueueTimeMillis());</span><br><span class="line">                        continueConsume = <span class="hljs-keyword">false</span>;</span><br><span class="line">                    &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                        commitOffset = consumeRequest.getProcessQueue().commit();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                <span class="hljs-keyword">default</span>:</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            <span class="hljs-keyword">switch</span> (status) &#123;</span><br><span class="line">                <span class="hljs-keyword">case</span> SUCCESS:</span><br><span class="line">                    <span class="hljs-keyword">this</span>.getConsumerStatsManager().incConsumeOKTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(), msgs.size());</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                <span class="hljs-keyword">case</span> SUSPEND_CURRENT_QUEUE_A_MOMENT:</span><br><span class="line">                    <span class="hljs-keyword">this</span>.getConsumerStatsManager().incConsumeFailedTPS(consumerGroup, consumeRequest.getMessageQueue().getTopic(), msgs.size());</span><br><span class="line">                    <span class="hljs-keyword">if</span> (checkReconsumeTimes(msgs)) &#123;</span><br><span class="line">                        consumeRequest.getProcessQueue().makeMessageToCosumeAgain(msgs);</span><br><span class="line">                        <span class="hljs-keyword">this</span>.submitConsumeRequestLater(</span><br><span class="line">                            consumeRequest.getProcessQueue(),</span><br><span class="line">                            consumeRequest.getMessageQueue(),</span><br><span class="line">                            context.getSuspendCurrentQueueTimeMillis());</span><br><span class="line">                        continueConsume = <span class="hljs-keyword">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                <span class="hljs-keyword">default</span>:</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> (commitOffset &gt;= <span class="hljs-number">0</span> &amp;&amp; !consumeRequest.getProcessQueue().isDropped()) &#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.defaultMQPushConsumerImpl.getOffsetStore().updateOffset(consumeRequest.getMessageQueue(), commitOffset, <span class="hljs-keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> continueConsume;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Step 1: 判断当前offset是否是自动提交更新，一般autoCommit不需要设置，默认是自动提交，除非有特别的需求才会做这样一个设置。</li>
+<li>Step 2: 如果是自动提交，需要判断状态：<ul>
+<li>SUCCESS: 如果是成功状态则获取当前需要提交的offset，然后记录到OK的TPS中</li>
+<li>SUSPEND_CURRENT_QUEUE_A_MOMENT：注意在普通消息中如果失败会返回RECONSUME_LATER，有什么不同呢？再这个状态下面，并不会向当前topic再次发送，而是会在本地线程池再次提交一个ConsumeRequest，延迟重试，这里默认时间是1s。如果大于了最大重试次数这里会将数据发送至RetryTopic。</li>
+</ul>
+</li>
+<li>Step 3: 如果不是自动提交的话，和步骤2类似，但是不会获取提交的offset。</li>
+<li>Step 4: 更新offset。</li>
+</ul>
+<p>这里回到我们的第三个问题，如何设置消息消费的重试次数呢？由于我们直接使用的阿里云的mq，所以我们又包装了一层，方便接入。再接入层中我们最开始统一配置了最大重试2000次，这里设置2000次的原因主要是想让我们的消息队列尽量无限重试，因为我们默认消息基本最终会成功，但是为了以防万一，所以这里设置了一个较大的数值2000次。设置2000次对于我们的普通消息，基本没什么影响，因为他会重新投递至broker，但是我们的顺序消息是不行的，如果顺序消息设置重试2000次，当遇到了这种不可能成功的消息的时候就会导致消息一直在本地进行重试，并且由于对队列加锁了，所以当前MessageQueue将会一直被阻塞，导致后续消息不会被消费，如果设置2000次那么至少会阻塞半个小时以上。所以这里应该将顺序消息设置一个较小的值，目前我们设置为16。</p>
+<h2 id="4-最后"><a href="#4-最后" class="headerlink" title="4. 最后"></a>4. 最后</h2><p>之前没怎么看过Rocketmq的源码，经过这次打压，从Rocketmq中学习到了很多精妙优秀的设计，将一些经验提炼成了文中的一些问题，希望大家能仔细阅读，找到答案。</p>
+
+        
+        <!--原创-->
+        
+        <!--转载标注-->
+        
+        <div class="alert alert-success">
+          本文作者：咖啡拿铁<br>
+          原文链接：<a href="https://juejin.im/post/5db7a2f06fb9a0203b234d64" target="_blank">https://juejin.im/post/5db7a2f06fb9a0203b234d64</a><br>
+          <b>版权归作者所有，转载请注明出处</b>
+        </div>
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/技术杂谈/">技术杂谈</a>, <a class="has-link-grey-link" href="/tags/消息队列/">消息队列</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/cache-lru-principle-of-impl.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：聊聊缓存淘汰算法-LRU 实现原理</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/ignore-apiboot-logging-collection-path.html">
+          <span class="level-item">下一篇：ApiBoot Logging忽略路径不进行采集日志</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '94305c320290c8d5e54c40c56f19ff2a',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

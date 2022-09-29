@@ -21,7 +21,7 @@ jobs:
         run: npm install
       # 构建项目
       - name: Build website
-        run: npm run build
+        run: hexo deploy
       # 部署到GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

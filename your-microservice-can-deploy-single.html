@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>你的微服务敢独立交付么？ - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="你的微服务敢独立交付么？">
+<meta name="keywords" content="springcloud,springboot,微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你的微服务敢独立交付么？">
+<meta property="og:url" content="https://blog.minbox.org/your-microservice-can-deploy-single.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="你的微服务敢独立交付么？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
+<meta property="og:updated_time" content="2022-09-29T04:18:51.355Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="你的微服务敢独立交付么？">
+<meta name="twitter:description" content="你的微服务敢独立交付么？">
+<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">你的微服务敢独立交付么？</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #a9800a;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            转载</span>
+          
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-10-15</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">王健</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/technical-talk.html">技术杂谈</a>&nbsp;
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>最近经常在项目或是社区里听到大家谈论微服务架构，但谈论的焦点更多集中在微服务拆分，分布式架构，微服务门槛，DevOps配套设施等话题上。</p>
+<p>但是在我眼里，真正能称之为微服务架构的少之又少。原因也很简单，我所见到的很多所谓的微服务架构项目，大多都没有做到微服务架构的一个基本要求：服务的独立部署（交付）。</p>
+<a id="more"></a>
+
+<p><img src="/images/post/your-microservice-can-deploy-single-1.jpeg" alt></p>
+<p>这里的独立部署和自动化部署还不是一个概念，服务的自动化部署相对简单，已有大量的工具可以帮助我们做到。但是这里所谈的独立部署，我认为关键和难点并不在于“部署”，而在于“独立”。</p>
+<p>如果失去了服务独立部署（交付）的能力，一个微服务架构的威力将大打折扣，我们的系统虽然在物理上被拆分成了多个小的服务，但是如果从最终交付的角度来看，仍然是以一个整体存在的，就像单体应用一样，存在诸多的问题。</p>
+<h3 id="为什么服务的独立交付并不简单？"><a href="#为什么服务的独立交付并不简单？" class="headerlink" title="为什么服务的独立交付并不简单？"></a>为什么服务的独立交付并不简单？</h3><p>那为什么不能让每一个服务都独立部署到产品环境呢？问题的答案是：不是不能，而是不敢！</p>
+<p>为了表达清楚，让我们来看个例子吧。</p>
+<p>像下图一样，我现在就是那个程序员帅哥（本色出演），突然有一天心血来潮，动手开发了一个网上商城。代码Push到Github并通过CI构建持续交付流水线，最终自动化部署到云端产品环境，供用户访问使用。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-2.jpeg" alt></p>
+<p>随着用户和访问量的增加，需求和功能也越来越多，系统也变得越发复杂。</p>
+<p>从网上了解到最近有个叫微服务的架构非常火爆，我也赶了回时髦，当然也觉得这种架构确实可以帮助我解决现在的一些问题。</p>
+<p>经过对系统的分析，我将商城的后台部分拆分出了3个服务，为了简单我们就称之为ABC三个服务。<br><img src="/images/post/your-microservice-can-deploy-single-3.jpeg" alt><br>我们假设一个比较极端的情况，三个服务相互调用（先不考虑这样是否合理），每个服务通过自己的持续交付流水线独立部署到产品环境。当前产品环境的各个服务的版本是：A：1.0、B：2.0、C：3.0</p>
+<p>一切都非常完美是不是？看！我们已经做到了服务的独立部署！So easy~</p>
+<p>当然，事情肯定不会那么简单。</p>
+<p>问题出现在当我对A服务做了一次新的提交之后，A服务的最新版本升级到了1.1。不幸的是，这个新的版本意外的破坏了A与B之间的契约，错误的调用了B的接口，导致出现了错误。</p>
+<p>虽然我的A服务和B服务都有比较完备的UT（单元测试），但因为UT无法发现服务之间的集成是否被破坏，所以只有UT作为质量保障的A服务持续交付流水线也自然没有能力发现AB服务集成被破坏的这个问题。最终导致存在问题的A1.1版本被部署到了产品环境，产品环境出现了严重的Bug。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-4.jpeg" alt></p>
+<p>请问在座的同学，碰到这样的情况，你会如何处理？</p>
+<p>“加集成测试啊！”</p>
+<p>这位同学说的极是，我这么聪明自然也想到了这一点，不就是要测集成吗？UT干不了就加集成测试不就成了。</p>
+<p>为了统一语言，毕竟对于各种测试的叫法太容易引起混淆，参考Martin Fowler在《微服务测试策略》中的定义，我们在本文中将这种测试多服务集成的测试统一称作端到端测试（End-to-End tests，简称E2E测试）。</p>
+<p>添加了E2E测试之后，我的交付流水线就变成了下面这个样子。<br><img src="/images/post/your-microservice-can-deploy-single-5.jpeg" alt><br>因为有了E2E测试的存在，问题迎刃而解，当A服务的新版本破坏了与B服务的集成时，E2E测试就会及时诊断出来，并阻止A服务的最新版本向产品环境流动，保证产品环境不被破坏。</p>
+<p>这样看似没有什么问题，通过添加E2E测试，解决了服务间集成的验证问题，但在不知不觉中，我们也失去了微服务架构的那个重要的特性：“服务的独立交付”。</p>
+<p>怎么讲？别急，我们再往下看。</p>
+<p>假设A服务的修复过程中，B和C服务也提交了新的代码，我们假设这两个提交是没有问题的，但因为A服务的1.1版本导致E2E测试挂掉的问题还没有被修复，所以B和C的新版本也被E2E测试拦了下来，此时的E2E测试就像是一个亮起红灯的路口，阻塞了所有服务通往产品环境的通道。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-6.jpeg" alt></p>
+<p>所以说，随着集中E2E测试的添加，质量被保障的同时，我们的“微服务架构”也已悄然失去了服务独立交付的能力，杀敌一千自损八百，损失惨重！</p>
+<p>这并不是我假想的场景，在我自己经历的几个真实项目中，这个问题都在一直困扰着我们。带来了各种各样的衍生问题，例如E2E测试长时间失败，无人修复，修复难度大，服务交付堵塞，为了保持交付通路畅通还不得不引入同样存在很大副作用的CodeFrezze机制和提交Token机制等。</p>
+<p>可以看到，虽然我们能够在代码库，在部署结构上，甚至在组织上进行服务化拆分，但就因为这最后一个交付的十里路口，最后这一个红绿灯，让所有的服务又纠缠在了一起，所有的服务化拆分形同虚设，最终我们得到的也只是一个<strong>看起来像微服务架构的单体应用而已</strong>。</p>
+<h3 id="拆除红绿灯，各行其道，收复失地！"><a href="#拆除红绿灯，各行其道，收复失地！" class="headerlink" title="拆除红绿灯，各行其道，收复失地！"></a>拆除红绿灯，各行其道，收复失地！</h3><p>那，如何才能将这个“红绿灯”拆除，让服务可以在有质量保障的前提下还可以做到独立交付呢？这就是本文要解决的问题，让我们继续往下看。</p>
+<p>我的解决方法其实也很简单：Inline E2E tests。</p>
+<p>即并不添加新的集中的Pipeline做E2E测试，而是为每一个服务的Pipeline都添加一个相同的E2E测试的Stage，就相当于将E2E测试Inline到每个服务各自的部署流水线中，如下图所示。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-7.jpeg" alt><br>其实Inline E2E测试还不是最关键的，最关键的变化点就是假设A服务有了新的提交，运行到A服务自己Pipeline的E2E测试的时候，<strong>此时的E2E测试并不是像之前一样获取B和C服务的最新代码库版本做集成验证，而获取当前产品环境上的B和C服务的已部署当前版本做集成验证</strong>。</p>
+<p>例如，如图所示A服务的版本从1.0升级到了1.1，当前产品环境的B和C的版本是2.0和3.0。在执行A服务Pipeline上的E2E测试时，验证出A1.1和B2.0集成存在问题，测试变红，Pipeline挂掉，从而阻断了A服务的1.1版本部署到产品环境，保证了产品环境不会被A的1.1版本破坏。</p>
+<p>同样，假设A还没有被修复之前，B也有了新的提交，产生了一个新的版本B2.1，这时在B服务Pipeline上的E2E测试并不获取当前A服务的代码库最新版本1.1做集成测试，而是获取产品环境上的当前版本A1.0版本做集成测试。我们假设B2.1和A1.0之间的集成没有问题，测试通过，所以B的2.1版本就被成功的交付到了产品环境，而此时产品环境的A服务的版本仍是1.0。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-8.jpeg" alt><br>看！服务之间的阻塞被神奇的解决了，服务再也不会被堵在一个统一的十字路口，而是各行其道，A的车道出了事故，是A的问题，应该由A来承担后果和解决问题，不应该影响到其他服务，其他服务依然可以持续的交付到产品环境。</p>
+<h3 id="向前看是持续集成，向后看是持续交付！"><a href="#向前看是持续集成，向后看是持续交付！" class="headerlink" title="向前看是持续集成，向后看是持续交付！"></a>向前看是持续集成，向后看是持续交付！</h3><p>看到这里可能有些小伙伴会感到有些失望。咋呼半天，不就是将E2E测试整到每个服务的Pipeline里，再把获取版本从最新代码改成产品环境么？有啥厉害的。</p>
+<p>但是，在我看来，这个看似简单的变化，意义却是重大的：它揭示了“持续集成”和“持续交付”的一个主要区别。</p>
+<p>“持续集成”和”持续交付”，这两个概念相信大家一定都不陌生，在软件领域也被提了不少年头了，不算什么新概念新技术。但对于这两个概念，我们经常一起提及，也经常混淆，搞不清楚两者的区别到底是什么，可能认为持续交付只不过是持续集成的演进版，新瓶装旧酒而已。</p>
+<p>但其实它们却有着本质的区别。</p>
+<p>“持续集成”关注的是各个集成单元之前最新版本的集成问题，即是不是某个集成单元的最新版本破坏了系统整体的集成，我管这种视角叫：向“前”看。</p>
+<p>而“持续交付”关注的应该不是集成单元最新版本之间的集成问题，而是某个集成单元的最新版本是否可以（能和敢）部署到产品环境。换句话说就是维持产品环境的其他服务不变，只将当前集成单元的最新版本部署到产品环境，产品是否依然可用，不被破坏。所以在“持续交付”的视角下，应该关注的是当前集成单元与产品环境上的其他服务的版本是否兼容，我管这种视角叫：向“后”看。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-9.jpeg" alt></p>
+<p>向前看是持续集成，向后看才是持续交付，如果前后都不看那就是在裸奔。</p>
+<p>但是肯定早有同学在心里疑惑，将E2E测试下放到每一个服务自己的Pipeline中，靠谱么？是不是太重了？根据测试金字塔，E2E测试应该是属于靠近金字塔顶端的测试种类，无论从数量和覆盖范围应该也都不会太多，怎么能靠它来保障服务之间的所有集成点和契约呢？</p>
+<h3 id="主角登场-契约测试"><a href="#主角登场-契约测试" class="headerlink" title="主角登场-契约测试"></a>主角登场-契约测试</h3><p>细心的同学肯定已经发现上面最后一张图中，我已经悄悄的把E2E测试变为了CT，即Contract Test，契约测试。</p>
+<p>契约测试也是这两年伴随微服务架构的兴起，经常被提及的一种比较新的测试类型。在测试金字塔中，他的位置介于E2E和Component Tests（可以理解成单个服务的API测试）之间。</p>
+<p>简单的理解，契约测试就是一种可以用类似于单元测试的技术验证两两服务之间集成的测试技术。它相比于更低层次的单元测试的优势是可以测集成（两两服务之间），相比于更高层次的E2E测试的优势是实现方式上又类似于单元测试，更轻量，跑的更快，覆盖的范围也自然可以更广更细。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-10.jpeg" alt></p>
+<p>使用契约测试替换掉E2E测试之后，整个架构也会变得更复杂一些，目前契约测试的框架也有很多，如大家常常提到的Pact或是SpringContracts等等。这里我先以Pact为例予以说明，其他框架实现上可能有些差别，但是思路是一致的。</p>
+<p>A服务调用B服务的一个API，我们就称为A和B之间存在了一个契约，即B应该按照这个契约提供一个满足契约要求的API，而A也应该按照这个契约约定的方式来调用B的这个API。在这个过程中A作为调用方，我们称之为Consumer端。B作为被调用方，我们称之为Provider端。</p>
+<p>如果A和B都履行契约，按照契约定义的约定调用和被调用，我们就可以认为集成不会有问题。但无论是B擅自修改了API破坏了契约，还是A擅自修改了调用API的方式破坏了契约，都会导致契约被破坏，反应到测试上就是契约测试会失败，反应到产品上就是功能被破坏，出现Bug。</p>
+<p>每个契约，例如A-&gt;B，都会有Consumer端和Provider端生成的两个产出物：分别是a-b.consumer.json.1.1(由Consumer端生成的契约文件，所以版本也是Consumer端A的版本号)和a-b.provider.jar.2.0（由Provider端生成的契约验证测试包，他由Provider端生成，所以版本是B的版本）。这个jar包其实就是一组测试，他的输入是a-b.consumer.json，产出则是测试的结果，也就是契约的验证结果：成功或是失败。</p>
+<p><img src="/images/post/your-microservice-can-deploy-single-11.jpeg" alt></p>
+<p>可以把A服务产出的契约文件a-b.consumer.json.1.1想象成一把钥匙，把B服务产出的Provider端的测试a-b.provider.jar.2.0想象成一把锁。那契约测试的执行过程就像是用这把钥匙试着去打开这把锁：如果可以打开，我们认为这A1.1-&gt;B2.0的契约是满足的，反之契约就是被破坏了。</p>
+<p>值得注意的一点就是，契约测试不像E2E测试，它是有方向的，所以我们看到a-b和b-a是两个不同的契约。</p>
+<p>所以，只有当A1.1-&gt;B2.0和B2.0-&gt;A1.1双向的契约都被验证通过后，我们才能认为A1.1版本和B2.0版本的集成是没有问题的。</p>
+<h3 id="用契约测试替换E2E测试"><a href="#用契约测试替换E2E测试" class="headerlink" title="用契约测试替换E2E测试"></a>用契约测试替换E2E测试</h3><p><img src="/images/post/your-microservice-can-deploy-single-12.jpeg" alt><br>回到前面的例子上，假设我们已经构建了ABC三个服务两两之间的契约测试。此时，A服务有了新的提交升级到了1.1版本，那我们如何才能通过契约测试来验证A1.1版本能否交付到产品环境呢？</p>
+<p>答案就是只要通过A的1.1版本的最新代码，生成所有A作为Consumer端的契约文件（a-b.consumer.json.1.1和a-c.consumer.json.1.1），用这两把“钥匙”去试着开（作为输入执行Provider端测试）产品环境对应的两把“锁”（a-b.provider.jar.2.0和a-c.provider.jar.3.0）。</p>
+<p>如果都可以打开（测试通过）的话，就证明A的新版本1.1作为Consumer端与产品环境的B和C服务是兼容的。</p>
+<p>等等，别着急，还没完……</p>
+<p>因为我们还需要考虑A作为Provider的情况，做法还是通过A的1.1版本的最新代码生成A版本作为Provider端的契约测试（b-a.provider.jar.1.1和c-a.provider.jar.1.1），拿着这两把“新锁”，然后试着用产品环境上的两把“钥匙”（b-a.consumer.json.2.0和c-a.consumer.json3.0）去开。</p>
+<p>如果也都可以打开（测试通过）的话，就证明A的新版本1.1作为Provider端与产品环境的B和C服务也是兼容的。</p>
+<p>至此，当验证了A的新版本1.1无论是作为调用端还是被调用端都与产品环境上的其他服务契约满足后，我们就认为A1.1与B2.0和C3.0集成是没有问题的，也就代表A1.1可以被放心地部署到产品环境中，替代现在的1.0版本。</p>
+<h3 id="最后，敲黑板划重点"><a href="#最后，敲黑板划重点" class="headerlink" title="最后，敲黑板划重点"></a>最后，敲黑板划重点</h3><ol>
+<li>微服务架构下的独立部署（交付）很重要，但往往容易被忽视，没有被引起足够重视。</li>
+<li>为了实现微服务的独立持续交付，我们要向“后”看，不要向“前”看，即关注当前变更服务与部署环境中其他服务的兼容性而不是关注当前变更服务与其他服务最新版本的兼容性。</li>
+<li>用契约测试来替代E2E测试，降低测试成本，提高测试覆盖，尽早测试。并通过不断地完善契约管理，保障微服务架构质量和避免微服务架构腐化僵化。</li>
+</ol>
+
+        
+        <!--原创-->
+        
+        <!--转载标注-->
+        
+        <div class="alert alert-success">
+          本文作者：王健<br>
+          原文链接：<a href="https://mp.weixin.qq.com/s/TJK-v7F0stzoZOY_9T8FgA" target="_blank">https://mp.weixin.qq.com/s/TJK-v7F0stzoZOY_9T8FgA</a><br>
+          <b>版权归作者所有，转载请注明出处</b>
+        </div>
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/技术杂谈/">技术杂谈</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/apiboot-unified-manage-request-logs.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：使用ApiBoot Logging进行统一管理请求日志</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/seata-first-application.html">
+          <span class="level-item">下一篇：SpringCloud与Seata分布式事务初体验</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '03509a9bdc9a7bc3b01526afce41074b',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

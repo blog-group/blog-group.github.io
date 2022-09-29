@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>微服务中使用 OpenJ9 JVM 内存占用降60%(相对HotSpot) - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="know-openj9-jvm">
+<meta name="keywords" content="SpringCloud,SpringBoot,恒宇少年,Openj9">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务中使用 OpenJ9 JVM 内存占用降60%(相对HotSpot)">
+<meta property="og:url" content="https://blog.minbox.org/know-openj9-jvm.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="know-openj9-jvm">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
+<meta property="og:updated_time" content="2022-09-29T04:18:51.347Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务中使用 OpenJ9 JVM 内存占用降60%(相对HotSpot)">
+<meta name="twitter:description" content="know-openj9-jvm">
+<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">微服务中使用 OpenJ9 JVM 内存占用降60%(相对HotSpot)</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #a9800a;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            转载</span>
+          
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2022-08-12</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">陈一乐</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/spring-cloud-all-articles.html">SpringCloud</a>&nbsp;
+                
+              
+                
+              
+                
+              
+            
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
+                
+              
+                
+              
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p>随着微服务的普及，许多企业踏上微服务之旅。</p>
+<p>微服务化后，应用数量可能高一个数量级。一般企业，以前三五个应用能支撑业务，微服务化之后应用数量可能多达几十个。<br>每个微服务往往独立部署，内存的消耗自然也高居不下，以前两台8核16G机器指不定就能跑起来，现两台16核64G还不一定够用，同时由于多套环境的存在加上容器编排工具(如K8s)所需的资源，硬件资源的投入自然是成倍增加。</p>
+<p>在 Web 应用开发中，为了降低内存消耗，你是否尝试过：</p>
+<ul>
+<li><strong>去除不必要的组件，减少代码体积</strong></li>
+<li><strong>更换 Web 容器，如将 Tomcat 更换为Undertow</strong></li>
+<li><strong>优化Docker基础镜像，减少镜像体积</strong></li>
+</ul>
+<p>这些效果往往不是很理想。本篇介绍 OpenJ9 JVM，通过将 HotSpot 更换为 OpenJ9，内存占用能降低至少 60%，而启动时间也能快 40% 以上，效果立竿见影。</p>
+<h2 id="OpenJ9-简介"><a href="#OpenJ9-简介" class="headerlink" title="OpenJ9 简介"></a>OpenJ9 简介</h2><p>OpenJ9 的前身是IBM的 J9 Java 虚拟机，主要服务于IBM企业级软件产品，是一款高性能的JVM。</p>
+<p>2017年9月，IBM 将 J9 JVM 捐献给 Eclipse 基金会，并更名 Eclipse OpenJ9，开启开源之旅。</p>
+<p>OpenJ9 擅长于内存管理，同时针对容器化做了很多工作，按官方说法是： more container-aware 。</p>
+<p>下面摘自 OpenJ9 的 <a href="https://www.eclipse.org/openj9/oj9_whatsnew.html" target="_blank" rel="noopener">Release History</a>，选择了部分内容，可快速一览：</p>
+<ul>
+<li><p>2017.11 支持使用 OpenJDK8 构建 OpenJ9</p>
+</li>
+<li><p>2018.3 发布 0.8.0：OpenJ9 开始支持各平台(Mac、Linux、Windows等) 的 OpenJDK 8，宣布在JDK8中，比HotSpot 42% faster startup and a footprint at least 60% smaller</p>
+</li>
+<li><p>2018.8 发布 0.9.0：支持 OpenJDK 10；对Docker容器支持更友好；在运行一些Eclipse性能测试时，比HotSpot JVM快 43%，少用42%的内存.</p>
+</li>
+<li><p>2018.10 发布 0.10.0：支持 OpenJDK 11，开始适配 HotSpot JVM的一些参数配置</p>
+</li>
+<li><p>2018.10 发布 0.11.0：改善AOT性能、针对运行在容器中的应用内存优化、 “pause-less” GC mode for response-time sensitive, large heap applications</p>
+</li>
+<li><p>2019.2 发布 0.12.1 ：提示RSA算法加密性能；性能进一步提升</p>
+</li>
+<li><p>2019.3 发布 0.13.0：支持OpenJDK 12; 支持jps命令；支持将Java dump 文件写入STDOUT/STDERR</p>
+</li>
+</ul>
+<h2 id="官方性能报告"><a href="#官方性能报告" class="headerlink" title="官方性能报告"></a>官方性能报告</h2><p>下面是 OpenJ9官方的基准测试结果(完整报告)，包含启动时间、响应时间、吞吐量等指标。</p>
+<p><strong>66% smaller footprint after startup</strong></p>
+<p>由于减少内存占用的重要性，OpenJ9 对云负载(cloud wordloads)做了深度优化，在应用启动后，占用内存比HotSpot 约少 66%。</p>
+<p><strong>66% smaller footprint after startup</strong></p>
+<p>由于减少内存占用的重要性，OpenJ9 对云负载(cloud wordloads)做了深度优化，在应用启动后，占用内存比HotSpot 约少 66%。</p>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/2.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/2.png" alt="img"></a></p>
+<p><strong>63% smaller footprint during ramp up</strong></p>
+<p>应用负载增加时，内存都会骤增。但状态稳定后，使用 OpenJ9 的OpenJDK 8 比使用 HotSpot 的 OpenJDK 8 <strong>减少了约 63% 的物理内存</strong>。</p>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/3.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/3.png" alt="img"></a></p>
+<p><strong>42% faster startup time</strong></p>
+<p><strong>Shared classes</strong> 和 <strong>Ahead-of-Time(AOT)</strong> 技术的应用显著减少了应用启动时间。通过使用 <strong>-Xquickstart</strong> 参数(启用AOT)，<strong>启动时间可以减少高达42%</strong>。</p>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/4.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/4.png" alt="img"></a></p>
+<p><strong>Comparable throughput</strong></p>
+<p>在做吞吐量对比时，二者峰值吞吐量差不多，但使用OpenJ9 的 OpenJDK 8 大约快1分钟达到峰值。</p>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/5.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/5.png" alt="img"></a></p>
+<p><strong>Faster ramp-up time in the cloud</strong></p>
+<p>在云环境下，虚拟化技术被广泛使用，一台大的机器经常被切割成若干小的虚拟机，这些虚拟机往往做了资源限制。OpenJ9 在单核CPU上用了8.5分钟达到峰值吞吐量，而 HotSpot用了30分钟。对于在资源受限的环境下(如云环境)跑 short-lived VMs，能够更快的完成更多工作就显得更为重要。</p>
+<p>资源受限的一大副作用就是 <strong>Java应用花费更长的启动时间(受JIT影响)</strong>。</p>
+<blockquote>
+<p>笔者注：内存限制时，应用甚至会无法启动，导致不断重启。</p>
+</blockquote>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/6.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/6.png" alt="img"></a></p>
+<h2 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h2><p>创建一个 Spring Boot Web 应用并打成jar包，分别使用 HotSpot、OpenJ9 虚拟机的 Open JDK8 结合Docker来做测试。</p>
+<p>基于OpenJ9的Dockerfile</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FROM adoptopenjdk/openjdk8-openj9:alpine-slim</span><br><span class="line">COPY target/app.jar /app.jar</span><br><span class="line">ENTRYPOINT java $JAVA_OPTS -Xshareclasses -Xquickstart -jar /app.jar</span><br></pre></td></tr></table></figure>
+
+<p>基于HotSpot的Dockerfile</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:8u181-jre-slim-stretch</span><br><span class="line">COPY target/app.jar /app.jar</span><br><span class="line">ENTRYPOINT java $JAVA_OPTS -jar /app.jar</span><br></pre></td></tr></table></figure>
+
+<p>启动容器后，<code>docker stats openj9 hotspot</code> 查看容器资源使用情况如下：</p>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/1.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/20/1.png" alt="img"></a></p>
+<p>OpenJ9 是 50.89M；HotSpot 是235.7M，差异非常大。</p>
+<p>下面是我们测试环境中的一个普通应用(使用Docker运行)的测试结果。</p>
+<p>基于 Open JDK8 (HotSpot) 时内存消耗稳定在 <strong>1G左右</strong>。</p>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/21/2.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/21/2.png" alt="img"></a></p>
+<p>基于 OpenJDK8(OpenJ9)时内存消耗稳定在 <strong>300M左右</strong>。</p>
+<p><a href="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/21/3.png" target="_blank" rel="noopener"><img src="https://blog-1256695615.cos.ap-shanghai.myqcloud.com/2019/07/21/3.png" alt="img"></a></p>
+<h2 id="该怎么切换到-OpenJ9-？"><a href="#该怎么切换到-OpenJ9-？" class="headerlink" title="该怎么切换到 OpenJ9 ？"></a>该怎么切换到 OpenJ9 ？</h2><p>如果使用Docker，直接更换基础镜像即可，容器场景下更能发挥 OpenJ9 的作用。</p>
+<p>如果JDK直接安装在服务器上，可以直接在 <a href="https://adoptopenjdk.net/releases.html?variant=openjdk8&jvmVariant=openj9" target="_blank" rel="noopener">AdoptOpenJDK</a> 上下载相应的介质。</p>
+<p>对于 <a href="https://www.eclipse.org/openj9/docs/cmdline_migration/" target="_blank" rel="noopener">JVM Options</a>，可以参考做一些调整。</p>
+<h2 id="对开发人员的影响有哪些？"><a href="#对开发人员的影响有哪些？" class="headerlink" title="对开发人员的影响有哪些？"></a>对开发人员的影响有哪些？</h2><p>大家一般接触的都是HotSpot VM，且对于其理论、JVM参数、命令行工具甚至性能调优等相对比较熟悉，这块资料也比较丰富。</p>
+<p>OpenJ9 以前更多的是支持IBM企业级的商业产品，大家了解相对较少，连日用命令行工具暂时都只提供了jps、jstack，不过可以使用像阿里 <a href="https://alibaba.github.io/arthas/" target="_blank" rel="noopener">arthas</a> 这类Java应用诊断工具，效果也是一样的。</p>
+<p>对于小企业来说，JVM一般不是瓶颈，而更换JVM所带来的IT成本投入减少确是实实在在的，尤其是对于初创团队，自然是能省则省。</p>
+
+        
+        <!--原创-->
+        
+        <!--转载标注-->
+        
+        <div class="alert alert-success">
+          本文作者：陈一乐<br>
+          原文链接：<a href="https://chenyongjun.vip/articles/117" target="_blank">https://chenyongjun.vip/articles/117</a><br>
+          <b>版权归作者所有，转载请注明出处</b>
+        </div>
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>, <a class="has-link-grey-link" href="/tags/SpringCloud/">SpringCloud</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/technical-talk.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：技术杂谈专题</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/git-chapter-core-directory.html">
+          <span class="level-item">下一篇：Git托管项目的.git目录下都有什么？</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '4878ee96f5785b4470cd9ccaeacf0427',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

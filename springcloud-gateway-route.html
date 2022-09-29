@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>SpringCloud Gateway路由转发规则 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="SpringCloud Gateway路由转发规则">
+<meta name="keywords" content="SpringCloud,SpringBoot,恒宇少年,gateway">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud Gateway路由转发规则">
+<meta property="og:url" content="https://blog.minbox.org/springcloud-gateway-route.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="SpringCloud Gateway路由转发规则">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
+<meta property="og:updated_time" content="2022-09-29T04:18:51.355Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud Gateway路由转发规则">
+<meta name="twitter:description" content="SpringCloud Gateway路由转发规则">
+<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">SpringCloud Gateway路由转发规则</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2019-09-30</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/spring-cloud-all-articles.html">SpringCloud</a>&nbsp;
+                
+              
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p><code>Spring</code>在因<code>Netflix</code>开源流产事件后，在不断的更换<code>Netflix</code>相关的组件，比如：<code>Eureka</code>、<code>Zuul</code>、<code>Feign</code>、<code>Ribbon</code>等，<code>Zuul</code>的替代产品就是<code>SpringCloud Gateway</code>，这是<code>Spring</code>团队研发的网关组件，可以实现限流、安全认证、支持长连接等新特性。</p>
+<a id="more"></a>
+
+<h2 id="Spring-Cloud-Gateway"><a href="#Spring-Cloud-Gateway" class="headerlink" title="Spring Cloud Gateway"></a>Spring Cloud Gateway</h2><p><code>Spring Cloud Gateway</code>是<code>SpringCloud</code>的全新子项目，该项目基于<code>Spring5.x</code>、<code>SpringBoot2.x</code>技术版本进行编写，意在提供简单方便、可扩展的统一API路由管理方式。<br><strong>概念解释：</strong></p>
+<ul>
+<li><code>Route（路由）</code>：路由是网关的基本单元，由ID、URI、一组Predicate、一组Filter组成，根据Predicate进行匹配转发。</li>
+<li><code>Predicate（谓语、断言）</code>：路由转发的判断条件，目前<code>SpringCloud Gateway</code>支持多种方式，常见如：<code>Path</code>、<code>Query</code>、<code>Method</code>、<code>Header</code>等。</li>
+<li><code>Filter（过滤器）</code>：过滤器是路由转发请求时所经过的过滤逻辑，可用于修改请求、响应内容。</li>
+</ul>
+<p><strong>Spring Cloud GateWay 工作流程如下所示</strong>：<br><img src="/images/post/springcloud-gateway-route-1.png" alt="spring-cloud-gateway-work.png"></p>
+<p>客户端向<code>Spring Cloud Gateway</code>发出请求。如果网关处理程序映射确定请求与路由匹配，则将其发送到网关Web处理程序。此处理程序运行时通过特定于请求的筛选链发送请求。过滤器被虚线分隔的原因是过滤器可以在发送代理请求之前或之后执行逻辑。执行所有“预”过滤逻辑，然后发出代理请求。在发出代理请求后，将执行“post”过滤器逻辑。</p>
+<h2 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h2><p><code>Spring Cloud Gateway</code>目前有两种方式进行配置：</p>
+<ul>
+<li><code>application.yml</code>配置文件方式</li>
+<li>通过@Bean注解<code>RouteLocator</code>方法返回值</li>
+</ul>
+<p>在本章会侧重针对配置文件方式进行讲解，当然<code>RouteLocator</code>方式也会简单的告诉大家的使用方式。</p>
+<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><p>添加<code>Spring Cloud Gateway</code>相关依赖，<code>pom.xml</code>如下所示：</p>
+<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//...省略部分内容</span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">spring-cloud.version</span>&gt;</span>Greenwich.SR1<span class="hljs-tag">&lt;/<span class="hljs-name">spring-cloud.version</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="hljs-comment">&lt;!--Spring Cloud Gateway--&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-gateway<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependencyManagement</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">                <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">                <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;spring-cloud.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">                <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>pom<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span></span><br><span class="line">                <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>import<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencyManagement</span>&gt;</span></span><br><span class="line">//...省略部分内容</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring-Cloud-Gateway-Predicates"><a href="#Spring-Cloud-Gateway-Predicates" class="headerlink" title="Spring Cloud Gateway Predicates"></a>Spring Cloud Gateway Predicates</h3><p>在我们开始本章内容之前我们要来先了解下<code>Spring Cloud Gateway</code>内部提供的所有<code>谓语、断言</code>，这样我们才能目标性的进行学习，我整理出来了一个脑图，如下所示：</p>
+<p><img src="/images/post/springcloud-gateway-route-2.png" alt="SpringCloud-Gateway-Predicates.png"></p>
+<p>每一个<code>Predicate</code>的使用，你可以理解为：<code>当满足这种条件后才会被转发</code>，如果是多个，那就是都满足的情况下被转发。</p>
+<h3 id="Path-方式匹配转发"><a href="#Path-方式匹配转发" class="headerlink" title="Path 方式匹配转发"></a>Path 方式匹配转发</h3><p>通过<code>Path</code>转发示例，我们讲解下上面的两种配置，分别是<code>application.yml</code>以及<code>RouteLocator</code>。</p>
+<h4 id="配置文件匹配地址转发"><a href="#配置文件匹配地址转发" class="headerlink" title="配置文件匹配地址转发"></a>配置文件匹配地址转发</h4><p>我们在<code>application.yml</code>配置文件内添加对应的路由配置，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">application:</span></span><br><span class="line">    <span class="hljs-attr">name:</span> <span class="hljs-string">spring-cloud-gateway-sample</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-comment"># 匹配路径转发</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Path=/api-boot-datasource-switch.html</span></span><br><span class="line"><span class="hljs-comment"># 端口号</span></span><br><span class="line"><span class="hljs-attr">server:</span></span><br><span class="line">  <span class="hljs-attr">port:</span> <span class="hljs-number">9090</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>先来解释下<code>route</code>的组成部分：</strong></p>
+<ul>
+<li><code>id</code>：路由的ID</li>
+<li><code>uri</code>：匹配路由的转发地址</li>
+<li><code>predicates</code>：配置该路由的断言，通过<code>PredicateDefinition</code>类进行接收配置。</li>
+</ul>
+<p>在上面的配置中，当访问<code>http://localhost:9090/api-boot-datasource-switch.html</code>时就会被自动转发到<code>https://blog.yuqiyu.com/api-boot-datasource-switch.html</code>，这里要注意完全匹配<code>Path</code>的值时才会进行路由转发。</p>
+<p>访问效果如下所示：</p>
+<p><img src="/images/post/springcloud-gateway-route-3.png" alt="spring-cloud-gateway-path-predicate.png"></p>
+<h4 id="RouteLocator-匹配路径转发"><a href="#RouteLocator-匹配路径转发" class="headerlink" title="RouteLocator 匹配路径转发"></a>RouteLocator 匹配路径转发</h4><p>在上面的配置中，如果使用<code>RouteLocator</code>方式该怎么进行配置呢？</p>
+<p>如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Bean</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> RouteLocator <span class="hljs-title">routeLocator</span><span class="hljs-params">(RouteLocatorBuilder builder)</span> </span>&#123;</span><br><span class="line">  <span class="hljs-keyword">return</span> builder.routes()</span><br><span class="line">    .route(<span class="hljs-string">"blog"</span>, r -&gt; </span><br><span class="line">           r.path(<span class="hljs-string">"/api-boot-datasource-switch.html"</span>).uri(<span class="hljs-string">"https://blog.yuqiyu.com"</span>))</span><br><span class="line">    .build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Before-方式匹配转发"><a href="#Before-方式匹配转发" class="headerlink" title="Before 方式匹配转发"></a>Before 方式匹配转发</h3><p>当部署有访问时间限制的接口时，我们可以通过<code>Before Predicate</code>来完成某一个时间点之前允许访问，过时后则不允许转发请求到具体的服务，配置如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Before=2019-05-01T00:00:00+08:00[Asia/Shanghai]</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面配置中，我们允许<code>2019-05-01</code>日凌晨之前通过路由转发到<code>https://blog.yuqiyu.com</code>，通过查看<code>org.springframework.cloud.gateway.handler.predicate.BeforeRoutePredicateFactory</code>源码我们发现，<code>Spring Cloud Gateway</code>的<code>Before</code>断言采用的<code>ZonedDateTime</code>进行匹配时间，这里要注意存在时区的问题，需要配置<code>[Asia/Shanghai]</code>作为中国时区。</p>
+<h3 id="After-方式匹配转发"><a href="#After-方式匹配转发" class="headerlink" title="After 方式匹配转发"></a>After 方式匹配转发</h3><p><code>After Predicate</code>与<code>Before</code>配置使用一致，匹配某一个时间点之后允许路由转发，如下所示配置：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">After=2019-04-29T00:00:00+08:00[Asia/Shanghai]</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面配置中允许<code>2019-04-29</code>凌晨之后进行转发到<code>https://blog.yuqiyu.com</code>。</p>
+<h3 id="Between-方式匹配转发"><a href="#Between-方式匹配转发" class="headerlink" title="Between 方式匹配转发"></a>Between 方式匹配转发</h3><p>那如果是一个时间段内允许请求转发，通过<code>Before</code>、<code>After</code>组合配置也可以完成，不过<code>Spring Cloud Gateway</code>还是提供了<code>Between</code>方式，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Between=2019-04-29T00:00:00+08:00[Asia/Shanghai],</span> <span class="hljs-number">2019</span><span class="hljs-number">-05</span><span class="hljs-string">-01T00:00:00+08:00[Asia/Shanghai]</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面配置中，允许在<code>2019-04-29</code>日凌晨后 &amp; <code>2019-05-01</code>凌晨之前请求转发到<code>https://blog.yuqiyu.com</code>。</p>
+<h3 id="Cookie-方式匹配转发"><a href="#Cookie-方式匹配转发" class="headerlink" title="Cookie 方式匹配转发"></a>Cookie 方式匹配转发</h3><p><code>Spring Cloud Gateway</code> 还提供了根据<code>Cookie</code>值的方式匹配转发请求，如果请求中所携带的<code>Cookie</code>值与配置的<code>Predicate</code>匹配，那么就可以被允许转发到指定地址，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Cookie=hengboy,</span> <span class="hljs-string">yuqiyu</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面配置中，如果客户端发送请求时携带了<code>&quot;hengboy=yuqiyu&quot;</code>的Cookie信息，则允许请求转发。</p>
+<p><strong>测试Cookie方式转发：</strong></p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:9090 --cookie <span class="hljs-string">"hengboy=yuqiyu"</span></span><br></pre></td></tr></table></figure>
+
+<p>通过上面方式我们是可以成功转发请求的，如果我们修改<code>Cookie</code>的值，就会导致<code>无法转发</code>，出现404。</p>
+<h3 id="Header-方式匹配转发"><a href="#Header-方式匹配转发" class="headerlink" title="Header 方式匹配转发"></a>Header 方式匹配转发</h3><p><code>Spring Cloud Gateway</code>可以根据发送请求的<code>Header</code>信息进行匹配转发，加入我们可以根据<code>X-Request-Id</code>的值进行匹配，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Header=X-Request-Id,</span> <span class="hljs-string">\d+</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面配置中，如果<code>X-Request-Id</code>的值为数字，那么就可以转发到<code>https://blog.yuqiyu.com</code>，我们通过如下方式进行测试：</p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost:9090 -H <span class="hljs-string">"X-Request-Id:123456"</span></span><br></pre></td></tr></table></figure>
+
+<p>如果头信息为<code>X-Request-Id:abc</code>时，就会转发失败，出现404。</p>
+<h3 id="Host-方式匹配转发"><a href="#Host-方式匹配转发" class="headerlink" title="Host 方式匹配转发"></a>Host 方式匹配转发</h3><p><code>Spring Cloud Gateway</code>可以根据<code>Host</code>主机名进行匹配转发，如果我们的接口只允许<code>**.yuqiyu.com</code>域名进行访问，那么配置如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Host=**.yuqiyu.com</span></span><br></pre></td></tr></table></figure>
+
+<p>测试如下所示：</p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. curl http://localhost:9090 -H <span class="hljs-string">"Host: yuqiyu.com"</span>      	// 匹配</span><br><span class="line">2. curl http://localhost:9090 -H <span class="hljs-string">"Host: api.yuqiyu.com"</span>		// 匹配</span><br><span class="line">3. curl http://localhost:9090 -H <span class="hljs-string">"Host: admin.yuqiyu.com"</span>  // 匹配</span><br><span class="line">4. curl http://localhost:9090 -H <span class="hljs-string">"Host: hengboy.com"</span>  	    // 不匹配</span><br></pre></td></tr></table></figure>
+
+<h3 id="请求方式-方式匹配转发"><a href="#请求方式-方式匹配转发" class="headerlink" title="请求方式 方式匹配转发"></a>请求方式 方式匹配转发</h3><p><code>Rest</code>请求风格的接口内往往会存在多种请求方式的接口，如果我们的接口只允许<code>POST</code>请求访问，那么配置如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Method=POST</span></span><br></pre></td></tr></table></figure>
+
+<p>发送<code>GET</code>请求测试：</p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~ curl http://localhost:9090</span><br><span class="line">&#123;<span class="hljs-string">"timestamp"</span>:<span class="hljs-string">"2019-04-29T06:27:41.121+0000"</span>,<span class="hljs-string">"path"</span>:<span class="hljs-string">"/"</span>,<span class="hljs-string">"status"</span>:404,<span class="hljs-string">"error"</span>:<span class="hljs-string">"Not Found"</span>,<span class="hljs-string">"message"</span>:null&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们的请求并未被<code>Spring Cloud Gateway</code>进行转发，那么我们再来通过<code>POST</code>请求进行测试：</p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST http://localhost:9090</span><br></pre></td></tr></table></figure>
+
+<p>是可以被转发到目标地址<code>uri</code>的，不过我的这个博客是<code>OSS</code>部署的，阿里云限制了<code>POST</code>访问，尽管如此我们也证明了可以转发。</p>
+<h3 id="请求参数-方式匹配转发"><a href="#请求参数-方式匹配转发" class="headerlink" title="请求参数 方式匹配转发"></a>请求参数 方式匹配转发</h3><p><code>Spring Cloud GateWay</code>还支持根据指定的参数进行匹配，<code>Query</code>方式的<code>Predicate</code>也有两种方式匹配情况，如下所示：</p>
+<ul>
+<li><p>请求中存在<code>xxx</code>参数</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Query=xxx</span></span><br></pre></td></tr></table></figure>
+
+<p>我们通过<code>curl http://localhost:9090\?xxx\=123</code>是可以被成功转发的，只要参数存在<code>xxx</code>就会被成功转发，否则出现404转发失败。</p>
+</li>
+<li><p>请求中存在<code>xxx</code>参数且值为<code>zzz</code></p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Query=xxx,</span> <span class="hljs-string">zzz</span></span><br></pre></td></tr></table></figure>
+
+<p>根据上面配置，我们限定了参数<code>xxx</code>必须为<code>zzz</code>时才会被成功转发，否则同样会出现404抓发失败。</p>
+</li>
+</ul>
+<h3 id="请求路径-方式匹配转发"><a href="#请求路径-方式匹配转发" class="headerlink" title="请求路径 方式匹配转发"></a>请求路径 方式匹配转发</h3><p><code>Spring Cloud Gateway</code>提供了请求路径变量方式匹配转发，如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Path=/article/&#123;articleId&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面配置中<code>{articleId}</code>是一个路径变量，可以是任意值，匹配<code>/article/1</code>、<code>/article/abc</code>等，测试如下所示：</p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ curl http://localhost:9090/article/1			// 匹配</span><br><span class="line">~ curl http://localhost:9090/article/abc		// 匹配</span><br><span class="line">~ curl http://localhost:9090/article/1/1		// 不匹配</span><br></pre></td></tr></table></figure>
+
+<h3 id="请求IP-方式匹配转发"><a href="#请求IP-方式匹配转发" class="headerlink" title="请求IP 方式匹配转发"></a>请求IP 方式匹配转发</h3><p><code>Spring Cloud Gateway</code>可以限制允许访问接口的客户端<code>IP</code>地址，配置后只对指定<code>IP</code>地址的客户端进行请求转发，配置如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">RemoteAddr=192.168.1.56/24</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面我们配置了<code>192.168.1.56/24</code>，其中<code>192.168.1.56</code>是客户端的<code>IP</code>地址，而<code>24</code>则是子网掩码。</p>
+<h3 id="组合示例"><a href="#组合示例" class="headerlink" title="组合示例"></a>组合示例</h3><p>相同的<code>Predicate</code>也可以配置多个，请求的转发是必须满足所有的<code>Predicate</code>后才可以进行路由转发，组合使用示例如下所示：</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">cloud:</span></span><br><span class="line">    <span class="hljs-attr">gateway:</span></span><br><span class="line">      <span class="hljs-attr">routes:</span></span><br><span class="line">        <span class="hljs-bullet">-</span> <span class="hljs-attr">id:</span> <span class="hljs-string">blog</span></span><br><span class="line">          <span class="hljs-attr">uri:</span> <span class="hljs-string">https://blog.yuqiyu.com</span></span><br><span class="line">          <span class="hljs-attr">predicates:</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Query=author,</span> <span class="hljs-string">hengboy</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Query=yuqiyu</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Method=GET</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Cookie=hengboy,</span> <span class="hljs-string">yuqiyu</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">Header=X-Request-Id,</span> <span class="hljs-string">\d+</span></span><br><span class="line">            <span class="hljs-bullet">-</span> <span class="hljs-string">RemoteAddr=192.168.1.56/24</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本章节讲解了<code>Spring Cloud Gateway</code>的相关<code>谓词、断言</code>基本使用方式，<code>GateWay</code>内部提供了很多种灵活的路由转发规则，在同一个路由内存在多个<code>Predicate</code>时，同时满足规则后请求才会被路由转发。</p>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/Gateway/">Gateway</a>, <a class="has-link-grey-link" href="/tags/SpringCloud/">SpringCloud</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/springcloud-gateway-eureka.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：SpringCloud Gateway整合Eureka转发服务请求</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/mongodb-springboot2-rest.html">
+          <span class="level-item">下一篇：SpringBoot2.x使用MongoDB的Rest端点访问数据</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '77da25242f9eba70d3cedb61b9e5dfb8',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

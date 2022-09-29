@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Spring OAuth2 实现始终获取新的令牌 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
+
+
+    <meta name="description" content="oauth2-always-create-token">
+<meta name="keywords" content="OAuth2,Spring,AccessToken,RefreshToken">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring OAuth2 实现始终获取新的令牌">
+<meta property="og:url" content="https://blog.minbox.org/oauth2-always-create-token.html">
+<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
+<meta property="og:description" content="oauth2-always-create-token">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
+<meta property="og:updated_time" content="2022-09-29T04:18:51.347Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring OAuth2 实现始终获取新的令牌">
+<meta name="twitter:description" content="oauth2-always-create-token">
+<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-127746557-1');
+</script>
+
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-2-column">
+    <nav class="navbar navbar-main">
+  <div class="container">
+    <div class="navbar-brand is-flex-center">
+      <a class="navbar-item navbar-logo" href="/">
+        <div class="logo"></div>
+        <span class="site_title">恒宇少年 - 于起宇</span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      
+      <div class="navbar-start nav-link">
+        
+        <a class="navbar-item"
+          href="/interview-strategy.html" target="_blank">面试攻略</a>
+        
+        <a class="navbar-item"
+          href="/welfare/" target="_blank">签到送书</a>
+        
+        <a class="navbar-item"
+          href="/geektime/" target="_blank">推荐课程</a>
+        
+        <a class="navbar-item"
+          href="/opensource/" target="_blank">我的开源</a>
+        
+        <a class="navbar-item"
+          href="/openbooks/" target="_blank">免费书籍</a>
+        
+        <a class="navbar-item"
+          href="/years/2019.html" target="_blank">我的2019</a>
+        
+        <a class="navbar-item"
+          href="/archives/" target="_blank">归档</a>
+        
+      </div>
+      
+      <div class="navbar-end">
+        
+        
+        
+        <a class="navbar-item search" title="搜索" href="javascript:;">
+          <i class="fas fa-search"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
+<div id="container">
+  
+  <div class="card" style="margin-bottom: 10px">
+    
+    <div class="card-content article ">
+      <!--文章标题-->
+      
+      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+        
+        <span class="article_title">Spring OAuth2 实现始终获取新的令牌</span>
+        
+      </h1>
+      <!--完全自定义页面显示的访问次数-->
+      
+      
+      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+        <div class="level-left">
+          <!--文章类型-->
+          
+          
+          
+          <span
+            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+            原创</span>
+          
+          
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--发布时间-->
+          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+          &nbsp;
+          <span class="article-meta-element">2021-04-21</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--作者-->
+          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+
+          <span class="article-meta-element">于起宇</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <!--目录列表-->
+          
+          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
+          &nbsp;
+          <div class="level-item article-meta-element">
+            <!--读取config.yml文件内的目录配置-->
+            
+            
+              
+                
+                  <!--跳转文章目录地址-->
+                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
+                
+              
+                
+              
+                
+              
+                
+              
+            
+          </div>
+          
+          <!--不蒜子统计阅读量-->
+          <!--
+          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
+            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
+          </span>
+          -->
+        </div>
+      </div>
+      
+      
+      <!--推荐阅读 - 新闻-->
+      
+      
+      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
+      </div>
+      
+      
+      <!--文章内容-->
+      <div class="content">
+        <p><code>Spring</code>基于<code>OAuth2</code>协议编写的<code>spring-oauth2</code>实现，是行业级的接口资源安全解决方案，我们可以基于该依赖配置不同客户端的不同权限来访问接口数据。</p>
+<h2 id="默认令牌生成方式"><a href="#默认令牌生成方式" class="headerlink" title="默认令牌生成方式"></a>默认令牌生成方式</h2><p>每当我们获取请求令牌（<code>access_token</code>）时，默认情况返回第一次生成的令牌，使用同一个用户多次获取令牌时，只有过期时间在缩短，其它的内容不变。</p>
+<p>这种方式有利有弊，如果同一个账户只能有一个人登录，这样是没有任何问题的，但是如果同一个账号可以让多个人同时登录，那么就会存在一定的问题。</p>
+<p>比如我们现在有一个名为<code>hengboy</code>的账户：第一个人登录时令牌有效期为我们配置的最长有效期（假设为<code>7200</code>秒），这时又有第二个人登录的同一个用户，第二个人获取的令牌并不会重置有效期（可能还剩下<code>3000</code>秒），对于<strong>这种结果并不是我们期望的</strong>。</p>
+<h3 id="原因分析"><a href="#原因分析" class="headerlink" title="原因分析"></a>原因分析</h3><p>目前<code>spring-oauth2</code>依赖内集成了三种存储令牌的方式，分别是：<code>InMemoryTokenStore（内存方式）</code>、<code>RedisTokenStore（Redis方式）</code>、<code>JdbcTokenStore（数据库方式）</code>。</p>
+<p>从阅读源码中可以发现无论我们配置使用什么方式来进行存储令牌，同一个账户的有效令牌只会存在一个，结合上面的场景来思考所以第二个人获取的令牌与第一个人是同一个。</p>
+<h3 id="DefaultTokenServices"><a href="#DefaultTokenServices" class="headerlink" title="DefaultTokenServices"></a>DefaultTokenServices</h3><p><code>DefaultTokenServices</code>令牌服务是<code>AuthorizationServerTokenServices</code>接口的默认实现，位于<code>org.springframework.security.oauth2.provider.token</code>包内，提供了默认的操作令牌的方法，常用的有：</p>
+<ul>
+<li><code>createAccessToken</code>：根据客户端信息、登录用户信息来创建请求令牌（<code>access_token</code>）以及刷新令牌（<code>refresh_token</code>）</li>
+<li><code>refreshAccessToken</code>：根据刷新令牌（<code>refresh_token</code>）来获取一个全新的请求令牌（<code>access_token</code>）</li>
+<li><code>revokeToken</code>：撤销令牌，删除用户生成的请求令牌（<code>access_token</code>）、刷新令牌（<code>refresh_token</code>）</li>
+</ul>
+<h3 id="源码解析：生成令牌"><a href="#源码解析：生成令牌" class="headerlink" title="源码解析：生成令牌"></a>源码解析：生成令牌</h3><p><strong>DefaultTokenServices#createAccessToken：</strong></p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Transactional</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> OAuth2AccessToken <span class="hljs-title">createAccessToken</span><span class="hljs-params">(OAuth2Authentication authentication)</span> <span class="hljs-keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">        OAuth2AccessToken existingAccessToken = <span class="hljs-keyword">this</span>.tokenStore.getAccessToken(authentication);</span><br><span class="line">        OAuth2RefreshToken refreshToken = <span class="hljs-keyword">null</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span> (existingAccessToken != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (!existingAccessToken.isExpired()) &#123;</span><br><span class="line">                <span class="hljs-keyword">this</span>.tokenStore.storeAccessToken(existingAccessToken, authentication);</span><br><span class="line">                <span class="hljs-keyword">return</span> existingAccessToken;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span> (existingAccessToken.getRefreshToken() != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                refreshToken = existingAccessToken.getRefreshToken();</span><br><span class="line">                <span class="hljs-keyword">this</span>.tokenStore.removeRefreshToken(refreshToken);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">this</span>.tokenStore.removeAccessToken(existingAccessToken);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> (refreshToken == <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            refreshToken = <span class="hljs-keyword">this</span>.createRefreshToken(authentication);</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (refreshToken <span class="hljs-keyword">instanceof</span> ExpiringOAuth2RefreshToken) &#123;</span><br><span class="line">            ExpiringOAuth2RefreshToken expiring = (ExpiringOAuth2RefreshToken)refreshToken;</span><br><span class="line">            <span class="hljs-keyword">if</span> (System.currentTimeMillis() &gt; expiring.getExpiration().getTime()) &#123;</span><br><span class="line">                refreshToken = <span class="hljs-keyword">this</span>.createRefreshToken(authentication);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        OAuth2AccessToken accessToken = <span class="hljs-keyword">this</span>.createAccessToken(authentication, refreshToken);</span><br><span class="line">        <span class="hljs-keyword">this</span>.tokenStore.storeAccessToken(accessToken, authentication);</span><br><span class="line">        refreshToken = accessToken.getRefreshToken();</span><br><span class="line">        <span class="hljs-keyword">if</span> (refreshToken != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.tokenStore.storeRefreshToken(refreshToken, authentication);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> accessToken;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在创建令牌的源码方法中，首先根据认证信息去读取存储介质（<code>TokenStore</code>实现类）内该账户的令牌，如果令牌已经存储并且并未过期，则直接返回（<code>这也就是同一个账户不同人登录时返回同一个令牌的逻辑</code>），如果令牌已经过期，则删除刷新令牌（<code>refresh_token</code>）、请求令牌（<code>access_token</code>）后重新生成。</p>
+<h3 id="源码解析：刷新令牌"><a href="#源码解析：刷新令牌" class="headerlink" title="源码解析：刷新令牌"></a>源码解析：刷新令牌</h3><p><strong>DefaultTokenServices#refreshAccessToken：</strong></p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Transactional</span>(</span><br><span class="line">        noRollbackFor = &#123;InvalidTokenException<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">InvalidGrantException</span>.<span class="hljs-title">class</span>&#125;</span></span><br><span class="line"><span class="hljs-class">    )</span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-title">public</span> <span class="hljs-title">OAuth2AccessToken</span> <span class="hljs-title">refreshAccessToken</span>(<span class="hljs-title">String</span> <span class="hljs-title">refreshTokenValue</span>, <span class="hljs-title">TokenRequest</span> <span class="hljs-title">tokenRequest</span>) <span class="hljs-title">throws</span> <span class="hljs-title">AuthenticationException</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.supportRefreshToken) &#123;</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidGrantException(<span class="hljs-string">"Invalid refresh token: "</span> + refreshTokenValue);</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            OAuth2RefreshToken refreshToken = <span class="hljs-keyword">this</span>.tokenStore.readRefreshToken(refreshTokenValue);</span><br><span class="line">            <span class="hljs-keyword">if</span> (refreshToken == <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidGrantException(<span class="hljs-string">"Invalid refresh token: "</span> + refreshTokenValue);</span><br><span class="line">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                OAuth2Authentication authentication = <span class="hljs-keyword">this</span>.tokenStore.readAuthenticationForRefreshToken(refreshToken);</span><br><span class="line">                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.authenticationManager != <span class="hljs-keyword">null</span> &amp;&amp; !authentication.isClientOnly()) &#123;</span><br><span class="line">                    Authentication userAuthentication = authentication.getUserAuthentication();</span><br><span class="line">                    PreAuthenticatedAuthenticationToken preAuthenticatedToken = <span class="hljs-keyword">new</span> PreAuthenticatedAuthenticationToken(userAuthentication, <span class="hljs-string">""</span>, authentication.getAuthorities());</span><br><span class="line">                    <span class="hljs-keyword">if</span> (userAuthentication.getDetails() != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                        preAuthenticatedToken.setDetails(userAuthentication.getDetails());</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    Authentication user = <span class="hljs-keyword">this</span>.authenticationManager.authenticate(preAuthenticatedToken);</span><br><span class="line">                    Object details = authentication.getDetails();</span><br><span class="line">                    authentication = <span class="hljs-keyword">new</span> OAuth2Authentication(authentication.getOAuth2Request(), user);</span><br><span class="line">                    authentication.setDetails(details);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                String clientId = authentication.getOAuth2Request().getClientId();</span><br><span class="line">                <span class="hljs-keyword">if</span> (clientId != <span class="hljs-keyword">null</span> &amp;&amp; clientId.equals(tokenRequest.getClientId())) &#123;</span><br><span class="line">                    <span class="hljs-keyword">this</span>.tokenStore.removeAccessTokenUsingRefreshToken(refreshToken);</span><br><span class="line">                    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isExpired(refreshToken)) &#123;</span><br><span class="line">                        <span class="hljs-keyword">this</span>.tokenStore.removeRefreshToken(refreshToken);</span><br><span class="line">                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidTokenException(<span class="hljs-string">"Invalid refresh token (expired): "</span> + refreshToken);</span><br><span class="line">                    &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                        authentication = <span class="hljs-keyword">this</span>.createRefreshedAuthentication(authentication, tokenRequest);</span><br><span class="line">                        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.reuseRefreshToken) &#123;</span><br><span class="line">                            <span class="hljs-keyword">this</span>.tokenStore.removeRefreshToken(refreshToken);</span><br><span class="line">                            refreshToken = <span class="hljs-keyword">this</span>.createRefreshToken(authentication);</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        OAuth2AccessToken accessToken = <span class="hljs-keyword">this</span>.createAccessToken(authentication, refreshToken);</span><br><span class="line">                        <span class="hljs-keyword">this</span>.tokenStore.storeAccessToken(accessToken, authentication);</span><br><span class="line">                        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.reuseRefreshToken) &#123;</span><br><span class="line">                            <span class="hljs-keyword">this</span>.tokenStore.storeRefreshToken(accessToken.getRefreshToken(), authentication);</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="hljs-keyword">return</span> accessToken;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidGrantException(<span class="hljs-string">"Wrong client for this refresh token: "</span> + refreshTokenValue);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在刷新令牌的源码方法中，首先需要读取刷新令牌（<code>refresh_token</code>）的具体内容，如果不存在则直接抛出刷新令牌无效的异常<code>InvalidGrantException</code>。</p>
+<p>执行令牌刷新之前，需要根据刷新令牌删除请求令牌<code>removeAccessTokenUsingRefreshToken</code>，删除后再次判定刷新令牌是否失效，如果失效抛出<code>InvalidTokenException</code>异常。</p>
+<p>刷新令牌的重复使用是根据全局变量<code>reuseRefreshToken</code>来判定的，默认情况下该变量的值为<code>true</code>，也就是刷新令牌可以重复使用，但是经过<code>createAccessToken &gt; TokenEnhancer#enhance</code>处理后刷新令牌会被重新创建并替换（这个地方貌似是一个Bug）。</p>
+<h2 id="重写TokenServices"><a href="#重写TokenServices" class="headerlink" title="重写TokenServices"></a>重写TokenServices</h2><h3 id="期望效果"><a href="#期望效果" class="headerlink" title="期望效果"></a>期望效果</h3><p>假设请求令牌（<code>access_token</code>）的有效期为<code>7200</code>秒，也就是<code>2</code>个小时，刷新令牌（<code>refresh_token</code>）的有效期为<code>43200</code>秒，也就是<code>12</code>个小时。</p>
+<p>在第一次通过<code>createAccessToken</code>获取令牌后，每次请求令牌（<code>access_token</code>）过期后通过刷新的方式（<code>/oauth/token?grant_type=refresh_token</code>）重新获取一次新的（<code>有效期为2个小时</code>）请求令牌，当刷新令牌（<code>refresh_token</code>）失效后，再次通过<code>createAccessToken</code>方法来获取令牌。</p>
+<h3 id="分析期望效果"><a href="#分析期望效果" class="headerlink" title="分析期望效果"></a>分析期望效果</h3><p>针对上面的期望效果我们需要修改<code>createAccessToken</code>、<code>refreshAccessToken</code>两个方法的源码，调用<code>createAccessToken</code>方法时不再判定是否使用已经存在的有效令牌，而调用<code>refreshAccessToken</code>方法时需要删除响应的<code>refresh_token</code>的返回字段并把新的请求令牌与刷新令牌进行绑定。</p>
+<h3 id="OverrideTokenServices"><a href="#OverrideTokenServices" class="headerlink" title="OverrideTokenServices"></a>OverrideTokenServices</h3><p>复制<code>DefaultTokenServices</code>类内的全部代码，创建一个名为<code>OverrideTokenServices</code>的类，为了兼容原来的逻辑，需要添加一个全局变量<code>alwaysCreateToken</code>，用于判定是否始终创建令牌。</p>
+<h3 id="重写创建令牌逻辑"><a href="#重写创建令牌逻辑" class="headerlink" title="重写创建令牌逻辑"></a>重写创建令牌逻辑</h3><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Transactional</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> OAuth2AccessToken <span class="hljs-title">createAccessToken</span><span class="hljs-params">(OAuth2Authentication authentication)</span> <span class="hljs-keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">        OAuth2RefreshToken refreshToken = <span class="hljs-keyword">null</span>;</span><br><span class="line">        OAuth2AccessToken existingAccessToken = <span class="hljs-keyword">this</span>.tokenStore.getAccessToken(authentication);</span><br><span class="line">        <span class="hljs-comment">// 根据alwaysCreateToken字段判定是否始终创建令牌</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.alwaysCreateToken &amp;&amp; existingAccessToken != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span> (!existingAccessToken.isExpired()) &#123;</span><br><span class="line">                <span class="hljs-keyword">this</span>.tokenStore.storeAccessToken(existingAccessToken, authentication);</span><br><span class="line">                <span class="hljs-keyword">return</span> existingAccessToken;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span> (existingAccessToken.getRefreshToken() != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                refreshToken = existingAccessToken.getRefreshToken();</span><br><span class="line">                <span class="hljs-keyword">this</span>.tokenStore.removeRefreshToken(refreshToken);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">this</span>.tokenStore.removeAccessToken(existingAccessToken);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span> (refreshToken == <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            refreshToken = <span class="hljs-keyword">this</span>.createRefreshToken(authentication);</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (refreshToken <span class="hljs-keyword">instanceof</span> ExpiringOAuth2RefreshToken) &#123;</span><br><span class="line">            ExpiringOAuth2RefreshToken expiring = (ExpiringOAuth2RefreshToken)refreshToken;</span><br><span class="line">            <span class="hljs-keyword">if</span> (System.currentTimeMillis() &gt; expiring.getExpiration().getTime()) &#123;</span><br><span class="line">                refreshToken = <span class="hljs-keyword">this</span>.createRefreshToken(authentication);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        OAuth2AccessToken accessToken = <span class="hljs-keyword">this</span>.createAccessToken(authentication, refreshToken);</span><br><span class="line">        <span class="hljs-keyword">this</span>.tokenStore.storeAccessToken(accessToken, authentication);</span><br><span class="line">        refreshToken = accessToken.getRefreshToken();</span><br><span class="line">        <span class="hljs-keyword">if</span> (refreshToken != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">            <span class="hljs-keyword">this</span>.tokenStore.storeRefreshToken(refreshToken, authentication);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> accessToken;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果我们想使用原来的逻辑，在初始化<code>OverrideTokenServices</code>类时需要设置<code>alwaysCreateToken</code>变量的值为<code>false</code>。</p>
+</blockquote>
+<h3 id="重写刷新令牌逻辑"><a href="#重写刷新令牌逻辑" class="headerlink" title="重写刷新令牌逻辑"></a>重写刷新令牌逻辑</h3><figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> OAuth2AccessToken <span class="hljs-title">refreshAccessToken</span><span class="hljs-params">(String refreshTokenValue, TokenRequest tokenRequest)</span> <span class="hljs-keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.supportRefreshToken) &#123;</span><br><span class="line">            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidGrantException(<span class="hljs-string">"Invalid refresh token: "</span> + refreshTokenValue);</span><br><span class="line">        &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">            OAuth2RefreshToken refreshToken = <span class="hljs-keyword">this</span>.tokenStore.readRefreshToken(refreshTokenValue);</span><br><span class="line">            <span class="hljs-keyword">if</span> (refreshToken == <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidGrantException(<span class="hljs-string">"Invalid refresh token: "</span> + refreshTokenValue);</span><br><span class="line">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                OAuth2Authentication authentication = <span class="hljs-keyword">this</span>.tokenStore.readAuthenticationForRefreshToken(refreshToken);</span><br><span class="line">                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.authenticationManager != <span class="hljs-keyword">null</span> &amp;&amp; !authentication.isClientOnly()) &#123;</span><br><span class="line">                    Authentication userAuthentication = authentication.getUserAuthentication();</span><br><span class="line">                    PreAuthenticatedAuthenticationToken preAuthenticatedToken = <span class="hljs-keyword">new</span> PreAuthenticatedAuthenticationToken(userAuthentication, <span class="hljs-string">""</span>, authentication.getAuthorities());</span><br><span class="line">                    <span class="hljs-keyword">if</span> (userAuthentication.getDetails() != <span class="hljs-keyword">null</span>) &#123;</span><br><span class="line">                        preAuthenticatedToken.setDetails(userAuthentication.getDetails());</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    Authentication user = <span class="hljs-keyword">this</span>.authenticationManager.authenticate(preAuthenticatedToken);</span><br><span class="line">                    Object details = authentication.getDetails();</span><br><span class="line">                    authentication = <span class="hljs-keyword">new</span> OAuth2Authentication(authentication.getOAuth2Request(), user);</span><br><span class="line">                    authentication.setDetails(details);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                String clientId = authentication.getOAuth2Request().getClientId();</span><br><span class="line">                <span class="hljs-keyword">if</span> (clientId != <span class="hljs-keyword">null</span> &amp;&amp; clientId.equals(tokenRequest.getClientId())) &#123;</span><br><span class="line">                    <span class="hljs-keyword">this</span>.tokenStore.removeAccessTokenUsingRefreshToken(refreshToken);</span><br><span class="line">                    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isExpired(refreshToken)) &#123;</span><br><span class="line">                        <span class="hljs-keyword">this</span>.tokenStore.removeRefreshToken(refreshToken);</span><br><span class="line">                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidTokenException(<span class="hljs-string">"Invalid refresh token (expired): "</span> + refreshToken);</span><br><span class="line">                    &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                        authentication = <span class="hljs-keyword">this</span>.createRefreshedAuthentication(authentication, tokenRequest);</span><br><span class="line">                        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.reuseRefreshToken) &#123;</span><br><span class="line">                            <span class="hljs-keyword">this</span>.tokenStore.removeRefreshToken(refreshToken);</span><br><span class="line">                            refreshToken = <span class="hljs-keyword">this</span>.createRefreshToken(authentication);</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        DefaultOAuth2AccessToken accessToken = (DefaultOAuth2AccessToken) <span class="hljs-keyword">this</span>.createAccessToken(authentication, refreshToken);</span><br><span class="line">                        <span class="hljs-comment">// If you reuse the refresh token, set the refresh token to the new AccessToken</span></span><br><span class="line">                        <span class="hljs-comment">// 如果重复使用刷新令牌，将刷新令牌与新生成的请求令牌进行绑定</span></span><br><span class="line">                        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.reuseRefreshToken) &#123;</span><br><span class="line">                            accessToken.setRefreshToken(refreshToken);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="hljs-keyword">this</span>.tokenStore.storeAccessToken(accessToken, authentication);</span><br><span class="line">                        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.reuseRefreshToken) &#123;</span><br><span class="line">                            <span class="hljs-keyword">this</span>.tokenStore.storeRefreshToken(accessToken.getRefreshToken(), authentication);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="hljs-comment">// No new token will be returned after refresh</span></span><br><span class="line">                        <span class="hljs-comment">// 刷新令牌后不再返回refresh_token</span></span><br><span class="line">                        accessToken.setRefreshToken(<span class="hljs-keyword">null</span>);</span><br><span class="line">                        <span class="hljs-keyword">return</span> accessToken;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InvalidGrantException(<span class="hljs-string">"Wrong client for this refresh token: "</span> + refreshTokenValue);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>DefaultTokenServices</code>类中默认定义了全局变量<code>reuseRefreshToken</code>，该变量的值为<code>true</code>，表示默认情况下刷新令牌（<code>refresh_token</code>）是可以重复使用的，一般刷新令牌的过期时间都比较久，当请求令牌（<code>access_token</code>）失效后根据刷新令牌进行获取新的有效请求令牌。</p>
+<h2 id="配置TokenServices"><a href="#配置TokenServices" class="headerlink" title="配置TokenServices"></a>配置TokenServices</h2><p>我们需要在<code>AuthorizationServerConfigurerAdapter</code>实现类内进行配置<code>TokenServices</code>的替换使用，如下所示：</p>
+<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">  * 实例化&#123;<span class="hljs-doctag">@link</span> OverrideTokenServices&#125;</span></span><br><span class="line"><span class="hljs-comment">  *</span></span><br><span class="line"><span class="hljs-comment">  * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-doctag">@link</span> OverrideTokenServices&#125;</span></span><br><span class="line"><span class="hljs-comment">  */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">private</span> AuthorizationServerTokenServices <span class="hljs-title">tokenServices</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">  OverrideTokenServices tokenServices = <span class="hljs-keyword">new</span> OverrideTokenServices();</span><br><span class="line">  tokenServices.setTokenStore(tokenStore());</span><br><span class="line">  tokenServices.setAlwaysCreateToken(<span class="hljs-keyword">true</span>);</span><br><span class="line">  tokenServices.setSupportRefreshToken(<span class="hljs-keyword">true</span>);</span><br><span class="line">  tokenServices.setClientDetailsService(clientDetailsService);</span><br><span class="line">  <span class="hljs-keyword">return</span> tokenServices;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Override</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">configure</span><span class="hljs-params">(AuthorizationServerEndpointsConfigurer endpoints)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;</span><br><span class="line">  endpoints</span><br><span class="line">    .authenticationManager(authenticationManager)</span><br><span class="line">    .tokenStore(tokenStore())</span><br><span class="line">    <span class="hljs-comment">// 配置替换使用TokenServices</span></span><br><span class="line">    .tokenServices(tokenServices());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p><strong>获取令牌示例：</strong></p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">第一次获取令牌：</span><br><span class="line">yuqiyu@hengyu ~&gt; curl -X POST -u <span class="hljs-string">"local:123456"</span> http://localhost:9091/oauth/token -d <span class="hljs-string">"grant_type=password&amp;username=hengboy&amp;password=123456"</span> | jsonpp</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   199    0   147  100    52    362    128 --:--:-- --:--:-- --:--:--   491</span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-string">"access_token"</span>: <span class="hljs-string">"qoL7Kg33-deYw-aw8PnIKK-qxEk"</span>,</span><br><span class="line">  <span class="hljs-string">"token_type"</span>: <span class="hljs-string">"bearer"</span>,</span><br><span class="line">  <span class="hljs-string">"refresh_token"</span>: <span class="hljs-string">"-OfFqllKZJC6-r_v_uR9KGUBXl0"</span>,</span><br><span class="line">  <span class="hljs-string">"expires_in"</span>: 7199,</span><br><span class="line">  <span class="hljs-string">"scope"</span>: <span class="hljs-string">"read"</span></span><br><span class="line">&#125;</span><br><span class="line">第二次获取令牌：</span><br><span class="line">yuqiyu@hengyu ~&gt; curl -X POST -u <span class="hljs-string">"local:123456"</span> http://localhost:9091/oauth/token -d <span class="hljs-string">"grant_type=password&amp;username=hengboy&amp;password=123456"</span> | jsonpp</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   199    0   147  100    52    896    317 --:--:-- --:--:-- --:--:--  1213</span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-string">"access_token"</span>: <span class="hljs-string">"hfo01xMTVE1xxxbzQLY7vPfLXPE"</span>,</span><br><span class="line">  <span class="hljs-string">"token_type"</span>: <span class="hljs-string">"bearer"</span>,</span><br><span class="line">  <span class="hljs-string">"refresh_token"</span>: <span class="hljs-string">"QuLgm-H3xHzo71M_XSLrglsRs_o"</span>,</span><br><span class="line">  <span class="hljs-string">"expires_in"</span>: 7199,</span><br><span class="line">  <span class="hljs-string">"scope"</span>: <span class="hljs-string">"read"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到上面使用同一个账号获取了两次令牌，而这两次的令牌内容是完全不同的，这也就是实现了针对同一个账号不同人登录时返回新的令牌的需求。</p>
+<p><strong>刷新令牌示例：</strong></p>
+<figure class="highlight sh hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">根据第一次获取的刷新令牌刷新：</span><br><span class="line">yuqiyu@hengyu ~&gt; curl -X POST -u <span class="hljs-string">"local:123456"</span> http://localhost:9091/oauth/token -d <span class="hljs-string">"grant_type=refresh_token&amp;refresh_token=-OfFqllKZJC6-r_v_uR9KGUBXl0"</span> | jsonpp</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   167    0   101  100    66   1109    725 --:--:-- --:--:-- --:--:--  1835</span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-string">"access_token"</span>: <span class="hljs-string">"KuOprmzBCzC78NXlTkHvZGs9rhs"</span>,</span><br><span class="line">  <span class="hljs-string">"token_type"</span>: <span class="hljs-string">"bearer"</span>,</span><br><span class="line">  <span class="hljs-string">"expires_in"</span>: 7199,</span><br><span class="line">  <span class="hljs-string">"scope"</span>: <span class="hljs-string">"read"</span></span><br><span class="line">&#125;</span><br><span class="line">根据第二次获取的刷新令牌刷新：</span><br><span class="line">yuqiyu@hengyu ~&gt; curl -X POST -u <span class="hljs-string">"local:123456"</span> http://localhost:9091/oauth/token -d <span class="hljs-string">"grant_type=refresh_token&amp;refresh_token=QuLgm-H3xHzo71M_XSLrglsRs_o"</span> | jsonpp</span><br><span class="line">  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current</span><br><span class="line">                                 Dload  Upload   Total   Spent    Left  Speed</span><br><span class="line">100   167    0   101  100    66   1122    733 --:--:-- --:--:-- --:--:--  1855</span><br><span class="line">&#123;</span><br><span class="line">  <span class="hljs-string">"access_token"</span>: <span class="hljs-string">"aLPOEkfUCxn87XkTkcwyixaUO1s"</span>,</span><br><span class="line">  <span class="hljs-string">"token_type"</span>: <span class="hljs-string">"bearer"</span>,</span><br><span class="line">  <span class="hljs-string">"expires_in"</span>: 7200,</span><br><span class="line">  <span class="hljs-string">"scope"</span>: <span class="hljs-string">"read"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>同一个账户，上面虽然刷新了两次，但是令牌的有效期不会相互影响</strong>，第一次刷新使用的是第一次获取的刷新令牌，这样其实也就是刷新的第一次的请求令牌，与第二次的无关！！！</p>
+</blockquote>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>如果您喜欢本篇文章请为源码仓库点个<code>Star</code>，谢谢！！！<br>本篇文章示例源码可以通过以下途径获取，目录为<code>oauth2-always-create-token</code>：</p>
+<ul>
+<li>Gitee：<a href="https://gitee.com/hengboy/spring-boot-chapter/tree/2.x/" target="_blank" rel="noopener">https://gitee.com/hengboy/spring-boot-chapter</a></li>
+</ul>
+
+        
+        <!--原创-->
+        
+        <div class="alert alert-success">
+          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
+              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
+              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
+        </div>
+        
+        <!--转载标注-->
+        
+        
+      </div>
+      <!--文章标签-->
+      
+      <div class="level is-size-7">
+        <div class="level-start">
+          <div class="level-item">
+            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
+            <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+    </div>
+  </div>
+
+  
+  
+
+  
+  <div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+      <!--上一篇-->
+      
+      <div class="level-start">
+        <a class="level level-item has-link-grey  article-nav-prev"
+          href="/postgresql-vs-mysql.html">
+          <i class="level-item fas fa-chevron-left"></i>
+          <span class="level-item">上一篇：PostgreSQL和MySQL到底选哪一个？</span>
+        </a>
+      </div>
+      
+      <!--下一篇-->
+      
+      <div class="level-end">
+        <a class="level level-item has-link-grey  article-nav-next"
+          href="/import-osm-data-into-mysql.html">
+          <span class="level-item">下一篇：将OpenStreetMap导出的OSM数据导入MySQL数据库</span>
+          <i class="level-item fas fa-chevron-right"></i>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!--评论-->
+  
+  <div class="card">
+    <div class="card-content">
+      <h3 class="title is-5 has-text-weight-normal">评论</h3>
+      
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: 'c6d9a9addcb940fef06f',
+        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
+        id: '1151859889e9fb23dd0bce446117fa1f',
+        repo: 'learning-tutorials',
+        owner: 'hengboy',
+        admin: "hengboy",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+  </div>
+  
+  
+</div>
+
+<script src="/js/readmore.js" type="text/javascript"></script>
+<script>
+  const btw = new BTWPlugin();
+  btw.init({
+    id: 'container',
+    blogId: '10034-1569731208928-426',
+    name: '恒宇少年',
+    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
+    keyword: 'free',
+  });
+</script>
+
+<!--<script src="/js/layui.js"></script>
+<script>
+  layui.use(['layer'], function () {
+    var layer = layui.layer;
+    var isShowOnce = localStorage.getItem('isShowHistory');
+    if (!isShowOnce) {
+      localStorage.setItem('isShowHistory',true);
+      layer.open({
+          type: 1
+          ,title: false //不显示标题栏
+          ,closeBtn: false
+          ,area: '350px;'
+          ,shade: 0.8
+          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+          ,btn: ['带朕去看看', '给朕退下']
+          ,btnAlign: 'c'
+          ,moveType: 1 //拖拽模式，0或者1
+          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
+          ,success: function(layero){
+            var btn = layero.find('.layui-layer-btn');
+            btn.find('.layui-layer-btn0').attr({
+              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
+              ,target: '_blank'
+            });
+          }
+        });
+    }
+  });
+</script>-->
+
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script></div>
+                
+                
+
+
+
+
+<!--展示块 布局-->
+<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
+    
+        <div class="card widget">
+  <div class="card-content" style="padding: 0%">
+    <!--个人信息-->
+    <img src="/images/profile2.png" />
+    <!--第三方文章发布平台-->
+    <div class="article-platform">
+      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
+            width="25" /></a></span>
+      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
+            width="25" /></a></span>
+      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
+            src="/images/juejin-logo.svg" width="25" /></a></span>
+      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
+            src="/images/思否.png" width="25" /></a></span>
+      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
+            src="/images/知乎.svg" width="25" /></a></span>
+      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
+            width="25" /></a></span>
+      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
+            width="25" /></a></span>
+    </div>
+  </div>
+</div>
+    
+        <!--热门文章列表，在文章详情显示，首页不显示-->
+
+<div class="card widget">
+  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
+    
+    
+    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        fish终端快速切换JDK版本
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        OAuth2 始终获取新的令牌
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        将OSM数据导入MySQL
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/redis-geo-practice.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        了解Redis Geo范围查询
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        Spring Security密码加密方式
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+    
+    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
+        <!--热门-->
+        
+        <img src="/images/hot.gif" />
+        
+        <!--如果存在短标题，使用短标题-->
+        
+        使用GitHub Actions发布Jar到Maven Central
+        
+        <!--如果不存在短标题，使用文章标题-->
+        
+      </a></p>
+    
+    
+
+  </div>
+</div>
+
+    
+        
+
+
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="/apiboot-all-articles.html" target="_blank">
+      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+
+
+    
+        
+
+
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="http://gk.link/a/10f7u" target="_blank">
+      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+
+
+    
+        <!--学习专题列表-->
+
+
+  <div class="card widget" id="topic">
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-1-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v1.x 基础教程</p>
+
+            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-boot-2-x-articles.html" target="_blank">
+            <p class="title">SpringBoot v2.x 基础教程</p>
+
+            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/spring-cloud.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/spring-cloud-all-articles.html" target="_blank">
+            <p class="title">SpringCloud 基础教程</p>
+
+            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/api-boot.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/apiboot-all-articles.html" target="_blank">
+            <p class="title">ApiBoot 基础教程</p>
+
+            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="/images/技术杂谈.svg" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="/technical-talk.html" target="_blank">
+            <p class="title">技术杂谈</p>
+
+            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+
+
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+  <div class="container">
+    <div class="level">
+      <div class="level-start has-text-centered-mobile">
+        <p class="is-size-7">
+          &copy; 2018 - 2022
+          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
+          <br />
+          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
+        </p>
+      </div>
+      <div class="level-end">
+        
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>

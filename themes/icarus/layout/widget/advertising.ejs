@@ -1,0 +1,16 @@
+<% const adverts = get_config_from_obj(widget, 'adverts'); %>
+<% if (adverts !== null) { %>
+<% for (let ad in adverts) { %>
+<div class="card widget" style="margin-top: 1rem;">
+
+  <div class="card-content" style="padding: 0">
+
+    <a href="<%- adverts[ad] %>" target="_blank">
+      <img src="<%= ad %>" style="padding: 0px;height: 130px;width:100%" />
+    </a>
+
+  </div>
+
+</div>
+<% } %>
+<% } %>

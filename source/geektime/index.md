@@ -1,0 +1,248 @@
+---
+id: geektime
+title: 全网最优惠的极客时间购买通道
+layout: post
+enable_comment: false
+keywords: '极客时间购买通道,恒宇少年,视频教程'
+customize: true
+---
+<p>恒宇少年为爱学习的你准备了专属的极客时间优惠券<b>199元</b>大礼包，点击领取：<a href="http://gk.link/a/10f7u" target="_blank">http://gk.link/a/10f7u</a></p>
+<p>如果您身边的朋友也需要，那么请把这个页面分享给他吧~</p>
+<p>推荐一下极客时间出品的内容中，个人觉得非常不错的的专栏！</p>
+
+<h2>微服务</h2>
+
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/玩转Spring全家桶-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/course/intro/100023501?code=Bb0kYvkF8opyRcznUfl1msqTIMJ1AY-kgBEfuR9N4nw%3D">
+  <h3>玩转Spring全家桶</h3>
+  <p>这门课程是极客时间订阅最多的视频课，同时也是市面上性价比最高的付费教程，20000+订阅，课程由丁雪丰（市面上畅销书《SpringBoot实战》和《Spring攻略》的译者）主讲，详述 Spring、Spring Boot 和 Spring Cloud 技术应用，目前已经开始讲 Cloud 和 Cloud Native 部分了。最后课程还会带你用相关技术搭建一个线上咖啡馆项目，通过实战把所有知识点串联起来。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/微服务架构实战160讲-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/course/intro/100007001?code=mP4R0bYDPnlfre048hBvxH6vV%2Fvls%2FrR7tcaP3y5P1Q%3D">
+  <h3>微服务架构实战160讲</h3>
+  <p>资深架构师杨波老师在《微服务架构实践160讲》视频课程中，通过原理讲解和实战操作的方式，帮助你从0到1深入理解主流微服务技术栈组建及架构，帮你踏上从程序员到架构师的进阶之路。随着课程难度的提升，还会带有字幕。学习起来更轻松。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/Spring Boot 与 Kibernetes 云原生微服务实践.jpg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/course/intro/100031401?code=tNZAzBD%2F6culjF4IAq1BqRRmv0SrIKB-6Nojl21qkPU%3D">
+  <h3>Spring Boot 与 Kubernetes 云原生微服务实践</h3>
+  <p>"平时虽然学习了很多微服务理论，但是在真正落地实施微服务架构的时候，仍然会感到手足无措。我们都知道微服务、云原生、SpringBoot 和 Kubernetes，是当前互联网行业，尤其是主流互联网公司的主流技术，该课程将这些技术做了很好的融合。讲师杨波，资深架构师，有15年以上的研发经验，一直在一线互联网公司(携程和拍拍贷)的基础框架部担任架构师和研发总监等职位，主导这些公司的微服务基础平台建设，有非常丰富的落地微服务经验，是妥妥的前辈了。"</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/从0开始学微服务-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100014401?code=8LvyyG7UxmLTqSXNugWukHgVCAm7RyzSnr8Xz4Hj4FI%3D">
+  <h3>从0开始学微服务</h3>
+  <p>服务化问题，是每个后端程序员迟早会面临的难题。专栏作者是新浪微博技术专家胡忠想，如果你刷微博，一定对他不陌生。胡大大几乎亲历了微博后端架构的每一次重大升级，积累了大量实战干货经验。他会由浅入深，带你从0开始构建微服务体系，给你提供一套可以快速落地的方法论。现在这个专栏已经有1.5W+人上车，你还不来吗？</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/深入剖析Kuberntes-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100015201?code=cMHp1Z36M8Ei7T0dYth0TvhT-zvHZdG9u%2FbfFeZfrwA%3D">
+  <h3>深入剖析Kubernetes</h3>
+  <p>最近几年Kubernetes一跃成为容器王者，推荐Kubernetes项目维护者张磊的这个专栏，张磊从开发者和使用者的真实逻辑出发，帮你理解 Kubernetes 的核心特性，甚至从Docker诞生背景讲起，把设计原则和容器编排理念讲的明明白白。化繁为简，深入浅出。如果你觉得Kubernetes学习来晦涩难懂，那你一定要好好学学这个专栏。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/Nginx核心知识100讲-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/course/intro/100020301?code=ui1Cd1zysphKr%2FqvJK%2FM3lVGWL1LeqSM1nW65sEMPW8%3D">
+  <h3>Nginx核心知识100讲</h3>
+  <p>Nginx，是应对高并发场景的万能药。掌握好 Nginx，便掌握了应对高并发以及海量数据处理的利器。陶辉的《Nginx 核心知识100讲》 就是出于能带你学好 Nginx 目的而设计的一个课程，从概念、代码再到实战，从 HTTP 到 OpenResty 等5大核心内容全覆盖。跟着他学，让你少走弯路，进阶 Nginx 高手！</p>
+  </a>
+  </div>
+</div>
+
+<h2 style="margin-top:40px">基础知识</h2>
+
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/左耳听风-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100002201?code=Qs2iY4eILSDZ1eU8fPNtkhw26DYY1PmxHIcesCft12I%3D">
+  <h3>左耳听风</h3>
+  <p>左耳朵耗子，陈皓的专栏，他可是骨灰级程序员，圈内的大神。这个专栏集合了他20年技术经验和学习过程的总结，内容涉及分布式、编程范式、容器技术、AI、区块链、程序员练级、高效管理等等，算是极客时间价格最贵的专栏，但绝对超值，已有近3.5w人加入学习，而且耗子目前坚决不出书，说实话，未来的你如果想成为一名骨灰级程序员，这就是你的必修课程。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BE%8E-%E5%B8%B8%E8%A7%84%E8%BD%AE%E6%92%AD%E5%9B%BE.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100017301?code=My3d483rRHzGxfatJncHkeZVFqWHDzD7xORlGQZmUSw%3D">
+  <h3>数据结构与算法之美</h3>
+  <p>订阅量Top1，50000+程序员的算法课堂，整个专栏会涵盖100 多个算法真实项目场景案例，更难得的是它跟市面上晦涩的算法书籍不同的是，还手绘了一些清晰易懂的详解图（总共有 300 多张），市面上的大多数的算法教程都看过，走心的说，这个专栏是市面上唯一一门真正适用于工程师的专栏，作者是前Google工程师王争，相信会开启你的趣味学习算法之旅。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/Java核心技术36讲-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100006701?code=QAG8uio8HV6ccyx65AE4KSbC0xxgJ%2FhO35y%2F65MLnZM%3D">
+  <h3>Java核心技术36讲</h3>
+  <p>如果你想认真进阶Java或者准备面试，我推荐你好好看下《Java核心技术36讲》专栏。作者从核心知识点和能力出发，精选出36道Java面试题。每期针对1道题目，不仅会给出典型回答和考点分析，还会剖析Java核心知识点，将其讲清讲透，让你彻底领悟题目背后所考察的能力，帮你梳理复习Java知识体系。不管你是在准备面试、还是想进阶Java，你都可以通过这个专栏，提升Java技能。作者杨晓峰是前 Oracle 首席工程师，大家都知道，Java就是Oracle公司的，内部人的专栏，给你与众不同的视角。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/MySQL实战45讲-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100020801?code=DD%2FM8YxUxfOkv8CAlJt9KXWW5ANoKlp%2Ftbw0KsB-T0E%3D">
+  <h3>MySQL实战45讲</h3>
+  <p>这个专栏是数据库大神、前阿里资深技术专家丁奇写的，冲着作者买都不会亏。在这个专栏里，丁奇会帮你梳理出学习 MySQL 的主线知识，比如事务、索引、锁等，还会就开发过程中经常遇到的具体问题和你分析讨论，并且帮你理解问题背后的本质。你会收获 MySQL 核心技术详解与原理说明和36 个 MySQL 常见痛点问题解析。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/深入拆解Java虚拟机-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100010301?code=nUMjpf0u%2FQVWujqg5p4AKa5wXA-2tiZxkaMyYVS11xI%3D">
+  <h3>深入拆解Java虚拟机</h3>
+  <p>作为 Java 程序员，如果你不去深入理解 Java 虚拟机，那基本是与进阶加薪无缘了。这个专栏，我记得当时上线不到3天，已经有1W人订阅，异常火爆。1、Java虚拟机确实是面试大题；2、作者是郑雨迪，Oracle Labs高级研究员，专攻Graal编译器，也在研究HotSpot虚拟机项目。既然你要学JVM，那跟着Oracle内部专家学，是我想到最高效的方式。想认真进阶Java的同学，实力推荐这个专栏。</p>
+  </a>
+  </div>
+</div>
+
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/代码精进之路-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100019601?code=UoghZNK7M1JHPnS%2FT3E5i6n9isdcrSIngXRwAaURFg0%3D">
+  <h3>代码精进之路</h3>
+  <p>普通的工程师堆砌代码，优秀的工程师优雅代码，卓越的工程师简化代码。如何写出优雅整洁易懂的代码是一门学问，也是软件工程实践里重要的一环。范学雷老师，现在是 Oracle 的主任工程师，也是 OpenJDK 和 Java 安全的评审成员。他是1998年参加工作的，20多年了一直在一线从事编程工作，04年的时候，就加入了 Java SE 团队，这15年来完整经历了JDK从1.5.0到12.0的整个迭代过程。希望这门专栏能够培养你的良好的编程习惯，这意味着你可以用更少的努力：时间和精力的投入，产生更干净、简洁、智能的代码。</p>
+  </a>
+  </div>
+</div>
+
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/程序员的数学基础课-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100021201?code=HQ8p4bnGHEU%2Fd4XnfdGYiu2eXpy2OBD6AYV0Z5DYde4%3D">
+  <h3>程序员的数学基础课</h3>
+  <p>数学基础的好坏，会直接决定一个程序员的发展潜力。很多大公司在招人时，都会优先考虑数学专业的毕业生。LinkedIn 资深数据科学家黄申，为你精讲程序员真正用得上的数学知识。超过  2.1 万人已加入学习，是极客时间最火爆的基础课程，专栏图文并茂，老师不仅会回答问题，还会在每一章节末尾总结「学习笔记」，可以保存下来随时复习。算法学不好？或许你该补补数学了。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/Java并发编程实战-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100023901?code=6axCbx6C1a1i7iVOldEDKJi2XqVwaX87iSsD%2Fm0gNEM%3D">
+  <h3>Java并发编程实战</h3>
+  <p>这应该是完结之后用户最舍不得呼声最高要求作者再写的一门课，真真带开了大家的并发编程世界。京东资深架构师宝令老师带你搭建一张「处理并发问题」全景图，找到并发根源，系统提升你的并发编程能力。如果你正在苦恼并发，那么这个专栏值得你花时间多次看、反复看、来回看。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/玩转GIT三剑客-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/course/intro/100021601?code=lGmMVMitLgo2RtbKV8-WkI0OtJuejad-CxRffXMl%2F%2FU%3D">
+  <h3>玩转Git三剑客</h3>
+  <p>作为程序员，怎么能不掌握Git、GitHub 和 GitLab 三剑客？就说B站代码泄漏的锅，Git背不背？[奸笑]《玩转Git三剑客》正在限时优惠中，62节视频课手把手带你从入门到精通，推荐～</p>
+  </a>
+  </div>
+</div>
+
+<h2 style="margin-top:40px">架构师修炼</h2>
+
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/从0开始学架构-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100006601?code=bGr9ysjZjIBtMxZKXm4-yC7u4NgJqw67LpAfmHwzyOs%3D">
+  <h3>从0开始学架构</h3>
+  <p>每个程序员都有成为架构师的梦想，李运华，资深技术专家，14年技术老兵，超过十年架构经验，有自己一套独门的架构设计方法论，经受了超过3万学员锤炼，用户留言超过20万字。照着做，你也能成为架构师。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/许式伟的架构课.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100025201?code=lbpbzXEJefqlfJzbmpYJw9ATaqxeA9UKolA3yLzWJVI%3D">
+  <h3>许式伟的架构课</h3>
+  <p>印象中这个专栏上线不到 1 个月，就有 1.5W+ 订阅了。用四个字概括这个专栏，我觉得是：高屋建瓴——既有架构观，也有方法论，结合老许 20 年的经验沉淀，可以说是始于架构，又高于架构。老许是个传奇人物啊，毕业 2 年就成为 WPS 的首席架构师，创建七牛云后，他亲自架构设计，编写了大量核心代码。所谓「带你重新理解架构设计」，这话可不止说说而已。</p>
+  </a>
+  </div>
+</div>
+
+<h2 style="margin-top:40px">技术管理</h2>
+
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/朱赟的技术管理课-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100002401?code=Nwl73NijP%2FVmNP80W-953Aj5HSn3Ot7DhZCx0ST%2F134%3D">
+  <h3>朱赟的技术管理课</h3>
+  <p>技术人必须开拓自己的视野，去了解外面的技术实战、公司文化。而这个专栏可以带你走进硅谷，了解硅谷的开发流程、Core Review、热点技术等等。朱赟--前Airbnb技术经理、计算机博士，将自己近几年在硅谷的技术经历总结成文，囊括了技术管理、技术实践、硅谷文化、个人成长等5个维度的内容。无论你是初入职场的程序员，还是正面临技术转管理选择的职场中人，相信都能在这个专栏中有所收获，找到成长跃迁的最佳路径。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/技术管理26讲-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100014301?code=8zqKDEcHH-sEKSFfVhqzj-qdcluYC2eZpyYn8p94Snk%3D">
+  <h3>技术管理实战36讲</h3>
+  <p>你能不能想像，一个教技术人怎样管理的专栏，竟然3个月订阅量过万？很多技术人觉得管理跟自己无关，但其实，超过80%的技术管理者，都是在没有明确表达管理意愿的情况下，被公司推到管理岗位的。你是管理者，可以对照自己，你是下属，也可以对照上司，很多事情就通透了。这个专栏的最大特点就是几十张管理卡片，张张经典，是作者带团队十几年总结的精华。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/技术领导力300讲-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100006201?code=qsQ-r8whMZEKvBZO6G5kustR9pXiod-njAlmjnKMzs8%3D">
+  <h3>技术领导力实战笔记</h3>
+  <p>《技术领导力300讲》用一句话总结：“都TM是人生经验啊！” ——100 位 CTO 的真知灼见都凝聚在这了，用二爷的话说：和作者中任何一位聊上一杯咖啡的时间，我都愿意付出比这 100 多块钱多得多的代价。由阿里、腾讯、京东、AWS 等上百家知名互联网公司的优秀技术领导者与 CEO 共同贡献内容，涵盖前沿技术、趋势分析、团队管理、软性技能等技术管理者关注的重点问题，手把手带你做管理。</p>
+  </a>
+  </div>
+</div>
+
+<h2 style="margin-top:40px">必备技能</h2>
+
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/面试现场-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100023401?code=rfJIIsJQ9nScGX3F6Jg3GVkpQeqZzf1u1s2EkKQo-kg%3D">
+  <h3>面试现场</h3>
+  <p>很多人简历或面试被Pass，并不是因为专业技能不够。被录用的，也往往并不是专业技能最强的人。《面试现场》专栏，作者将立足应聘者的素质模型，带你全方位梳理经验、总结技能、找出潜能、调整动机，让你能够充分理解面试这个场景下的各个关键因素。系统告诉你怎样“知己知彼”准备面试，从而在“面试现场”高水准发挥。</p>
+  </a>
+  </div>
+</div>
+<hr style="width:100%;margin-top:20px">
+<div class="row">
+  <div class="cols-4"><img src="/images/geek/程序员的法律课-常规轮播图.jpeg"/></div>
+  <div class="cols-5">
+  <a href="https://time.geekbang.org/column/intro/100020001?code=-l9TxqhvcEsuJ%2Ff6zaigBPFGp6lrhpnEnOZpvKdGGp8%3D">
+  <h3>程序员的法律课</h3>
+  <p>批量爬虫企业数据，违法吗？搬运其他网站的用户评论到自家平台，侵权吗？开源代码的版权，到底怎么看？转正申请不被批，劳动合同你看懂了吗？无故被裁员，工资社保跟谁要？租房碰上黑中介，维权从哪儿入手？资深律师老周为程序员量身定制，选取了职场、技术、生活三个领域中与程序员联系最密切的 40 个法律问题，给到你最实用有效的处理办法。每天通勤路上 8 分钟，就能掌握一生必知的法律常识。</p>
+  </a>
+  </div>
+</div>

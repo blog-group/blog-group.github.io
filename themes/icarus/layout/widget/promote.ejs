@@ -1,0 +1,12 @@
+<% const items = get_config_from_obj(widget, 'items'); %>
+<% if (items !== null) { %>
+<% for (let item in items) { %>
+<div class="card widget">
+  <div class="card-content" style="padding: 0">
+    <a href="<%- items[item] %>" target="_blank">
+      <img src="<%= item %>" style="padding: 0px;height: 150px;width:100%" />
+    </a>
+  </div>
+</div>
+<% } %>
+<% } %>

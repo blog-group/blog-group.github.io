@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="<%- url_for('/tags') %>"><%= _p('common.tag', Infinity) %></a></li>
+            <li class="is-active"><a href="#" aria-current="page"><%= page.tag %></a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+<!--文章列表-->
+<% page.posts.each(function(post){ %>
+    <%- partial('common/article', { post, index: true }) %>
+<% }); %>
+<!--分页-->
+<% if (page.total > 1) { %>
+    <%- partial('common/paginator') %>
+<% } %>

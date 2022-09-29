@@ -1,0 +1,38 @@
+<!--学习专题列表-->
+<% const projects = get_config_from_obj(widget, 'projects'); %>
+<% if (projects !== null) { %>
+  <div class="card widget" id="topic">
+  <% projects.forEach(project=> { %>
+  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
+    <ul class="project">
+      <li>
+        <div class="project-left">
+          <img src="<%= project.image %>" width="55" />
+        </div>
+        <div class="project-right">
+          <a href="<%= project.url %>" target="_blank">
+            <p class="title"><%= project.title %></p>
+
+            <p class="desc"><%= project.desc %></p>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr>
+  <% }) %>
+</div>
+<script src="/js/lay/modules/jquery.js"></script>
+<script>
+  var scrollTop = $("#topic").offset().top;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > scrollTop) {
+      $("#topic").addClass("quoteSticky");
+      $("#profile").show();
+    } else {
+      $("#topic").removeClass("quoteSticky");
+      $("#profile").hide();
+    }
+  });
+</script>
+<% } %>

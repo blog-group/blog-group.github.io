@@ -40,7 +40,7 @@ management:
 - `value`，新的`监控节点映射路径`，如：`healthcheck`
 
 修改后我们就可以通过访问`/actuator/healthcheck`访问监控的健康信息。
-> 如果你修改了`management.endpoints.web.base-path`,那么前缀为你修改后得值，具体可以访问{% post_link springboot-actuator-default 探究Actuator的默认开放节点 & 详细健康状态 %}了解详情。
+> 如果你修改了`management.endpoints.web.base-path`,那么前缀为你修改后得值，具体可以访问{% post_path springboot-actuator-default 探究Actuator的默认开放节点 & 详细健康状态 %}了解详情。
 
 #### 运行测试
 启动本章项目，打开`浏览器`或者`终端`，如下为终端示例：

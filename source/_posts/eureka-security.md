@@ -15,7 +15,7 @@ keywords: eureka,security,恒宇少年
 date: 2019-09-29 13:36:59
 description: '你的Eureka服务注册中心安全吗？'
 ---
-在之前的章节我们讲到了{% post_link eureka-server 搭建Eureka服务注册中心 %}，已经可以让我们自定义的`微服务节点`进行注册到该`Eureka Server`上，不过在注册过程中存在一个风险的问题，如果我们的`Eureka Server`的地址无意暴露在外，那岂不是通过`Eureka`协议创建的`任意服务`都可以进行注册到该`Eureka Server`吗？（当然如果你配置了服务器的`安全组`并且使用`内网的IP地址`或者`主机名`方式对外提供`服务注册地址`几乎不存在这个问题。）
+在之前的章节我们讲到了{% post_path eureka-server 搭建Eureka服务注册中心 %}，已经可以让我们自定义的`微服务节点`进行注册到该`Eureka Server`上，不过在注册过程中存在一个风险的问题，如果我们的`Eureka Server`的地址无意暴露在外，那岂不是通过`Eureka`协议创建的`任意服务`都可以进行注册到该`Eureka Server`吗？（当然如果你配置了服务器的`安全组`并且使用`内网的IP地址`或者`主机名`方式对外提供`服务注册地址`几乎不存在这个问题。）
 <!--more-->
 ### 本章目标
 为`Eureka Server`穿上安全的外套，我的注册中心更安全。
@@ -48,7 +48,7 @@ description: '你的Eureka服务注册中心安全吗？'
 既然依赖已经添加好了，那么我们怎么配置安全用户呢？
 
 ### 开启注册中心安全配置
-在添加安全配置之前，我们需要把`Eureka Server`的配置也一并添加上，如果你对`Eureka Server`配置不太了解，你可以查看{% post_link eureka-server 搭建Eureka服务注册中心 %}阅读学习
+在添加安全配置之前，我们需要把`Eureka Server`的配置也一并添加上，如果你对`Eureka Server`配置不太了解，你可以查看{% post_path eureka-server 搭建Eureka服务注册中心 %}阅读学习
 
 #### 配置文件的安全配置
 修改`application.yml`配置文件内容，添加安全配置信息，如下所示：
@@ -131,7 +131,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 > 不过服务注册时仅仅是微调，影响不太大，那么我们下面来看下该怎么调整。
 
 ### 注册服务时的安全配置
-如果你对怎么把服务注册到`Eureka Server`不太了解，你可以阅读{% post_link eureka-register-service 将服务注册到Eureka %}来进行学习，
+如果你对怎么把服务注册到`Eureka Server`不太了解，你可以阅读{% post_path eureka-register-service 将服务注册到Eureka %}来进行学习，
 我们只需要修改`eureka.client.service-url.defaultZone`配置的连接字符串内容即可，下面是修改前后的对比：
 ```yaml
 // 修改前
@@ -156,7 +156,7 @@ eureka:
 ### 运行测试
 > 本章的测试流程如下：
 > 1. 启动`Eureka Server`（本章项目）
-> 2. 启动`Eureka Client`（可以自行创建一个`服务节点`，也可以直接使用{% post_link eureka-register-service 将服务注册到Eureka %}源码进行测试。）
+> 2. 启动`Eureka Client`（可以自行创建一个`服务节点`，也可以直接使用{% post_path eureka-register-service 将服务注册到Eureka %}源码进行测试。）
 > 3. 访问`Eureka Server`管理平台 `http://localhost:10000`
 > 4. 输入用户名`api`以及密码`node`进行登录
 > 5. 查看`服务注册列表`

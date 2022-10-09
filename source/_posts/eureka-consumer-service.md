@@ -20,7 +20,7 @@ description: 'SpringCloud下使用Eureka的服务发现与消费'
 ### 本章目标
 消费`Eureka`注册的`服务节点`的请求信息。
 ### 构建项目
-我们只需要创建一个`服务节点项目`即可，因为服务`提供者`也是`消费者`，然后将本项目注册到之前编写的`服务注册中心`，下载文章{% post_link eureka-server 搭建Eureka服务注册中心 %}源码运行即可。
+我们只需要创建一个`服务节点项目`即可，因为服务`提供者`也是`消费者`，然后将本项目注册到之前编写的`服务注册中心`，下载文章{% post_path eureka-server 搭建Eureka服务注册中心 %}源码运行即可。
 我们使用`idea`开发工具创建一个`SpringBoot`项目，对应的选择`spring-boot-starter-web`、`spring-cloud-starter-netflix-ribbon`、`spring-cloud-starter-netflix-eureka-client`三个依赖，`pom.xml`配置文件如下所示：
 ```xml
 <properties>
@@ -54,7 +54,7 @@ description: 'SpringCloud下使用Eureka的服务发现与消费'
     </dependency>
 </dependencies>
 ```
-添加完依赖后我们需要对本项目进行配置，让本项目注册到服务中心，在之前的章节{% post_link eureka-register-service 将服务注册到Eureka %}有讲过，这里就不做过多的赘述。
+添加完依赖后我们需要对本项目进行配置，让本项目注册到服务中心，在之前的章节{% post_path eureka-register-service 将服务注册到Eureka %}有讲过，这里就不做过多的赘述。
 #### 配置Eureka客户端
 打开`XxxApplication`入口类，添加`@EnableDiscoveryClient`注解，如下所示：
 ```java

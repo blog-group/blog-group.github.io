@@ -33,7 +33,7 @@ description: '长期免费开放一台Nacos Server服务'
 - 当作服务注册中心，请在`application.properties`配置文件内添加`spring.cloud.nacos.discovery.server-add=open.nacos.yuqiyu.com:80`
 - 当作配置中心，请在`application.properties`配置文件内添加`spring.cloud.nacos.config.server-addr=open.nacos.yuqiyu.com:80`
 
-> 如果你使用的是`Eureka`，可以使用另外一台开放的`Eureka Server`，{% post_link open-eureka-server %}。
+> 如果你使用的是`Eureka`，可以使用另外一台开放的`Eureka Server`，{% post_path open-eureka-server %}。
 
 ### 登录信息
 使用`Nacos`默认的用户名：`nacos`，密码：`nacos`即可登陆。

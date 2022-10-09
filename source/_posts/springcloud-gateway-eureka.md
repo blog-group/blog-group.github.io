@@ -15,7 +15,7 @@ date: 2019-09-30 09:57:05
 keywords: SpringCloud,SpringBoot,恒宇少年,gateway
 description: 'SpringCloud Gateway整合Eureka转发服务请求'
 ---
-在上一篇文章{% post_link springcloud-gateway-route SpringCloud Gateway路由转发规则 %}中我们讲解了`SpringCloud Gateway`内部提供的`断言、谓语`，让我们可以组合更精确的业务场景进行请求，既然`SpringCloud GateWay`担任了`网关`的角色，在之前`Zuul`可以通过服务名进行自动转发，`SpringCloud Gateway`是否可以实现自动转发呢？
+在上一篇文章{% post_path springcloud-gateway-route SpringCloud Gateway路由转发规则 %}中我们讲解了`SpringCloud Gateway`内部提供的`断言、谓语`，让我们可以组合更精确的业务场景进行请求，既然`SpringCloud GateWay`担任了`网关`的角色，在之前`Zuul`可以通过服务名进行自动转发，`SpringCloud Gateway`是否可以实现自动转发呢？
 <!--more-->
 ### 初始化Gateway服务
 
@@ -150,7 +150,7 @@ eureka:
     register-with-eureka: false
 ```
 
-这里我们修改默认的端口号为`10000`，为了匹配在`网关项目`的配置信息，至于`fetch-registry`、`register-with-eureka`可以去我之前的文章查看，{% post_link eureka-register-service 将服务注册到Eureka %}
+这里我们修改默认的端口号为`10000`，为了匹配在`网关项目`的配置信息，至于`fetch-registry`、`register-with-eureka`可以去我之前的文章查看，{% post_path eureka-register-service 将服务注册到Eureka %}
 
 #### 开启Eureka Server
 

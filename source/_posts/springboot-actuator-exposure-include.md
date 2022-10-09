@@ -11,12 +11,12 @@ date: 2018-10-22 17:28:23
 title: 你了解Actuator开放指定监控节点吗？
 description: '你了解SpringBoot Actuator开放指定监控节点吗？'
 ---
-之前章节{% post_link springboot-actuator-default 探究Actuator的默认开放节点 & 详细健康状态 %}讲解了`spring-boot-actuator`默认开放的节点以及如何修改查看详细的健康信息，那我们怎么设置`开放指定的节点`访问呢？
+之前章节{% post_path springboot-actuator-default 探究Actuator的默认开放节点 & 详细健康状态 %}讲解了`spring-boot-actuator`默认开放的节点以及如何修改查看详细的健康信息，那我们怎么设置`开放指定的节点`访问呢？
 <!--more-->
 ### 本章目标
 开放`spring-boot-actuator`的指定节点访问。
 ### 构建项目
-由于我们在[SpringBoot核心技术：探究Actuator的默认开放节点 & 详细健康状态]{% post_link springboot-actuator-default 探究Actuator的默认开放节点 & 详细健康状态 %}已经创建了项目，之前章节的源码已经上传到`码云`，访问：[SpringBoot源码汇总](https://gitee.com/hengboy/spring-boot-chapter)下载源码，下载完成后使用`idea`工具打开即可，我们在之前的基础上修改。
+由于我们在[SpringBoot核心技术：探究Actuator的默认开放节点 & 详细健康状态]{% post_path springboot-actuator-default 探究Actuator的默认开放节点 & 详细健康状态 %}已经创建了项目，之前章节的源码已经上传到`码云`，访问：[SpringBoot源码汇总](https://gitee.com/hengboy/spring-boot-chapter)下载源码，下载完成后使用`idea`工具打开即可，我们在之前的基础上修改。
 
 ### 开放指定节点
 `management.endpoints.web.exposure.include`的配置字段我们已经了解到了在`org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties`属性配置类内，而且`exposure.include`的值默认为`["health","info"]`。

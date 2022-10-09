@@ -14,7 +14,7 @@ date: 2019-09-29 14:03:29
 keywords: eureka,SpringCloud,SpringBoot
 description: '将服务注册到Eureka'
 ---
-`Eureka`提供了`Server`当然也提供了`Client`，如果你对`Eureka Server`不了解，通过{% post_link spring-cloud-eureka 搭建Eureka服务注册中心 %}阅读文章查看具体的编码实现。
+`Eureka`提供了`Server`当然也提供了`Client`，如果你对`Eureka Server`不了解，通过{% post_path spring-cloud-eureka 搭建Eureka服务注册中心 %}阅读文章查看具体的编码实现。
 <!--more-->
 本章构建的项目其实是一个`Eureka Client`，因为是向`Eureka Server`注册的服务，相对于`Eureka Server`来说相当于一个客户端的形式存在。
 

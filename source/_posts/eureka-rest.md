@@ -25,7 +25,7 @@ description: 'Eureka服务注册中心内置的REST节点列表'
 ### 本章目标
 熟悉`Eureka Server`内部提供的`REST`服务维护请求节点。
 ### 构建项目
-我们本章知识点不需要涉及到代码的编写，所以我们只需要运行之前章节{% post_link eureka-server 搭建Eureka服务注册中心 %}的源码即可。
+我们本章知识点不需要涉及到代码的编写，所以我们只需要运行之前章节{% post_path eureka-server 搭建Eureka服务注册中心 %}的源码即可。
 
 ### REST节点一览
 `Eureka Server`内部通过`JAX-RS`(Java API for RESTful Web Services)规范提供了一系列的管理`服务节点`的请求节点，这样也保证了在非`JVM`环境运行的程序可以通过`HTTP REST`方式进行管理维护指定`服务节点`，所以只要遵循`Eureka`协议的`服务节点`都可以进行`注册`到`Eureka Server`。
@@ -143,11 +143,11 @@ description: 'Eureka服务注册中心内置的REST节点列表'
     </xsd:complexType>
 </xsd:schema>
 ```
-我们本章先来使用之前章节{% post_link eureka-register-service 将服务注册到Eureka %}源码进行`自动注册服务`，在之后的章节内我们再来细讲具体怎么通过符合以上`XSD`主体内容的`XML`/`JSON`手动注册。
+我们本章先来使用之前章节{% post_path eureka-register-service 将服务注册到Eureka %}源码进行`自动注册服务`，在之后的章节内我们再来细讲具体怎么通过符合以上`XSD`主体内容的`XML`/`JSON`手动注册。
 
 在下面我们来看下通过`REST`来维护`服务实例`，在这之前我们需要通过以下步骤进行启动服务，为后续`REST`请求维护`服务实例`提供环境：
-> 1. 启动`Eureka Server`，源码查看{% post_link eureka-server 搭建Eureka服务注册中心 %}
-> 2. 启动`Eureka Client`，源码查看{% post_link eureka-register-service 将服务注册到Eureka %}
+> 1. 启动`Eureka Server`，源码查看{% post_path eureka-server 搭建Eureka服务注册中心 %}
+> 2. 启动`Eureka Client`，源码查看{% post_path eureka-register-service 将服务注册到Eureka %}
 
 
 #### 服务状态变更

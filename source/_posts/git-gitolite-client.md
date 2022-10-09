@@ -17,8 +17,8 @@ description: '在Ubuntu下为Gitolite添加客户端'
 在之前的章节完成了`服务端`、`管理客户端`的配置，基础的配置已经完成，下面就可以开始把团队的开发人员添加到`服务端`了，`客户端`的配置要比`管理客户端`更简单一些，只需要把`客户端`生成的`公钥`上传到`服务端`即可。
 <!--more-->
 相关文章：
-- {% post_link git-gitolite-server 在Ubuntu下部署Gitolite服务端 %}
-- {% post_link git-gitolite-manage 在Ubuntu下为Gitolite添加管理端 %}
+- {% post_path git-gitolite-server 在Ubuntu下部署Gitolite服务端 %}
+- {% post_path git-gitolite-manage 在Ubuntu下为Gitolite添加管理端 %}
 
 ### 本章目标
 完成`客户端`的`gitolite`配置。

@@ -32,11 +32,11 @@ description: 'SpringCloud与Seata分布式事务初体验'
 
 - **Seata Server**
 
-  如果对`Seata Server`部署方式还不了解，请访问：{% post_link seata-init-env %}
+  如果对`Seata Server`部署方式还不了解，请访问：{% post_path seata-init-env %}
 
 - **Eureka Server**
 
-  服务注册中心，如果对`Eureka Server`部署方式还不了解，请访问{% post_link eureka-server %}
+  服务注册中心，如果对`Eureka Server`部署方式还不了解，请访问{% post_path eureka-server %}
 
 ## 2. 准备测试服务
 

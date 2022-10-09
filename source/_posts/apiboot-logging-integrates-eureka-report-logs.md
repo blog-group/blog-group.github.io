@@ -19,10 +19,10 @@ article_url:
 
 <!--more-->
 ## 搭建Eureka Server
-我们先来搭建一个`Eureka Server`，请访问【{% post_link eureka-server %}】文章内容查看具体搭建流程。
+我们先来搭建一个`Eureka Server`，请访问【{% post_path eureka-server %}】文章内容查看具体搭建流程。
 
 ## 将Logging Admin注册到Eureka
-既然使用的是`服务注册中心`，我们需要将之前章节将的`Logging Admin`进行简单的改造，添加`Eureka`客户端相关的依赖，并在`application.yml`配置文件内添加`Eureka Server`的相关配置，如果对`Logging Admin`不了解的同学可以访问【{% post_link apiboot-report-logs-by-logging-to-admin %}】查看文章内容，文章底部有源码。
+既然使用的是`服务注册中心`，我们需要将之前章节将的`Logging Admin`进行简单的改造，添加`Eureka`客户端相关的依赖，并在`application.yml`配置文件内添加`Eureka Server`的相关配置，如果对`Logging Admin`不了解的同学可以访问【{% post_path apiboot-report-logs-by-logging-to-admin %}】查看文章内容，文章底部有源码。
 ### 添加Eureka Client依赖
 我们需要将`Logging Admin`注册到`Eureka Server`，对于`Eureka Server`而言`Logging Admin`是一个`客户端`（Eureka Client）角色。
 

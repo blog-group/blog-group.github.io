@@ -15,7 +15,7 @@ keywords: nacos,config,springboot
 description: 'Nacos 作为配置中心 & 读取Yaml配置信息'
 ---
 通过本系列的前篇文章：
-- {% post_link nacos-config-properties Nacos 作为配置中心 & 读取Properties配置信息%}
+- {% post_path nacos-config-properties Nacos 作为配置中心 & 读取Properties配置信息%}
 在之前文章中我们学习到了`SpringCloud Alibaba`读取`Nacos Config`内定义的`properties`类型的配置文件信息，并且使用`Nacos Console`进行修改配置信息后可以在应用程序内实时更新。
 <!--more-->
 ### 本章目标

@@ -7,11 +7,10 @@ enable_comment: true
 news: true
 tags:
   - SpringCloud
-  - Eureka
 categories:
   - SpringCloud
 date: 2019-09-29 13:54:59
-keywords: eureka,SpringCloud,SpringBoot
+keywords: SpringCloud,SpringBoot
 description: 'Eureka服务注册是采用主机名还是IP地址？'
 ---
 我们一直在使用`Eureka`进行注册服务，然而你有可能很少关心`服务`在注册到`Eureka Server`时是采用的`主机名`的方式？还是`IP地址`的方式？
@@ -39,7 +38,7 @@ eureka:
 ```
 在上面配置中，并没有对注册方式进行任何修改，如果现在启动当然就是采用的默认方式进行注册，接下来我们来看看默认的方式是采用的哪种？
 ### 查看默认方式
-我们仍然使用{% post_link eureka-server 搭建Eureka服务注册中心 %}源码作为`服务注册中心`(Eureka Server)来完成本章的测试工作。
+我们仍然使用{% post_path eureka-server 搭建Eureka服务注册中心 %}源码作为`服务注册中心`(Eureka Server)来完成本章的测试工作。
 ##### 测试步骤：
 > 1. 启动服务注册中心
 > 2. 启动本章项目

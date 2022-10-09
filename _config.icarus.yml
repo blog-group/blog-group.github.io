@@ -1,0 +1,208 @@
+version: 5.1.0
+variant: default
+logo: /images/avatar.png
+head:
+    favicon: /images/favicon.jpg
+    manifest:
+        name:
+        short_name:
+        start_url:
+        theme_color:
+        background_color:
+        display: standalone
+        icons:
+            -
+                src: ''
+                sizes: ''
+                type:
+    open_graph:
+        title:
+        type: blog
+        url:
+        image:
+        site_name:
+        author:
+        description:
+        twitter_card:
+        twitter_id:
+        twitter_site:
+        google_plus:
+        fb_admins:
+        fb_app_id:
+    structured_data:
+        title:
+        description:
+        url:
+        author:
+        publisher:
+        publisher_logo:
+        image:
+    meta:
+        - ''
+    rss:
+navbar:
+    menu:
+        面试攻略: /interview-strategy.html
+        签到送书: /welfare/
+        推荐课程: /geektime/
+        我的开源: /opensource/
+        免费书籍: /openbooks/
+        我的2019: /years/2019.html
+        归档: /archives/
+    links:
+        作者GitHub开源组织:
+            icon: fab fa-github
+            url: https://github.com/minbox-projects
+# 底部
+footer:
+    links:
+# 文章
+article:
+    highlight:
+        theme: ocean
+        clipboard: true
+        fold: unfolded
+    readtime: true
+    update_time: true
+    licenses:
+        Creative Commons:
+            icon: fab fa-creative-commons
+            url: https://creativecommons.org/
+        Attribution:
+            icon: fab fa-creative-commons-by
+            url: https://creativecommons.org/licenses/by/4.0/
+        Noncommercial:
+            icon: fab fa-creative-commons-nc
+            url: https://creativecommons.org/licenses/by-nc/4.0/
+
+# Comment plugin settings
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Plugins/Comment
+comment:
+    # Name of the comment plugin
+    type: gitalk
+    owner: hengboy
+    repo: learning-tutorials
+    client_id: c6d9a9addcb940fef06f
+    client_secret: 0c209053121187dd685030c01cfa10a7861afd27
+    admin: hengboy
+donates:
+    -
+        type: afdian
+        url: ''
+    -
+        type: alipay
+        qrcode: ''
+    -
+        type: buymeacoffee
+        url: ''
+    -
+        type: patreon
+        url: ''
+    -
+        type: paypal
+        business: ''
+        currency_code: USD
+    -
+        type: wechat
+        qrcode: ''
+share:
+    type: sharethis
+    install_url: ''
+sidebar:
+    left:
+        sticky: false
+    right:
+        sticky: false
+# Sidebar widget settings
+# https://ppoffice.github.io/hexo-theme-icarus/categories/Widgets/
+widgets:
+    -
+        # Widget name
+        type: profile
+        # Where should the widget be placed, left or right
+        position: right
+        # Author name to be shown in the profile widget
+        author: 程序员 - 恒宇少年
+        # Title of the author to be shown in the profile widget
+        author_title: 分享一些项目实践、SpringBoot、SpringCloud文章
+        # Author's current location to be shown in the profile widget
+        location: 山东，济南
+        # Path or URL to the avatar to be shown in the profile widget
+        avatar:
+        # Email address for the Gravatar to be shown in the profile widget
+        gravatar:
+        # 圆滑
+        avatar_rounded: true
+        # Path or URL for the follow button
+        follow_link: 'https://gitee.com/hengboy'
+    -
+        # 热门文章
+        type: hot_article
+        position: right
+        # 根据时间倒序展示的热门文章数量
+        show_count: 6
+    -
+        # 专题列表
+        type: topic
+        position: right
+        projects:
+            -
+                title: SpringBoot v1.x 基础教程
+                url: /spring-boot-1-x-articles.html
+                image: /images/spring-boot.svg
+                desc: 全网单篇文章阅读量超30万的SpringBoot免费基础教程
+            -
+                title: SpringBoot v2.x 基础教程
+                url: /spring-boot-2-x-articles.html
+                image: /images/spring-boot.svg
+                desc: 持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析
+            -
+                title: SpringCloud 基础教程
+                url: /spring-cloud-all-articles.html
+                image: /images/spring-cloud.svg
+                desc: 全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章
+            -
+                title: ApiBoot 基础教程
+                url: /apiboot-all-articles.html
+                image: /images/api-boot.svg
+                desc: 新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.
+            -
+                title: 技术杂谈
+                url: /technical-talk.html
+                image: /images/技术杂谈.svg
+                desc: 涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...
+plugins:
+    animejs: true
+    back_to_top: true
+    baidu_analytics:
+        tracking_id:
+    bing_webmaster:
+        tracking_id:
+    busuanzi: false
+    cnzz:
+        id:
+        web_id:
+    cookie_consent:
+        type: info
+        theme: edgeless
+        static: false
+        position: bottom-left
+        policyLink: https://www.cookiesandyou.com/
+    gallery: true
+    google_analytics:
+        tracking_id:
+    hotjar:
+        site_id:
+    katex: false
+    mathjax: false
+    outdated_browser: false
+    progressbar: true
+    statcounter:
+        project:
+        security:
+    twitter_conversion_tracking:
+        pixel_id:
+providers:
+    cdn: jsdelivr
+    fontcdn: google
+    iconcdn: fontawesome

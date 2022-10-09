@@ -19,7 +19,7 @@ description: 'ApiBoot Logging忽略路径不进行采集日志'
 <!--more-->
 ## 创建示例项目
 
-本章所使用的示例项目请访问【{% post_link modify-apiboot-logging-collection-prefix %}】文章底部访问源码下载后导入`idea`工具。
+本章所使用的示例项目请访问【{% post_path modify-apiboot-logging-collection-prefix %}】文章底部访问源码下载后导入`idea`工具。
 
 ## 配置排除路径
 

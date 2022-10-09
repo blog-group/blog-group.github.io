@@ -15,11 +15,11 @@ description: 'ApiBoot Logging使用RestTemplate透传链路信息'
 date: 2019-11-06 14:15:57
 article_url:
 ---
-在上一篇文章【{% post_link apiboot-logging-using-openfeign-transparent-traceid %}】中我们详细的讲解了`ApiBoot Logging`整合`SpringCloud`通过`Openfeign`进行透传链路信息，包括`traceId`（链路编号）、`parentSpanId`（上级单元编号）等信息。
+在上一篇文章【{% post_path apiboot-logging-using-openfeign-transparent-traceid %}】中我们详细的讲解了`ApiBoot Logging`整合`SpringCloud`通过`Openfeign`进行透传链路信息，包括`traceId`（链路编号）、`parentSpanId`（上级单元编号）等信息。
 `ApiBoot Logging`不仅仅可以使用`Openfeign`传递链路信息，还支持`RestTemplate`方式，本篇文章来详细的讲解下具体的使用方式。
 <!--more-->
 ## 搭建Logging Admin
-我们需要搭建`Logging Admin`服务，用于接收`业务服务`上报的请求日志信息，请参考【{% post_link apiboot-report-logs-by-logging-to-admin %}】文章内容.
+我们需要搭建`Logging Admin`服务，用于接收`业务服务`上报的请求日志信息，请参考【{% post_path apiboot-report-logs-by-logging-to-admin %}】文章内容.
 ## 添加ApiBoot统一版本
 由于本章采用是`Maven 多模块`的方式构建源码，所以我们只需要将`ApiBoot`统一版本的依赖配置在`root`项目的`pom.xml`内，如下所示：
 ```xml

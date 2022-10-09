@@ -204,7 +204,7 @@ CREATE TABLE `logging_service_details` (
 
 ## 上报日志到指定Logging Admin
 
-我们将修改{% post_link apiboot-unified-manage-request-logs %}文章源码，在`application.yml`添加`Logging Admin`的地址，如下所示：
+我们将修改{% post_path apiboot-unified-manage-request-logs %}文章源码，在`application.yml`添加`Logging Admin`的地址，如下所示：
 
 ```yaml
 api:

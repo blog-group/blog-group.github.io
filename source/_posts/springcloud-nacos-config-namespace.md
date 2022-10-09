@@ -18,8 +18,8 @@ description: 'Nacos Config 使用自定义的NameSpace & Group'
 <!--more-->
 ### 回顾
 通过本系列的前篇文章：
-- {% post_link nacos-config-properties Nacos 作为配置中心 & 读取Properties配置信息 %}
-- {% post_link nacos-config-yaml Nacos 作为配置中心 & 读取Yaml配置信息 %}
+- {% post_path nacos-config-properties Nacos 作为配置中心 & 读取Properties配置信息 %}
+- {% post_path nacos-config-yaml Nacos 作为配置中心 & 读取Yaml配置信息 %}
 
 在之前文章中我们学习到了`SpringCloud Alibaba`读取`Nacos Config`内定义的`properties`、`Yaml`类型的配置文件信息、配置信息实时更新、`Profile`环境下的配置信息读取优先级等。
 

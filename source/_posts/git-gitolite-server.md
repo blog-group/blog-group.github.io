@@ -62,6 +62,6 @@ ${HOME}/gitolite/install -to ${HOME}/bin
 git@code-server:~/bin$ ls
 commands  gitolite  gitolite-shell  lib  syntactic-sugar  triggers  VERSION  VREF
 ```
-到目前这一步我们差不多已经完成了`Gitolite Server`的配置，不过我们需要设置一个`管理员权限的客户端`，详见{% post_link git-gitolite-manage 在Ubuntu下为Gitolite添加管理端 %}。
+到目前这一步我们差不多已经完成了`Gitolite Server`的配置，不过我们需要设置一个`管理员权限的客户端`，详见{% post_path git-gitolite-manage 在Ubuntu下为Gitolite添加管理端 %}。
 ### 总结
 本章简单完成了`Gitolite`的安装，在接下来的章节会对仓库创建、权限控制等进行更新。

@@ -19,7 +19,7 @@ article_url:
 <!--more-->
 
 ## 搭建Eureka Server
-我们先来搭建一个`Eureka Server`，请访问【{% post_link eureka-server %}】文章内容查看具体搭建流程。
+我们先来搭建一个`Eureka Server`，请访问【{% post_path eureka-server %}】文章内容查看具体搭建流程。
 ## 搭建Logging Admin
 我们需要搭建一个`Logging Admin`用于接收`Logging Client`上报的请求日志，请访问【[ApiBoot Logging整合SpringCloud Eureka负载均衡上报日志](http://localhost:4000/apiboot-logging-integrates-eureka-report-logs.html#%E5%B0%86Logging-Admin%E6%B3%A8%E5%86%8C%E5%88%B0Eureka)】查看具体的搭建流程。
 

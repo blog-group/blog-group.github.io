@@ -41,7 +41,7 @@ management:
 ```
 通过`management.endpoint.shutdown.enabled`参数来进行设置，默认为`false`，默认不会开启`远程关闭服务`功能，然后把`shutdown`节点进行开放，否则无法发送`远程关机`请求。
 
-> 注意：在{% post_link springboot-actuator-exposure-include 你了解Actuator开放指定监控节点吗？ %}文章内我们说到了`Actuator`内置的`监控节点列表`，当我们访问`shutdown`节点时必须发送`POST`类型请求，否则无法执行关机操作。
+> 注意：在{% post_path springboot-actuator-exposure-include 你了解Actuator开放指定监控节点吗？ %}文章内我们说到了`Actuator`内置的`监控节点列表`，当我们访问`shutdown`节点时必须发送`POST`类型请求，否则无法执行关机操作。
 
 ### 测试
 打开`终端`或者`postman`工具进行测试关机请求，如下是`终端`命令测试结果：

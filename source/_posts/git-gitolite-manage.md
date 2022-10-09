@@ -13,13 +13,13 @@ date: 2018-10-20 13:27:35
 title: 在Ubuntu下为Gitolite添加管理端
 description: '在Ubuntu下为Gitolite添加管理端'
 ---
-在之前章节已经完成了服务端的配置，可以访问{% post_link git-gitolite-server 在Ubuntu下部署Gitolite服务端 %}查看配置步骤，因为`gitolite`的管理是通过一个名为`gitolite-admin`的仓库进行的，我们本章来主要讲解下这个仓库。
+在之前章节已经完成了服务端的配置，可以访问{% post_path git-gitolite-server 在Ubuntu下部署Gitolite服务端 %}查看配置步骤，因为`gitolite`的管理是通过一个名为`gitolite-admin`的仓库进行的，我们本章来主要讲解下这个仓库。
 <!--more-->
 ### 本章目标
 了解`gitolite-admin`仓库组成。
 
 ### 注意事项
-> 注意：本章（除设置管理用户）操作用户并不是`git`（`git`用户是我们为服务端专属创建的用户），如果你是连续阅读{% post_link git-gitolite-server 在Ubuntu下部署Gitolite服务端 %}进行配置，请执行`exit`退出`git`用户。
+> 注意：本章（除设置管理用户）操作用户并不是`git`（`git`用户是我们为服务端专属创建的用户），如果你是连续阅读{% post_path git-gitolite-server 在Ubuntu下部署Gitolite服务端 %}进行配置，请执行`exit`退出`git`用户。
 
 ### 生成SSH KEY
 `Gitolite`的管理端可以跟`Server`是一个系统也可以是分开的系统，本章我们使用相同的系统来进行配置，后期我们创建的客户端用户也可以`授权管理权限`。
@@ -118,7 +118,7 @@ repo testing
 - `RWCD`或`RW+CD`：读写 + 创建删除
 
 #### 公钥目录
-在`gitolite-admin`内有一个名为`keydir`的目录，该目录存放了所有`客户端的公钥`，当然`管理端`其实也是一个客户端，`管理端的公钥`也存放在该目录，如果你想添加用户可以把公钥存放到该目录然后配置该用户对应的权限，创建客户端详见{% post_link git-gitolite-client 在Ubuntu下为Gitolite添加客户端 %}
+在`gitolite-admin`内有一个名为`keydir`的目录，该目录存放了所有`客户端的公钥`，当然`管理端`其实也是一个客户端，`管理端的公钥`也存放在该目录，如果你想添加用户可以把公钥存放到该目录然后配置该用户对应的权限，创建客户端详见{% post_path git-gitolite-client 在Ubuntu下为Gitolite添加客户端 %}
 
 ### 总结
 通过本章我们完成了对`gitolite`添加管理客户端，可以通过管理客户端来维护仓库信息、仓库授权等。

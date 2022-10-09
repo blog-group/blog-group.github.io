@@ -15,7 +15,7 @@ keywords: rabbitmq,springboot,消息队列
 description: '消息队列RabbitMQ的Direct类型消息多节点集群消费'
 ---
 
-在上一章{% post_link rabbitmq-direct-exchange 消息队列RabbitMQ的Direct类型消息消费 %}我们讲解到了``RabbitMQ``消息队列的``DirectExchange``路由键消息单个消费者消费，源码请访问[SpringBoot对应章节源码](https://gitee.com/hengboy/spring-boot-chapter)下载查看，消息队列目的是完成消息的分布式消费，那么我们是否可以为一个``Provider``创建并绑定多个``Consumer``呢？
+在上一章{% post_path rabbitmq-direct-exchange 消息队列RabbitMQ的Direct类型消息消费 %}我们讲解到了``RabbitMQ``消息队列的``DirectExchange``路由键消息单个消费者消费，源码请访问[SpringBoot对应章节源码](https://gitee.com/hengboy/spring-boot-chapter)下载查看，消息队列目的是完成消息的分布式消费，那么我们是否可以为一个``Provider``创建并绑定多个``Consumer``呢？
 
 <!--more-->
 

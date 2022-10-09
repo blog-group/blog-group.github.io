@@ -23,9 +23,9 @@ article_url:
 
 ## 前文回顾
 
-- {% post_link apiboot-unified-manage-request-logs %}
+- {% post_path apiboot-unified-manage-request-logs %}
 
-- {% post_link apiboot-report-logs-by-logging-to-admin %}
+- {% post_path apiboot-report-logs-by-logging-to-admin %}
 
 ## 了解链路编号的传递方式
 ![](/images/post/apiboot-custom-logging-traceid-1.png)

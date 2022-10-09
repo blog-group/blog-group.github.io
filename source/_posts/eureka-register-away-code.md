@@ -14,13 +14,13 @@ date: 2019-09-29 13:49:34
 keywords: eureka,SpringCloud,SpringBoot
 description: 'Eureka服务注册方式流程源码分析'
 ---
-{% post_link eureka-register-away Eureka服务注册是采用主机名还是IP地址？%}文章中我们讲到了`服务注册`的几种`注册方式`，那么这几种`注册方式`的源码是怎么实现的呢？我们带着这一个疑问来阅读本章内容能够让你更深入了解这块的知识点！！！
+{% post_path eureka-register-away Eureka服务注册是采用主机名还是IP地址？%}文章中我们讲到了`服务注册`的几种`注册方式`，那么这几种`注册方式`的源码是怎么实现的呢？我们带着这一个疑问来阅读本章内容能够让你更深入了解这块的知识点！！！
 <!--more-->
 ### 本章目标
 分析每一种`服务注册方式`源码执行流程。
 
 ### 构建项目
-本章以分析源码为主，所以不去新创建项目来讲解相关内容，我们使用{% post_link eureka-register-away Eureka服务注册是采用主机名还是IP地址？ %}源码作为`注册服务`，{% post_link eureka-server 搭建Eureka服务注册中心 %}源码作为`服务注册中心`，还是按照之前的运行流程：
+本章以分析源码为主，所以不去新创建项目来讲解相关内容，我们使用{% post_path eureka-register-away Eureka服务注册是采用主机名还是IP地址？ %}源码作为`注册服务`，{% post_path eureka-server 搭建Eureka服务注册中心 %}源码作为`服务注册中心`，还是按照之前的运行流程：
 > 1. 启动服务注册中心
 > 2. 启动本章服务项目
 > 3. 查看服务列表，服务注册方式

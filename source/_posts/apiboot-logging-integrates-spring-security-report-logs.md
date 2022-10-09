@@ -19,7 +19,7 @@ article_url:
 <!--more-->
 
 ## 创建Logging Admin项目
-我们需要在集成`ApiBoot Logging Admin`项目内添加`Spring Security`相关依赖来完成安全配置，我们需要创建一个`Logging Admin`项目，可参考【{% post_link apiboot-report-logs-by-logging-to-admin %}】文章内容。
+我们需要在集成`ApiBoot Logging Admin`项目内添加`Spring Security`相关依赖来完成安全配置，我们需要创建一个`Logging Admin`项目，可参考【{% post_path apiboot-report-logs-by-logging-to-admin %}】文章内容。
 ### 集成Spring Security
 在`Logging Admin`项目`pom.xml`文件内添加`Spring Security`依赖，如下所示：
 ```xml
@@ -48,7 +48,7 @@ spring:
 
 ## 创建Logging Client项目
 
-我们的业务服务需要集成`ApiBoot Logging`依赖（作为`Logging Client`进行上报请求日志），可参考【{% post_link apiboot-unified-manage-request-logs %}】文章内容创建项目。
+我们的业务服务需要集成`ApiBoot Logging`依赖（作为`Logging Client`进行上报请求日志），可参考【{% post_path apiboot-unified-manage-request-logs %}】文章内容创建项目。
 
 ### 配置安全上报
 

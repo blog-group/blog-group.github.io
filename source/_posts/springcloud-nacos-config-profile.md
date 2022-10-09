@@ -21,7 +21,7 @@ description: 'Nacos Config的多环境（Profile）配置信息读取 '
 在之前文章中我们学习到了`SpringCloud Alibaba`读取`Nacos Config`内定义的`properties`、`Yaml`类型的配置文件信息，并且使用`Nacos Console`进行修改配置信息后可以在应用程序内实时更新。
 
 
-在我之前的`SpringBoot`系列教程中有提到`Profile（多环境）`相关的概念，有兴趣的同学可以去查看{% post_link springboot-active-profiles 激活项目配置的多环境(profiles) %}文章，既然应用程序存在`Profile`分离的概念， `Nacos Config`同样为我们提供了这一概念，接下来我们来看看是如何进行`Profile`的配置信息`切换使用`、`优先级替换`。
+在我之前的`SpringBoot`系列教程中有提到`Profile（多环境）`相关的概念，有兴趣的同学可以去查看{% post_path springboot-active-profiles 激活项目配置的多环境(profiles) %}文章，既然应用程序存在`Profile`分离的概念， `Nacos Config`同样为我们提供了这一概念，接下来我们来看看是如何进行`Profile`的配置信息`切换使用`、`优先级替换`。
 
 
 ## 快速入门

@@ -23,7 +23,7 @@ description: 'Eureka服务注册中心的失效剔除与自我保护机制'
 ### 服务下线
 `迭代更新`、`终止访问`某一个或者多个`服务节点`时，我们在`正常关闭服务节点`的情况下，`Eureka Client`会通过`PUT`请求方式调用`Eureka Server`的`REST`访问节点`/eureka/apps/{appID}/{instanceID}/status?value=DOWN`请求地址，告知`Eureka Server`我要下线了，`Eureka Server`收到请求后会将该`服务实例`的`运行状态`由`UP`修改为`DOWN`，这样我们在`管理平台`服务列表内看到的就是`DOWN`状态的服务实例。
 
-> 有关`Eureka Server`内部的`REST`节点地址，请访问{% post_link eureka-rest Eureka服务注册中心内置的REST节点列表 %}来了解详情。
+> 有关`Eureka Server`内部的`REST`节点地址，请访问{% post_path eureka-rest Eureka服务注册中心内置的REST节点列表 %}来了解详情。
 
 ### 失效剔除
 `Eureka Server`在启动完成后会创建一个定时器每隔`60秒`检查一次`服务健康状况`，如果其中一个服务节点超过`90秒`未检查到心跳，那么`Eureka Server`会自动从`服务实例列表`内将该服务`剔除`。

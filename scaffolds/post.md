@@ -10,15 +10,9 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-    - SpringCloud
-    - SpringBoot
-    - ApiBoot
-categories:
-    - SpringCloud
-    - SpringBoot
-    - ApiBoot
+tags: [SpringCloud,SpringBoot,ApiBoot]
+categories: [SpringCloud,SpringBoot,ApiBoot]
 date: {{ date }}
-keywords: SpringCloud,SpringBoot,恒宇少年,微服务
+keywords: SpringCloud,SpringBoot,ApiBoot,恒宇少年,微服务
 description: {{ title }}
 ---

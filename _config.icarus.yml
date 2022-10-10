@@ -201,3 +201,10 @@ providers:
     cdn: jsdelivr
     fontcdn: google
     iconcdn: fontawesome
+search:
+    type: baidu
+# 推荐阅读
+recommended:
+        enable: true
+        title: 🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。
+        url: https://gitee.com/minbox-projects/api-boot

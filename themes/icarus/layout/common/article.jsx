@@ -20,16 +20,12 @@ function getWordCount(content) {
 module.exports = class extends Component {
     render() {
         const { config, helper, page, index } = this.props;
-        const { article, plugins } = config;
+        const { article, recommended } = config;
         const { url_for, date, date_xml, __, _p } = helper;
 
-        const indexLaunguage = config.language || 'en';
-        const language = page.lang || page.language || config.language || 'en';
         const cover = page.cover ? url_for(page.cover) : null;
-        const updateTime = article && article.update_time !== undefined ? article.update_time : true;
-        const isUpdated = page.updated && !moment(page.date).isSame(moment(page.updated));
-        const shouldShowUpdated = page.updated && ((updateTime === 'auto' && isUpdated) || updateTime === true);
-
+        // 文章目录列表
+        const {categories} = page;
         return <Fragment>
             {/* Main content */}
             <div class="card">
@@ -42,58 +38,66 @@ module.exports = class extends Component {
                     </span>}
                 </div> : null}
                 <article class={`card-content article${'direction' in page ? ' ' + page.direction : ''}`} role="article">
-                    {/* Metadata */}
-                    {page.layout !== 'page' ? <div class="article-meta is-size-7 is-uppercase level is-mobile">
-                        <div class="level-left">
-                            {/* Creation Date */}
-                            {page.date && <span class="level-item" dangerouslySetInnerHTML={{
-                                __html: _p('article.created_at', `<time dateTime="${date_xml(page.date)}" title="${new Date(page.date).toLocaleString()}">${date(page.date)}</time>`)
-                            }}></span>}
-                            {/* Last Update Date */}
-                            {shouldShowUpdated && <span class="level-item" dangerouslySetInnerHTML={{
-                                __html: _p('article.updated_at', `<time dateTime="${date_xml(page.updated)}" title="${new Date(page.updated).toLocaleString()}">${date(page.updated)}</time>`)
-                            }}></span>}
-                            {/* author */}
-                            {page.author ? <span class="level-item"> {page.author} </span> : null}
-                            {/* Categories */}
-                            {page.categories && page.categories.length ? <span class="level-item">
-                                {(() => {
-                                    const categories = [];
-                                    page.categories.forEach((category, i) => {
-                                        categories.push(<a class="link-muted" href={url_for(category.path)}>{category.name}</a>);
-                                        if (i < page.categories.length - 1) {
-                                            categories.push(<span>&nbsp;/&nbsp;</span>);
-                                        }
-                                    });
-                                    return categories;
-                                })()}
-                            </span> : null}
-                            {/* Read time */}
-                            {article && article.readtime && article.readtime === true ? <span class="level-item">
-                                {(() => {
-                                    const words = getWordCount(page._content);
-                                    const time = moment.duration((words / 150.0) * 60, 'seconds');
-                                    return `${_p('article.read_time', time.locale(index ? indexLaunguage : language).humanize())} (${_p('article.word_count', words)})`;
-                                })()}
-                            </span> : null}
-                            {/* Visitor counter */}
-                            {!index && plugins && plugins.busuanzi === true ? <span class="level-item" id="busuanzi_container_page_pv" dangerouslySetInnerHTML={{
-                                __html: _p('plugin.visit_count', '<span id="busuanzi_value_page_pv">0</span>')
-                            }}></span> : null}
-                        </div>
-                    </div> : null}
                     {/* Title */}
                     {page.title !== '' ? <h1 class="title is-3 is-size-4-mobile">
                         {index ? <a class="link-muted" href={url_for(page.link || page.path)}><span class="article_title">{page.title}</span></a> : <span class="article_title">{page.title}</span>}
                     </h1> : null}
+                    {/* 自定义文章信息 */}
+                    {
+                        !index && !page.customize ? <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
+                            <div class="level-left">
+                                {/* 原创 or 转载 */}
+                                {
+                                    page.article_type == '原创' ? <span
+                                            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+                                        {page.article_type}
+                                        </span> :
+                                        <span
+                                            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #a9800a;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
+                                    {page.article_type}
+                                </span>
+                                }
+                                {/* 发布时间 */}
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
+                                &nbsp;
+                                <span class="article-meta-element">{date(page.date)}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                {/*  作者 */}
+                                <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
+                                &nbsp;
+                                <span class="article-meta-element">{page.article_author}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                {/* 目录列表 */}
+                                {
+                                    !index && categories && categories.length ?
+                                        <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>: null
+                                }
+                                &nbsp;
+                                {!index && categories && categories.length ?
+                                    categories.map(category=>{
+                                        const category_url = "/categories/"+category+"/";
+                                        return <a class="category-link" href={category_url}>{category}&nbsp;</a>
+                                    })
+                                    : null}
+                            </div>
+                        </div> : null
+                    }
+                    {/* 推荐阅读 & 新闻 */}
+                    {!index && recommended.enable ?
+                        <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
+                            <a href={recommended.url} target="_blank">{recommended.title}</a>
+                        </div>
+                        : null}
+                    {!index ? <br/> : null}
                     {/* Content/Excerpt */}
                     <div class="content" dangerouslySetInnerHTML={{ __html: index && page.excerpt ? page.excerpt : page.content }}></div>
                     {/* Licensing block */}
-                    {!index && article && article.licenses && Object.keys(article.licenses)
+                    {!index && page.article_type == '原创' && article && article.licenses && Object.keys(article.licenses)
                         ? <ArticleLicensing.Cacheable page={page} config={config} helper={helper} /> : null}
                     {/* Tags */}
                     {!index && page.tags && page.tags.length ? <div class="article-tags is-size-7 mb-4">
-                        <span class="mr-2">#</span>
+                        <span class="mr-2">文章标签：</span>
                         {page.tags.map(tag => {
                             return <a class="link-muted mr-2" rel="tag" href={url_for(tag.path)}>{tag.name}</a>;
                         })}

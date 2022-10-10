@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://blog.minbox.org/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-cloud-all-articles.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-cloud-gateway-not-compatible.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-cloud-look.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-config-import-use-aways.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-event-listener.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-get-application-context.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-security-flexible-password-encoder.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-active-profiles.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-actuator-change-mapping.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-actuator-default.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-actuator-exposure-include.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-actuator-remote-shutdown.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
     <loc>https://blog.minbox.org/springboot-constructor-binding-properties.html</loc>
     <lastmod>2022-10-10</lastmod>
   </url>
@@ -97,6 +153,62 @@
     <lastmod>2022-10-10</lastmod>
   </url>
   <url>
+    <loc>https://blog.minbox.org/github-action-getting-started.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/github-action-publish-jar-to-maven-central.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/github-app-release.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/ignore-apiboot-logging-collection-path.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/import-osm-data-into-mysql.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/interview-strategy.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/know-openj9-jvm.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/know-qps-tps-uv-pv.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/linux-knowledge-you-should-know.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/linux-most-commonly-used-commands.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/linux-without-password.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/modify-apiboot-logging-collection-prefix.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/mongodb-springboot2-rest.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/mongodb-springboot2-starter.html</loc>
+    <lastmod>2022-10-10</lastmod>
+  </url>
+  <url>
     <loc>https://blog.minbox.org/mp4-convert-to-gif.html</loc>
     <lastmod>2022-10-10</lastmod>
   </url>
@@ -125,11 +237,11 @@
     <lastmod>2022-10-10</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/program-downgrade.html</loc>
+    <loc>https://blog.minbox.org/quartz-cluster-node.html</loc>
     <lastmod>2022-10-10</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/quartz-cluster-node.html</loc>
+    <loc>https://blog.minbox.org/program-downgrade.html</loc>
     <lastmod>2022-10-10</lastmod>
   </url>
   <url>
@@ -246,62 +358,6 @@
   </url>
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-placeholders-in-config-file.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-cloud-all-articles.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-cloud-gateway-not-compatible.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-cloud-look.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-config-import-use-aways.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-event-listener.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-get-application-context.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-security-flexible-password-encoder.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springboot-active-profiles.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springboot-actuator-change-mapping.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springboot-actuator-default.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springboot-actuator-exposure-include.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springboot-actuator-remote-shutdown.html</loc>
     <lastmod>2022-10-10</lastmod>
   </url>
   <url>
@@ -478,62 +534,6 @@
   </url>
   <url>
     <loc>https://blog.minbox.org/git-gitolite-server.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/github-action-getting-started.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/github-action-publish-jar-to-maven-central.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/github-app-release.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/ignore-apiboot-logging-collection-path.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/import-osm-data-into-mysql.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/interview-strategy.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/know-openj9-jvm.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/know-qps-tps-uv-pv.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/linux-knowledge-you-should-know.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/linux-most-commonly-used-commands.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/linux-without-password.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/modify-apiboot-logging-collection-prefix.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/mongodb-springboot2-rest.html</loc>
-    <lastmod>2022-10-10</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/mongodb-springboot2-starter.html</loc>
     <lastmod>2022-10-10</lastmod>
   </url>
 </urlset> 

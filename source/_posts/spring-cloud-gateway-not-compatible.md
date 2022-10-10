@@ -19,7 +19,7 @@ article_url:
 ---
 
 使用`ApiBoot`最新发布的`v2.2.5`版本整合`SpringCloud Gateway`的`Hoxton.SR5`版本时导致项目无法启动，控制台抛出的错误如下所示：
-
+<!--more-->
 ```java
 ***************************
 APPLICATION FAILED TO START

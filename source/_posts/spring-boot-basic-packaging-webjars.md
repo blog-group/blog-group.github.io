@@ -21,7 +21,7 @@ description: 'SpringBoot2.x基础篇：将静态资源打包为WebJars'
 
 我们在编写前后分离项目时，前端的项目一般需要静态资源（`Image`、`CSS`、`JavaScript`...）来进行渲染界面，而如果我们对外采用依赖的方式提供使用时，我们的静态资源文件也应该放入打包文件内，这样才能更便捷的提供我们的功能，在我的开源分布式日志框架 [minbox-logging](https://gitee.com/minbox-projects/minbox-logging) 内提供了管理界面的功能，就是采用的这种方式实现，将静态资源以及**编译后**的`HTML`页面存放到`minbox-logging-admin-ui`依赖内，下面我们来看下具体的实现方式。
 
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

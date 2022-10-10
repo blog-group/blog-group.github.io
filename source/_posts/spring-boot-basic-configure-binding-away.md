@@ -21,7 +21,7 @@ description: 'SpringBoot2.x基础篇：谈谈SpringBoot内提供的这几种配�
 ![](https://blog.minbox.org/images/post/spring-boot-basic-configure-binding-away-1.png)
 
 `SpringBoot`在不断地版本迭代中陆续提供了不同的配置参数绑定的方式，我们可以单独获取`一个配置参数`也可以将`一系列的配置`映射绑定到`JavaBean`的属性字段，下面我们来看看这几种方式的配置绑定哪一种是你最常用到的。
-
+<!--more-->
 ## 示例配置参数
 
 ```yaml

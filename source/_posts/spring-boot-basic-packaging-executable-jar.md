@@ -18,7 +18,7 @@ description: 'SpringBoot2.x基础篇：将应用程序打包为可执行Jar'
 ---
 
 应用程序在编写完成后，有一个重要的阶段就是发布，当我们发布时需要将应用程序进行打包，那通过`SpringBoot`编写的应用程序该如何打包呢？
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

@@ -19,7 +19,7 @@ description: 'SpringBoot2.x基础篇：探索配置文件中随机数的实现�
 随机数的使用你是不是经常用到？我们在进行运行`SpringBoot`单元测试时一般不会指定应用程序启动时的`端口号`，可以在`application.properties`文件内配置`server.port`的值为`${random.int(10000)}`，代表了随机使用`0~10000`的端口号。
 
 既然这种方式使用这么方便，那你知道`${random.int}`是通过什么方式实现的吗？
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

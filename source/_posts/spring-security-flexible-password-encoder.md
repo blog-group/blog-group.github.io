@@ -18,7 +18,7 @@ article_url:
 ---
 本章基于`Spring Security 5.4.1`版本编写，从`5.x`版本开始引入了很多新的特性。
 为了适配老系统的安全框架升级，`Spring Security`也是费劲了心思，支持不同的密码加密方式，而且根据不同的用户可以使用不同的加密方式。
-
+<!--more-->
 ## 构建Spring Security项目
 `Spring Security`的集成使用还是很简单的，根据项目使用的框架不同大致分为两种集成方式：
 - `SpringBoot方式集成`

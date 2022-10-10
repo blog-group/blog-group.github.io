@@ -20,7 +20,7 @@ article_url:
 ## 前言
 
 `Quartz`是一款比较优秀的分布式任务调度框架，`ApiBoot`对其封装之前就有两种任务存储方式，分别是：`memory`（内存方式）、`jdbc`（数据库方式），不过我们需要编写一些繁琐的代码配置，`ApiBoot`实现了集成后，可快速应用到项目中，而且还提供了 [ApiBootQuartzService](https://gitee.com/minbox-projects/api-boot/blob/master/api-boot-project/api-boot-plugins/api-boot-plugin-quartz/src/main/java/org/minbox/framework/api/boot/plugin/quartz/ApiBootQuartzService.java) 接口用于操作任务的状态、有效性、新任务创建等，提供了一些常用方法，使用时只需要注入即可，因为该类在 [ApiBootQuartzAutoConfiguration](https://gitee.com/minbox-projects/api-boot/blob/master/api-boot-project/api-boot-autoconfigure/src/main/java/org/minbox/framework/api/boot/autoconfigure/quartz/ApiBootQuartzAutoConfiguration.java) 自动化配置类中已经做了实例化。
-
+<!--more-->
 ## 任务存储
 
 之前有提到`Quartz`提供了两种任务存储的方式，这两种存在什么区别呢？

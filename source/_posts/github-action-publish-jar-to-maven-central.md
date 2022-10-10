@@ -18,7 +18,7 @@ article_url:
 ---
 
 在上一篇 [GitHub Actions使用入门](https://blog.minbox.org/github-action-getting-started.html) 文章中，我们了解到了该怎么去启用`GitHub Actions`功能，本篇文章来介绍下使用`GitHub Actions`怎么将我们的开源项目自动化构建后发布到`Maven Central`仓库中。
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](https://blog.minbox.org/spring-boot-2-x-articles.html)
 

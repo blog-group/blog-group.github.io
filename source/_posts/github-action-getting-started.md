@@ -20,7 +20,7 @@ article_url:
 ## 简介
 
 [GitHub Actions](https://github.com/features/actions) 是由`GitHub`在**2018**年推出的一款持续集成的服务方案，对于`GitHub`上托管的开源项目来说比较友好，集成使用简单，个人感觉比 [Travis-CI](https://www.travis-ci.org/github/minbox-projects/api-boot) 玩法要更多，而且还是可以自己去编写`Actions`在构建的过程中使用。
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](https://blog.minbox.org/spring-boot-2-x-articles.html)
 

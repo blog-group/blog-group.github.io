@@ -18,7 +18,7 @@ description: 'SpringBoot2.x基础篇：配置文件的加载顺序以及优先�
 ---
 
 `SpringBoot`约定了配置文件，默认为`application.properties`，通过该文件可以修改很多默认的配置，当然我们还可以在该配置文件内添加自定义的配置，该文件通过`key=value`的形式进行配置。
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

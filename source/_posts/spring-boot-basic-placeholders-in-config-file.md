@@ -20,7 +20,7 @@ description: 'SpringBoot2.x基础篇：配置文件中占位符的使用'
 ## 概念
 
 `占位符`是一种灵活的配置方式，可以让我们很灵活的使用配置参数，`@Value`注解的配置也是占位符的一种体现方式，这种方式可以从`Environment`内获取对应的`配置值`。
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

@@ -18,7 +18,7 @@ description: 'SpringBoot2.x基础篇：使用YAML代替Properties的对应配置
 ---
 
 `YAML`是一种用于指定层次结构配置数据的便捷格式，`SpringBoot`内部通过集成[SnakeYAML](https://bitbucket.org/asomov/snakeyaml)来支持解析，那我们如果来使用`YAML`格式来代替`Properties`，我们需要了解每一种`Properties`对应`YAML`的配置代替方式。
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

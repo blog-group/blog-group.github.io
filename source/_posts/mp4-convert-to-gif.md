@@ -24,7 +24,7 @@ article_url:
 - GitHub：[https://github.com/vvo/gifify](https://github.com/vvo/gifify)
 
 > 有些时候我们需要将`视频转换为动画GIF图`，可以更**生动形象**的描述我们想要说明的事物以及框架的使用方式，它对于程序员来说是一个`不可或缺的工具`之一。
-
+<!--more-->
 ## 环境支持
 
 在安装`Gifify`之前首先我们需要先安装它所需要的运行环境：

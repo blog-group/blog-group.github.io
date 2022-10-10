@@ -18,7 +18,7 @@ description: 'SpringBoot2.x基础篇：应用程序在启动时访问启动项�
 ---
 
 `SpringBoot`应用程序在启动时，我们可以传递自定义的参数来进行动态控制逻辑，比如我们使用`--debug`启动参数时就会使用`debug`启动应用程序，在控制台打印一些调试日志信息。
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

@@ -17,7 +17,7 @@ date: 2020-07-03 22:32:08
 article_url:
 ---
 如果你想要使用`SpringBoot`构建的项目在启动后运行一些特定的代码，那么`CommandLineRunner`、`ApplicationRunner`都是很好的选择。
-
+<!--more-->
 ## 推荐阅读
 - [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 

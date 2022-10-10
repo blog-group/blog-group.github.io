@@ -62,7 +62,7 @@ article_url:
 
 `ApiBoot MyBatis Enhance`使用文档详见[ApiBoot Mybatis Enhance官网文档](https://apiboot.minbox.org/zh-cn/docs/api-boot-mybatis-enhance.html)。
 
-本章的源码在[ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.yuqiyu.com/apiboot-security-customize-select-user.html)基础上进行修改，将之前章节源码的`application.yml`、`SystemUser`、`SystemUserEnhanceMppaer`、`UserService`文件复制到本章项目对应的目录内。
+本章的源码在[ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.minbox.org/apiboot-security-customize-select-user.html)基础上进行修改，将之前章节源码的`application.yml`、`SystemUser`、`SystemUserEnhanceMppaer`、`UserService`文件复制到本章项目对应的目录内。
 
 ## 验证码登录逻辑
 
@@ -188,7 +188,7 @@ public class PhoneCodeService {
 
 ### 修改用户表结构
 
-我们在[ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.yuqiyu.com/apiboot-security-customize-select-user.html)文章内创建的`system_user`用户表的基础上添加一个字段，如下所示：
+我们在[ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.minbox.org/apiboot-security-customize-select-user.html)文章内创建的`system_user`用户表的基础上添加一个字段，如下所示：
 
 ```sql
 alter table system_user
@@ -208,7 +208,7 @@ alter table system_user
  * @author：恒宇少年 - 于起宇
  * <p>
  * DateTime：2019-05-28 09:57
- * Blog：http://blog.yuqiyu.com
+ * Blog：http://blog.minbox.org
  * WebSite：http://www.jianshu.com/u/092df3f77bca
  * Gitee：https://gitee.com/hengboy
  * GitHub：https://github.com/hengboy

@@ -23,7 +23,7 @@ article_url:
 本文所需ApiBoot相关链接：
 
 - [ApiBoot官网](https://apiboot.minbox.org/)
-- [ApiBoot全组件系列文章](https://blog.yuqiyu.com/apiboot-all-articles.html)
+- [ApiBoot全组件系列文章](https://blog.minbox.org/apiboot-all-articles.html)
 - [ApiBoot Gitee源码仓库（欢迎Contributor）](https://gitee.com/minbox-projects/api-boot)
 - [ApiBoot GitHub源码仓库（欢迎Contributor）](https://github.com/minbox-projects/api-boot)
 

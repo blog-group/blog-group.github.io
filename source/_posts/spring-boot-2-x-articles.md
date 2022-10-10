@@ -52,25 +52,25 @@ description: 'SpringBoot2.x版本专题文章汇总'
 ## 阅读指南
 
 ###  最近更新
-- [Spring OAuth2 实现始终获取新的令牌](https://blog.yuqiyu.com/oauth2-always-create-token.html)
-- [将OpenStreetMap导出的OSM数据导入MySQL数据库](https://blog.yuqiyu.com/import-osm-data-into-mysql.html)
-- [实践：了解Redis Geo范围查询，获取当前位置最近的经纬度点](https://blog.yuqiyu.com/redis-geo-practice.html)
+- [Spring OAuth2 实现始终获取新的令牌](https://blog.minbox.org/oauth2-always-create-token.html)
+- [将OpenStreetMap导出的OSM数据导入MySQL数据库](https://blog.minbox.org/import-osm-data-into-mysql.html)
+- [实践：了解Redis Geo范围查询，获取当前位置最近的经纬度点](https://blog.minbox.org/redis-geo-practice.html)
 
 ### 基础篇
-- [SpringBoot2.x基础篇：使用CommandLineRunner或ApplicationRunner](https://blog.yuqiyu.com/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html)
-- [SpringBoot2.x基础篇：将静态资源打包为WebJars](https://blog.yuqiyu.com/spring-boot-basic-packaging-webjars.html)
-- [SpringBoot2.x基础篇：谈谈SpringBoot内提供的这几种配置绑定](https://blog.yuqiyu.com/spring-boot-basic-configure-binding-away.html)
-- [SpringBoot2.x基础篇：使用YAML代替Properties的对应配置](https://blog.yuqiyu.com/spring-boot-basic-using-yaml-instead-of-properties.html)
-- [SpringBoot2.x基础篇：配置文件中占位符的使用](https://blog.yuqiyu.com/spring-boot-basic-placeholders-in-config-file.html)
-- [SpringBoot2.x基础篇：配置文件的加载顺序以及优先级覆盖](https://blog.yuqiyu.com/spring-boot-basic-load-order-of-config-files.html)
-- [SpringBoot2.x基础篇：探索配置文件中随机数的实现方式](https://blog.yuqiyu.com/spring-boot-basic-configuring-random-values.html)
-- [SpringBoot2.x基础篇：应用程序在启动时访问启动项参数](https://blog.yuqiyu.com/spring-boot-basic-accessing-application-arguments.html)
-- [SpringBoot2.x基础篇：编写应用程序时常用的ApplicationEvents](https://blog.yuqiyu.com/spring-boot-basic-events-and-listeners.html)
-- [SpringBoot2.x基础篇：带你了解默认扫描的Package](https://blog.yuqiyu.com/spring-boot-basic-default-scan-package.html)
-- [SpringBoot2.x基础篇：Linux后台运行Jar以及Jvm参数调优](https://blog.yuqiyu.com/spring-boot-basic-back-run-jar.html)
-- [SpringBoot2.x基础篇：将应用程序打包为可执行Jar](https://blog.yuqiyu.com/spring-boot-basic-packaging-executable-jar.html)
-- [SpringBoot2.x基础篇：灵活的使用外部化配置信息](https://blog.yuqiyu.com/spring-boot-basic-externalized-configuration.html)
-- [SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序](https://blog.yuqiyu.com/spring-boot-basic-developing-first-application.html)
+- [SpringBoot2.x基础篇：使用CommandLineRunner或ApplicationRunner](https://blog.minbox.org/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html)
+- [SpringBoot2.x基础篇：将静态资源打包为WebJars](https://blog.minbox.org/spring-boot-basic-packaging-webjars.html)
+- [SpringBoot2.x基础篇：谈谈SpringBoot内提供的这几种配置绑定](https://blog.minbox.org/spring-boot-basic-configure-binding-away.html)
+- [SpringBoot2.x基础篇：使用YAML代替Properties的对应配置](https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html)
+- [SpringBoot2.x基础篇：配置文件中占位符的使用](https://blog.minbox.org/spring-boot-basic-placeholders-in-config-file.html)
+- [SpringBoot2.x基础篇：配置文件的加载顺序以及优先级覆盖](https://blog.minbox.org/spring-boot-basic-load-order-of-config-files.html)
+- [SpringBoot2.x基础篇：探索配置文件中随机数的实现方式](https://blog.minbox.org/spring-boot-basic-configuring-random-values.html)
+- [SpringBoot2.x基础篇：应用程序在启动时访问启动项参数](https://blog.minbox.org/spring-boot-basic-accessing-application-arguments.html)
+- [SpringBoot2.x基础篇：编写应用程序时常用的ApplicationEvents](https://blog.minbox.org/spring-boot-basic-events-and-listeners.html)
+- [SpringBoot2.x基础篇：带你了解默认扫描的Package](https://blog.minbox.org/spring-boot-basic-default-scan-package.html)
+- [SpringBoot2.x基础篇：Linux后台运行Jar以及Jvm参数调优](https://blog.minbox.org/spring-boot-basic-back-run-jar.html)
+- [SpringBoot2.x基础篇：将应用程序打包为可执行Jar](https://blog.minbox.org/spring-boot-basic-packaging-executable-jar.html)
+- [SpringBoot2.x基础篇：灵活的使用外部化配置信息](https://blog.minbox.org/spring-boot-basic-externalized-configuration.html)
+- [SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序](https://blog.minbox.org/spring-boot-basic-developing-first-application.html)
 
 
 ### 新特性

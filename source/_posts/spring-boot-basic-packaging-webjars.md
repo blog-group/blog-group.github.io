@@ -23,7 +23,7 @@ description: 'SpringBoot2.x基础篇：将静态资源打包为WebJars'
 
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 了解Resources Static Locations
 
@@ -86,13 +86,13 @@ private String[] staticLocations = CLASSPATH_RESOURCE_LOCATIONS;
 
 通过`IDEA`工具我们可以查看`webjars-sample`依赖内的资源文件，如下图所示：
 
-![](https://blog.yuqiyu.com/images/post/spring-boot-basic-packaging-webjars-1.png)
+![](https://blog.minbox.org/images/post/spring-boot-basic-packaging-webjars-1.png)
 
 由于`SpringBoot`提供的`spring.resources.static-locations`参数默认值，会将`classpath:/META-INF/resources`目录作为静态资源映射，所以我们可以直接进行访问`head.jpg`文件。
 
 运行`SpringBoot`项目，通过访问 [http://localhost:8080/head.jpg](http://localhost:8080/head.jpg)，效果如下图：
 
-![](https://blog.yuqiyu.com/images/post/spring-boot-basic-packaging-webjars-2.png)
+![](https://blog.minbox.org/images/post/spring-boot-basic-packaging-webjars-2.png)
 
 ## 静态资源访问前缀
 

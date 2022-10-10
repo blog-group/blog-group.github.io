@@ -13,7 +13,7 @@ baidusitemap:
   path: baidusitemap.xml
 baidu_url_submit:
   count: 20
-  host: blog.yuqiyu.com
+  host: blog.minbox.org
   token: CjL5xLTvQrUlNRzb
   path: baidu_urls.txt
 url: https://blog.minbox.org

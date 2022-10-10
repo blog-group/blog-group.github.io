@@ -22,7 +22,7 @@ description: 'SpringBoot2.x基础篇：配置文件中占位符的使用'
 `占位符`是一种灵活的配置方式，可以让我们很灵活的使用配置参数，`@Value`注解的配置也是占位符的一种体现方式，这种方式可以从`Environment`内获取对应的`配置值`。
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 配置方式
 
@@ -81,7 +81,7 @@ system:
 
 ## “短”命令行参数
 
-如果你对命令行参数不熟悉，可以访问 [SpringBoot2.x基础篇：灵活的使用外部化配置信息](https://blog.yuqiyu.com/spring-boot-basic-externalized-configuration.html) 学习。
+如果你对命令行参数不熟悉，可以访问 [SpringBoot2.x基础篇：灵活的使用外部化配置信息](https://blog.minbox.org/spring-boot-basic-externalized-configuration.html) 学习。
 
 在实际部署应用程序时，有很多的配置是动态的，`命令行`参数是一个不错的方式，不过`SpringBoot`所提供的配置参数名称都比较长，对此我们完全可以利用`占位符`配置方式实现自定义。
 

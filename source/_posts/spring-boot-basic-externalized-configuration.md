@@ -20,7 +20,7 @@ description: 'SpringBoot2.x基础篇：灵活的使用外部化配置信息'
 <!--more-->
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 前言
 

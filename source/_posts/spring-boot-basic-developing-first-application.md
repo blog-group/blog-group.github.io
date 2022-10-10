@@ -20,7 +20,7 @@ description: 'SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程�
 **本篇文章是2020年的开篇之作，希望能带给你不一样的阅读体验，能带给给你清晰的阅读思路。**
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 <!--more-->
 

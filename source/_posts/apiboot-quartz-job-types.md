@@ -27,9 +27,9 @@ article_url:
 
 `ApiBoot Quartz`是以系列文章的形式更新，了解更多使用方法请访问如下链接：
 
-- [这种方式整合Quartz你见过吗？](https://blog.yuqiyu.com/apiboot-quartz-integrated-away.html)
+- [这种方式整合Quartz你见过吗？](https://blog.minbox.org/apiboot-quartz-integrated-away.html)
 
-`ApiBoot`内其他组件系列使用文章请访问：[ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.yuqiyu.com/apiboot-all-articles.html)
+`ApiBoot`内其他组件系列使用文章请访问：[ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.minbox.org/apiboot-all-articles.html)
 
 ## 衍生的任务类型
 
@@ -95,7 +95,7 @@ public class DemoJob extends QuartzJobBean {
 }
 ```
 
-当任务执行时就会在控制台输出任务执行的时间，继承自`Spring`提供的封装任务类`QuartzJobBean`，会自动扫描到`DemoJob`并通过反射创建实例后放入`Ioc`容器，具体的流程可以访问 [这种方式整合Quartz你见过吗？](https://blog.yuqiyu.com/apiboot-quartz-integrated-away.html) 了解详情。
+当任务执行时就会在控制台输出任务执行的时间，继承自`Spring`提供的封装任务类`QuartzJobBean`，会自动扫描到`DemoJob`并通过反射创建实例后放入`Ioc`容器，具体的流程可以访问 [这种方式整合Quartz你见过吗？](https://blog.minbox.org/apiboot-quartz-integrated-away.html) 了解详情。
 
 ### 一次性任务
 

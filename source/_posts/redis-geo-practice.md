@@ -21,7 +21,7 @@ article_url:
 
 <!--more-->
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](https://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](https://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## Redis Geo
 

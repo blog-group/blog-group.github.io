@@ -46,37 +46,37 @@ article_url:
 我整理了极客时间学习热度比较高的课程，相关`SpringCloud`、`SpringBoot`、`K8s`、`数据结构与算法`、`Jvm调优`、`架构师修炼`等更多内容，有兴趣访问 [我的推荐课程](/geektime/) 了解详情，还能领取恒宇少年粉丝专属的 **¥199** 优惠券。
 
 ## 任务调度组件
-- [分布式任务调度框架ApiBoot Quartz内的两种任务存储方式](https://blog.yuqiyu.com/apiboot-quartz-job-storage-away.html)
-- [这种方式整合Quartz你见过吗？](https://blog.yuqiyu.com/apiboot-quartz-integrated-away.html)
-- [分布式调度框架Quartz衍生出的三种任务类型，你用过几个？](https://blog.yuqiyu.com/apiboot-quartz-job-types.html)
+- [分布式任务调度框架ApiBoot Quartz内的两种任务存储方式](https://blog.minbox.org/apiboot-quartz-job-storage-away.html)
+- [这种方式整合Quartz你见过吗？](https://blog.minbox.org/apiboot-quartz-integrated-away.html)
+- [分布式调度框架Quartz衍生出的三种任务类型，你用过几个？](https://blog.minbox.org/apiboot-quartz-job-types.html)
 
 ## 文档组件
-- [使用Swagger2作为文档来描述你的接口信息](https://blog.yuqiyu.com/apiboot-swagger-describe-the-interface.html)
-- [Swagger2怎么整合OAuth2来在线调试接口？](https://blog.yuqiyu.com/apiboot-swagger-integrated-oauth.html)
+- [使用Swagger2作为文档来描述你的接口信息](https://blog.minbox.org/apiboot-swagger-describe-the-interface.html)
+- [Swagger2怎么整合OAuth2来在线调试接口？](https://blog.minbox.org/apiboot-swagger-integrated-oauth.html)
 
 ## 安全组件
-- [OAuth2在内存、Redis、JDBC方式下的多客户端配置](https://blog.yuqiyu.com/apiboot-oauth-multiple-client-config.html)
-- [ApiBoot实现零代码整合Spring Security & OAuth2](https://blog.yuqiyu.com/apiboot-security-oauth-zero-code-integration.html)
-- [ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.yuqiyu.com/apiboot-security-customize-select-user.html)
-- [见过这么简单的方式整合Spring Security & OAuth2的自定义查询用户吗？](https://blog.yuqiyu.com/apiboot-security-oauth-custom-certification-user.html)
-- [Spring Security & OAuth2实现短信验证码方式获取AccessToken](https://blog.yuqiyu.com/apiboot-define-oauth-grant-type.html)
-- [原来Spring Security整合OAuth2后开放权限拦截路径还能这么玩？](https://blog.yuqiyu.com/apiboot-security-open-paths-without-intercept.html)
-- [我以为OAuth2整合JWT是很困难的事情，直到我使用了ApiBoot，一切都变了！](https://blog.yuqiyu.com/apiboot-security-oauth-use-jwt.html)
-- [来看看OAuth2怎么设置AccessToken有效期时间时长](https://blog.yuqiyu.com/apiboot-oauth-set-token-expire-time.html)
-- [OAuth2使用Redis来存储客户端信息以及AccessToken](https://blog.yuqiyu.com/apiboot-oauth-use-redis-storage.html)
+- [OAuth2在内存、Redis、JDBC方式下的多客户端配置](https://blog.minbox.org/apiboot-oauth-multiple-client-config.html)
+- [ApiBoot实现零代码整合Spring Security & OAuth2](https://blog.minbox.org/apiboot-security-oauth-zero-code-integration.html)
+- [ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.minbox.org/apiboot-security-customize-select-user.html)
+- [见过这么简单的方式整合Spring Security & OAuth2的自定义查询用户吗？](https://blog.minbox.org/apiboot-security-oauth-custom-certification-user.html)
+- [Spring Security & OAuth2实现短信验证码方式获取AccessToken](https://blog.minbox.org/apiboot-define-oauth-grant-type.html)
+- [原来Spring Security整合OAuth2后开放权限拦截路径还能这么玩？](https://blog.minbox.org/apiboot-security-open-paths-without-intercept.html)
+- [我以为OAuth2整合JWT是很困难的事情，直到我使用了ApiBoot，一切都变了！](https://blog.minbox.org/apiboot-security-oauth-use-jwt.html)
+- [来看看OAuth2怎么设置AccessToken有效期时间时长](https://blog.minbox.org/apiboot-oauth-set-token-expire-time.html)
+- [OAuth2使用Redis来存储客户端信息以及AccessToken](https://blog.minbox.org/apiboot-oauth-use-redis-storage.html)
 
 ## 分布式日志组件
-- [《ApiBoot新特性》GlobalLog全局日志的使用详解](https://blog.yuqiyu.com/apiboot-logging-use-global-log.html)
-- [使用ApiBoot Logging进行统一管理请求日志](https://blog.yuqiyu.com/apiboot-unified-manage-request-logs.html)
-- [将ApiBoot Logging采集的日志上报到Admin](https://blog.yuqiyu.com/apiboot-report-logs-by-logging-to-admin.html)
-- [自定义ApiBoot Logging链路以及单元ID](https://blog.yuqiyu.com/apiboot-custom-logging-traceid.html)
-- [修改ApiBoot Logging日志采集的前缀](https://blog.yuqiyu.com/modify-apiboot-logging-collection-prefix.html)
-- [ApiBoot Logging忽略路径不进行采集日志](https://blog.yuqiyu.com/ignore-apiboot-logging-collection-path.html)
-- [ApiBoot Logging整合Spring Security安全上报日志](https://blog.yuqiyu.com/apiboot-logging-integrates-spring-security.html)
-- [ApiBoot Logging整合SpringCloud Eureka负载均衡上报日志](https://blog.yuqiyu.com/apiboot-logging-integrates-eureka-report-logs.html)
-- [ApiBoot Logging使用SpringCloud Openfeign透传链路信息](https://blog.yuqiyu.com/apiboot-logging-using-openfeign-transparent-traceid.html)
-- [ApiBoot Logging使用RestTemplate透传链路信息](https://blog.yuqiyu.com/apiboot-logging-using-resttemplate-transparent-traceid.html)
-- [ApiBoot Logging Admin可视化界面管理日志](https://blog.yuqiyu.com/apiboot-logging-admin-visual-interface-management-log.html)
+- [《ApiBoot新特性》GlobalLog全局日志的使用详解](https://blog.minbox.org/apiboot-logging-use-global-log.html)
+- [使用ApiBoot Logging进行统一管理请求日志](https://blog.minbox.org/apiboot-unified-manage-request-logs.html)
+- [将ApiBoot Logging采集的日志上报到Admin](https://blog.minbox.org/apiboot-report-logs-by-logging-to-admin.html)
+- [自定义ApiBoot Logging链路以及单元ID](https://blog.minbox.org/apiboot-custom-logging-traceid.html)
+- [修改ApiBoot Logging日志采集的前缀](https://blog.minbox.org/modify-apiboot-logging-collection-prefix.html)
+- [ApiBoot Logging忽略路径不进行采集日志](https://blog.minbox.org/ignore-apiboot-logging-collection-path.html)
+- [ApiBoot Logging整合Spring Security安全上报日志](https://blog.minbox.org/apiboot-logging-integrates-spring-security.html)
+- [ApiBoot Logging整合SpringCloud Eureka负载均衡上报日志](https://blog.minbox.org/apiboot-logging-integrates-eureka-report-logs.html)
+- [ApiBoot Logging使用SpringCloud Openfeign透传链路信息](https://blog.minbox.org/apiboot-logging-using-openfeign-transparent-traceid.html)
+- [ApiBoot Logging使用RestTemplate透传链路信息](https://blog.minbox.org/apiboot-logging-using-resttemplate-transparent-traceid.html)
+- [ApiBoot Logging Admin可视化界面管理日志](https://blog.minbox.org/apiboot-logging-admin-visual-interface-management-log.html)
 
 ## 其他组件
 

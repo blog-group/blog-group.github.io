@@ -27,7 +27,7 @@ description: 'GitHub标星超1万的Chrome插件，助你轻松查看文件Git�
 
 该插件在`Chrome`商店内可以找到，名为：`Git History Browser Extension`，由`Luis Reinoso`提供。
 
-![](https://blog.yuqiyu.com/images/post/chrome-plugin-git-history-1.png)
+![](https://blog.minbox.org/images/post/chrome-plugin-git-history-1.png)
 
 它是一款开源的浏览器插件，仓库地址：[https://github.com/pomber/git-history](https://github.com/pomber/git-history/)，目前Star已经超过11k。
 
@@ -35,13 +35,13 @@ description: 'GitHub标星超1万的Chrome插件，助你轻松查看文件Git�
 
 通过`Chrome`商店安装完成后，这时我们打开`GitHub`的任意仓库（这里以[ApiBoot](https://github.com/minbox-projects/api-boot)仓库为例），找到某一个文件点击后，效果如下：
 
-![](https://blog.yuqiyu.com/images/post/chrome-plugin-git-history-2.png)
+![](https://blog.minbox.org/images/post/chrome-plugin-git-history-2.png)
 
 
 
 可以看到在工具栏多出了一个名为`Open in Git History`的按钮，我们点击该按钮会跳转到 `https://github.githistory.xyz/` ，效果如下图所示：
 
-![](https://blog.yuqiyu.com/images/post/chrome-plugin-git-history-3.png)
+![](https://blog.minbox.org/images/post/chrome-plugin-git-history-3.png)
 
 > 在地址栏中除了域名以外，后面的地址与访问`GitHub`时是一样的。
 

@@ -73,7 +73,7 @@ eureka:
 
 ## 将Logging Client注册到Eureka
 
-`Logging Client`其实就是我们的业务服务，不要被名称误导，我们在本章源码内创建一个`user-service`模块来作为测试的业务服务，我们也需要将`user-service`作为客户端注册到`Eureka Server`，可参考【[使用ApiBoot Logging进行统一管理请求日志](https://blog.yuqiyu.com/apiboot-unified-manage-request-logs.html)】文章内容创建项目。
+`Logging Client`其实就是我们的业务服务，不要被名称误导，我们在本章源码内创建一个`user-service`模块来作为测试的业务服务，我们也需要将`user-service`作为客户端注册到`Eureka Server`，可参考【[使用ApiBoot Logging进行统一管理请求日志](https://blog.minbox.org/apiboot-unified-manage-request-logs.html)】文章内容创建项目。
 
 ### 添加Eureka Client依赖
 

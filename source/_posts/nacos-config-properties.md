@@ -97,7 +97,7 @@ spring:
  * @author：恒宇少年 - 于起宇
  * <p>
  * DateTime：2019-03-01 11:20
- * Blog：https://blog.yuqiyu.com
+ * Blog：https://blog.minbox.org
  * WebSite：http://www.jianshu.com/u/092df3f77bca
  * Gitee：https://gitee.com/hengboy
  * GitHub：https://github.com/hengyuboy

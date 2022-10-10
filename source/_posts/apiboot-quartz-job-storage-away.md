@@ -30,7 +30,7 @@ article_url:
 
 ## 默认方式
 
-`ApiBoot`在整合`Quartz`之后将`内存方式`（memory）作为默认的任务存储方式，默认方式下不需要一行代码的配置就可以实现集成，通过`ApiBootQuartzService#newJob`方法就可以实现任务的初始化运行，还可以指定`Once`、`Loop`、`Cron`三种方式的任意一种来运行任务，使用方式详见：[分布式调度框架Quartz衍生出的三种任务类型，你用过几个？](https://blog.yuqiyu.com/apiboot-quartz-job-types.html)
+`ApiBoot`在整合`Quartz`之后将`内存方式`（memory）作为默认的任务存储方式，默认方式下不需要一行代码的配置就可以实现集成，通过`ApiBootQuartzService#newJob`方法就可以实现任务的初始化运行，还可以指定`Once`、`Loop`、`Cron`三种方式的任意一种来运行任务，使用方式详见：[分布式调度框架Quartz衍生出的三种任务类型，你用过几个？](https://blog.minbox.org/apiboot-quartz-job-types.html)
 
 ## 数据库方式
 

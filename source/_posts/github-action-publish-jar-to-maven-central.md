@@ -17,14 +17,14 @@ date: 2020-08-09 14:49:52
 article_url:
 ---
 
-在上一篇 [GitHub Actions使用入门](https://blog.yuqiyu.com/github-action-getting-started.html) 文章中，我们了解到了该怎么去启用`GitHub Actions`功能，本篇文章来介绍下使用`GitHub Actions`怎么将我们的开源项目自动化构建后发布到`Maven Central`仓库中。
+在上一篇 [GitHub Actions使用入门](https://blog.minbox.org/github-action-getting-started.html) 文章中，我们了解到了该怎么去启用`GitHub Actions`功能，本篇文章来介绍下使用`GitHub Actions`怎么将我们的开源项目自动化构建后发布到`Maven Central`仓库中。
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](https://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](https://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 新建workflow文件
 
-本篇文章以我的开源框架 [ApiBoot](https://github.com/minbox-projects/api-boot) 为例，大家有兴趣的也可以去了解下这个开源框架，详情请访问：[ApiBoot是什么？](https://blog.yuqiyu.com/apiboot-all-articles.html)
+本篇文章以我的开源框架 [ApiBoot](https://github.com/minbox-projects/api-boot) 为例，大家有兴趣的也可以去了解下这个开源框架，详情请访问：[ApiBoot是什么？](https://blog.minbox.org/apiboot-all-articles.html)
 
 在上一篇文章中我们提到过，`GitHub Actions`所需要的工作流文件要在`.github/workflows`文件夹内创建，那么接下来我们创建一个名为`deploy.yml`的工作流配置文件，配置`name`为该工作流的名称，如下所示：
 
@@ -118,7 +118,7 @@ jobs:
 
 由于该工作流配置文件是公开的，**我们肯定不会明文进行配置**，`GitHub`针对这一点，提供了`Secrets`配置的方式，我们需要将存在安全性的变量进行配置，使用时注意变量名称的对应即可。
 
-![](https://blog.yuqiyu.com/images/post/github-action-publish-jar-to-maven-central-1.png)
+![](https://blog.minbox.org/images/post/github-action-publish-jar-to-maven-central-1.png)
 
 `Secrets`在使用时需要根据约定的格式配置：
 
@@ -132,11 +132,11 @@ ${{ secrets.MAVEN_CENTER_USER_NAME }}
 
 到目前为止，我们的项目已经完成了`GitHub Actions`的配置，接下来需要将该工作流程配置文件推送()`push`)到目标仓库，推送后我们查看项目的`Actions`标签页的内容，如下所示：
 
-![](https://blog.yuqiyu.com/images/post/github-action-publish-jar-to-maven-central-2.png)
+![](https://blog.minbox.org/images/post/github-action-publish-jar-to-maven-central-2.png)
 
 **每当我们推送代码时都会自动触发构建工作流程的事件，一个工作流程的任务都会有完整的日志记录**，如下所示：
 
-![](https://blog.yuqiyu.com/images/post/github-action-publish-jar-to-maven-central-3.png)
+![](https://blog.minbox.org/images/post/github-action-publish-jar-to-maven-central-3.png)
 
 > 当一个任务的全部步骤都执行成功后，当前任务也算是真正的执行成功，如果一个工作流程文件内配置了多个任务，则是需要多个任务都构建成功后才算成功。
 

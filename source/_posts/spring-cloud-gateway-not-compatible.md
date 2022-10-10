@@ -83,7 +83,7 @@ Correct the classpath of your application so that it contains a single, compatib
 
 查看`idea`开发工具内项目的`External Libraries`发现，项目编译时使用的`reactor-netty`的版本确实是为`v0.9.6`，如下图所示：
 
-![](https://blog.yuqiyu.com/images/post/spring-cloud-gateway-not-compatible-1.png)
+![](https://blog.minbox.org/images/post/spring-cloud-gateway-not-compatible-1.png)
 
 
 

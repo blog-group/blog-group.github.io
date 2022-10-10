@@ -48,7 +48,7 @@ article_url:
  * @author：恒宇少年 - 于起宇
  * <p>
  * DateTime：2019-07-10 17:01
- * Blog：http://blog.yuqiyu.com
+ * Blog：http://blog.minbox.org
  * WebSite：http://www.jianshu.com/u/092df3f77bca
  * Gitee：https://gitee.com/hengboy
  * GitHub：https://github.com/hengboy
@@ -76,7 +76,7 @@ public interface LoggingTraceGenerator {
  * @author：恒宇少年 - 于起宇
  * <p>
  * DateTime：2019-07-10 17:28
- * Blog：http://blog.yuqiyu.com
+ * Blog：http://blog.minbox.org
  * WebSite：http://www.jianshu.com/u/092df3f77bca
  * Gitee：https://gitee.com/hengboy
  * GitHub：https://github.com/hengboy
@@ -112,7 +112,7 @@ public class LoggingDefaultTraceGenerator implements LoggingTraceGenerator {
  * @author：恒宇少年 - 于起宇
  * <p>
  * DateTime：2019-07-10 17:02
- * Blog：http://blog.yuqiyu.com
+ * Blog：http://blog.minbox.org
  * WebSite：http://www.jianshu.com/u/092df3f77bca
  * Gitee：https://gitee.com/hengboy
  * GitHub：https://github.com/hengboy
@@ -138,7 +138,7 @@ public interface LoggingSpanGenerator {
  * @author：恒宇少年 - 于起宇
  * <p>
  * DateTime：2019-07-15 17:24
- * Blog：http://blog.yuqiyu.com
+ * Blog：http://blog.minbox.org
  * WebSite：http://www.jianshu.com/u/092df3f77bca
  * Gitee：https://gitee.com/hengboy
  * GitHub：https://github.com/hengboy

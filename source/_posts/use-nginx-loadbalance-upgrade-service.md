@@ -145,7 +145,7 @@ public class TestController {
 
 **upstream转发流程如下图所示：**
 
-![](https://blog.yuqiyu.com/images/post/use-nginx-loadbalance-upgrade-service-1.png)
+![](https://blog.minbox.org/images/post/use-nginx-loadbalance-upgrade-service-1.png)
 
 ### 配置UpStream
 

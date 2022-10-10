@@ -112,7 +112,7 @@ server:
 ```html
 <tr>
   <td>程序员恒宇少年</td>
-  <td><img src="https://blog.yuqiyu.com/images/profile2.png" width="400px"/></td>
+  <td><img src="https://blog.minbox.org/images/profile2.png" width="400px"/></td>
 </tr>
 ```
 

@@ -68,7 +68,7 @@ article_url:
 
 ### 配置数据源
 
-我们需要连接到`Logging Admin`所需要的数据库上，具体的数据库表结构请访问【[将ApiBoot Logging采集的日志上报到Admin](https://blog.yuqiyu.com/apiboot-report-logs-by-logging-to-admin.html#初始化日志表结构)】查看.
+我们需要连接到`Logging Admin`所需要的数据库上，具体的数据库表结构请访问【[将ApiBoot Logging采集的日志上报到Admin](https://blog.minbox.org/apiboot-report-logs-by-logging-to-admin.html#初始化日志表结构)】查看.
 
 修改`application.yml`配置文件添加相关数据源信息如下所示：
 

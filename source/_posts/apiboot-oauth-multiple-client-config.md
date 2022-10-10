@@ -23,7 +23,7 @@ article_url:
 
 ## 系列文章
 
-`ApiBoot`针对每一个组件都提供一系列的拆分详解文章，详情请访问 [ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.yuqiyu.com/apiboot-all-articles.html) 。
+`ApiBoot`针对每一个组件都提供一系列的拆分详解文章，详情请访问 [ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.minbox.org/apiboot-all-articles.html) 。
 
 ## 前言
 
@@ -141,7 +141,7 @@ public static class Client {
 
 ### 配置多客户端
 
-看过`ApiBoot OAuth2`系列文章的同学都应该知道，默认使用`内存方式`进行存储生成的`AccessToken`，这一点我们就不做修改了，如果你项目不是使用默认，可以去参考 [ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.yuqiyu.com/apiboot-all-articles.html) 内安全组件分类下的文章。
+看过`ApiBoot OAuth2`系列文章的同学都应该知道，默认使用`内存方式`进行存储生成的`AccessToken`，这一点我们就不做修改了，如果你项目不是使用默认，可以去参考 [ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.minbox.org/apiboot-all-articles.html) 内安全组件分类下的文章。
 
 在`application.yml`文件内添加客户端列表配置，如下所示：
 
@@ -162,7 +162,7 @@ api:
           password: 123456
 ```
 
-> 由于`api-boot-starter-security-oauth-jwt`依赖是`Spring Security`与`OAuth2`的整合，所以我们想要获取`AccessToken`需要配置`Spring Security`的用户列表，即`api.boot.security.users`参数，默认同样是内存方式存储，详见：[ApiBoot实现零代码整合Spring Security & OAuth2](https://blog.yuqiyu.com/apiboot-security-oauth-zero-code-integration.html)
+> 由于`api-boot-starter-security-oauth-jwt`依赖是`Spring Security`与`OAuth2`的整合，所以我们想要获取`AccessToken`需要配置`Spring Security`的用户列表，即`api.boot.security.users`参数，默认同样是内存方式存储，详见：[ApiBoot实现零代码整合Spring Security & OAuth2](https://blog.minbox.org/apiboot-security-oauth-zero-code-integration.html)
 
 ## 运行测试
 

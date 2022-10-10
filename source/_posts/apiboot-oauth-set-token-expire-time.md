@@ -94,7 +94,7 @@ api:
 
 `JDBC`方式是`ApiBoot OAuth`无法控制的，因为`OAuth2`当使用`JDBC`方式进行存储客户端、令牌等信息时，都是通过`OAuth2`提供的固定的表进行操作，正因为如此我们只需要修改`oauth_client_details`表内每一条`client`信息的`access_token_validity`字段的值即可，时间单位同样也是`秒`，如下图所示：
 
-![](https://blog.yuqiyu.com/images/post/apiboot-oauth-set-token-expire-time-1.png)
+![](https://blog.minbox.org/images/post/apiboot-oauth-set-token-expire-time-1.png)
 
 `OAuth2`提供的`MySQL`版本的建表语句请访问[ApiBoot OAuth Starter](https://gitee.com/minbox-projects/api-boot/blob/master/api-boot-project/api-boot-starters/api-boot-starter-security-oauth-jwt/oauth-mysql.sql)查看。
 
@@ -111,7 +111,7 @@ api:
 
 通过`PostMan`方式获取`AccessToken`如下图所示：
 
-![](https://blog.yuqiyu.com/images/post/apiboot-oauth-set-token-expire-time-2.png)
+![](https://blog.minbox.org/images/post/apiboot-oauth-set-token-expire-time-2.png)
 
 我们根据结果可以看到，由原本默认的`7200`修改成了我们在`application.yml`配置的`43200`（结果中的`43199`是因为生成token耗时差导致的）。
 

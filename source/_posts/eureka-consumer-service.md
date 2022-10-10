@@ -99,7 +99,7 @@ public RestTemplate restTemplate() {
     return new RestTemplate();
 }
 ```
-在这里有个`@LoadBalanced`注解，我们后续章节会对它详细的讲解，[博客](https://blog.yuqiyu.com)搜索关键字`LoadBalanced`查询文章信息，不过如果你不添加并使用这个注解，你是没有办法通过`服务名`直接发送请求的，会出现错误信息。
+在这里有个`@LoadBalanced`注解，我们后续章节会对它详细的讲解，[博客](https://blog.minbox.org)搜索关键字`LoadBalanced`查询文章信息，不过如果你不添加并使用这个注解，你是没有办法通过`服务名`直接发送请求的，会出现错误信息。
 #### 了解DiscoveryClient
 我们需要创建一个`发送请求`以及`请求消费`的`Controller`，如下所示：
 ```java

@@ -152,7 +152,7 @@ api:
 - [ApiBoot Security](https://apiboot.minbox.org/zh-cn/docs/api-boot-security.html)
 - [ApiBoot OAuth](https://apiboot.minbox.org/zh-cn/docs/api-boot-oauth.html)
 
-或者你可以查看我编写的`ApiBoot`系列的文章：[ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.yuqiyu.com/apiboot-all-articles.html)
+或者你可以查看我编写的`ApiBoot`系列的文章：[ApiBoot开源框架各个组件的系列使用文章汇总](https://blog.minbox.org/apiboot-all-articles.html)
 
 ## 运行测试
 

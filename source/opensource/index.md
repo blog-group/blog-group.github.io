@@ -73,4 +73,4 @@ customize: true
 - Gitee：[https://gitee.com/minbox-projects/api-boot](https://gitee.com/minbox-projects/api-boot)
 - GitHub：[https://github.com/minbox-projects/api-boot](https://github.com/minbox-projects/api-boot)
 - 官方文档：[https://apiboot.minbox.org](https://apiboot.minbox.org/)
-- 系列使用文章：[https://blog.yuqiyu.com/apiboot-all-articles.html](https://blog.yuqiyu.com/apiboot-all-articles.html)
+- 系列使用文章：[https://blog.minbox.org/apiboot-all-articles.html](https://blog.minbox.org/apiboot-all-articles.html)

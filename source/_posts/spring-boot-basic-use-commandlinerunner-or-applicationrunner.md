@@ -19,7 +19,7 @@ article_url:
 如果你想要使用`SpringBoot`构建的项目在启动后运行一些特定的代码，那么`CommandLineRunner`、`ApplicationRunner`都是很好的选择。
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 
 ## 使用方式
@@ -87,7 +87,7 @@ public interface ApplicationRunner {
 
 `CommandLineRunner#run()`方法的参数是启动`SpringBoot`应用程序`main`方法的参数列表，而`ApplicationRunner#run()`方法的参数则是`ApplicationArguments`对象。
 
-在之前的文章中也提到过`ApplicatgionArguments`对象，并使用它获取外部的配置参数，查看：[应用程序在启动时访问启动项参数](https://blog.yuqiyu.com/spring-boot-basic-accessing-application-arguments.html)。
+在之前的文章中也提到过`ApplicatgionArguments`对象，并使用它获取外部的配置参数，查看：[应用程序在启动时访问启动项参数](https://blog.minbox.org/spring-boot-basic-accessing-application-arguments.html)。
 
 > **建议：**如果你在项目启动时需要获取类似 "--xxx" 的启动参数值建议使用`ApplicationRunner`
 

@@ -21,11 +21,11 @@ description: 'SpringBoot2.x基础篇：探索配置文件中随机数的实现�
 既然这种方式使用这么方便，那你知道`${random.int}`是通过什么方式实现的吗？
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 概述
 
-![](http://blog.yuqiyu.com/images/post/spring-boot-basic-configuring-random-values-1.png)
+![](http://blog.minbox.org/images/post/spring-boot-basic-configuring-random-values-1.png)
 
 ## 配置文件方式
 

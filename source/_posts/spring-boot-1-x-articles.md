@@ -72,7 +72,7 @@ description: 'SpringBoot1.x版本专题文章汇总'
 - [资源与业务分离Aop的实现方式](/aop-resource-load.html)
 - [如何在SpringBoot项目中使用拦截器](https://www.jianshu.com/p/f69b21731b41)
 - [使用ControllerAdvice完成异常统一处理](/springboot-exception-handler-advice.html)
-- [基于SpringBoot 设计业务逻辑异常统一处理](https://blog.yuqiyu.com/springboot-exception-handler-advice.html)
+- [基于SpringBoot 设计业务逻辑异常统一处理](https://blog.minbox.org/springboot-exception-handler-advice.html)
 - [SpringBoot整合JavaMail发送邮件](https://www.jianshu.com/p/0991f0841b0a)
 - [使用SpringBoot validator让数据更真实](https://www.jianshu.com/p/e111d3fbc583)
 - [SpringBoot项目中使用WebSocket配置广播式通信](https://www.jianshu.com/p/19cec6fbf422)

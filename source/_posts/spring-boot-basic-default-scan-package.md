@@ -21,7 +21,7 @@ description: 'SpringBoot2.x基础篇：带你了解扫描Package自动注册Bean
 
 <!--more-->
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 默认扫描目录
 

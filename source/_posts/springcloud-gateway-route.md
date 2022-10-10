@@ -105,7 +105,7 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             # 匹配路径转发
             - Path=/api-boot-datasource-switch.html
@@ -123,7 +123,7 @@ server:
 
 
 
-在上面的配置中，当访问`http://localhost:9090/api-boot-datasource-switch.html`时就会被自动转发到`https://blog.yuqiyu.com/api-boot-datasource-switch.html`，这里要注意完全匹配`Path`的值时才会进行路由转发。
+在上面的配置中，当访问`http://localhost:9090/api-boot-datasource-switch.html`时就会被自动转发到`https://blog.minbox.org/api-boot-datasource-switch.html`，这里要注意完全匹配`Path`的值时才会进行路由转发。
 
 访问效果如下所示：
 
@@ -143,7 +143,7 @@ server:
 public RouteLocator routeLocator(RouteLocatorBuilder builder) {
   return builder.routes()
     .route("blog", r -> 
-           r.path("/api-boot-datasource-switch.html").uri("https://blog.yuqiyu.com"))
+           r.path("/api-boot-datasource-switch.html").uri("https://blog.minbox.org"))
     .build();
 }
 ```
@@ -158,12 +158,12 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Before=2019-05-01T00:00:00+08:00[Asia/Shanghai]
 ```
 
-在上面配置中，我们允许`2019-05-01`日凌晨之前通过路由转发到`https://blog.yuqiyu.com`，通过查看`org.springframework.cloud.gateway.handler.predicate.BeforeRoutePredicateFactory`源码我们发现，`Spring Cloud Gateway`的`Before`断言采用的`ZonedDateTime`进行匹配时间，这里要注意存在时区的问题，需要配置`[Asia/Shanghai]`作为中国时区。
+在上面配置中，我们允许`2019-05-01`日凌晨之前通过路由转发到`https://blog.minbox.org`，通过查看`org.springframework.cloud.gateway.handler.predicate.BeforeRoutePredicateFactory`源码我们发现，`Spring Cloud Gateway`的`Before`断言采用的`ZonedDateTime`进行匹配时间，这里要注意存在时区的问题，需要配置`[Asia/Shanghai]`作为中国时区。
 
 ### After 方式匹配转发
 
@@ -175,12 +175,12 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - After=2019-04-29T00:00:00+08:00[Asia/Shanghai]
 ```
 
-在上面配置中允许`2019-04-29`凌晨之后进行转发到`https://blog.yuqiyu.com`。
+在上面配置中允许`2019-04-29`凌晨之后进行转发到`https://blog.minbox.org`。
 
 ### Between 方式匹配转发
 
@@ -192,12 +192,12 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Between=2019-04-29T00:00:00+08:00[Asia/Shanghai], 2019-05-01T00:00:00+08:00[Asia/Shanghai]
 ```
 
-在上面配置中，允许在`2019-04-29`日凌晨后 & `2019-05-01`凌晨之前请求转发到`https://blog.yuqiyu.com`。
+在上面配置中，允许在`2019-04-29`日凌晨后 & `2019-05-01`凌晨之前请求转发到`https://blog.minbox.org`。
 
 ### Cookie 方式匹配转发
 
@@ -209,7 +209,7 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Cookie=hengboy, yuqiyu
 ```
@@ -234,12 +234,12 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Header=X-Request-Id, \d+
 ```
 
-在上面配置中，如果`X-Request-Id`的值为数字，那么就可以转发到`https://blog.yuqiyu.com`，我们通过如下方式进行测试：
+在上面配置中，如果`X-Request-Id`的值为数字，那么就可以转发到`https://blog.minbox.org`，我们通过如下方式进行测试：
 
 ```sh
 curl http://localhost:9090 -H "X-Request-Id:123456"
@@ -257,7 +257,7 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Host=**.yuqiyu.com
 ```
@@ -283,7 +283,7 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Method=POST
 ```
@@ -315,7 +315,7 @@ curl -X POST http://localhost:9090
       gateway:
         routes:
           - id: blog
-            uri: https://blog.yuqiyu.com
+            uri: https://blog.minbox.org
             predicates:
               - Query=xxx
   ```
@@ -330,7 +330,7 @@ curl -X POST http://localhost:9090
       gateway:
         routes:
           - id: blog
-            uri: https://blog.yuqiyu.com
+            uri: https://blog.minbox.org
             predicates:
               - Query=xxx, zzz
   ```
@@ -347,7 +347,7 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Path=/article/{articleId}
 ```
@@ -370,7 +370,7 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - RemoteAddr=192.168.1.56/24
 ```
@@ -387,7 +387,7 @@ spring:
     gateway:
       routes:
         - id: blog
-          uri: https://blog.yuqiyu.com
+          uri: https://blog.minbox.org
           predicates:
             - Query=author, hengboy
             - Query=yuqiyu

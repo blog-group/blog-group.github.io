@@ -23,8 +23,8 @@ article_url:
 
 ## ApiBoot Security 系列文章
 
-- [ApiBoot实现零代码整合Spring Security & OAuth2](https://blog.yuqiyu.com/apiboot-security-oauth-zero-code-integration.html)
-- [ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.yuqiyu.com/apiboot-security-customize-select-user.html)
+- [ApiBoot实现零代码整合Spring Security & OAuth2](https://blog.minbox.org/apiboot-security-oauth-zero-code-integration.html)
+- [ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken](https://blog.minbox.org/apiboot-security-customize-select-user.html)
 
 ## 创建项目
 使用`IDEA`开发工具创建一个`SpringBoot`项目。

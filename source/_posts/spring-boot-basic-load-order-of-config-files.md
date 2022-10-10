@@ -20,7 +20,7 @@ description: 'SpringBoot2.x基础篇：配置文件的加载顺序以及优先�
 `SpringBoot`约定了配置文件，默认为`application.properties`，通过该文件可以修改很多默认的配置，当然我们还可以在该配置文件内添加自定义的配置，该文件通过`key=value`的形式进行配置。
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 疑惑配置提示？
 当我们使用开发工具来配置时，就会出现相应的提示，这要完全要归功于`spring-configuration-metadata.json`配置元数据文件，该文件内记录了配置的**名称**、**类型**、**归属类**等信息，如果配置类型为`枚举`还可以实现`选择性配置`。
@@ -104,7 +104,7 @@ java -jar project-sample.jar --spring.config.location=classpath:/configs/ --spri
 
 为了更好地解释这一点，我们根据对应的加载顺序分别创建一个`application.yml`配置文件，来验证根据优先级的不同是否存在覆盖问题，如下图所示：
 
-![](http://blog.yuqiyu.com/images/post/spring-boot-basic-load-order-of-config-files-1.jpg)
+![](http://blog.minbox.org/images/post/spring-boot-basic-load-order-of-config-files-1.jpg)
 
 在上面四个配置文件中都有一个名为`name`的配置，而红色字体标注的内容就是每个配置文件`name`的配置内容，下面我们来启动项目测试下输出内容。
 

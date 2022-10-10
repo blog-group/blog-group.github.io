@@ -19,7 +19,7 @@ description: 'SpringBoot2.x基础篇：Linux后台运行Jar以及Jvm参数调优
 我们将编写的应用程序打包为`Jar`可执行文件后，如果在`Linux`服务器环境下，可直接使用`java -jar xxx.jar`命令运行应用程序，不过当我们关闭命令窗口后`启动中`的应用程序也会停止，那我们需要通过什么方式才可以成为后台服务方式运行呢？
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 <!--more-->
 ## Nohup命令
@@ -113,7 +113,7 @@ appending output to nohup.out
 ```bash
 #!/bin/bash
 # author 恒宇少年 - 于起宇
-# http://blog.yuqiyu.com
+# http://blog.minbox.org
 nohup java -server -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms256m -Xmx1024m -Xmn256m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC -jar "$1" > "$1.log" 2>&1 &
 tail -1000f "$1.log"
 ```

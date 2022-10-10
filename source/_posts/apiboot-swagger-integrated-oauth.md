@@ -23,12 +23,12 @@ article_url:
 本文所需ApiBoot相关链接：
 
 - [ApiBoot官网](https://apiboot.minbox.org/)
-- [ApiBoot全组件系列文章](https://blog.yuqiyu.com/apiboot-all-articles.html)
+- [ApiBoot全组件系列文章](https://blog.minbox.org/apiboot-all-articles.html)
 - [ApiBoot Gitee源码仓库（欢迎Contributor）](https://gitee.com/minbox-projects/api-boot)
 - [ApiBoot GitHub源码仓库（欢迎Contributor）](https://github.com/minbox-projects/api-boot)
 
 ## 创建示例项目
-在之前文章「[使用Swagger2作为文档来描述你的接口信息](https://blog.yuqiyu.com/apiboot-swagger-describe-the-interface.html)」我们已经讲到了使用`Swagger2`来简单的描述接口，提供可视化在线的接口文档，我们本章的主要目的是来集成使用`OAuth2`实现在线调试接口，我们把之前章节测试的接口`UserController`复制到本篇文章中以便于测试，本章项目`pom.xml`依赖如下所示：
+在之前文章「[使用Swagger2作为文档来描述你的接口信息](https://blog.minbox.org/apiboot-swagger-describe-the-interface.html)」我们已经讲到了使用`Swagger2`来简单的描述接口，提供可视化在线的接口文档，我们本章的主要目的是来集成使用`OAuth2`实现在线调试接口，我们把之前章节测试的接口`UserController`复制到本篇文章中以便于测试，本章项目`pom.xml`依赖如下所示：
 ```xml
 <dependencies>
   <dependency>
@@ -59,7 +59,7 @@ article_url:
 
 如果你看过`ApiBoot Security`、`ApiBoot OAuth`你应该知道，通过`application.yml`文件简单的几行配置就可以集成`Spring Security`整合`OAuth2`，本章来使用**内存方式**配置`用户列表`以及`客户端列表`。
 
-> ApiBoot Security & ApiBoot OAuth组件使用系列文章：[https://blog.yuqiyu.com/apiboot-all-articles.html](https://blog.yuqiyu.com/apiboot-all-articles.html)
+> ApiBoot Security & ApiBoot OAuth组件使用系列文章：[https://blog.minbox.org/apiboot-all-articles.html](https://blog.minbox.org/apiboot-all-articles.html)
 >
 > 如果你想深入的了解这个神奇的`ApiBoot`安全组件，可以通过依赖文章汇总链接学习。
 
@@ -132,7 +132,7 @@ api:
 
 我们把获取的`AccessToken`与类型进行组合成：`Bearer 304676a4-b9a6-4c4d-af40-e439b934aba8`，将该令牌字符串配置到`Swagger`界面上，如下图所示：
 
-![](https://blog.yuqiyu.com/images/post/apiboot-swagger-integrated-oauth-1.png)
+![](https://blog.minbox.org/images/post/apiboot-swagger-integrated-oauth-1.png)
 
 输入后点击`Authorize`按钮即可。
 

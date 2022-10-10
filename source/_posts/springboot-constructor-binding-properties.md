@@ -55,7 +55,7 @@ description: 'SpringBoot使用@ConstructorBinding注解进行配置属性绑定'
 minbox:
   config:
     author: 恒宇少年 - 于起宇
-    blog-address: https://blog.yuqiyu.com
+    blog-address: https://blog.minbox.org
 ```
 
 
@@ -133,7 +133,7 @@ class SpringbootConstructorBindingPropertiesApplicationTests {
 
 ```
 作者名称：恒宇少年 - 于起宇
-作者博客地址：https://blog.yuqiyu.com
+作者博客地址：https://blog.minbox.org
 ```
 
 ## 敲黑板，划重点

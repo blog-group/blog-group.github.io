@@ -17,18 +17,18 @@ article_url:
 description: 'SpringBoot2.x基础篇：应用程序在启动时发布ApplicationEvents要怎么注册监听？'
 ---
 
-在`SpringFramework`编写过程中使用了大量的`Event/Listener`来做一些解耦的任务工作，当然在`SpringBoot`内同样也沿用了这一点，如果你看过我写的 [业务解耦利器Event/Listener](https://blog.yuqiyu.com/spring-event-listener.html) ，你应该了解事件的发布都是由`ApplicationContext`进行控制，但是在`SpringBoot`启动过程中有一些`Event`是在`ApplicationContext`实例化之前发布的，那我们要怎么去监听这些`Events`呢？
+在`SpringFramework`编写过程中使用了大量的`Event/Listener`来做一些解耦的任务工作，当然在`SpringBoot`内同样也沿用了这一点，如果你看过我写的 [业务解耦利器Event/Listener](https://blog.minbox.org/spring-event-listener.html) ，你应该了解事件的发布都是由`ApplicationContext`进行控制，但是在`SpringBoot`启动过程中有一些`Event`是在`ApplicationContext`实例化之前发布的，那我们要怎么去监听这些`Events`呢？
 
 <!--more-->
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](http://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](http://blog.minbox.org/spring-boot-2-x-articles.html)
 
 
 ## ApplicationEvents
 
 在`SpringBoot`编写的应用程序启动过程中会发布一些`Event`，它们都是`org.springframework.boot.context.event.SpringApplicationEvent`的实现类，分别对应了应用程序在启动过程中的每一个生命周期阶段，`ApplicationEvents`在应用程序运行过程中顺序如下图所示：
 
-![](https://blog.yuqiyu.com/images/post/spring-boot-basic-events-and-listeners/ApplicationEvents.png)
+![](https://blog.minbox.org/images/post/spring-boot-basic-events-and-listeners/ApplicationEvents.png)
 
 - `ApplicationStartingEvent` 在应用程序开始运行时发布。
 

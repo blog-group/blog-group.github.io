@@ -80,7 +80,7 @@ Generating GIF, please wait...
 
 > 自动创建的`example.gif`文件与转换的视频文件在同一目录下。
 
-![](https://blog.yuqiyu.com/images/post/mp4-convert-to-gif-1.gif)
+![](https://blog.minbox.org/images/post/mp4-convert-to-gif-1.gif)
 
 ## GIF截取
 

@@ -19,7 +19,7 @@ article_url:
 
 ## 全局日志是一个什么概念呢？
 
-其实理解起来比较简单，类似于我们平时一直在使用的`logback`、`log4j`这种的日志框架的其中一个功能部分，`minbox-logging`分布式日志框架目前独立于`api-boot-plugins`，已经加入了`minbox-projects`开源组织，之前博客有一系列的文章来讲解了`ApiBoot Logging`（内部是集成的`minbox-logging`）日志组件的使用以及极简的配置方式，可以访问[ApiBoot 组件系列文章使用汇总](https://blog.yuqiyu.com/apiboot-all-articles.html)了解日志组件的使用详情。
+其实理解起来比较简单，类似于我们平时一直在使用的`logback`、`log4j`这种的日志框架的其中一个功能部分，`minbox-logging`分布式日志框架目前独立于`api-boot-plugins`，已经加入了`minbox-projects`开源组织，之前博客有一系列的文章来讲解了`ApiBoot Logging`（内部是集成的`minbox-logging`）日志组件的使用以及极简的配置方式，可以访问[ApiBoot 组件系列文章使用汇总](https://blog.minbox.org/apiboot-all-articles.html)了解日志组件的使用详情。
 
 <!--more-->
 

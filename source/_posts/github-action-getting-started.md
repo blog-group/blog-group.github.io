@@ -22,7 +22,7 @@ article_url:
 [GitHub Actions](https://github.com/features/actions) 是由`GitHub`在**2018**年推出的一款持续集成的服务方案，对于`GitHub`上托管的开源项目来说比较友好，集成使用简单，个人感觉比 [Travis-CI](https://www.travis-ci.org/github/minbox-projects/api-boot) 玩法要更多，而且还是可以自己去编写`Actions`在构建的过程中使用。
 
 ## 推荐阅读
-- [SpringBoot2.x 教程汇总](https://blog.yuqiyu.com/spring-boot-2-x-articles.html)
+- [SpringBoot2.x 教程汇总](https://blog.minbox.org/spring-boot-2-x-articles.html)
 
 ## 基本概念
 
@@ -35,11 +35,11 @@ article_url:
 
 ## 使用GitHub Actions
 
-![](https://blog.yuqiyu.com/images/post/github-action-getting-started-1.png)
+![](https://blog.minbox.org/images/post/github-action-getting-started-1.png)
 
 当我们打开项目的主页时可以看到`Actions`功能标签页，这就是该仓库的`GitHub Actions`，如果你的仓库没有添加过`workflow`文件，看到的效果如下所示：
 
-![](https://blog.yuqiyu.com/images/post/github-action-getting-started-2.png)
+![](https://blog.minbox.org/images/post/github-action-getting-started-2.png)
 
 ## 配置Workflow YML
 
@@ -49,7 +49,7 @@ article_url:
 
 在上面的截图中，我们点击`set up a workflow yourself ->`回跳转添加`workflow`文件的页面，在该页面中我们可以修改文件名，也可以修改`workflow`文件的配置内容，如下所示：
 
-![](https://blog.yuqiyu.com/images/post/github-action-getting-started-3.png)
+![](https://blog.minbox.org/images/post/github-action-getting-started-3.png)
 
 ### 方式二：项目源码中添加后推送
 

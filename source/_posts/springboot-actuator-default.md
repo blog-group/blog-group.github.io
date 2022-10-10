@@ -4,8 +4,8 @@ article_type: 原创
 enable_comment: true
 article_author: 于起宇
 copyright: true
-tags: [SpringBoot,Actuator]
-categories: SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: actuator,springboot,springcloud
 date: 2018-10-22 15:12:59
 title: 探究Actuator的默认开放节点 & 详细健康状态

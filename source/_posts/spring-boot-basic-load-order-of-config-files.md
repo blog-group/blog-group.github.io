@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot2.x]
+categories: [SpringBoot]
 keywords: 'springboot,配置文件,覆盖,优先级'
 date: 2020-03-22 16:04:45
 article_url:

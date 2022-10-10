@@ -5,13 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - Spring
-  - ControllerAdvice
-  - ExceptionHandler
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-29 17:15:22
 keywords: advice,exception,springboot
 description: '使用ControllerAdvice完成异常统一处理'

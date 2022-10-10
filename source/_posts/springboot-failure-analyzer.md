@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-30 11:04:11
 keywords: springboot,failure,恒宇少年
 description: 'SpringBoot详细打印启动时异常堆栈信息'

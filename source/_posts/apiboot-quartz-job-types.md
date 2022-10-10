@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,Quartz]
+categories: [ApiBoot]
 keywords: quartz,cron,apiboot
 description: '分布式调度框架Quartz衍生出的三种任务类型，你用过几个？'
 date: 2019-12-24 09:33:00

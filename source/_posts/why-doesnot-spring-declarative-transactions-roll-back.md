@@ -5,10 +5,8 @@ article_type: 转载
 article_author: rabbitGYK
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: spring,事务,springboot
 date: 2019-10-23 11:04:37
 article_url: https://www.jianshu.com/p/f5fc14bde8a0

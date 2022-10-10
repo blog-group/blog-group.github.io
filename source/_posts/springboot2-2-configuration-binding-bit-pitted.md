@@ -8,10 +8,8 @@ enable_comment: true
 hot: true
 news: true
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: springboot,属性绑定,properties
 date: 2019-12-02 12:07:01
 article_url:

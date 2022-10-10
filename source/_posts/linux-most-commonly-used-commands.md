@@ -6,10 +6,8 @@ article_author: 小姐姐味道
 enable_comment: true
 hot: false
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,Linux]
+categories: [Linux]
 keywords: linux命令,常用命令
 date: 2019-10-31 09:18:54
 article_url: https://juejin.im/post/5d134fbfe51d4510727c80d1

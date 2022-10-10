@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: apiboot,logging,openfeign
 description: 'ApiBoot Logging使用SpringCloud Openfeign透传链路信息'
 date: 2019-11-05 15:47:14

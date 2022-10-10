@@ -8,10 +8,8 @@ hot: false
 news: false
 disable_toc: true
 customize: true
-tags:
-  - SpringCloud
-categories:
-  - SpringCloud
+tags: [SpringCloud,文章列表]
+categories: [微服务]
 keywords: springcloud,基础教程,微服务
 date: 2019-12-05 11:06:14
 article_url:

@@ -8,10 +8,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: SpringSecurity,apiboot,springboot
 description: '原来SpringSecurity整合OAuth2后开放权限拦截路径还能这么玩？'
 date: 2019-12-07 09:18:47

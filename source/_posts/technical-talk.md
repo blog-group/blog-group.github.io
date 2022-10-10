@@ -5,6 +5,8 @@ layout: post
 enable_comment: true
 keywords: java,springboot,技术杂谈
 customize: true
+tags: [技术杂谈,SpringBoot]
+categories: [技术杂谈]
 ---
 
 <br/>

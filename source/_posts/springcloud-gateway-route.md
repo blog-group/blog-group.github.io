@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringCloud
-  - Gateway
-categories:
-  - SpringCloud
+tags: [SpringCloud,网关]
+categories: [微服务]
 date: 2019-09-30 09:49:16
 keywords: SpringCloud,SpringBoot,恒宇少年,gateway
 description: 'SpringCloud Gateway路由转发规则'

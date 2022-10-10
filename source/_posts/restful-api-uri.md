@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 news: true
 hot: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 date: 2019-10-09 14:08:23
 keywords: restful,springboot,恒宇少年
 description: 'RESTful规范Api最佳设计实践'

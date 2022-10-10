@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 news: true
 date: 2018-9-18 15:47:06
-tags:
-  - SpringCloud
-categories:
-  - SpringCloud
+tags: [SpringCloud]
+categories: [微服务]
 keywords: springcloud,springboot,恒宇少年
 description: '初识SpringCloud'
 ---

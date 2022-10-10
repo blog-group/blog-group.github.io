@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - Quartz
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [ApiBoot,Quartz]
+categories: [Quartz]
 date: 2019-09-29 15:42:23
 keywords: quartz,springboot,恒宇少年
 description: 'Quartz分布式单节点持久化任务'

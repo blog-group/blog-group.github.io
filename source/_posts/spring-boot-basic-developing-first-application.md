@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot2.x]
+categories: [SpringBoot]
 keywords: springboot,应用程序,恒宇少年
 date: 2020-02-18 14:34:58
 article_url:

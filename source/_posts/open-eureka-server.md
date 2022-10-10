@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - SpringCloud
-categories:
-  - SpringCloud
+tags: [微服务,注册中心,Eureka]
+categories: [微服务]
 keywords: 'SpringCloud,SpringBoot,恒宇少年,微服务'
 date: 2019-11-22 10:05:04
 article_url:

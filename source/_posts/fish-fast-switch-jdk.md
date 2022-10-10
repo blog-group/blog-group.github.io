@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-    - 技术杂谈
-categories:
-    - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: 'fish,切换JDK版本'
 description: fish-fast-switch-jdk
 date: 2021-12-28 10:24:34

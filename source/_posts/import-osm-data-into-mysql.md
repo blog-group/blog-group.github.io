@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [Map, OpenStreet]
+categories: [地图服务]
 keywords: 'osm,openstreetmap,mysql'
 description: import-osm-data-into-mysql
 date: 2021-04-16 14:18:15

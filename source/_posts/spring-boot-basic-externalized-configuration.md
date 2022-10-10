@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot2.x]
+categories: [SpringBoot]
 keywords: 'springboot,外部配置,学习教程'
 date: 2020-03-06 10:23:54
 article_url:

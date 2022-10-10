@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - banner
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [技术杂谈,SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-29 15:12:17
 keywords: SpringCloud,SpringBoot,恒宇少年,banner
 description: '自定义SpringBoot项目的启动Banner'

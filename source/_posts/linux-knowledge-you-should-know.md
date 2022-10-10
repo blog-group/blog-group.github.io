@@ -6,10 +6,8 @@ article_author: 小姐姐味道
 enable_comment: true
 news: true
 hot: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,Linux]
+categories: [Linux]
 keywords: linux,java,linux系统组成
 date: 2019-10-31 09:44:42
 article_url: https://juejin.im/post/5db69c05f265da4d4434a221

@@ -4,11 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: 
-  - SpringCloud
-  - Eureka
-categories: 
-  - SpringCloud
+tags: [微服务,SpringCloud,Eureka]
+categories: [微服务]
 keywords: eureka,SpringCloud,SpringBoot
 date: 2018-10-05 11:12:47
 title: SpringCloud下使用Eureka高可用集群部署

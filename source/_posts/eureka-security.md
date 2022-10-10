@@ -6,11 +6,8 @@ article_author: 于起宇
 enable_comment: true
 news: true
 hot: true
-tags:
-  - SpringCloud
-  - Eureka
-categories:
-  - SpringCloud
+tags: [微服务,Spring Cloud,Eureka]
+categories: [微服务]
 keywords: eureka,security,恒宇少年
 date: 2019-09-29 13:36:59
 description: '你的Eureka服务注册中心安全吗？'

@@ -7,10 +7,8 @@ enable_comment: true
 hot: false
 news: true
 customize: false
-tags:
-  - SpringCloud
-categories:
-  - SpringCloud
+tags: [微服务,Spring Cloud,Eureka]
+categories: [微服务]
 keywords: eureka,springcloud,恒宇少年
 date: 2019-11-28 15:07:11
 article_url:

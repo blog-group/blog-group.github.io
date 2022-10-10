@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,GitHub]
+categories: [技术杂谈]
 keywords: github app,github,移动端
 description: '官宣，GitHub正式发布了移动端v1.0版本'
 date: 2020-03-19 09:40:51

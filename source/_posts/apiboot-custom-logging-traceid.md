@@ -6,11 +6,8 @@ article_author: 于起宇
 enable_comment: true
 news: true
 hot: true
-tags:
-  - ApiBoot
-  - Logging
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: apiboot,logging,springboot
 description: 'SpringBoot整合ApiBoot分布式链路日志组件自定义链路以及单元ID'
 date: 2019-10-21 16:44:52

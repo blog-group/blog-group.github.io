@@ -4,11 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-    - SpringCloud
-    - Eureka
-categories: 
-    - SpringCloud
+tags: [微服务,Spring Cloud,Eureka]
+categories: [微服务]
 date: 2018-10-08 17:26:09
 title: Eureka服务注册中心的失效剔除与自我保护机制
 keywords: eureka,SpringCloud,SpringBoot

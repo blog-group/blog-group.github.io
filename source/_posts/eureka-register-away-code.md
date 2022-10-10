@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringCloud
-  - Eureka
-categories:
-  - SpringCloud
+tags: [微服务,Spring Cloud,Eureka]
+categories: [微服务]
 date: 2019-09-29 13:49:34
 keywords: eureka,SpringCloud,SpringBoot
 description: 'Eureka服务注册方式流程源码分析'

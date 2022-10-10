@@ -4,8 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: [SpringBoot,Actuator]
-categories: SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: actuator,springboot,springcloud
 date: 2018-10-26 14:40:22
 title: Actuator自定义节点路径 & 监控服务自定义配置

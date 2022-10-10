@@ -7,10 +7,8 @@ enable_comment: true
 hot: false
 news: true
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: gitbook,导出pdf,markdown
 date: 2019-11-29 10:00:30
 article_url:

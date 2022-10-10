@@ -9,12 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringCloud
-  - ApiBoot
-categories:
-  - SpringCloud
-  - ApiBoot
+tags: [SpringCloud,网关]
+categories: [微服务]
 keywords: 'apiboot,springcloud,兼容性'
 date: 2020-06-19 22:04:58
 description: 'ApiBoot v2.2.5整合SpringCloud Gateway时发生reactory-netty版本兼容性问题.'

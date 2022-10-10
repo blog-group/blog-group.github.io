@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈 
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: 'Postgresql,Mysql'
 description: postgresql-vs-mysql
 date: 2021-11-19 13:48:48

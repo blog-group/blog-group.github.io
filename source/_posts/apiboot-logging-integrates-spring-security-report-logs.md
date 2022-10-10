@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: apiboot,logging,security
 description: 'ApiBoot Logging整合Spring Security安全上报日志'
 date: 2019-11-03 21:34:14

@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,GitHub,GitHub Action]
+categories: [技术杂谈]
 keywords: 'GitHub Actions,发布Jar到Maven,持续集成服务'
 description: 使用GitHub Actions编译项目并将Jar发布到Maven Central仓库
 date: 2020-08-09 14:49:52

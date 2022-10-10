@@ -9,12 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringCloud
-  - SpringBoot
-categories:
-  - SpringCloud
-  - SpringBoot
+tags: [微服务,Spring Cloud,Jvm]
+categories: [微服务]
 keywords: 'SpringCloud,SpringBoot,恒宇少年,Openj9'
 description: know-openj9-jvm
 date: 2022-08-12 10:06:22

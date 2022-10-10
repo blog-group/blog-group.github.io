@@ -5,10 +5,8 @@ article_type: 转载
 article_author: 为爱放弃一切
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: qps,pv,tps
 date: 2019-10-30 21:55:45
 article_url: https://www.jianshu.com/p/6f40a1efeba7

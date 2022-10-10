@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot2.x]
+categories: [SpringBoot]
 keywords: 'ConfigurationPropertiesScan,ConfigurationProperties,springboot配置'
 date: 2020-04-06 17:53:38
 article_url:

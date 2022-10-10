@@ -6,10 +6,8 @@ article_url: https://mp.weixin.qq.com/s/TJK-v7F0stzoZOY_9T8FgA
 article_author: 王健
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: springcloud,springboot,微服务
 date: 2019-10-15 14:55:13
 description: '你的微服务敢独立交付么？'

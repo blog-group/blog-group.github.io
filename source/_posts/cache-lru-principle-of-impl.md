@@ -5,11 +5,8 @@ article_type: 转载
 article_author: 程序通事
 enable_comment: true
 news: true
-tags:
-  - 缓存
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈, 缓存]
+categories: [技术杂谈]
 keywords: 算法,cache,lru
 date: 2019-10-29 12:42:55
 article_url: https://juejin.im/post/5db79d13518825698010ee42

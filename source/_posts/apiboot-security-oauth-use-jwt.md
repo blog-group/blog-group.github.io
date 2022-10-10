@@ -8,10 +8,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: OAuth2,jwt,apiboot
 description: '还不会使用JWT格式化OAuth2令牌吗？'
 date: 2019-12-09 15:53:47

@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - RabbitMQ
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [消息队列,RabbitMQ]
+categories: [消息队列]
 date: 2019-09-29 17:30:51
 keywords: rabbitmq,springboot,消息队列
 description: '消息队列RabbitMQ设置信任package'

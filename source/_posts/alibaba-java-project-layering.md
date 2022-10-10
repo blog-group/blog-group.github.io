@@ -6,10 +6,8 @@ article_author: 咖啡拿铁
 enable_comment: true
 news: true
 hot: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: java,代码分层
 description: '在阿里Java大牛们都是这样对Java项目代码分层的'
 date: 2019-10-31 13:39:07

@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [技术杂谈]
+categories: [技术杂谈]
 date: 2019-09-29 14:56:27
 keywords: lombok,SpringBoot,恒宇少年
 description: '使用Lombok优雅编码'

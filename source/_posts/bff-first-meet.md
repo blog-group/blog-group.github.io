@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 news: true
 hot: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈, BFF]
+categories: [技术杂谈]
 date: 2019-10-03 20:24:11
 keywords: bff,SpringCloud,SpringBoot
 description: 'BFF是（Backends For Frontends）单词的缩写，主要是用于服务前端的后台应用程序，来解决多访问终端业务耦合问题'

@@ -8,10 +8,8 @@ hot: false
 news: false
 disable_toc: true
 customize: true
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot,文章目录]
+categories: [SpringBoot]
 keywords: springboot,基础教程
 date: 2019-12-05 11:06:03
 article_url:

@@ -5,11 +5,8 @@ article_type: 转载
 article_author: 咖啡拿铁
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-  - 消息队列
-categories:
-  - 技术杂谈
+tags: [消息队列,RocketMQ]
+categories: [消息队列]
 keywords: springboot,rocketmq,消息队列
 date: 2019-10-29 12:22:57
 article_url: https://juejin.im/post/5db7a2f06fb9a0203b234d64

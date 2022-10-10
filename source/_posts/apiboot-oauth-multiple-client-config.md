@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: oauth,客户端,apiboot
 description: 'OAuth2在内存、Redis、JDBC方式下的多客户端配置'
 date: 2019-12-31 09:37:53

@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: 'OAuth2,Spring,AccessToken,RefreshToken'
 description: oauth2-always-create-token
 date: 2021-04-21 11:14:41

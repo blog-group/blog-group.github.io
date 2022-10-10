@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: apiboot,security,oauth2
 description: 'ApiBoot实现零代码整合Spring Security & OAuth2'
 date: 2019-11-12 14:30:27

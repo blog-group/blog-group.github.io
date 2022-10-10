@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: apiboot,resttemplate,logging
 description: 'ApiBoot Logging使用RestTemplate透传链路信息'
 date: 2019-11-06 14:15:57

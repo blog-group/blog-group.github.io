@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - Logging
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot, 日志组件]
+categories: [ApiBoot]
 keywords: apiboot,springboot,logging
 date: 2019-10-28 21:11:02
 article_url:

@@ -4,11 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: 
-	- SpringCloud
-	- Nacos
-categories: 
-	- SpringCloud
+tags: [微服务,SpringCloud,Nacos]
+categories: [微服务]
 keywords: SpringCloud,SpringBoot,恒宇少年,nacos
 date: 2019-03-05 16:03:56
 id: springcloud-nacos-config-namespace

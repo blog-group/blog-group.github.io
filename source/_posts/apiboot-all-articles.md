@@ -9,10 +9,8 @@ hot: false
 news: false
 customize: true
 disable_toc: true
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot]
+categories: [ApiBoot]
 keywords: apiboot,springboot,使用详解
 description: 'ApiBoot开源框架各个组件的系列使用文章汇总'
 date: 2019-12-04 14:48:48

@@ -4,8 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: [SpringBoot,Actuator]
-categories: SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: actuator,springboot,springcloud
 date: 2018-10-24 17:09:33
 title: Actuator远程关闭服务“黑科技”

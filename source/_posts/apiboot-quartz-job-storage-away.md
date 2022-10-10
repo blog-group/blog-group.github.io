@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,Quartz]
+categories: [ApiBoot]
 keywords: quartz,apiboot
 description: '分布式任务调度框架ApiBoot Quartz内的两种任务存储方式'
 date: 2020-01-09 09:49:56

@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot2.x]
+categories: [SpringBoot]
 keywords: '随机数,springboot,源码分析'
 date: 2020-03-06 17:29:29
 article_url:

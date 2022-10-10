@@ -5,10 +5,8 @@ article_type: 转载
 article_author: 小姐姐味道
 enable_comment: true
 news: true
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: springboot,config,外部配置
 date: 2019-10-31 08:53:04
 article_url: https://juejin.im/post/5dafc7adf265da5b8c03cf5e

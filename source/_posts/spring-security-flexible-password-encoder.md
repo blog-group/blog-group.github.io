@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: 'SpringSecurity,PasswordEncoder,安全加密'
 description: Spring Security灵活的PasswordEncoder加密方式
 date: 2020-10-21 16:44:36

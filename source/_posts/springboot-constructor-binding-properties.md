@@ -8,10 +8,8 @@ enable_comment: true
 hot: true
 news: true
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: ConstructorBinding,springboot,属性绑定
 date: 2019-12-03 14:45:42
 article_url:

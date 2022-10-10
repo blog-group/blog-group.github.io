@@ -4,8 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: [SpringBoot,Actuator]
-categories: SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: actuator,springboot,springcloud
 date: 2018-10-22 17:28:23
 title: 你了解Actuator开放指定监控节点吗？

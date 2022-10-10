@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: apiboot,logging,admin
 description: 'ApiBoot分布式链路日志组件的可视化管理平台'
 date: 2019-11-07 09:16:04

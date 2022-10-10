@@ -4,10 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: 
-    - 技术杂谈
-categories: 
-    - 技术杂谈
+tags: [Git]
+categories: [Git]
 keywords: SpringCloud,SpringBoot,恒宇少年,微服务,Git
 date: 2018-10-20 13:27:35
 title: 在Ubuntu下为Gitolite添加管理端

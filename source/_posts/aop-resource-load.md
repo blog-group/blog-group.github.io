@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-29 17:07:09
 keywords: aop,spring
 description: 'SpringBoot项目中资源与业务分离Aop的实现方式'

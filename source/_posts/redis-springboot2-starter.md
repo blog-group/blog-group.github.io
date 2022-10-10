@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - Redis
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [Redis,缓存]
+categories: [Redis]
 date: 2019-09-29 17:36:16
 keywords: redis,springboot,恒宇少年
 description: 'SpringBoot2.x使用Redis缓存数据'

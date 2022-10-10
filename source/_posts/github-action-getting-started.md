@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,GitHub,GitHub Action]
+categories: [技术杂谈]
 keywords: '持续交付,GitHub Actions'
 description: GitHub Actions是GitHub推出的一款持续集成服务
 date: 2020-08-08 10:52:02

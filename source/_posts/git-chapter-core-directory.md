@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [Git]
+categories: [Git]
 keywords: '学习Git基本知识'
 description: git-chapter-core-directory
 date: 2022-05-29 10:15:56

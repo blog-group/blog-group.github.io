@@ -6,11 +6,8 @@ article_author: 于起宇
 enable_comment: true
 news: true
 hot: true
-tags:
-  - SpringBoot
-  - profile
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: springboot,profiles,active
 date: 2019-10-22 16:47:29
 article_url:

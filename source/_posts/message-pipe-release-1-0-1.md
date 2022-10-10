@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: 'redisson,消息管道,顺序消息'
 description: 它是`minbox`开源组织内的新成员，`Message Pipe`从字面的意思上理解为 "消息管道"，它确实是一个消息管道的定位，是基于`Redis`实现的分布式顺序消息管道。
 date: 2020-08-31 10:06:54

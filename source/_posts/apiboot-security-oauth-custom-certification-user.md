@@ -7,10 +7,8 @@ enable_comment: true
 hot: false
 news: true
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: apiboot,springboot,security,oauth2
 description: '见过这么简单的方式整合SpringSecurity & OAuth2的自定义查询用户吗？'
 date: 2019-12-02 14:51:51

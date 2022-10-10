@@ -5,12 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringCloud
-  - Gateway
-  - SpringBoot
-categories:
-  - SpringCloud
+tags: [微服务,SpringCloud,网关,Eureka]
+categories: [微服务]
 date: 2019-09-30 09:57:05
 keywords: SpringCloud,SpringBoot,恒宇少年,gateway
 description: 'SpringCloud Gateway整合Eureka转发服务请求'

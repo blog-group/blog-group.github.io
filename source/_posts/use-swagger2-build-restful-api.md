@@ -5,12 +5,8 @@ article_type: 转载
 article_author: 程序猿DD
 enable_comment: true
 news: true
-tags:
-  - RESTful
-  - SpringBoot
-  - Swagger
-categories:
-  - SpringBoot
+tags: [技术杂谈,Swagger2]
+categories: [技术杂谈]
 keywords: swagger,springboot,restful
 date: 2019-10-23 11:17:52
 article_url: https://www.jianshu.com/p/8033ef83a8ed

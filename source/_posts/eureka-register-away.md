@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringCloud
-categories:
-  - SpringCloud
+tags: [微服务,Spring Cloud,Eureka]
+categories: [微服务]
 date: 2019-09-29 13:54:59
 keywords: SpringCloud,SpringBoot
 description: 'Eureka服务注册是采用主机名还是IP地址？'

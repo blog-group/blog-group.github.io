@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - MongoDB
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot,MongoDB]
+categories: [MongoDB]
 date: 2019-09-29 17:43:16
 keywords: SpringCloud,SpringBoot,恒宇少年,微服务,mongodb
 description: 'SpringBoot2.x使用MongoDB存储数据'

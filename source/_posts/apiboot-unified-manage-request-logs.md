@@ -6,11 +6,8 @@ article_author: 于起宇
 enable_comment: true
 news: true
 hot: true
-tags:
-  - Logging
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: apiboot,logging,springboot
 description: '使用ApiBoot Logging进行统一管理请求日志'
 date: 2019-10-15 21:35:57

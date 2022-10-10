@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: apiboot,logging,global log
 description: 'ApiBoot接口服务框架的又一新特性GlobalLog全局日志的使用详解'
 date: 2019-12-17 10:12:47

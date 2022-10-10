@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - Quartz
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [ApiBoot,Quartz]
+categories: [SpringBoot]
 date: 2019-09-29 17:28:40
 keywords: quartz,springboot,恒宇少年
 description: 'Quartz在SpringBoot2.x内的自动化配置'

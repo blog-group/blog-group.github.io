@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,Linux]
+categories: [Linux]
 date: 2019-09-29 14:14:25
 keywords: Linux,Ubuntu,openssh
 ---

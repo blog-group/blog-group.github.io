@@ -5,12 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringCloud
-  - profile
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-29 15:33:29
 keywords: springboot,active,profiles
 description: '激活项目配置的多环境(profiles)'

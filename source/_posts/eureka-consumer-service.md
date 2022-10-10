@@ -4,11 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: 
-  - SpringCloud
-  - Eureka
-categories: 
-  - SpringCloud
+tags: [微服务,Spring Cloud,Eureka]
+categories: [微服务]
 keywords: eureka,SpringCloud,SpringBoot
 date: 2018-10-04 15:30:23
 id: eureka-service-consumer

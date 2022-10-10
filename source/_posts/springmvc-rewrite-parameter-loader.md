@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,SpringBoot]
+categories: [技术杂谈]
 date: 2019-09-29 15:23:28
 keywords: SpringCloud,SpringBoot,恒宇少年,请求参数
 description: '重写SpringMvc参数装载方式'

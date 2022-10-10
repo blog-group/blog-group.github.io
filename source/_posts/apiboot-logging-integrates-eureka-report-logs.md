@@ -6,10 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,日志组件]
+categories: [ApiBoot]
 keywords: 'SpringCloud,SpringBoot,恒宇少年,微服务'
 description: 'ApiBoot Logging整合SpringCloud Eureka负载均衡上报日志'
 date: 2019-11-04 16:33:12

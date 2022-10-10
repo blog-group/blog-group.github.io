@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - starter
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-29 14:51:00
 keywords: starter,springboot,恒宇少年
 description: '自定义你的业务SpringBoot Starter'

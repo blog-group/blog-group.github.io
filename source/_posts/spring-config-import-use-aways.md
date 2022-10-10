@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: 'SpringCloud,SpringBoot,恒宇少年,微服务'
 description: spring-config-import-use-aways
 date: 2022-04-10 08:41:29

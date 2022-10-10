@@ -5,11 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - 消息队列
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [消息队列,RabbitMQ]
+categories: [消息队列]
 date: 2019-09-29 16:11:45
 keywords: rabbitmq,springboot,消息队列
 description: '消息队列RabbitMQ的Topic类型消息消费'

@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot2.x]
+categories: [SpringBoot]
 keywords: 'SpringBoot,CommandLineRunner,ApplicationRunner'
 description: spring-boot-basic-use-commandlinerunner-or-applicationrunner
 date: 2020-07-03 22:32:08

@@ -6,11 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - SpringBoot
-  - flyway
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 keywords: springboot,flyway,springcloud
 date: 2019-11-01 11:20:26
 article_url:

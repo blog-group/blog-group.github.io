@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: oauth2过期时间,accesstoken,apiboot
 description: '来看看OAuth2怎么设置AccessToken有效期时间时长'
 date: 2019-12-11 09:45:07

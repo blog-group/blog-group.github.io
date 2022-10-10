@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-29 14:39:50
 keywords: event,listener,springboot
 description: '业务解耦利器Event/Listener'

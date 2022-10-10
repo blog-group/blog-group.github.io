@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [Redis,Geo]
+categories: [Redis]
 keywords: 'Redis,Geo,范围检索'
 description: 实践，基于Redis Geo实现范围内位置检索
 date: 2021-04-07 17:16:02

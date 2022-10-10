@@ -7,10 +7,8 @@ enable_comment: true
 hot: true
 news: true
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: apiboot,security,spring
 description: 'ApiBoot零代码整合Spring Security的JDBC方式获取AccessToken'
 date: 2019-11-29 12:34:41

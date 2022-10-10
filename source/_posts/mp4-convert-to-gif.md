@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: 'mp4转gif,gifify'
 description: mp4-convert-to-gif
 date: 2020-08-04 08:45:12

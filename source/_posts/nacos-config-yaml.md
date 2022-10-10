@@ -4,11 +4,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags: 
-    - SpringCloud
-    - Nacos
-categories: 
-    - SpringCloud
+tags: [微服务,配置中心,Nacos]
+categories: [微服务]
 date: 2019-03-02 17:04:47
 id: nacos-config-yaml
 keywords: nacos,config,springboot

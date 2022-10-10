@@ -9,10 +9,8 @@ hot: false
 news: false
 disable_toc: false
 customize: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈, 面试]
+categories: [技术杂谈]
 keywords: '面试攻略,面试指南,Java面试'
 date: 2020-04-04 08:55:29
 ---

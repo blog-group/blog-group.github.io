@@ -5,11 +5,8 @@ article_type: 转载
 article_author: 殷天文
 enable_comment: true
 news: true
-tags:
-  - Aop
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [技术杂谈,SpringBoot]
+categories: [技术杂谈]
 keywords: aop,springboot,重复提交
 date: 2019-10-23 10:51:33
 article_url: https://www.jianshu.com/p/09860b74658e

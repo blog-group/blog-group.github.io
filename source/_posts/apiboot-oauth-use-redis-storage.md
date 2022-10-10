@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: oauth,redis,apiboot
 description: 'OAuth2使用Redis来存储客户端信息以及AccessToken'
 date: 2019-12-11 14:48:54

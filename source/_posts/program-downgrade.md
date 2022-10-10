@@ -5,10 +5,8 @@ article_type: 转载
 article_author: 小姐姐味道
 enable_comment: true
 news: true
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈]
+categories: [技术杂谈]
 keywords: springboot,降级
 date: 2019-10-31 09:01:46
 article_url: https://juejin.im/post/5d9d35fbf265da5b8f107695

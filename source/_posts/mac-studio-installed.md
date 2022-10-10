@@ -9,10 +9,9 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - 技术杂谈
-categories:
-  - 技术杂谈
+tags: [技术杂谈,Mac]
+categories: [技术杂谈]
+directories: [技术杂谈]
 keywords: '程序员,MacStudio,造梦空间'
 description: 程序员新入手Mac Studio装机
 date: 2022-10-03 09:51:17

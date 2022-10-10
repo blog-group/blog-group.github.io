@@ -6,11 +6,8 @@ article_author: 于起宇
 enable_comment: true
 hot: true
 news: true
-tags:
-  - SpringCloud
-  - Seata
-categories:
-  - SpringCloud
+tags: [消息队列,分布式事务,Seata]
+categories: [微服务]
 keywords: seata,springcloud,springboot
 date: 2019-10-10 16:14:04
 description: 'SpringCloud与Seata分布式事务初体验'

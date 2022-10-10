@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,Swagger2]
+categories: [ApiBoot]
 keywords: swagger,apiboot,接口文档
 description: '使用Swagger2作为文档来描述你的接口信息'
 date: 2019-12-18 10:34:07

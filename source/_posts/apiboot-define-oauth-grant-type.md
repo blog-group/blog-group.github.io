@@ -8,10 +8,8 @@ enable_comment: true
 hot: true
 news: true
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,OAuth2,Spring Security]
+categories: [ApiBoot]
 keywords: granttype,apiboot,oauth2
 description: '使用ApiBoot来自定义OAuth2的GrantType授权方式'
 date: 2019-12-04 09:18:26

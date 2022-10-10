@@ -5,10 +5,8 @@ article_type: 原创
 article_author: 于起宇
 enable_comment: true
 news: true
-tags:
-  - SpringBoot
-categories:
-  - SpringBoot
+tags: [SpringBoot]
+categories: [SpringBoot]
 date: 2019-09-29 15:16:27
 keywords: SpringBoot,恒宇少年,拦截器,跨域
 description: 'SpringBoot1.x配置WebMvcConfiguration'

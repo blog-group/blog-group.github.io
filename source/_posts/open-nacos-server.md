@@ -7,10 +7,8 @@ enable_comment: true
 hot: true
 news: true
 customize: false
-tags:
-  - SpringCloud
-categories:
-  - SpringCloud
+tags: [微服务,注册中心,Nacos]
+categories: [微服务]
 keywords: 'nacos,服务注册,配置中心'
 date: 2019-11-27 17:12:12
 article_url:

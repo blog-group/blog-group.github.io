@@ -9,10 +9,8 @@ hot: false
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,Swagger2]
+categories: [ApiBoot]
 keywords: swagger,apiboot,oauth
 date: 2019-12-18 17:05:58
 description: 'Swagger2怎么整合OAuth2来在线调试接口？'

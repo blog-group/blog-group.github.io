@@ -9,10 +9,8 @@ hot: true
 news: true
 disable_toc: false
 customize: false
-tags:
-  - ApiBoot
-categories:
-  - ApiBoot
+tags: [ApiBoot,Quartz]
+categories: [ApiBoot]
 keywords: quartz,定时任务,apiboot
 description: '这种方式整合Quartz你见过吗？'
 date: 2019-12-23 14:34:10

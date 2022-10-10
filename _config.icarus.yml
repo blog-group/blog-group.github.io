@@ -78,8 +78,8 @@ comment:
     type: gitalk
     owner: hengboy
     repo: learning-tutorials
-    client_id: 54d8ce67f611e5b7421d
-    client_secret: c2b3506ec397ac4df754635cefbe16e2bc5bd219
+    client_id: 1560ff459a2b15f5e992
+    client_secret: 0289bb92623d9ce2bb25c4ffb454bf8b887fa6a2
     admin: hengboy
 sidebar:
     left:

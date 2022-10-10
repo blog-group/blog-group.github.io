@@ -14,7 +14,7 @@ baidusitemap:
 baidu_url_submit:
   count: 20
   host: blog.minbox.org
-  token: CjL5xLTvQrUlNRzb
+  token: f7clB0aLJBBZrDjf
   path: baidu_urls.txt
 url: https://blog.minbox.org
 root: /

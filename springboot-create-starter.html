@@ -1,259 +1,49 @@
-<!DOCTYPE html>
-<html  lang="zh">
-<head>
-    <meta charset="utf-8" />
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>自定义你的业务Starter - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="msapplication-TileImage" content="/images/favicon.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="自定义你的业务SpringBoot Starter"><meta property="og:type" content="blog"><meta property="og:title" content="自定义你的业务Starter"><meta property="og:url" content="https://blog.minbox.org/springboot-create-starter.html"><meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta property="og:description" content="自定义你的业务SpringBoot Starter"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.minbox.org/img/og_image.png"><meta property="article:published_time" content="2019-09-29T14:51:00.000Z"><meta property="article:modified_time" content="2022-10-10T09:22:37.802Z"><meta property="article:author" content="恒宇少年 - 于起宇"><meta property="article:tag" content="SpringBoot"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://blog.minbox.org/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.minbox.org/springboot-create-starter.html"},"headline":"自定义你的业务Starter","image":["https://blog.minbox.org/img/og_image.png"],"datePublished":"2019-09-29T14:51:00.000Z","dateModified":"2022-10-10T09:22:37.802Z","author":{"@type":"Person","name":"恒宇少年 - 于起宇"},"publisher":{"@type":"Organization","name":"程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客","logo":{"@type":"ImageObject","url":"https://blog.minbox.org/images/avatar.png"}},"description":"自定义你的业务SpringBoot Starter"}</script><link rel="canonical" href="https://blog.minbox.org/springboot-create-starter.html"><link rel="icon" href="/images/favicon.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
 
-<meta name="generator" content="Hexo 3.9.0" />
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
 
-<title>自定义你的业务Starter - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
-
-
-    <meta name="description" content="自定义你的业务SpringBoot Starter">
-<meta name="keywords" content="starter,springboot,恒宇少年">
-<meta property="og:type" content="article">
-<meta property="og:title" content="自定义你的业务Starter">
-<meta property="og:url" content="https://blog.minbox.org/springboot-create-starter.html">
-<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
-<meta property="og:description" content="自定义你的业务SpringBoot Starter">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
-<meta property="og:updated_time" content="2022-09-29T04:18:51.351Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自定义你的业务Starter">
-<meta name="twitter:description" content="自定义你的业务SpringBoot Starter">
-<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
-
-
-
-
-
-
-
-<link rel="icon" href="/images/favicon.jpg">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
-
-
-    
-    
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
-
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
-
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/css/back-to-top.css">
-
-
-    
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-127746557-1');
-</script>
-
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-
-<link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="is-2-column">
-    <nav class="navbar navbar-main">
-  <div class="container">
-    <div class="navbar-brand is-flex-center">
-      <a class="navbar-item navbar-logo" href="/">
-        <div class="logo"></div>
-        <span class="site_title">恒宇少年 - 于起宇</span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      
-      <div class="navbar-start nav-link">
-        
-        <a class="navbar-item"
-          href="/interview-strategy.html" target="_blank">面试攻略</a>
-        
-        <a class="navbar-item"
-          href="/welfare/" target="_blank">签到送书</a>
-        
-        <a class="navbar-item"
-          href="/geektime/" target="_blank">推荐课程</a>
-        
-        <a class="navbar-item"
-          href="/opensource/" target="_blank">我的开源</a>
-        
-        <a class="navbar-item"
-          href="/openbooks/" target="_blank">免费书籍</a>
-        
-        <a class="navbar-item"
-          href="/years/2019.html" target="_blank">我的2019</a>
-        
-        <a class="navbar-item"
-          href="/archives/" target="_blank">归档</a>
-        
-      </div>
-      
-      <div class="navbar-end">
-        
-        
-        
-        <a class="navbar-item search" title="搜索" href="javascript:;">
-          <i class="fas fa-search"></i>
-        </a>
-        
-      </div>
-    </div>
-  </div>
-</nav>
-    
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
-<div id="container">
-  
-  <div class="card" style="margin-bottom: 10px">
-    
-    <div class="card-content article ">
-      <!--文章标题-->
-      
-      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-        
-        <span class="article_title">自定义你的业务Starter</span>
-        
-      </h1>
-      <!--完全自定义页面显示的访问次数-->
-      
-      
-      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
-        <div class="level-left">
-          <!--文章类型-->
-          
-          
-          
-          <span
-            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
-            原创</span>
-          
-          
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--发布时间-->
-          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
-          &nbsp;
-          <span class="article-meta-element">2019-09-29</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--作者-->
-          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
-
-          <span class="article-meta-element">于起宇</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--目录列表-->
-          
-          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
-          &nbsp;
-          <div class="level-item article-meta-element">
-            <!--读取config.yml文件内的目录配置-->
-            
-            
-              
-                
-                  <!--跳转文章目录地址-->
-                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
-                
-              
-                
-              
-                
-              
-                
-              
-            
-          </div>
-          
-          <!--不蒜子统计阅读量-->
-          <!--
-          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
-            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
-          </span>
-          -->
-        </div>
-      </div>
-      
-      
-      <!--推荐阅读 - 新闻-->
-      
-      
-      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
-        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
-      </div>
-      
-      
-      <!--文章内容-->
-      <div class="content">
-        <p>在我们学习<code>SpringBoot</code>时都已经了解到<code>starter</code>是<code>SpringBoot</code>的核心组成部分，<code>SpringBoot</code>为我们提供了尽可能完善的封装，提供了一系列的自动化配置的<code>starter</code>插件，我们在使用<code>spring-boot-starter-web</code>时只需要在<code>pom.xml</code>配置文件内添加依赖就可以了，我们之前传统方式则是需要添加很多相关<code>SpringMVC</code>配置文件。而<code>spring-boot-starter-web</code>为我们提供了几乎所有的默认配置，很好的降低了使用框架时的复杂度。</p>
-<a id="more"></a>
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28">  <p class="site_title">恒宇少年 - 于起宇</p></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/interview-strategy.html">面试攻略</a><a class="navbar-item" href="/geektime/">推荐课程</a><a class="navbar-item" href="/opensource/">我的开源</a><a class="navbar-item" href="/openbooks/">免费书籍</a><a class="navbar-item" href="/archives/">时间轴</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile"><span class="article_title">自定义你的业务Starter</span></h1><div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px"><div class="level-left"><span style="float: left;padding: 1px 4px 1px 4px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">原创</span>    <img src="/images/date_time.png" style="width: 27px;" title="发布时间"> <span class="article-meta-element">2019-09-29</span>    <img src="/images/author.svg" style="width: 23px" title="文章作者"> <span class="article-meta-element">于起宇</span>    <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表">  <a class="category-link article-meta-element" href="/categories/SpringBoot/">SpringBoot </a></div></div><div style="height: 50px;padding-top: 10px;vertical-align: middle;"><a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a></div><br><div class="content"><p>在我们学习<code>SpringBoot</code>时都已经了解到<code>starter</code>是<code>SpringBoot</code>的核心组成部分，<code>SpringBoot</code>为我们提供了尽可能完善的封装，提供了一系列的自动化配置的<code>starter</code>插件，我们在使用<code>spring-boot-starter-web</code>时只需要在<code>pom.xml</code>配置文件内添加依赖就可以了，我们之前传统方式则是需要添加很多相关<code>SpringMVC</code>配置文件。而<code>spring-boot-starter-web</code>为我们提供了几乎所有的默认配置，很好的降低了使用框架时的复杂度。</p>
+<span id="more"></span>
 <p>因此在使用<code>xx.starter</code>时你就不用考虑该怎么配置，即便是有一些必要的配置在<code>application.properties</code>配置文件内对应配置就可以了，那好，为什么我在<code>application.properties</code>配置对应属性后<code>xx.starter</code>就可以获取到并作出处理呢？下面我们带着这个疑问来编写我们自定义的<code>starter</code>让我们深入了解<code>SpringBoot</code></p>
 <h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><p>自定义<code>starter</code>并且通过<code>spring-boot-autoconfigure</code>完成自动化配置。</p>
 <h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>创建<code>starter</code>项目我们并不需要创建<code>SpringBoot</code>项目，我们创建一个<code>Maven</code>项目就可以满足我们的需求，创建项目完成后<code>pom.xml</code>配置信息如下所示：</p>
-<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.yuqiyu<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>chapter28<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">packaging</span>&gt;</span>jar<span class="hljs-tag">&lt;/<span class="hljs-name">packaging</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-autoconfigure<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.5.4.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.yuqiyu<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>chapter28<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>我们这个<code>starter</code>并不做其他复杂逻辑的编写，所以这里的依赖只是添加了<code>spring-boot-autoconfigure</code>，实战开发时可以添加任意依赖到项目中。</p>
 <h3 id="配置映射参数实体"><a href="#配置映射参数实体" class="headerlink" title="配置映射参数实体"></a>配置映射参数实体</h3><p>我们在文章开头埋下了一个疑问，<code>starter</code>是如何读取<code>application.properties</code>或者<code>application.yml</code>配置文件内需要的配置参数的呢？那么接下来我们就看看如何可以获取自定义的配置信息。<br><code>SpringBoot</code>在处理这种事情上早就已经考虑到了，所以提供了一个注解<code>@ConfigurationProperties</code>，该注解可以完成将<code>application.properties</code>配置文件内的有规则的配置参数映射到实体内的<code>field</code>内，不过需要提供setter方法，自定义配置参数实体代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter28;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 配置文件实体映射</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/22</span></span><br><span class="line"><span class="hljs-comment"> * Time：22:51</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@ConfigurationProperties</span>(prefix = <span class="hljs-string">"hello"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloProperties</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">//消息内容</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String msg = <span class="hljs-string">"HengYu"</span>;</span><br><span class="line">    <span class="hljs-comment">//是否显示消息内容</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> show = <span class="hljs-keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getMsg</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMsg</span><span class="hljs-params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isShow</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> show;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setShow</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> show)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.show = show;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter28;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 配置文件实体映射</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/22</span></span><br><span class="line"><span class="comment"> * Time：22:51</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;hello&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloProperties</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//消息内容</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="string">&quot;HengYu&quot;</span>;</span><br><span class="line">    <span class="comment">//是否显示消息内容</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="variable">show</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getMsg</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setMsg</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isShow</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> show;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setShow</span><span class="params">(<span class="type">boolean</span> show)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.show = show;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在上面代码中，<code>@ConfigurationProperties</code>注解内我们使用到了属性<code>preffix</code>，该属性配置了读取参数的前缀，根据上面的实体属性对应配置文件内的配置则是<code>hello.msg</code>、<code>hello.show</code>，当然我们提供了默认值，配置文件内不进行配置时则是使用默认值。</p>
 <h3 id="编写自定义业务"><a href="#编写自定义业务" class="headerlink" title="编写自定义业务"></a>编写自定义业务</h3><p>我们为自定义<code>starter</code>提供一个<code>Service</code>，并且提供一个名为<code>sayHello</code>的方法用于返回我们配置的<code>msg</code>内容。代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter28;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 自定义业务实现</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/22</span></span><br><span class="line"><span class="hljs-comment"> * Time：22:54</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloService</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">//消息内容</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String msg;</span><br><span class="line">    <span class="hljs-comment">//是否显示消息内容</span></span><br><span class="line">    <span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> show = <span class="hljs-keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">sayHello</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> show ? <span class="hljs-string">"Hello，"</span> + msg : <span class="hljs-string">"Hidden"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setMsg</span><span class="hljs-params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setShow</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> show)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.show = show;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter28;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义业务实现</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/22</span></span><br><span class="line"><span class="comment"> * Time：22:54</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//消息内容</span></span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line">    <span class="comment">//是否显示消息内容</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="variable">show</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> show ? <span class="string">&quot;Hello，&quot;</span> + msg : <span class="string">&quot;Hidden&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setMsg</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setShow</span><span class="params">(<span class="type">boolean</span> show)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.show = show;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们<code>Service</code>内的代码比较简单，根据属性参数进行返回格式化后的字符串。</p>
 <p>接下来我们开始编写自动配置，这一块是<code>starter</code>的核心部分，配置该部分后在启动项目时才会自动加载配置，当然其中有很多细节性质的配置</p>
 <h3 id="实现自动化配置"><a href="#实现自动化配置" class="headerlink" title="实现自动化配置"></a>实现自动化配置</h3><p>自动化配置其实只是提供实体bean的验证以及初始化，我们先来看看代码：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter28;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnClass;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 自定义starter自动化配置</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/22</span></span><br><span class="line"><span class="hljs-comment"> * Time：22:56</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Configuration</span><span class="hljs-comment">//开启配置</span></span><br><span class="line"><span class="hljs-meta">@EnableConfigurationProperties</span>(HelloProperties<span class="hljs-class">.<span class="hljs-keyword">class</span>)//开启使用映射实体对象</span></span><br><span class="line"><span class="hljs-class">@<span class="hljs-title">ConditionalOnClass</span>(<span class="hljs-title">HelloService</span>.<span class="hljs-title">class</span>)//存在<span class="hljs-title">HelloService</span>时初始化该配置类</span></span><br><span class="line"><span class="hljs-class">@<span class="hljs-title">ConditionalOnProperty</span>//存在对应配置信息时初始化该配置类</span></span><br><span class="line"><span class="hljs-class">        (</span></span><br><span class="line"><span class="hljs-class">                <span class="hljs-title">prefix</span> </span>= <span class="hljs-string">"hello"</span>,<span class="hljs-comment">//存在配置前缀hello</span></span><br><span class="line">                value = <span class="hljs-string">"enabled"</span>,<span class="hljs-comment">//开启</span></span><br><span class="line">                matchIfMissing = <span class="hljs-keyword">true</span><span class="hljs-comment">//缺失检查</span></span><br><span class="line">        )</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloAutoConfiguration</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">//application.properties配置文件映射前缀实体对象</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> HelloProperties helloProperties;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 根据条件判断不存在HelloService时初始化新bean到SpringIoc</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Bean</span><span class="hljs-comment">//创建HelloService实体bean</span></span><br><span class="line">    <span class="hljs-meta">@ConditionalOnMissingBean</span>(HelloService<span class="hljs-class">.<span class="hljs-keyword">class</span>)//缺失<span class="hljs-title">HelloService</span>实体<span class="hljs-title">bean</span>时，初始化<span class="hljs-title">HelloService</span>并添加到<span class="hljs-title">SpringIoc</span></span></span><br><span class="line"><span class="hljs-class">    <span class="hljs-title">public</span> <span class="hljs-title">HelloService</span> <span class="hljs-title">helloService</span>()</span></span><br><span class="line"><span class="hljs-class">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="hljs-string">"&gt;&gt;&gt;The HelloService Not Found，Execute Create New Bean."</span>);</span><br><span class="line">        HelloService helloService = <span class="hljs-keyword">new</span> HelloService();</span><br><span class="line">        helloService.setMsg(helloProperties.getMsg());<span class="hljs-comment">//设置消息内容</span></span><br><span class="line">        helloService.setShow(helloProperties.isShow());<span class="hljs-comment">//设置是否显示</span></span><br><span class="line">        <span class="hljs-keyword">return</span> helloService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter28;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnClass;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 自定义starter自动化配置</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/22</span></span><br><span class="line"><span class="comment"> * Time：22:56</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span><span class="comment">//开启配置</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(HelloProperties.class)</span><span class="comment">//开启使用映射实体对象</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(HelloService.class)</span><span class="comment">//存在HelloService时初始化该配置类</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty</span><span class="comment">//存在对应配置信息时初始化该配置类</span></span><br><span class="line">        (</span><br><span class="line">                prefix = <span class="string">&quot;hello&quot;</span>,<span class="comment">//存在配置前缀hello</span></span><br><span class="line">                value = <span class="string">&quot;enabled&quot;</span>,<span class="comment">//开启</span></span><br><span class="line">                matchIfMissing = <span class="literal">true</span><span class="comment">//缺失检查</span></span><br><span class="line">        )</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloAutoConfiguration</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//application.properties配置文件映射前缀实体对象</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> HelloProperties helloProperties;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据条件判断不存在HelloService时初始化新bean到SpringIoc</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span><span class="comment">//创建HelloService实体bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean(HelloService.class)</span><span class="comment">//缺失HelloService实体bean时，初始化HelloService并添加到SpringIoc</span></span><br><span class="line">    <span class="keyword">public</span> HelloService <span class="title function_">helloService</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;&gt;&gt;&gt;The HelloService Not Found，Execute Create New Bean.&quot;</span>);</span><br><span class="line">        <span class="type">HelloService</span> <span class="variable">helloService</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HelloService</span>();</span><br><span class="line">        helloService.setMsg(helloProperties.getMsg());<span class="comment">//设置消息内容</span></span><br><span class="line">        helloService.setShow(helloProperties.isShow());<span class="comment">//设置是否显示</span></span><br><span class="line">        <span class="keyword">return</span> helloService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>自动化配置代码中有很多我们之前没有用到的注解配置，我们从上开始讲解</p>
 <p><code>@Configuration</code>：这个配置就不用多做解释了，我们一直在使用<br><code>@EnableConfigurationProperties</code>：这是一个开启使用配置参数的注解，<code>value</code>值就是我们配置实体参数映射的<code>ClassType</code>，将配置实体作为配置来源。</p>
 <h5 id="SpringBoot内置条件注解"><a href="#SpringBoot内置条件注解" class="headerlink" title="SpringBoot内置条件注解"></a>SpringBoot内置条件注解</h5><p>有关<code>@ConditionalOnXxx</code>相关的注解这里要系统的说下，因为这个是我们配置的关键，根据名称我们可以理解为<code>具有Xxx条件</code>，当然它实际的意义也是如此，条件注解是一个系列，下面我们详细做出解释</p>
@@ -261,623 +51,104 @@
 <p>以上注解都是元注解<code>@Conditional</code>演变而来的，根据不用的条件对应创建以上的具体条件注解。</p>
 <p>到目前为止我们还没有完成自动化配置<code>starter</code>，我们需要了解<code>SpringBoot</code>运作原理后才可以完成后续编码。</p>
 <h3 id="Starter自动化运作原理"><a href="#Starter自动化运作原理" class="headerlink" title="Starter自动化运作原理"></a>Starter自动化运作原理</h3><p>在注解<code>@SpringBootApplication</code>上存在一个开启自动化配置的注解<code>@EnableAutoConfiguration</code>来完成自动化配置，注解源码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//</span></span><br><span class="line"><span class="hljs-comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="hljs-comment">// (powered by Fernflower decompiler)</span></span><br><span class="line"><span class="hljs-comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">package</span> org.springframework.boot.autoconfigure;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="hljs-keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="hljs-keyword">import</span> java.lang.annotation.Inherited;</span><br><span class="line"><span class="hljs-keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="hljs-keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="hljs-keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.annotation.Import;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="hljs-meta">@Documented</span></span><br><span class="line"><span class="hljs-meta">@Inherited</span></span><br><span class="line"><span class="hljs-meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="hljs-meta">@Import</span>(&#123;EnableAutoConfigurationImportSelector<span class="hljs-class">.<span class="hljs-keyword">class</span>&#125;)</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-title">public</span> @<span class="hljs-title">interface</span> <span class="hljs-title">EnableAutoConfiguration</span> </span>&#123;</span><br><span class="line">    String ENABLED_OVERRIDE_PROPERTY = <span class="hljs-string">"spring.boot.enableautoconfiguration"</span>;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt;[] exclude() <span class="hljs-keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] excludeName() <span class="hljs-keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by Fernflower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> org.springframework.boot.autoconfigure;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Documented;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Inherited;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Import;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import(&#123;EnableAutoConfigurationImportSelector.class&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">ENABLED_OVERRIDE_PROPERTY</span> <span class="operator">=</span> <span class="string">&quot;spring.boot.enableautoconfiguration&quot;</span>;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] excludeName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在<code>@EnableAutoConfiguration</code>注解内使用到了<code>@import</code>注解来完成导入配置的功能，而<code>EnableAutoConfigurationImportSelector</code>内部则是使用了<code>SpringFactoriesLoader.loadFactoryNames</code>方法进行扫描具有<code>META-INF/spring.factories</code>文件的jar包。我们可以先来看下<code>spring-boot-autoconfigure</code>包内的<code>spring.factories</code>文件内容，如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># Initializers</span><br><span class="line">org.springframework.context.ApplicationContextInitializer=\</span><br><span class="line">org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer,\</span><br><span class="line">org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer</span><br><span class="line"></span><br><span class="line"># Application Listeners</span><br><span class="line">org.springframework.context.ApplicationListener=\</span><br><span class="line">org.springframework.boot.autoconfigure.BackgroundPreinitializer</span><br><span class="line"></span><br><span class="line"># Auto Configuration Import Listeners</span><br><span class="line">org.springframework.boot.autoconfigure.AutoConfigurationImportListener=\</span><br><span class="line">org.springframework.boot.autoconfigure.condition.ConditionEvaluationReportAutoConfigurationImportListener</span><br><span class="line"></span><br><span class="line"># Auto Configuration Import Filters</span><br><span class="line">org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\</span><br><span class="line">org.springframework.boot.autoconfigure.condition.OnClassCondition</span><br><span class="line"></span><br><span class="line"># Auto Configure</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span><br><span class="line">.....省略</span><br></pre></td></tr></table></figure>
-
-<p>可以看到配置的结构形式是<code>Key</code>=&gt;<code>Value</code>形式，多个<code>Value</code>时使用<code>,</code>隔开，那我们在自定义<code>starter</code>内也可以使用这种形式来完成，我们的目的是为了完成自动化配置，所以我们这里<code>Key</code>则是需要使用<code>org.springframework.boot.autoconfigure.EnableAutoConfiguration</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># Initializers</span><br><span class="line">org.springframework.context.ApplicationContextInitializer=\</span><br><span class="line">org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer,\</span><br><span class="line">org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer</span><br><span class="line"></span><br><span class="line"># Application Listeners</span><br><span class="line">org.springframework.context.ApplicationListener=\</span><br><span class="line">org.springframework.boot.autoconfigure.BackgroundPreinitializer</span><br><span class="line"></span><br><span class="line"># Auto Configuration Import Listeners</span><br><span class="line">org.springframework.boot.autoconfigure.AutoConfigurationImportListener=\</span><br><span class="line">org.springframework.boot.autoconfigure.condition.ConditionEvaluationReportAutoConfigurationImportListener</span><br><span class="line"></span><br><span class="line"># Auto Configuration Import Filters</span><br><span class="line">org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\</span><br><span class="line">org.springframework.boot.autoconfigure.condition.OnClassCondition</span><br><span class="line"></span><br><span class="line"># Auto Configure</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span><br><span class="line">.....省略</span><br></pre></td></tr></table></figure>
+<p>可以看到配置的结构形式是<code>Key</code>&#x3D;&gt;<code>Value</code>形式，多个<code>Value</code>时使用<code>,</code>隔开，那我们在自定义<code>starter</code>内也可以使用这种形式来完成，我们的目的是为了完成自动化配置，所以我们这里<code>Key</code>则是需要使用<code>org.springframework.boot.autoconfigure.EnableAutoConfiguration</code></p>
 <h3 id="自定义spring-factories"><a href="#自定义spring-factories" class="headerlink" title="自定义spring.factories"></a>自定义spring.factories</h3><p>我们在<code>src/main/resource</code>目录下创建<code>META-INF</code>目录，并在目录内添加文件<code>spring.factories</code>，具体内容如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#配置自定义Starter的自动化配置</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.yuqiyu.chapter28.HelloAutoConfiguration</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#配置自定义Starter的自动化配置</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.yuqiyu.chapter28.HelloAutoConfiguration</span><br></pre></td></tr></table></figure>
 <p>都目前为止我们的自定义<code>starter</code>已经配置完成，下面我们需要新建一个<code>SpringBoot</code>项目来测试我们的自动化配置是否已经生效。</p>
 <h3 id="创建测试SpringBoot项目"><a href="#创建测试SpringBoot项目" class="headerlink" title="创建测试SpringBoot项目"></a>创建测试SpringBoot项目</h3><p>在使用自定义<code>starter</code>之前需要将<code>starter</code>作<code>Maven Jar Install</code>到本地，我们使用idea工具自带的maven命令完成该操作</p>
 <p>步骤：工具右侧 -&gt; Maven Projects -&gt; Lifecycle -&gt; install</p>
 <p>创建测试项目的<code>pom.xml</code>配置文件内容如下所示：</p>
-<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0"</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="hljs-tag">	<span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.yuqiyu.sample<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>test-spring-boot-starter-hello<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">packaging</span>&gt;</span>jar<span class="hljs-tag">&lt;/<span class="hljs-name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>test-spring-boot-starter-hello<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>Demo project for Spring Boot<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.5.4.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">relativePath</span>/&gt;</span> <span class="hljs-comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>                </span><br><span class="line">        <span class="hljs-comment">&lt;!--自定义starter依赖--&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.yuqiyu<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>chapter28<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="line">				<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">				<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.yuqiyu.sample<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>test-spring-boot-starter-hello<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>test-spring-boot-starter-hello<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span>                </span><br><span class="line">        <span class="comment">&lt;!--自定义starter依赖--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.yuqiyu<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>chapter28<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>我们只需要将依赖添加到<code>pom.xml</code>配置文件内</p>
 <h3 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h3><p>在运行项目之前，我们打开<code>application.properties</code>配置文件开启<code>debug</code>模式，查看自动化配置的输出日志，配置内容如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#显示debug日志信息</span><br><span class="line">debug=true</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示debug日志信息</span></span><br><span class="line"><span class="attr">debug</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
 <p>接下来我们启动项目，在控制台查找是否存在我们的<code>HelloAutoConfiguration</code>日志输出，控制台输出内容如下所示：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.....省略</span><br><span class="line">&gt;&gt;&gt;The HelloService Not Found，Execute Create New Bean.</span><br><span class="line">.....省略</span><br><span class="line">   HelloAutoConfiguration matched:</span><br><span class="line">      - @ConditionalOnClass found required class <span class="hljs-string">'com.yuqiyu.chapter28.HelloService'</span>; @ConditionalOnMissingClass did not find unwanted class (OnClassCondition)</span><br><span class="line">      - @ConditionalOnProperty (hello.enabled) matched (OnPropertyCondition)</span><br><span class="line"></span><br><span class="line">   HelloAutoConfiguration<span class="hljs-comment">#helloService matched:</span></span><br><span class="line">      - @ConditionalOnMissingBean (types: com.yuqiyu.chapter28.HelloService; SearchStrategy: all) did not find any beans (OnBeanCondition)</span><br><span class="line">.....省略</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.....省略</span><br><span class="line">&gt;&gt;&gt;The HelloService Not Found，Execute Create New Bean.</span><br><span class="line">.....省略</span><br><span class="line">   HelloAutoConfiguration matched:</span><br><span class="line">      - @ConditionalOnClass found required class <span class="string">&#x27;com.yuqiyu.chapter28.HelloService&#x27;</span>; @ConditionalOnMissingClass did not find unwanted class (OnClassCondition)</span><br><span class="line">      - @ConditionalOnProperty (hello.enabled) matched (OnPropertyCondition)</span><br><span class="line"></span><br><span class="line">   HelloAutoConfiguration<span class="comment">#helloService matched:</span></span><br><span class="line">      - @ConditionalOnMissingBean (types: com.yuqiyu.chapter28.HelloService; SearchStrategy: all) did not find any beans (OnBeanCondition)</span><br><span class="line">.....省略</span><br></pre></td></tr></table></figure>
 <p>在控制台可以看到我们的自定义<code>starter</code>的自动化配置已经生效了，并且根据<code>@ConditionalOnMissingBean(HelloService.class)</code>做出了条件注入<code>HelloService</code>实体bean到<code>SpringIoc</code>容器内</p>
 <h3 id="编写测试控制器"><a href="#编写测试控制器" class="headerlink" title="编写测试控制器"></a>编写测试控制器</h3><p>我们来编写一个简单的测试控制器，查看<code>HelloService</code>在不配置参数情况下输出格式化字符串内容，控制器代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.sample.testspringbootstarterhello;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter28.HelloService;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 测试自定义starter自动化配置HelloService</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/23</span></span><br><span class="line"><span class="hljs-comment"> * Time：11:42</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloController</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">//注入自定义starter内逻辑</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    HelloService helloService;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 测试访问地址/hello</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 格式化字符串</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/hello"</span>)</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">sayHello</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> helloService.sayHello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>接下来我们重启下项目，访问地址<a href="http://127.0.0.1:8080/hello" target="_blank" rel="noopener">http://127.0.0.1:8080/hello</a>，界面输出内容如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello，HengYu</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.sample.testspringbootstarterhello;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter28.HelloService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试自定义starter自动化配置HelloService</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/23</span></span><br><span class="line"><span class="comment"> * Time：11:42</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//注入自定义starter内逻辑</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    HelloService helloService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试访问地址/hello</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 格式化字符串</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/hello&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> helloService.sayHello();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来我们重启下项目，访问地址<a target="_blank" rel="noopener" href="http://127.0.0.1:8080/hello">http://127.0.0.1:8080/hello</a>，界面输出内容如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello，HengYu</span><br></pre></td></tr></table></figure>
 <p>界面输出的内容是我们默认值，接下来我们在<code>application.properties</code>配置文件内对应添加<code>hello.msg</code>、<code>hello.show</code>配置参数，如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#配置自定义starter参数</span><br><span class="line">hello.msg=HengYu Boy</span><br><span class="line">hello.show=true</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置自定义starter参数</span></span><br><span class="line"><span class="attr">hello.msg</span>=<span class="string">HengYu Boy</span></span><br><span class="line"><span class="attr">hello.show</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
 <p>重启项目，再次访问地址，界面输出内容如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello，HengYu Boy</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello，HengYu Boy</span><br></pre></td></tr></table></figure>
 <p>我们的配置生效了，到目前为止我相信大家已经明白了我们<code>application.properties</code>配置文件为什么可以作为统一配置入口，为什么配置后可以被对应<code>starter</code>所使用。</p>
 <p>#总结<br>以上内容是本章的全部讲解，本章主要讲解了我们如何自定义<code>starter</code>并且自动化配置到<code>SpringBoot</code>项目中，当然里面还有很多神奇的地方需要大家去深入挖掘。</p>
-
-        
-        <!--原创-->
-        
-        <div class="alert alert-success">
-          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
-              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
-              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
-        </div>
-        
-        <!--转载标注-->
-        
-        
-      </div>
-      <!--文章标签-->
-      
-      <div class="level is-size-7">
-        <div class="level-start">
-          <div class="level-item">
-            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
-            <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>, <a class="has-link-grey-link" href="/tags/starter/">starter</a>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-    </div>
-  </div>
-
-  
-  
-
-  
-  <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-      <!--上一篇-->
-      
-      <div class="level-start">
-        <a class="level level-item has-link-grey  article-nav-prev"
-          href="/use-lombok.html">
-          <i class="level-item fas fa-chevron-left"></i>
-          <span class="level-item">上一篇：使用Lombok优雅编码</span>
-        </a>
-      </div>
-      
-      <!--下一篇-->
-      
-      <div class="level-end">
-        <a class="level level-item has-link-grey  article-nav-next"
-          href="/spring-event-listener.html">
-          <span class="level-item">下一篇：业务解耦利器Event/Listener</span>
-          <i class="level-item fas fa-chevron-right"></i>
-        </a>
-      </div>
-      
-    </div>
-  </div>
-  
-  <!--评论-->
-  
-  <div class="card">
-    <div class="card-content">
-      <h3 class="title is-5 has-text-weight-normal">评论</h3>
-      
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: 'c6d9a9addcb940fef06f',
-        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
-        id: '8fb276d21838d4cd1c0c724c8e201301',
-        repo: 'learning-tutorials',
-        owner: 'hengboy',
-        admin: "hengboy",
-        createIssueManually: false,
-        distractionFreeMode: false
-    })
-    gitalk.render('comment-container')
-</script>
-
-    </div>
-  </div>
-  
-  
-</div>
-
-<script src="/js/readmore.js" type="text/javascript"></script>
-<script>
-  const btw = new BTWPlugin();
-  btw.init({
-    id: 'container',
-    blogId: '10034-1569731208928-426',
-    name: '恒宇少年',
-    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
-    keyword: 'free',
-  });
-</script>
-
-<!--<script src="/js/layui.js"></script>
-<script>
-  layui.use(['layer'], function () {
-    var layer = layui.layer;
-    var isShowOnce = localStorage.getItem('isShowHistory');
-    if (!isShowOnce) {
-      localStorage.setItem('isShowHistory',true);
-      layer.open({
-          type: 1
-          ,title: false //不显示标题栏
-          ,closeBtn: false
-          ,area: '350px;'
-          ,shade: 0.8
-          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-          ,btn: ['带朕去看看', '给朕退下']
-          ,btnAlign: 'c'
-          ,moveType: 1 //拖拽模式，0或者1
-          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
-          ,success: function(layero){
-            var btn = layero.find('.layui-layer-btn');
-            btn.find('.layui-layer-btn0').attr({
-              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
-              ,target: '_blank'
+</div><div class="article-licensing box"><div class="licensing-title"><p>自定义你的业务Starter</p><p><a href="https://blog.minbox.org/springboot-create-starter.html">https://blog.minbox.org/springboot-create-starter.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>恒宇少年 - 于起宇</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-29</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">文章标签：</span><a class="link-muted mr-2" rel="tag" href="/tags/SpringBoot/">SpringBoot</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/use-lombok.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">使用Lombok优雅编码</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/spring-event-listener.html"><span class="level-item">业务解耦利器Event/Listener</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "8fb276d21838d4cd1c0c724c8e201301",
+            repo: "learning-tutorials",
+            owner: "hengboy",
+            clientID: "c6d9a9addcb940fef06f",
+            clientSecret: "0c209053121187dd685030c01cfa10a7861afd27",
+            admin: "hengboy",
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content" style="padding:0px"><img src="/images/profile2.png"><div class="article-platform"><span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png" width="25"></a></span><span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg" width="25"></a></span><span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img src="/images/juejin-logo.svg" width="25"></a></span><span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img src="/images/思否.png" width="25"></a></span><span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img src="/images/知乎.svg" width="25"></a></span><span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png" width="25"></a></span><span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg" width="25"></a></span></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://apiboot.minbox.org" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">ApiBoot官网</span></span><span class="level-right"><span class="level-item tag">apiboot.minbox.org</span></span></a></li></ul></div></div></div><div class="card widget"><div><h1 class="widget-title">热门文章</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div class="card-content" style="font-size: 14px;font-weight:500;line-height: 35px"><p class="p-overflow"><a href="fish-fast-switch-jdk.html"><img src="/images/hot.gif"> fish终端快速切换JDK版本</a></p><p class="p-overflow"><a href="oauth2-always-create-token.html"><img src="/images/hot.gif"> OAuth2 始终获取新的令牌</a></p><p class="p-overflow"><a href="import-osm-data-into-mysql.html"><img src="/images/hot.gif"> 将OSM数据导入MySQL</a></p><p class="p-overflow"><a href="redis-geo-practice.html"><img src="/images/hot.gif"> 了解Redis Geo范围查询</a></p><p class="p-overflow"><a href="spring-security-flexible-password-encoder.html"><img src="/images/hot.gif"> Spring Security密码加密方式</a></p><p class="p-overflow"><a href="github-action-publish-jar-to-maven-central.html"><img src="/images/hot.gif"> 使用GitHub Actions发布Jar到Maven Central</a></p></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="/apiboot-all-articles.html" target="_blank"><img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="http://gk.link/a/10f7u" target="_blank"><img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget"><div><h1 class="widget-title">热门专题</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v1.x 基础教程"></div><div class="project-right"><a href="/spring-boot-1-x-articles.html" target="_blank"><p class="title">SpringBoot v1.x 基础教程</p><p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v2.x 基础教程"></div><div class="project-right"><a href="/spring-boot-2-x-articles.html" target="_blank"><p class="title">SpringBoot v2.x 基础教程</p><p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-cloud.svg" alt="SpringCloud 基础教程"></div><div class="project-right"><a href="/spring-cloud-all-articles.html" target="_blank"><p class="title">SpringCloud 基础教程</p><p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/api-boot.svg" alt="ApiBoot 基础教程"></div><div class="project-right"><a href="/apiboot-all-articles.html" target="_blank"><p class="title">ApiBoot 基础教程</p><p class="desc">新一代的接口服务落地解决方案，助力你成为服务架构师.</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/技术杂谈.svg" alt="技术杂谈"></div><div class="project-right"><a href="/technical-talk.html" target="_blank"><p class="title">技术杂谈</p><p class="desc">涵盖Java基础，数据结构与算法，Linux，代码规范，消息队列...</p></a></div></li></ul></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/ApiBoot/"><span class="level-start"><span class="level-item">ApiBoot</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/MongoDB/"><span class="level-start"><span class="level-item">MongoDB</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Quartz/"><span class="level-start"><span class="level-item">Quartz</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/SpringBoot/"><span class="level-start"><span class="level-item">SpringBoot</span></span><span class="level-end"><span class="level-item tag">39</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">地图服务</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">微服务</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">技术杂谈</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><span class="level-start"><span class="level-item">消息队列</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28"></a><p class="is-size-7"><span>&copy; 2022 恒宇少年 - 于起宇</span>  鲁ICP备14029686号<br>希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！</p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><form class="searchbox-input-container"><input class="searchbox-input" name="wd" type="text" placeholder="想要查找什么..."></form><a class="searchbox-close" href="javascript:;">×</a></div></div></div><script>(function ($) {
+            $('.searchbox-input-container').on('submit', function (e) {
+                var keyword = $('.searchbox-input[name="wd"]').val();
+                window.location = 'https://www.baidu.com/s?wd=site:blog.minbox.org ' + keyword;
+                return false;
             });
-          }
-        });
-    }
-  });
-</script>-->
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    </script></div>
-                
-                
-
-
-
-
-<!--展示块 布局-->
-<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
-    
-        <div class="card widget">
-  <div class="card-content" style="padding: 0%">
-    <!--个人信息-->
-    <img src="/images/profile2.png" />
-    <!--第三方文章发布平台-->
-    <div class="article-platform">
-      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
-            width="25" /></a></span>
-      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
-            width="25" /></a></span>
-      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
-            src="/images/juejin-logo.svg" width="25" /></a></span>
-      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
-            src="/images/思否.png" width="25" /></a></span>
-      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
-            src="/images/知乎.svg" width="25" /></a></span>
-      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
-            width="25" /></a></span>
-      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
-            width="25" /></a></span>
-    </div>
-  </div>
-</div>
-    
-        <!--热门文章列表，在文章详情显示，首页不显示-->
-
-<div class="card widget">
-  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
-    
-    
-    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        fish终端快速切换JDK版本
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        OAuth2 始终获取新的令牌
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        将OSM数据导入MySQL
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/redis-geo-practice.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        了解Redis Geo范围查询
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        Spring Security密码加密方式
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        使用GitHub Actions发布Jar到Maven Central
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-
-  </div>
-</div>
-
-    
-        
-
-
-<div class="card widget">
-  <div class="card-content" style="padding: 0">
-    <a href="/apiboot-all-articles.html" target="_blank">
-      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
-    </a>
-  </div>
-</div>
-
-
-    
-        
-
-
-<div class="card widget" style="margin-top: 1rem;">
-
-  <div class="card-content" style="padding: 0">
-
-    <a href="http://gk.link/a/10f7u" target="_blank">
-      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
-    </a>
-
-  </div>
-
-</div>
-
-
-    
-        <!--学习专题列表-->
-
-
-  <div class="card widget" id="topic">
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-1-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v1.x 基础教程</p>
-
-            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-2-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v2.x 基础教程</p>
-
-            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-cloud.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-cloud-all-articles.html" target="_blank">
-            <p class="title">SpringCloud 基础教程</p>
-
-            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/api-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/apiboot-all-articles.html" target="_blank">
-            <p class="title">ApiBoot 基础教程</p>
-
-            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/技术杂谈.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/technical-talk.html" target="_blank">
-            <p class="title">技术杂谈</p>
-
-            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-</div>
-<script src="/js/lay/modules/jquery.js"></script>
-<script>
-  var scrollTop = $("#topic").offset().top;
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > scrollTop) {
-      $("#topic").addClass("quoteSticky");
-      $("#profile").show();
-    } else {
-      $("#topic").removeClass("quoteSticky");
-      $("#profile").hide();
-    }
-  });
-</script>
-
-
-    
-    
-</div>
-
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-  <div class="container">
-    <div class="level">
-      <div class="level-start has-text-centered-mobile">
-        <p class="is-size-7">
-          &copy; 2018 - 2022
-          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
-          <br />
-          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
-        </p>
-      </div>
-      <div class="level-end">
-        
-      </div>
-    </div>
-  </div>
-</footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("zh-CN");</script>
-
-<script>
-var IcarusThemeSettings = {
-    article: {
-        highlight: {
-            clipboard: true,
-            fold: 'unfolded'
-        }
-    }
-};
-</script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-
-
-
-    
-    
-    
-    <script src="/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
-
-
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="回到顶端" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/js/back-to-top.js" defer></script>
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-
-
-<script src="/js/main.js" defer></script>
-
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
-            },
-            CONTENT_URL: '/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
-    
-</body>
-</html>
+        })(jQuery);
+        (function (document, $) {
+            $(document).on('click', '.navbar-main .search', function () {
+                $('.searchbox').toggleClass('show');
+            }).on('click', '.searchbox .searchbox-mask', function () {
+                $('.searchbox').removeClass('show');
+            }).on('click', '.searchbox-close', function () {
+                $('.searchbox').removeClass('show');
+            });
+        })(document, jQuery);</script></body></html>

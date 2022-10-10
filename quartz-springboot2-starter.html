@@ -1,249 +1,42 @@
-<!DOCTYPE html>
-<html  lang="zh">
-<head>
-    <meta charset="utf-8" />
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Quartz在SpringBoot2.x内的自动化配置 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="msapplication-TileImage" content="/images/favicon.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Quartz在SpringBoot2.x内的自动化配置"><meta property="og:type" content="blog"><meta property="og:title" content="Quartz在SpringBoot2.x内的自动化配置"><meta property="og:url" content="https://blog.minbox.org/quartz-springboot2-starter.html"><meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta property="og:description" content="Quartz在SpringBoot2.x内的自动化配置"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.minbox.org/img/og_image.png"><meta property="article:published_time" content="2019-09-29T17:28:40.000Z"><meta property="article:modified_time" content="2022-10-10T09:22:37.798Z"><meta property="article:author" content="恒宇少年 - 于起宇"><meta property="article:tag" content="ApiBoot"><meta property="article:tag" content="Quartz"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://blog.minbox.org/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.minbox.org/quartz-springboot2-starter.html"},"headline":"Quartz在SpringBoot2.x内的自动化配置","image":["https://blog.minbox.org/img/og_image.png"],"datePublished":"2019-09-29T17:28:40.000Z","dateModified":"2022-10-10T09:22:37.798Z","author":{"@type":"Person","name":"恒宇少年 - 于起宇"},"publisher":{"@type":"Organization","name":"程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客","logo":{"@type":"ImageObject","url":"https://blog.minbox.org/images/avatar.png"}},"description":"Quartz在SpringBoot2.x内的自动化配置"}</script><link rel="canonical" href="https://blog.minbox.org/quartz-springboot2-starter.html"><link rel="icon" href="/images/favicon.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
 
-<meta name="generator" content="Hexo 3.9.0" />
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
 
-<title>Quartz在SpringBoot2.x内的自动化配置 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
-
-
-    <meta name="description" content="Quartz在SpringBoot2.x内的自动化配置">
-<meta name="keywords" content="quartz,springboot,恒宇少年">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Quartz在SpringBoot2.x内的自动化配置">
-<meta property="og:url" content="https://blog.minbox.org/quartz-springboot2-starter.html">
-<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
-<meta property="og:description" content="Quartz在SpringBoot2.x内的自动化配置">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
-<meta property="og:updated_time" content="2022-09-29T04:18:51.347Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Quartz在SpringBoot2.x内的自动化配置">
-<meta name="twitter:description" content="Quartz在SpringBoot2.x内的自动化配置">
-<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
-
-
-
-
-
-
-
-<link rel="icon" href="/images/favicon.jpg">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
-
-
-    
-    
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
-
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
-
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/css/back-to-top.css">
-
-
-    
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-127746557-1');
-</script>
-
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-
-<link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="is-2-column">
-    <nav class="navbar navbar-main">
-  <div class="container">
-    <div class="navbar-brand is-flex-center">
-      <a class="navbar-item navbar-logo" href="/">
-        <div class="logo"></div>
-        <span class="site_title">恒宇少年 - 于起宇</span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      
-      <div class="navbar-start nav-link">
-        
-        <a class="navbar-item"
-          href="/interview-strategy.html" target="_blank">面试攻略</a>
-        
-        <a class="navbar-item"
-          href="/welfare/" target="_blank">签到送书</a>
-        
-        <a class="navbar-item"
-          href="/geektime/" target="_blank">推荐课程</a>
-        
-        <a class="navbar-item"
-          href="/opensource/" target="_blank">我的开源</a>
-        
-        <a class="navbar-item"
-          href="/openbooks/" target="_blank">免费书籍</a>
-        
-        <a class="navbar-item"
-          href="/years/2019.html" target="_blank">我的2019</a>
-        
-        <a class="navbar-item"
-          href="/archives/" target="_blank">归档</a>
-        
-      </div>
-      
-      <div class="navbar-end">
-        
-        
-        
-        <a class="navbar-item search" title="搜索" href="javascript:;">
-          <i class="fas fa-search"></i>
-        </a>
-        
-      </div>
-    </div>
-  </div>
-</nav>
-    
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
-<div id="container">
-  
-  <div class="card" style="margin-bottom: 10px">
-    
-    <div class="card-content article ">
-      <!--文章标题-->
-      
-      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-        
-        <span class="article_title">Quartz在SpringBoot2.x内的自动化配置</span>
-        
-      </h1>
-      <!--完全自定义页面显示的访问次数-->
-      
-      
-      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
-        <div class="level-left">
-          <!--文章类型-->
-          
-          
-          
-          <span
-            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
-            原创</span>
-          
-          
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--发布时间-->
-          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
-          &nbsp;
-          <span class="article-meta-element">2019-09-29</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--作者-->
-          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
-
-          <span class="article-meta-element">于起宇</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--目录列表-->
-          
-          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
-          &nbsp;
-          <div class="level-item article-meta-element">
-            <!--读取config.yml文件内的目录配置-->
-            
-            
-              
-                
-                  <!--跳转文章目录地址-->
-                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
-                
-              
-                
-              
-                
-              
-                
-              
-            
-          </div>
-          
-          <!--不蒜子统计阅读量-->
-          <!--
-          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
-            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
-          </span>
-          -->
-        </div>
-      </div>
-      
-      
-      <!--推荐阅读 - 新闻-->
-      
-      
-      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
-        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
-      </div>
-      
-      
-      <!--文章内容-->
-      <div class="content">
-        <p>在新版本的<code>SpringBoot2.0</code>发布后，急迫尝鲜的我将相关的项目已经更换为最新版本，在<code>SpringBoot</code>源码<code>GitHub</code>看到更新日志，表明了针对<code>Quartz</code>新版本进行了  <code>AutoConfiguration</code>自动化配置，省去了很多繁琐的配置。</p>
-<a id="more"></a>
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28">  <p class="site_title">恒宇少年 - 于起宇</p></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/interview-strategy.html">面试攻略</a><a class="navbar-item" href="/geektime/">推荐课程</a><a class="navbar-item" href="/opensource/">我的开源</a><a class="navbar-item" href="/openbooks/">免费书籍</a><a class="navbar-item" href="/archives/">时间轴</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile"><span class="article_title">Quartz在SpringBoot2.x内的自动化配置</span></h1><div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px"><div class="level-left"><span style="float: left;padding: 1px 4px 1px 4px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">原创</span>    <img src="/images/date_time.png" style="width: 27px;" title="发布时间"> <span class="article-meta-element">2019-09-29</span>    <img src="/images/author.svg" style="width: 23px" title="文章作者"> <span class="article-meta-element">于起宇</span>    <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表">  <a class="category-link article-meta-element" href="/categories/SpringBoot/">SpringBoot </a></div></div><div style="height: 50px;padding-top: 10px;vertical-align: middle;"><a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a></div><br><div class="content"><p>在新版本的<code>SpringBoot2.0</code>发布后，急迫尝鲜的我将相关的项目已经更换为最新版本，在<code>SpringBoot</code>源码<code>GitHub</code>看到更新日志，表明了针对<code>Quartz</code>新版本进行了  <code>AutoConfiguration</code>自动化配置，省去了很多繁琐的配置。</p>
+<span id="more"></span>
 <h4 id="官网更新日志"><a href="#官网更新日志" class="headerlink" title="官网更新日志"></a>官网更新日志</h4><blockquote>
-<p>Auto-configuration support is now include for the <a href="http://www.quartz-scheduler.org/" target="_blank" rel="noopener">Quartz Scheduler</a>. We’ve also added a new <code>spring-boot-starter-quartz</code> starter POM.<br>You can use in-memory <code>JobStores</code>, or a full JDBC-based store. All <code>JobDetail</code>, <code>Calendar</code> and <code>Trigger</code> beans from your Spring application context will be automatically registered with the <code>Scheduler</code>.<br>For more details read the new <a href="http://docs.spring.io/spring-boot/docs/2.0.x-SNAPSHOT/reference/htmlsingle/#boot-features-quartz" target="_blank" rel="noopener">“Quartz Scheduler” section</a> of the reference documentation.</p>
+<p>Auto-configuration support is now include for the <a target="_blank" rel="noopener" href="http://www.quartz-scheduler.org/">Quartz Scheduler</a>. We’ve also added a new <code>spring-boot-starter-quartz</code> starter POM.<br>You can use in-memory <code>JobStores</code>, or a full JDBC-based store. All <code>JobDetail</code>, <code>Calendar</code> and <code>Trigger</code> beans from your Spring application context will be automatically registered with the <code>Scheduler</code>.<br>For more details read the new <a target="_blank" rel="noopener" href="http://docs.spring.io/spring-boot/docs/2.0.x-SNAPSHOT/reference/htmlsingle/#boot-features-quartz">“Quartz Scheduler” section</a> of the reference documentation.</p>
 </blockquote>
 <p><code>SpringBoot2.0</code>版本集成了<code>Quartz2.3.0</code>官网最新版本。</p>
 <h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><p>使用<code>SpringBoot2.0</code>新特性完成<code>Quartz</code>自动化配置。</p>
-<h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>在前面章节<a href="https://www.jianshu.com/p/49133c107143" target="_blank" rel="noopener">第四十章：基于SpringBoot &amp; Quartz完成定时任务分布式多节点负载持久化</a>内我们已经通过添加配置的方式完成集成，为了本章的方便直接复制之前的项目，在基础上进行修改。<br>打开<code>pom.xml</code>配置文件，<code>SpringBoot</code>为我们提供了对应的依赖，我们将之前的<code>quartz</code>相关依赖删除，替换为<code>spring-boot-starter-quartz</code>，如下所示：</p>
-<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">&lt;!--quartz相关依赖--&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.quartz-scheduler<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>quartz<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;quartz.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.quartz-scheduler<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>quartz-jobs<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>$&#123;quartz.version&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">&gt;&gt;&gt;&gt;替换为：&gt;&gt;&gt;&gt;</span><br><span class="line"><span class="hljs-comment">&lt;!--quartz依赖--&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-quartz<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-
+<h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>在前面章节<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/49133c107143">第四十章：基于SpringBoot &amp; Quartz完成定时任务分布式多节点负载持久化</a>内我们已经通过添加配置的方式完成集成，为了本章的方便直接复制之前的项目，在基础上进行修改。<br>打开<code>pom.xml</code>配置文件，<code>SpringBoot</code>为我们提供了对应的依赖，我们将之前的<code>quartz</code>相关依赖删除，替换为<code>spring-boot-starter-quartz</code>，如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--quartz相关依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.quartz-scheduler<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;quartz.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.quartz-scheduler<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>quartz-jobs<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;quartz.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">&gt;&gt;&gt;&gt;替换为：&gt;&gt;&gt;&gt;</span><br><span class="line"><span class="comment">&lt;!--quartz依赖--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-quartz<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
 <h4 id="删除QuartzConfiguration配置类"><a href="#删除QuartzConfiguration配置类" class="headerlink" title="删除QuartzConfiguration配置类"></a>删除QuartzConfiguration配置类</h4><p>在之前章节我们使用<code>QuartzConfiguration</code>配置类来完成了<code>Quartz</code>需要的一系列配置，如：<code>JobFactory</code>、<code>SchedulerFactoryBean</code>等，在我们添加<code>spring-boot-starter-quartz</code>依赖后就不需要主动声明工厂类，因为<code>spring-boot-starter-quartz</code>已经为我们自动化配置好了。</p>
 <h4 id="自动化配置源码"><a href="#自动化配置源码" class="headerlink" title="自动化配置源码"></a>自动化配置源码</h4><p>我们找到<code>Idea</code>的<code>External Libraries</code>并且展开<code>spring-boot-autoconfigure-2.0.0.RELEASE.jar</code>，找到<code>org.springframework.boot.autoconfigure.quartz</code>，该目录就是<code>SpringBoot</code>为我们提供的<code>Quartz</code>自动化配置源码实现，在该目录下有如下所示几个类：</p>
 <ul>
@@ -255,16 +48,11 @@
 <li><code>SchedulerFactoryBeanCustomizer</code><br>这是一个接口，我们实现该接口后并且将实现类使用<code>Spring IOC</code>托管，可以完成<code>SchedulerFactoryBean</code>的个性化设置，这里的设置完全可以对<code>SchedulerFactoryBean</code>做出全部的设置变更。</li>
 </ul>
 <h4 id="spring-quartz配置"><a href="#spring-quartz配置" class="headerlink" title="spring.quartz配置"></a>spring.quartz配置</h4><p>看到<code>QuartzAutoConfiguration</code>类源码，我们知道了，想要使用自动化配置，需要满足<code>QuartzProperties</code>属性配置类的初始化，所以我们需要再<code>application.yml</code>、<code>application.properties</code>配置文件内添加对应的配置信息，如下所示：</p>
-<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">quartz:</span></span><br><span class="line">    <span class="hljs-comment">#相关属性配置</span></span><br><span class="line">    <span class="hljs-attr">properties:</span></span><br><span class="line">      <span class="hljs-attr">org:</span></span><br><span class="line">        <span class="hljs-attr">quartz:</span></span><br><span class="line">          <span class="hljs-attr">scheduler:</span></span><br><span class="line">            <span class="hljs-attr">instanceName:</span> <span class="hljs-string">clusteredScheduler</span></span><br><span class="line">            <span class="hljs-attr">instanceId:</span> <span class="hljs-string">AUTO</span></span><br><span class="line">          <span class="hljs-attr">jobStore:</span></span><br><span class="line">            <span class="hljs-attr">class:</span> <span class="hljs-string">org.quartz.impl.jdbcjobstore.JobStoreTX</span></span><br><span class="line">            <span class="hljs-attr">driverDelegateClass:</span> <span class="hljs-string">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span></span><br><span class="line">            <span class="hljs-attr">tablePrefix:</span> <span class="hljs-string">QRTZ_</span></span><br><span class="line">            <span class="hljs-attr">isClustered:</span> <span class="hljs-literal">true</span></span><br><span class="line">            <span class="hljs-attr">clusterCheckinInterval:</span> <span class="hljs-number">10000</span></span><br><span class="line">            <span class="hljs-attr">useProperties:</span> <span class="hljs-literal">false</span></span><br><span class="line">          <span class="hljs-attr">threadPool:</span></span><br><span class="line">            <span class="hljs-attr">class:</span> <span class="hljs-string">org.quartz.simpl.SimpleThreadPool</span></span><br><span class="line">            <span class="hljs-attr">threadCount:</span> <span class="hljs-number">10</span></span><br><span class="line">            <span class="hljs-attr">threadPriority:</span> <span class="hljs-number">5</span></span><br><span class="line">            <span class="hljs-attr">threadsInheritContextClassLoaderOfInitializingThread:</span> <span class="hljs-literal">true</span></span><br><span class="line">    <span class="hljs-comment">#数据库方式</span></span><br><span class="line">    <span class="hljs-attr">job-store-type:</span> <span class="hljs-string">jdbc</span></span><br><span class="line">    <span class="hljs-comment">#初始化表结构</span></span><br><span class="line">    <span class="hljs-comment">#jdbc:</span></span><br><span class="line">      <span class="hljs-comment">#initialize-schema: never</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">quartz:</span></span><br><span class="line">    <span class="comment">#相关属性配置</span></span><br><span class="line">    <span class="attr">properties:</span></span><br><span class="line">      <span class="attr">org:</span></span><br><span class="line">        <span class="attr">quartz:</span></span><br><span class="line">          <span class="attr">scheduler:</span></span><br><span class="line">            <span class="attr">instanceName:</span> <span class="string">clusteredScheduler</span></span><br><span class="line">            <span class="attr">instanceId:</span> <span class="string">AUTO</span></span><br><span class="line">          <span class="attr">jobStore:</span></span><br><span class="line">            <span class="attr">class:</span> <span class="string">org.quartz.impl.jdbcjobstore.JobStoreTX</span></span><br><span class="line">            <span class="attr">driverDelegateClass:</span> <span class="string">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span></span><br><span class="line">            <span class="attr">tablePrefix:</span> <span class="string">QRTZ_</span></span><br><span class="line">            <span class="attr">isClustered:</span> <span class="literal">true</span></span><br><span class="line">            <span class="attr">clusterCheckinInterval:</span> <span class="number">10000</span></span><br><span class="line">            <span class="attr">useProperties:</span> <span class="literal">false</span></span><br><span class="line">          <span class="attr">threadPool:</span></span><br><span class="line">            <span class="attr">class:</span> <span class="string">org.quartz.simpl.SimpleThreadPool</span></span><br><span class="line">            <span class="attr">threadCount:</span> <span class="number">10</span></span><br><span class="line">            <span class="attr">threadPriority:</span> <span class="number">5</span></span><br><span class="line">            <span class="attr">threadsInheritContextClassLoaderOfInitializingThread:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment">#数据库方式</span></span><br><span class="line">    <span class="attr">job-store-type:</span> <span class="string">jdbc</span></span><br><span class="line">    <span class="comment">#初始化表结构</span></span><br><span class="line">    <span class="comment">#jdbc:</span></span><br><span class="line">      <span class="comment">#initialize-schema: never</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li><p><code>spring.quartz.properties</code><br>该配置其实代替了之前的<code>quartz.properties</code>，我们把之前<code>quartz.properties</code>配置文件内的所有配置转换成<code>YAML</code>风格，对应的添加在该配置下即可，在<code>QuartzAutoConfiguration</code>类内，会自动调用<code>SchedulerFactoryBean</code>的<code>setQuartzProperties</code>方法，把<code>spring.quartz.properties</code>内的所有配置进行设置。</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Bean</span></span><br><span class="line"><span class="hljs-meta">@ConditionalOnMissingBean</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> SchedulerFactoryBean <span class="hljs-title">quartzScheduler</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        SchedulerFactoryBean schedulerFactoryBean = <span class="hljs-keyword">new</span> SchedulerFactoryBean();</span><br><span class="line">        schedulerFactoryBean.setJobFactory(<span class="hljs-keyword">new</span> AutowireCapableBeanJobFactory(<span class="hljs-keyword">this</span>.applicationContext.getAutowireCapableBeanFactory()));</span><br><span class="line">        <span class="hljs-comment">// 如果配置了spring.quartz.properties</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.properties.getProperties().isEmpty()) &#123;</span><br><span class="line">        <span class="hljs-comment">//  将所有properties设置到QuartzProperties</span></span><br><span class="line">            schedulerFactoryBean.setQuartzProperties(<span class="hljs-keyword">this</span>.asProperties(<span class="hljs-keyword">this</span>.properties.getProperties()));</span><br><span class="line">        &#125;</span><br><span class="line">......省略部分代码</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>spring.quartz.job-store-type</code><br>设置<code>quartz</code>任务的数据持久化方式，默认是内存方式，我们这里沿用之前的方式，配置<code>JDBC</code>以使用数据库方式持久化任务。</p>
-</li>
-<li><p><code>spring.quartz.jdbc.initialize-schema</code></p>
-<blockquote>
+<li><code>spring.quartz.properties</code><br>该配置其实代替了之前的<code>quartz.properties</code>，我们把之前<code>quartz.properties</code>配置文件内的所有配置转换成<code>YAML</code>风格，对应的添加在该配置下即可，在<code>QuartzAutoConfiguration</code>类内，会自动调用<code>SchedulerFactoryBean</code>的<code>setQuartzProperties</code>方法，把<code>spring.quartz.properties</code>内的所有配置进行设置。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line"><span class="keyword">public</span> SchedulerFactoryBean <span class="title function_">quartzScheduler</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">SchedulerFactoryBean</span> <span class="variable">schedulerFactoryBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SchedulerFactoryBean</span>();</span><br><span class="line">        schedulerFactoryBean.setJobFactory(<span class="keyword">new</span> <span class="title class_">AutowireCapableBeanJobFactory</span>(<span class="built_in">this</span>.applicationContext.getAutowireCapableBeanFactory()));</span><br><span class="line">        <span class="comment">// 如果配置了spring.quartz.properties</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">this</span>.properties.getProperties().isEmpty()) &#123;</span><br><span class="line">        <span class="comment">//  将所有properties设置到QuartzProperties</span></span><br><span class="line">            schedulerFactoryBean.setQuartzProperties(<span class="built_in">this</span>.asProperties(<span class="built_in">this</span>.properties.getProperties()));</span><br><span class="line">        &#125;</span><br><span class="line">......省略部分代码</span><br></pre></td></tr></table></figure></li>
+<li><code>spring.quartz.job-store-type</code><br>设置<code>quartz</code>任务的数据持久化方式，默认是内存方式，我们这里沿用之前的方式，配置<code>JDBC</code>以使用数据库方式持久化任务。</li>
+<li><code>spring.quartz.jdbc.initialize-schema</code><blockquote>
 <p>该配置目前版本没有生效，根据官网文档查看，其目的是自动将<code>quartz</code>需要的数据表通过配置方式进行初始化。</p>
 </blockquote>
 </li>
@@ -272,592 +60,81 @@
 <h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><ol>
 <li>启动项目</li>
 <li>打开浏览器访问<code>http://localhost:8083/good/save?name=abcd&amp;unit=斤&amp;price=12.5</code>进行添加定时任务</li>
-<li>查看控制台输出<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> 22:55:18.812  INFO 17161 --- [           main] c.hengyu.chapter39.Chapter47Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】</span><br><span class="line">2018-03-06 22:55:20.772  INFO 17161 --- [uartzScheduler]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2018-03-06 22:55:20.793  INFO 17161 --- [uartzScheduler]] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_<span class="hljs-variable">$_yuqiyudeMacBook</span>-Pro.local1520348117910 started.</span><br><span class="line">2018-03-06 22:56:20.103  INFO 17161 --- [nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span></span><br><span class="line">2018-03-06 22:56:20.103  INFO 17161 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization started</span><br><span class="line">2018-03-06 22:56:20.121  INFO 17161 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization completed <span class="hljs-keyword">in</span> 18 ms</span><br><span class="line">Hibernate: select next_val as id_val from hibernate_sequence <span class="hljs-keyword">for</span> update</span><br><span class="line">Hibernate: update hibernate_sequence <span class="hljs-built_in">set</span> next_val= ? <span class="hljs-built_in">where</span> next_val=?</span><br><span class="line">Hibernate: insert into basic_good_info (bgi_name, bgi_price, bgi_unit, bgi_id) values (?, ?, ?, ?)</span><br><span class="line">2018-03-06 22:56:20.268 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [abcd]</span><br><span class="line">2018-03-06 22:56:20.269 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [NUMERIC] - [12.5]</span><br><span class="line">2018-03-06 22:56:20.269 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [斤]</span><br><span class="line">2018-03-06 22:56:20.269 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [BIGINT] - [1]</span><br><span class="line">2018-03-06 22:56:47.253  INFO 17161 --- [eduler_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:56:47 CST 2018</span><br><span class="line">2018-03-06 22:57:00.012  INFO 17161 --- [eduler_Worker-2] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:57:00 CST 2018</span><br><span class="line">2018-03-06 22:57:20.207  INFO 17161 --- [eduler_Worker-3] c.hengyu.chapter39.timers.GoodAddTimer   : 分布式节点quartz-cluster-node-second，商品添加完成后执行任务，任务时间：Tue Mar 06 22:57:20 CST 2018</span><br><span class="line">2018-03-06 22:57:30.013  INFO 17161 --- [eduler_Worker-4] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:57:30 CST 2018</span><br><span class="line">2018-03-06 22:58:00.014  INFO 17161 --- [eduler_Worker-5] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:58:00 CST 2018</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>查看控制台输出<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> 22:55:18.812  INFO 17161 --- [           main] c.hengyu.chapter39.Chapter47Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】</span><br><span class="line">2018-03-06 22:55:20.772  INFO 17161 --- [uartzScheduler]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2018-03-06 22:55:20.793  INFO 17161 --- [uartzScheduler]] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_<span class="variable">$_yuqiyudeMacBook</span>-Pro.local1520348117910 started.</span><br><span class="line">2018-03-06 22:56:20.103  INFO 17161 --- [nio-8083-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span></span><br><span class="line">2018-03-06 22:56:20.103  INFO 17161 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization started</span><br><span class="line">2018-03-06 22:56:20.121  INFO 17161 --- [nio-8083-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization completed <span class="keyword">in</span> 18 ms</span><br><span class="line">Hibernate: select next_val as id_val from hibernate_sequence <span class="keyword">for</span> update</span><br><span class="line">Hibernate: update hibernate_sequence <span class="built_in">set</span> next_val= ? <span class="built_in">where</span> next_val=?</span><br><span class="line">Hibernate: insert into basic_good_info (bgi_name, bgi_price, bgi_unit, bgi_id) values (?, ?, ?, ?)</span><br><span class="line">2018-03-06 22:56:20.268 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [abcd]</span><br><span class="line">2018-03-06 22:56:20.269 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [NUMERIC] - [12.5]</span><br><span class="line">2018-03-06 22:56:20.269 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [斤]</span><br><span class="line">2018-03-06 22:56:20.269 TRACE 17161 --- [nio-8083-exec-1] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [BIGINT] - [1]</span><br><span class="line">2018-03-06 22:56:47.253  INFO 17161 --- [eduler_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:56:47 CST 2018</span><br><span class="line">2018-03-06 22:57:00.012  INFO 17161 --- [eduler_Worker-2] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:57:00 CST 2018</span><br><span class="line">2018-03-06 22:57:20.207  INFO 17161 --- [eduler_Worker-3] c.hengyu.chapter39.timers.GoodAddTimer   : 分布式节点quartz-cluster-node-second，商品添加完成后执行任务，任务时间：Tue Mar 06 22:57:20 CST 2018</span><br><span class="line">2018-03-06 22:57:30.013  INFO 17161 --- [eduler_Worker-4] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:57:30 CST 2018</span><br><span class="line">2018-03-06 22:58:00.014  INFO 17161 --- [eduler_Worker-5] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Tue Mar 06 22:58:00 CST 2018</span><br></pre></td></tr></table></figure>
+根据控制台内容，可以看到我们的定时任务已经正常的开始执行，当然我们如果打开<code>多个节点</code>同样可以实现<code>任务自动漂移</code>的效果。</li>
 </ol>
-<p>根据控制台内容，可以看到我们的定时任务已经正常的开始执行，当然我们如果打开<code>多个节点</code>同样可以实现<code>任务自动漂移</code>的效果。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>综上所述我们已经完成了<code>SpringBoot2.0</code>集成<code>Quartz</code>，我们只需要添加依赖、添加配置即可，别的不需要做任何代码编写。</p>
-
-        
-        <!--原创-->
-        
-        <div class="alert alert-success">
-          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
-              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
-              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
-        </div>
-        
-        <!--转载标注-->
-        
-        
-      </div>
-      <!--文章标签-->
-      
-      <div class="level is-size-7">
-        <div class="level-start">
-          <div class="level-item">
-            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
-            <a class="has-link-grey-link" href="/tags/Quartz/">Quartz</a>, <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-    </div>
-  </div>
-
-  
-  
-
-  
-  <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-      <!--上一篇-->
-      
-      <div class="level-start">
-        <a class="level level-item has-link-grey  article-nav-prev"
-          href="/rabbitmq-trust-package.html">
-          <i class="level-item fas fa-chevron-left"></i>
-          <span class="level-item">上一篇：消息队列RabbitMQ设置信任package</span>
-        </a>
-      </div>
-      
-      <!--下一篇-->
-      
-      <div class="level-end">
-        <a class="level level-item has-link-grey  article-nav-next"
-          href="/rabbitmq-delay-consumer.html">
-          <span class="level-item">下一篇：消息队列RabbitMQ消息延时消费</span>
-          <i class="level-item fas fa-chevron-right"></i>
-        </a>
-      </div>
-      
-    </div>
-  </div>
-  
-  <!--评论-->
-  
-  <div class="card">
-    <div class="card-content">
-      <h3 class="title is-5 has-text-weight-normal">评论</h3>
-      
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: 'c6d9a9addcb940fef06f',
-        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
-        id: '270e177bbbfb6deb269188a66b4df28c',
-        repo: 'learning-tutorials',
-        owner: 'hengboy',
-        admin: "hengboy",
-        createIssueManually: false,
-        distractionFreeMode: false
-    })
-    gitalk.render('comment-container')
-</script>
-
-    </div>
-  </div>
-  
-  
-</div>
-
-<script src="/js/readmore.js" type="text/javascript"></script>
-<script>
-  const btw = new BTWPlugin();
-  btw.init({
-    id: 'container',
-    blogId: '10034-1569731208928-426',
-    name: '恒宇少年',
-    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
-    keyword: 'free',
-  });
-</script>
-
-<!--<script src="/js/layui.js"></script>
-<script>
-  layui.use(['layer'], function () {
-    var layer = layui.layer;
-    var isShowOnce = localStorage.getItem('isShowHistory');
-    if (!isShowOnce) {
-      localStorage.setItem('isShowHistory',true);
-      layer.open({
-          type: 1
-          ,title: false //不显示标题栏
-          ,closeBtn: false
-          ,area: '350px;'
-          ,shade: 0.8
-          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-          ,btn: ['带朕去看看', '给朕退下']
-          ,btnAlign: 'c'
-          ,moveType: 1 //拖拽模式，0或者1
-          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
-          ,success: function(layero){
-            var btn = layero.find('.layui-layer-btn');
-            btn.find('.layui-layer-btn0').attr({
-              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
-              ,target: '_blank'
+</div><div class="article-licensing box"><div class="licensing-title"><p>Quartz在SpringBoot2.x内的自动化配置</p><p><a href="https://blog.minbox.org/quartz-springboot2-starter.html">https://blog.minbox.org/quartz-springboot2-starter.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>恒宇少年 - 于起宇</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-29</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">文章标签：</span><a class="link-muted mr-2" rel="tag" href="/tags/ApiBoot/">ApiBoot</a><a class="link-muted mr-2" rel="tag" href="/tags/Quartz/">Quartz</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/rabbitmq-trust-package.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">消息队列RabbitMQ设置信任package</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/rabbitmq-delay-consumer.html"><span class="level-item">消息队列RabbitMQ消息延时消费</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "270e177bbbfb6deb269188a66b4df28c",
+            repo: "learning-tutorials",
+            owner: "hengboy",
+            clientID: "c6d9a9addcb940fef06f",
+            clientSecret: "0c209053121187dd685030c01cfa10a7861afd27",
+            admin: "hengboy",
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content" style="padding:0px"><img src="/images/profile2.png"><div class="article-platform"><span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png" width="25"></a></span><span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg" width="25"></a></span><span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img src="/images/juejin-logo.svg" width="25"></a></span><span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img src="/images/思否.png" width="25"></a></span><span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img src="/images/知乎.svg" width="25"></a></span><span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png" width="25"></a></span><span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg" width="25"></a></span></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://apiboot.minbox.org" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">ApiBoot官网</span></span><span class="level-right"><span class="level-item tag">apiboot.minbox.org</span></span></a></li></ul></div></div></div><div class="card widget"><div><h1 class="widget-title">热门文章</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div class="card-content" style="font-size: 14px;font-weight:500;line-height: 35px"><p class="p-overflow"><a href="fish-fast-switch-jdk.html"><img src="/images/hot.gif"> fish终端快速切换JDK版本</a></p><p class="p-overflow"><a href="oauth2-always-create-token.html"><img src="/images/hot.gif"> OAuth2 始终获取新的令牌</a></p><p class="p-overflow"><a href="import-osm-data-into-mysql.html"><img src="/images/hot.gif"> 将OSM数据导入MySQL</a></p><p class="p-overflow"><a href="redis-geo-practice.html"><img src="/images/hot.gif"> 了解Redis Geo范围查询</a></p><p class="p-overflow"><a href="spring-security-flexible-password-encoder.html"><img src="/images/hot.gif"> Spring Security密码加密方式</a></p><p class="p-overflow"><a href="github-action-publish-jar-to-maven-central.html"><img src="/images/hot.gif"> 使用GitHub Actions发布Jar到Maven Central</a></p></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="/apiboot-all-articles.html" target="_blank"><img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="http://gk.link/a/10f7u" target="_blank"><img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget"><div><h1 class="widget-title">热门专题</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v1.x 基础教程"></div><div class="project-right"><a href="/spring-boot-1-x-articles.html" target="_blank"><p class="title">SpringBoot v1.x 基础教程</p><p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v2.x 基础教程"></div><div class="project-right"><a href="/spring-boot-2-x-articles.html" target="_blank"><p class="title">SpringBoot v2.x 基础教程</p><p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-cloud.svg" alt="SpringCloud 基础教程"></div><div class="project-right"><a href="/spring-cloud-all-articles.html" target="_blank"><p class="title">SpringCloud 基础教程</p><p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/api-boot.svg" alt="ApiBoot 基础教程"></div><div class="project-right"><a href="/apiboot-all-articles.html" target="_blank"><p class="title">ApiBoot 基础教程</p><p class="desc">新一代的接口服务落地解决方案，助力你成为服务架构师.</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/技术杂谈.svg" alt="技术杂谈"></div><div class="project-right"><a href="/technical-talk.html" target="_blank"><p class="title">技术杂谈</p><p class="desc">涵盖Java基础，数据结构与算法，Linux，代码规范，消息队列...</p></a></div></li></ul></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/ApiBoot/"><span class="level-start"><span class="level-item">ApiBoot</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/MongoDB/"><span class="level-start"><span class="level-item">MongoDB</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Quartz/"><span class="level-start"><span class="level-item">Quartz</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/SpringBoot/"><span class="level-start"><span class="level-item">SpringBoot</span></span><span class="level-end"><span class="level-item tag">39</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">地图服务</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">微服务</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">技术杂谈</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><span class="level-start"><span class="level-item">消息队列</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28"></a><p class="is-size-7"><span>&copy; 2022 恒宇少年 - 于起宇</span>  鲁ICP备14029686号<br>希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！</p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><form class="searchbox-input-container"><input class="searchbox-input" name="wd" type="text" placeholder="想要查找什么..."></form><a class="searchbox-close" href="javascript:;">×</a></div></div></div><script>(function ($) {
+            $('.searchbox-input-container').on('submit', function (e) {
+                var keyword = $('.searchbox-input[name="wd"]').val();
+                window.location = 'https://www.baidu.com/s?wd=site:blog.minbox.org ' + keyword;
+                return false;
             });
-          }
-        });
-    }
-  });
-</script>-->
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    </script></div>
-                
-                
-
-
-
-
-<!--展示块 布局-->
-<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
-    
-        <div class="card widget">
-  <div class="card-content" style="padding: 0%">
-    <!--个人信息-->
-    <img src="/images/profile2.png" />
-    <!--第三方文章发布平台-->
-    <div class="article-platform">
-      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
-            width="25" /></a></span>
-      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
-            width="25" /></a></span>
-      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
-            src="/images/juejin-logo.svg" width="25" /></a></span>
-      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
-            src="/images/思否.png" width="25" /></a></span>
-      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
-            src="/images/知乎.svg" width="25" /></a></span>
-      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
-            width="25" /></a></span>
-      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
-            width="25" /></a></span>
-    </div>
-  </div>
-</div>
-    
-        <!--热门文章列表，在文章详情显示，首页不显示-->
-
-<div class="card widget">
-  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
-    
-    
-    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        fish终端快速切换JDK版本
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        OAuth2 始终获取新的令牌
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        将OSM数据导入MySQL
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/redis-geo-practice.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        了解Redis Geo范围查询
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        Spring Security密码加密方式
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        使用GitHub Actions发布Jar到Maven Central
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-
-  </div>
-</div>
-
-    
-        
-
-
-<div class="card widget">
-  <div class="card-content" style="padding: 0">
-    <a href="/apiboot-all-articles.html" target="_blank">
-      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
-    </a>
-  </div>
-</div>
-
-
-    
-        
-
-
-<div class="card widget" style="margin-top: 1rem;">
-
-  <div class="card-content" style="padding: 0">
-
-    <a href="http://gk.link/a/10f7u" target="_blank">
-      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
-    </a>
-
-  </div>
-
-</div>
-
-
-    
-        <!--学习专题列表-->
-
-
-  <div class="card widget" id="topic">
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-1-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v1.x 基础教程</p>
-
-            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-2-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v2.x 基础教程</p>
-
-            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-cloud.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-cloud-all-articles.html" target="_blank">
-            <p class="title">SpringCloud 基础教程</p>
-
-            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/api-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/apiboot-all-articles.html" target="_blank">
-            <p class="title">ApiBoot 基础教程</p>
-
-            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/技术杂谈.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/technical-talk.html" target="_blank">
-            <p class="title">技术杂谈</p>
-
-            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-</div>
-<script src="/js/lay/modules/jquery.js"></script>
-<script>
-  var scrollTop = $("#topic").offset().top;
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > scrollTop) {
-      $("#topic").addClass("quoteSticky");
-      $("#profile").show();
-    } else {
-      $("#topic").removeClass("quoteSticky");
-      $("#profile").hide();
-    }
-  });
-</script>
-
-
-    
-    
-</div>
-
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-  <div class="container">
-    <div class="level">
-      <div class="level-start has-text-centered-mobile">
-        <p class="is-size-7">
-          &copy; 2018 - 2022
-          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
-          <br />
-          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
-        </p>
-      </div>
-      <div class="level-end">
-        
-      </div>
-    </div>
-  </div>
-</footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("zh-CN");</script>
-
-<script>
-var IcarusThemeSettings = {
-    article: {
-        highlight: {
-            clipboard: true,
-            fold: 'unfolded'
-        }
-    }
-};
-</script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-
-
-
-    
-    
-    
-    <script src="/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
-
-
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="回到顶端" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/js/back-to-top.js" defer></script>
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-
-
-<script src="/js/main.js" defer></script>
-
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
-            },
-            CONTENT_URL: '/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
-    
-</body>
-</html>
+        })(jQuery);
+        (function (document, $) {
+            $(document).on('click', '.navbar-main .search', function () {
+                $('.searchbox').toggleClass('show');
+            }).on('click', '.searchbox .searchbox-mask', function () {
+                $('.searchbox').removeClass('show');
+            }).on('click', '.searchbox-close', function () {
+                $('.searchbox').removeClass('show');
+            });
+        })(document, jQuery);</script></body></html>

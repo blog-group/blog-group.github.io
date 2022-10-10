@@ -8,8 +8,6 @@ https://blog.minbox.org/oauth2-always-create-token.html
 https://blog.minbox.org/import-osm-data-into-mysql.html
 https://blog.minbox.org/redis-geo-practice.html
 https://blog.minbox.org/spring-security-flexible-password-encoder.html
-https://blog.minbox.org/message-pipe-release-1-0-2.html
-https://blog.minbox.org/message-pipe-release-1-0-1.html
 https://blog.minbox.org/github-action-publish-jar-to-maven-central.html
 https://blog.minbox.org/github-action-getting-started.html
 https://blog.minbox.org/mp4-convert-to-gif.html
@@ -18,3 +16,5 @@ https://blog.minbox.org/spring-cloud-gateway-not-compatible.html
 https://blog.minbox.org/spring-boot-basic-packaging-webjars.html
 https://blog.minbox.org/spring-boot-basic-configure-binding-away.html
 https://blog.minbox.org/interview-strategy.html
+https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html
+https://blog.minbox.org/spring-boot-basic-placeholders-in-config-file.html

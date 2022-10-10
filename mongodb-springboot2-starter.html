@@ -1,277 +1,66 @@
-<!DOCTYPE html>
-<html  lang="zh">
-<head>
-    <meta charset="utf-8" />
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>SpringBoot2.x使用MongoDB存储数据 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="msapplication-TileImage" content="/images/favicon.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="SpringBoot2.x使用MongoDB存储数据"><meta property="og:type" content="blog"><meta property="og:title" content="SpringBoot2.x使用MongoDB存储数据"><meta property="og:url" content="https://blog.minbox.org/mongodb-springboot2-starter.html"><meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta property="og:description" content="SpringBoot2.x使用MongoDB存储数据"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.minbox.org/img/og_image.png"><meta property="article:published_time" content="2019-09-29T17:43:16.000Z"><meta property="article:modified_time" content="2022-10-10T09:22:37.794Z"><meta property="article:author" content="恒宇少年 - 于起宇"><meta property="article:tag" content="SpringBoot"><meta property="article:tag" content="MongoDB"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://blog.minbox.org/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.minbox.org/mongodb-springboot2-starter.html"},"headline":"SpringBoot2.x使用MongoDB存储数据","image":["https://blog.minbox.org/img/og_image.png"],"datePublished":"2019-09-29T17:43:16.000Z","dateModified":"2022-10-10T09:22:37.794Z","author":{"@type":"Person","name":"恒宇少年 - 于起宇"},"publisher":{"@type":"Organization","name":"程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客","logo":{"@type":"ImageObject","url":"https://blog.minbox.org/images/avatar.png"}},"description":"SpringBoot2.x使用MongoDB存储数据"}</script><link rel="canonical" href="https://blog.minbox.org/mongodb-springboot2-starter.html"><link rel="icon" href="/images/favicon.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
 
-<meta name="generator" content="Hexo 3.9.0" />
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
 
-<title>SpringBoot2.x使用MongoDB存储数据 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
-
-
-    <meta name="description" content="SpringBoot2.x使用MongoDB存储数据">
-<meta name="keywords" content="SpringCloud,SpringBoot,恒宇少年,微服务,mongodb">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot2.x使用MongoDB存储数据">
-<meta property="og:url" content="https://blog.minbox.org/mongodb-springboot2-starter.html">
-<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
-<meta property="og:description" content="SpringBoot2.x使用MongoDB存储数据">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
-<meta property="og:updated_time" content="2022-09-29T04:18:51.347Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot2.x使用MongoDB存储数据">
-<meta name="twitter:description" content="SpringBoot2.x使用MongoDB存储数据">
-<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
-
-
-
-
-
-
-
-<link rel="icon" href="/images/favicon.jpg">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
-
-
-    
-    
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
-
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
-
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/css/back-to-top.css">
-
-
-    
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-127746557-1');
-</script>
-
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-
-<link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="is-2-column">
-    <nav class="navbar navbar-main">
-  <div class="container">
-    <div class="navbar-brand is-flex-center">
-      <a class="navbar-item navbar-logo" href="/">
-        <div class="logo"></div>
-        <span class="site_title">恒宇少年 - 于起宇</span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      
-      <div class="navbar-start nav-link">
-        
-        <a class="navbar-item"
-          href="/interview-strategy.html" target="_blank">面试攻略</a>
-        
-        <a class="navbar-item"
-          href="/welfare/" target="_blank">签到送书</a>
-        
-        <a class="navbar-item"
-          href="/geektime/" target="_blank">推荐课程</a>
-        
-        <a class="navbar-item"
-          href="/opensource/" target="_blank">我的开源</a>
-        
-        <a class="navbar-item"
-          href="/openbooks/" target="_blank">免费书籍</a>
-        
-        <a class="navbar-item"
-          href="/years/2019.html" target="_blank">我的2019</a>
-        
-        <a class="navbar-item"
-          href="/archives/" target="_blank">归档</a>
-        
-      </div>
-      
-      <div class="navbar-end">
-        
-        
-        
-        <a class="navbar-item search" title="搜索" href="javascript:;">
-          <i class="fas fa-search"></i>
-        </a>
-        
-      </div>
-    </div>
-  </div>
-</nav>
-    
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
-<div id="container">
-  
-  <div class="card" style="margin-bottom: 10px">
-    
-    <div class="card-content article ">
-      <!--文章标题-->
-      
-      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-        
-        <span class="article_title">SpringBoot2.x使用MongoDB存储数据</span>
-        
-      </h1>
-      <!--完全自定义页面显示的访问次数-->
-      
-      
-      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
-        <div class="level-left">
-          <!--文章类型-->
-          
-          
-          
-          <span
-            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
-            原创</span>
-          
-          
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--发布时间-->
-          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
-          &nbsp;
-          <span class="article-meta-element">2019-09-29</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--作者-->
-          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
-
-          <span class="article-meta-element">于起宇</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--目录列表-->
-          
-          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
-          &nbsp;
-          <div class="level-item article-meta-element">
-            <!--读取config.yml文件内的目录配置-->
-            
-            
-              
-                
-                  <!--跳转文章目录地址-->
-                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
-                
-              
-                
-              
-                
-              
-                
-              
-            
-          </div>
-          
-          <!--不蒜子统计阅读量-->
-          <!--
-          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
-            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
-          </span>
-          -->
-        </div>
-      </div>
-      
-      
-      <!--推荐阅读 - 新闻-->
-      
-      
-      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
-        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
-      </div>
-      
-      
-      <!--文章内容-->
-      <div class="content">
-        <p><code>MongoDB</code>在企业级项目中一般用于存储文档信息、图片资源等，<code>MongoDB</code>的内容完全是以 <code>JSON</code>字符串的形式进行存储的，所以我们在获取数据时通过简单的 <code>反序列化</code>就可以完成与项目内的实体类转换，不过这个过程是自动的，不需要我们手动进行反序列化处理。</p>
-<a id="more"></a>
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28">  <p class="site_title">恒宇少年 - 于起宇</p></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/interview-strategy.html">面试攻略</a><a class="navbar-item" href="/geektime/">推荐课程</a><a class="navbar-item" href="/opensource/">我的开源</a><a class="navbar-item" href="/openbooks/">免费书籍</a><a class="navbar-item" href="/archives/">时间轴</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile"><span class="article_title">SpringBoot2.x使用MongoDB存储数据</span></h1><div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px"><div class="level-left"><span style="float: left;padding: 1px 4px 1px 4px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">原创</span>    <img src="/images/date_time.png" style="width: 27px;" title="发布时间"> <span class="article-meta-element">2019-09-29</span>    <img src="/images/author.svg" style="width: 23px" title="文章作者"> <span class="article-meta-element">于起宇</span>    <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表">  <a class="category-link article-meta-element" href="/categories/MongoDB/">MongoDB </a></div></div><div style="height: 50px;padding-top: 10px;vertical-align: middle;"><a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a></div><br><div class="content"><p><code>MongoDB</code>在企业级项目中一般用于存储文档信息、图片资源等，<code>MongoDB</code>的内容完全是以 <code>JSON</code>字符串的形式进行存储的，所以我们在获取数据时通过简单的 <code>反序列化</code>就可以完成与项目内的实体类转换，不过这个过程是自动的，不需要我们手动进行反序列化处理。</p>
+<span id="more"></span>
 
 <h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><p>完成简单的<code>SpringBoot</code>与<code>MongoDB</code>的自动化整合，让我们像是使用<code>spring-data-jpa</code>的形式来完成<code>MongoDB</code>的数据操作。</p>
 <h1 id="准备MongDB"><a href="#准备MongDB" class="headerlink" title="准备MongDB"></a>准备MongDB</h1><p>我们使用<code>MongoDB</code>官方提供的安装方式进行安装，下面是对应系统的官方安装文档：</p>
 <ol>
-<li><a href="https://docs.mongodb.com/manual/administration/install-on-linux/" target="_blank" rel="noopener">Linux下安装MongoDB</a></li>
-<li><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/" target="_blank" rel="noopener">Windows下安装MongoDB</a></li>
-<li><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/" target="_blank" rel="noopener">OSX下安装MongoDB</a><h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3>我们需要创建一个用户，用于本章的使用，如果你是<code>OSX</code>系统，只需要打开终端输入<code>mongo</code>命令就可以进入<code>MongoDB</code>的管理界面。<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1. 创建数据库</span><br><span class="line">使用 use test; 命令可以创建一个名为`test`的数据库</span><br><span class="line">2. 创建数据库所有者角色的用户</span><br><span class="line">db.createUser(</span><br><span class="line">   &#123;</span><br><span class="line">     user: &quot;test&quot;,</span><br><span class="line">     pwd: &quot;123456&quot;,</span><br><span class="line">     roles: [ &#123; role: &quot;dbOwner&quot;, db: &quot;test&quot; &#125; ]</span><br><span class="line">   &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-</li>
+<li><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/administration/install-on-linux/">Linux下安装MongoDB</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/">Windows下安装MongoDB</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/">OSX下安装MongoDB</a></li>
 </ol>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><p>我们需要创建一个用户，用于本章的使用，如果你是<code>OSX</code>系统，只需要打开终端输入<code>mongo</code>命令就可以进入<code>MongoDB</code>的管理界面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1. 创建数据库</span><br><span class="line">使用 use test; 命令可以创建一个名为`test`的数据库</span><br><span class="line">2. 创建数据库所有者角色的用户</span><br><span class="line">db.createUser(</span><br><span class="line">   &#123;</span><br><span class="line">     user: &quot;test&quot;,</span><br><span class="line">     pwd: &quot;123456&quot;,</span><br><span class="line">     roles: [ &#123; role: &quot;dbOwner&quot;, db: &quot;test&quot; &#125; ]</span><br><span class="line">   &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <p>用户创建完成后就可以进行本章的编码了，环境有了之后我们接下来需要进行环境的连接进行操作数据。</p>
 <hr>
 <h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>我们使用<code>IDEA</code>创建一个新的<code>SpringBoot</code>项目，在<code>pom.xml</code>配置文件内添加我们本章所需要的依赖，如下所示：</p>
-<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--mongodb依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-data-mongodb<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--lombok依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">optional</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">optional</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--fastjson依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>fastjson<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.44<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--测试依赖--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--mongodb依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-mongodb<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--lombok依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--fastjson依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.44<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--测试依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>根据<code>mongodb</code>的依赖我们可以看到<code>Spring</code>家族式的设计，把所有操作数据的依赖都进行归类到<code>spring-boot-starter-data-xxx</code>下，我们比较常用到的如：<code>spring-boot-starter-data-jpa</code>、<code>spring-boot-starter-data-redis</code>等。</p>
 <hr>
 <h3 id="MongoRepository"><a href="#MongoRepository" class="headerlink" title="MongoRepository"></a>MongoRepository</h3><p><code>spring-boot-starter-data-mongodb</code>确实采用了跟<code>spring-boot-starter-data-jpa</code>同样的方式来完成接口代理类的生成，并且提供了一些常用的单个对象操作的公共方法，<code>MongoRepository</code>接口作用与<code>JPARepository</code>一致，继承了该接口的<code>业务数据接口</code>就可以提供一个被<code>Spring IOC</code>托管的代理实现类，这样我们在注入<code>业务数据接口</code>时就会完成代理实现类的注入。<br>废话不多说了，下面我们直接来创建一个名为<code>CustomerRepository</code>的数据接口，该接口继承<code>MongoRepository&lt;T,PK&gt;</code>，如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 客户数据接口</span></span><br><span class="line"><span class="hljs-comment"> * 继承自MongoRepository接口</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="hljs-comment"> * ===============================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2018/3/28</span></span><br><span class="line"><span class="hljs-comment"> * Time：下午7:41</span></span><br><span class="line"><span class="hljs-comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="hljs-comment"> * ================================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CustomerRepository</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">MongoRepository</span>&lt;<span class="hljs-title">Customer</span>, <span class="hljs-title">String</span>&gt; </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 客户数据接口</span></span><br><span class="line"><span class="comment"> * 继承自MongoRepository接口</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>：于起宇 &lt;br/&gt;</span></span><br><span class="line"><span class="comment"> * ===============================</span></span><br><span class="line"><span class="comment"> * Created with IDEA.</span></span><br><span class="line"><span class="comment"> * Date：2018/3/28</span></span><br><span class="line"><span class="comment"> * Time：下午7:41</span></span><br><span class="line"><span class="comment"> * 简书：http://www.jianshu.com/u/092df3f77bca</span></span><br><span class="line"><span class="comment"> * ================================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">CustomerRepository</span> <span class="keyword">extends</span> <span class="title class_">MongoRepository</span>&lt;Customer, String&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>MongoRepository &lt;T,PK&gt;</code>同样也是采用了两个泛型参数，<br><code>T</code>：实体类类型。<br><code>PK</code>：<code>T</code>实体类内的主键类型，如：String。</p>
 <hr>
-<h4 id="自定义实体类"><a href="#自定义实体类" class="headerlink" title="自定义实体类"></a>自定义实体类</h4><p>我们在<code>CustomerRepository</code>接口内使用了<code>Customer</code>实体类作为泛型参数，下面我们简单创建<code>Customer</code>实体类，内容如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@Data</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Customer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 客户编号</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Id</span></span><br><span class="line">    <span class="hljs-keyword">public</span> String id;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 客户名称</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> String firstName;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 客户姓氏</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">public</span> String lastName;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Customer</span><span class="hljs-params">(String firstName, String lastName)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">this</span>.firstName = firstName;</span><br><span class="line">        <span class="hljs-keyword">this</span>.lastName = lastName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h4 id="自定义实体类"><a href="#自定义实体类" class="headerlink" title="自定义实体类"></a>自定义实体类</h4><p>我们在<code>CustomerRepository </code>接口内使用了<code>Customer</code>实体类作为泛型参数，下面我们简单创建<code>Customer</code>实体类，内容如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Customer</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 客户编号</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">public</span> String id;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 客户名称</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> String firstName;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 客户姓氏</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> String lastName;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Customer</span><span class="params">(String firstName, String lastName)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.firstName = firstName;</span><br><span class="line">        <span class="built_in">this</span>.lastName = lastName;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>同样我们需要通过<code>@Id</code>注解进行设置主键，不过这个主键的值是<code>MongoDB</code>自动生成的，生成的主键值是具有唯一性的。</p>
 <hr>
 <h3 id="添加配置"><a href="#添加配置" class="headerlink" title="添加配置"></a>添加配置</h3><p>代码已经准备好了，我们只需要添加<code>MongoDB</code>的一些配置信息就大功告成了，下面我们需要在<code>application.yml</code>配置文件内添加如下配置：</p>
-<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">  <span class="hljs-attr">application:</span></span><br><span class="line">    <span class="hljs-attr">name:</span> <span class="hljs-string">spring-boot-mongodb</span></span><br><span class="line">  <span class="hljs-attr">data:</span></span><br><span class="line">    <span class="hljs-attr">mongodb:</span></span><br><span class="line">      <span class="hljs-attr">uri:</span> <span class="hljs-string">mongodb://localhost/test</span></span><br><span class="line">      <span class="hljs-attr">username:</span> <span class="hljs-string">test</span></span><br><span class="line">      <span class="hljs-attr">password:</span> <span class="hljs-number">123456</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">spring-boot-mongodb</span></span><br><span class="line">  <span class="attr">data:</span></span><br><span class="line">    <span class="attr">mongodb:</span></span><br><span class="line">      <span class="attr">uri:</span> <span class="string">mongodb://localhost/test</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">test</span></span><br><span class="line">      <span class="attr">password:</span> <span class="number">123456</span></span><br></pre></td></tr></table></figure>
 <p>在上面配置的<code>uri</code>内的<code>test</code>即为数据库的名称，<code>username</code>配置我们自定义的用户名称，<code>password</code>配置为自定义用户设置的密码。</p>
 <p>上面我们的代码已经全部编写完成，接下来我们需要进行测试，来查看我们的<code>CustomerRepository</code>是否已经生效.</p>
 <hr>
 <h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>我们使用<code>CommandLineRunner</code>接口进行简单的项目运行后就执行<code>Customer</code>文档内的数据操作，修改<code>Chapter51Application</code>入口类，添加<code>CommandLineRunner</code>接口的实现，如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 程序入口类</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@SpringBootApplication</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Chapter51Application</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CommandLineRunner</span> </span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * logger instance</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">static</span> Logger logger = LoggerFactory.getLogger(Chapter51Application<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 客户数据接口注入</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> CustomerRepository repository;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(Chapter51Application<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">args</span>)</span>;</span><br><span class="line">        logger.info(<span class="hljs-string">"【【【【【SpringBoot整合Mongodb启动完成.】】】】】"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">(String... args)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// 删除全部</span></span><br><span class="line">        repository.deleteAll();</span><br><span class="line">        <span class="hljs-comment">// 添加一条数据</span></span><br><span class="line">        repository.save(<span class="hljs-keyword">new</span> Customer(<span class="hljs-string">"于"</span>, <span class="hljs-string">"起宇"</span>));</span><br><span class="line">        <span class="hljs-comment">// 查询全部</span></span><br><span class="line">        logger.info(JSON.toJSONString(repository.findAll()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 程序入口类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> yuqiyu</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Chapter51Application</span> <span class="keyword">implements</span> <span class="title class_">CommandLineRunner</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * logger instance</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(Chapter51Application.class);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 客户数据接口注入</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> CustomerRepository repository;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(Chapter51Application.class, args);</span><br><span class="line">        logger.info(<span class="string">&quot;【【【【【SpringBoot整合Mongodb启动完成.】】】】】&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">(String... args)</span> &#123;</span><br><span class="line">        <span class="comment">// 删除全部</span></span><br><span class="line">        repository.deleteAll();</span><br><span class="line">        <span class="comment">// 添加一条数据</span></span><br><span class="line">        repository.save(<span class="keyword">new</span> <span class="title class_">Customer</span>(<span class="string">&quot;于&quot;</span>, <span class="string">&quot;起宇&quot;</span>));</span><br><span class="line">        <span class="comment">// 查询全部</span></span><br><span class="line">        logger.info(JSON.toJSONString(repository.findAll()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在<code>run</code>方法内</p>
 <ol>
 <li>删除了<code>Customer</code>文档内的全部内容</li>
@@ -279,595 +68,84 @@
 <li>查询出本次保存的数据内容</li>
 </ol>
 <p>下面我们来运行下程序查看控制台的效果，如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#123;&quot;firstName&quot;:&quot;于&quot;,&quot;id&quot;:&quot;5ad4be1cab73ac0bdc23bd9a&quot;,&quot;lastName&quot;:&quot;起宇&quot;&#125;]</span><br><span class="line">【【【【【SpringBoot整合Mongodb启动完成.】】】】】</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#123;&quot;firstName&quot;:&quot;于&quot;,&quot;id&quot;:&quot;5ad4be1cab73ac0bdc23bd9a&quot;,&quot;lastName&quot;:&quot;起宇&quot;&#125;]</span><br><span class="line">【【【【【SpringBoot整合Mongodb启动完成.】】】】】</span><br></pre></td></tr></table></figure>
 <p>已经可以正常的输出了<code>MongoDB</code>我们添加到文档内的数据，在上面说到了<code>id</code>这个字段的特殊性，这是个分布式唯一性的字段值，是一个短板的<code>md5</code>格式的字符串。</p>
 <hr>
 <h3 id="修改默认扫描路径"><a href="#修改默认扫描路径" class="headerlink" title="修改默认扫描路径"></a>修改默认扫描路径</h3><p>如果你不打算使用<code>SpringBoot</code>默认的扫描路径（<code>SpringBoot</code>默认扫描<code>XxxApplication</code>类的同级以及所有子级的<code>package</code>）可以通过<code>@EnableMongoRepositories</code>注解配置<code>basePackages</code>属性完成自定义的<code>MongoDB</code>的<code>MongoRepository</code>实现类的扫描，如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">@SpringBootApplication</span></span><br><span class="line"><span class="hljs-meta">@EnableMongoRepositories</span>(basePackages = <span class="hljs-string">"com.hengyu.chapter51"</span>)</span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Chapter51Application</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CommandLineRunner</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableMongoRepositories(basePackages = &quot;com.hengyu.chapter51&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Chapter51Application</span> <span class="keyword">implements</span> <span class="title class_">CommandLineRunner</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本章简单的讲解了<code>SpringBoot</code>集成<code>MongoDB</code>，它与<code>JPA</code>有着同样的数据操作方式，数据接口通过继承<code>MongoRepository</code>就可以让我们可以使用与<code>JPA</code>相同的方法进行操作<code>MongoDB</code>文档内的数据，从而减少了学习的成本。</p>
-
-        
-        <!--原创-->
-        
-        <div class="alert alert-success">
-          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
-              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
-              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
-        </div>
-        
-        <!--转载标注-->
-        
-        
-      </div>
-      <!--文章标签-->
-      
-      <div class="level is-size-7">
-        <div class="level-start">
-          <div class="level-item">
-            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
-            <a class="has-link-grey-link" href="/tags/MongoDB/">MongoDB</a>, <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-    </div>
-  </div>
-
-  
-  
-
-  
-  <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-      <!--上一篇-->
-      
-      <div class="level-start">
-        <a class="level level-item has-link-grey  article-nav-prev"
-          href="/mongodb-springboot2-rest.html">
-          <i class="level-item fas fa-chevron-left"></i>
-          <span class="level-item">上一篇：SpringBoot2.x使用MongoDB的Rest端点访问数据</span>
-        </a>
-      </div>
-      
-      <!--下一篇-->
-      
-      <div class="level-end">
-        <a class="level level-item has-link-grey  article-nav-next"
-          href="/redis-springboot2-starter.html">
-          <span class="level-item">下一篇：SpringBoot2.x使用Redis缓存数据</span>
-          <i class="level-item fas fa-chevron-right"></i>
-        </a>
-      </div>
-      
-    </div>
-  </div>
-  
-  <!--评论-->
-  
-  <div class="card">
-    <div class="card-content">
-      <h3 class="title is-5 has-text-weight-normal">评论</h3>
-      
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: 'c6d9a9addcb940fef06f',
-        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
-        id: '73eba3379e02df79ebed483639b0c79d',
-        repo: 'learning-tutorials',
-        owner: 'hengboy',
-        admin: "hengboy",
-        createIssueManually: false,
-        distractionFreeMode: false
-    })
-    gitalk.render('comment-container')
-</script>
-
-    </div>
-  </div>
-  
-  
-</div>
-
-<script src="/js/readmore.js" type="text/javascript"></script>
-<script>
-  const btw = new BTWPlugin();
-  btw.init({
-    id: 'container',
-    blogId: '10034-1569731208928-426',
-    name: '恒宇少年',
-    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
-    keyword: 'free',
-  });
-</script>
-
-<!--<script src="/js/layui.js"></script>
-<script>
-  layui.use(['layer'], function () {
-    var layer = layui.layer;
-    var isShowOnce = localStorage.getItem('isShowHistory');
-    if (!isShowOnce) {
-      localStorage.setItem('isShowHistory',true);
-      layer.open({
-          type: 1
-          ,title: false //不显示标题栏
-          ,closeBtn: false
-          ,area: '350px;'
-          ,shade: 0.8
-          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-          ,btn: ['带朕去看看', '给朕退下']
-          ,btnAlign: 'c'
-          ,moveType: 1 //拖拽模式，0或者1
-          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
-          ,success: function(layero){
-            var btn = layero.find('.layui-layer-btn');
-            btn.find('.layui-layer-btn0').attr({
-              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
-              ,target: '_blank'
+</div><div class="article-licensing box"><div class="licensing-title"><p>SpringBoot2.x使用MongoDB存储数据</p><p><a href="https://blog.minbox.org/mongodb-springboot2-starter.html">https://blog.minbox.org/mongodb-springboot2-starter.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>恒宇少年 - 于起宇</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-29</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">文章标签：</span><a class="link-muted mr-2" rel="tag" href="/tags/SpringBoot/">SpringBoot</a><a class="link-muted mr-2" rel="tag" href="/tags/MongoDB/">MongoDB</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/mongodb-springboot2-rest.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">SpringBoot2.x使用MongoDB的Rest端点访问数据</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/redis-springboot2-starter.html"><span class="level-item">SpringBoot2.x使用Redis缓存数据</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "73eba3379e02df79ebed483639b0c79d",
+            repo: "learning-tutorials",
+            owner: "hengboy",
+            clientID: "c6d9a9addcb940fef06f",
+            clientSecret: "0c209053121187dd685030c01cfa10a7861afd27",
+            admin: "hengboy",
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content" style="padding:0px"><img src="/images/profile2.png"><div class="article-platform"><span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png" width="25"></a></span><span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg" width="25"></a></span><span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img src="/images/juejin-logo.svg" width="25"></a></span><span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img src="/images/思否.png" width="25"></a></span><span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img src="/images/知乎.svg" width="25"></a></span><span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png" width="25"></a></span><span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg" width="25"></a></span></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://apiboot.minbox.org" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">ApiBoot官网</span></span><span class="level-right"><span class="level-item tag">apiboot.minbox.org</span></span></a></li></ul></div></div></div><div class="card widget"><div><h1 class="widget-title">热门文章</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div class="card-content" style="font-size: 14px;font-weight:500;line-height: 35px"><p class="p-overflow"><a href="fish-fast-switch-jdk.html"><img src="/images/hot.gif"> fish终端快速切换JDK版本</a></p><p class="p-overflow"><a href="oauth2-always-create-token.html"><img src="/images/hot.gif"> OAuth2 始终获取新的令牌</a></p><p class="p-overflow"><a href="import-osm-data-into-mysql.html"><img src="/images/hot.gif"> 将OSM数据导入MySQL</a></p><p class="p-overflow"><a href="redis-geo-practice.html"><img src="/images/hot.gif"> 了解Redis Geo范围查询</a></p><p class="p-overflow"><a href="spring-security-flexible-password-encoder.html"><img src="/images/hot.gif"> Spring Security密码加密方式</a></p><p class="p-overflow"><a href="github-action-publish-jar-to-maven-central.html"><img src="/images/hot.gif"> 使用GitHub Actions发布Jar到Maven Central</a></p></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="/apiboot-all-articles.html" target="_blank"><img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="http://gk.link/a/10f7u" target="_blank"><img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget"><div><h1 class="widget-title">热门专题</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v1.x 基础教程"></div><div class="project-right"><a href="/spring-boot-1-x-articles.html" target="_blank"><p class="title">SpringBoot v1.x 基础教程</p><p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v2.x 基础教程"></div><div class="project-right"><a href="/spring-boot-2-x-articles.html" target="_blank"><p class="title">SpringBoot v2.x 基础教程</p><p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-cloud.svg" alt="SpringCloud 基础教程"></div><div class="project-right"><a href="/spring-cloud-all-articles.html" target="_blank"><p class="title">SpringCloud 基础教程</p><p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/api-boot.svg" alt="ApiBoot 基础教程"></div><div class="project-right"><a href="/apiboot-all-articles.html" target="_blank"><p class="title">ApiBoot 基础教程</p><p class="desc">新一代的接口服务落地解决方案，助力你成为服务架构师.</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/技术杂谈.svg" alt="技术杂谈"></div><div class="project-right"><a href="/technical-talk.html" target="_blank"><p class="title">技术杂谈</p><p class="desc">涵盖Java基础，数据结构与算法，Linux，代码规范，消息队列...</p></a></div></li></ul></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/ApiBoot/"><span class="level-start"><span class="level-item">ApiBoot</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/MongoDB/"><span class="level-start"><span class="level-item">MongoDB</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Quartz/"><span class="level-start"><span class="level-item">Quartz</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/SpringBoot/"><span class="level-start"><span class="level-item">SpringBoot</span></span><span class="level-end"><span class="level-item tag">39</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">地图服务</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">微服务</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">技术杂谈</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><span class="level-start"><span class="level-item">消息队列</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28"></a><p class="is-size-7"><span>&copy; 2022 恒宇少年 - 于起宇</span>  鲁ICP备14029686号<br>希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！</p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><form class="searchbox-input-container"><input class="searchbox-input" name="wd" type="text" placeholder="想要查找什么..."></form><a class="searchbox-close" href="javascript:;">×</a></div></div></div><script>(function ($) {
+            $('.searchbox-input-container').on('submit', function (e) {
+                var keyword = $('.searchbox-input[name="wd"]').val();
+                window.location = 'https://www.baidu.com/s?wd=site:blog.minbox.org ' + keyword;
+                return false;
             });
-          }
-        });
-    }
-  });
-</script>-->
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    </script></div>
-                
-                
-
-
-
-
-<!--展示块 布局-->
-<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
-    
-        <div class="card widget">
-  <div class="card-content" style="padding: 0%">
-    <!--个人信息-->
-    <img src="/images/profile2.png" />
-    <!--第三方文章发布平台-->
-    <div class="article-platform">
-      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
-            width="25" /></a></span>
-      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
-            width="25" /></a></span>
-      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
-            src="/images/juejin-logo.svg" width="25" /></a></span>
-      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
-            src="/images/思否.png" width="25" /></a></span>
-      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
-            src="/images/知乎.svg" width="25" /></a></span>
-      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
-            width="25" /></a></span>
-      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
-            width="25" /></a></span>
-    </div>
-  </div>
-</div>
-    
-        <!--热门文章列表，在文章详情显示，首页不显示-->
-
-<div class="card widget">
-  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
-    
-    
-    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        fish终端快速切换JDK版本
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        OAuth2 始终获取新的令牌
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        将OSM数据导入MySQL
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/redis-geo-practice.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        了解Redis Geo范围查询
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        Spring Security密码加密方式
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        使用GitHub Actions发布Jar到Maven Central
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-
-  </div>
-</div>
-
-    
-        
-
-
-<div class="card widget">
-  <div class="card-content" style="padding: 0">
-    <a href="/apiboot-all-articles.html" target="_blank">
-      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
-    </a>
-  </div>
-</div>
-
-
-    
-        
-
-
-<div class="card widget" style="margin-top: 1rem;">
-
-  <div class="card-content" style="padding: 0">
-
-    <a href="http://gk.link/a/10f7u" target="_blank">
-      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
-    </a>
-
-  </div>
-
-</div>
-
-
-    
-        <!--学习专题列表-->
-
-
-  <div class="card widget" id="topic">
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-1-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v1.x 基础教程</p>
-
-            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-2-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v2.x 基础教程</p>
-
-            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-cloud.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-cloud-all-articles.html" target="_blank">
-            <p class="title">SpringCloud 基础教程</p>
-
-            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/api-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/apiboot-all-articles.html" target="_blank">
-            <p class="title">ApiBoot 基础教程</p>
-
-            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/技术杂谈.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/technical-talk.html" target="_blank">
-            <p class="title">技术杂谈</p>
-
-            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-</div>
-<script src="/js/lay/modules/jquery.js"></script>
-<script>
-  var scrollTop = $("#topic").offset().top;
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > scrollTop) {
-      $("#topic").addClass("quoteSticky");
-      $("#profile").show();
-    } else {
-      $("#topic").removeClass("quoteSticky");
-      $("#profile").hide();
-    }
-  });
-</script>
-
-
-    
-    
-</div>
-
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-  <div class="container">
-    <div class="level">
-      <div class="level-start has-text-centered-mobile">
-        <p class="is-size-7">
-          &copy; 2018 - 2022
-          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
-          <br />
-          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
-        </p>
-      </div>
-      <div class="level-end">
-        
-      </div>
-    </div>
-  </div>
-</footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("zh-CN");</script>
-
-<script>
-var IcarusThemeSettings = {
-    article: {
-        highlight: {
-            clipboard: true,
-            fold: 'unfolded'
-        }
-    }
-};
-</script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-
-
-
-    
-    
-    
-    <script src="/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
-
-
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="回到顶端" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/js/back-to-top.js" defer></script>
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-
-
-<script src="/js/main.js" defer></script>
-
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
-            },
-            CONTENT_URL: '/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
-    
-</body>
-</html>
+        })(jQuery);
+        (function (document, $) {
+            $(document).on('click', '.navbar-main .search', function () {
+                $('.searchbox').toggleClass('show');
+            }).on('click', '.searchbox .searchbox-mask', function () {
+                $('.searchbox').removeClass('show');
+            }).on('click', '.searchbox-close', function () {
+                $('.searchbox').removeClass('show');
+            });
+        })(document, jQuery);</script></body></html>

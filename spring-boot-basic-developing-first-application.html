@@ -1,253 +1,47 @@
-<!DOCTYPE html>
-<html  lang="zh">
-<head>
-    <meta charset="utf-8" />
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="msapplication-TileImage" content="/images/favicon.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序"><meta property="og:type" content="blog"><meta property="og:title" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序"><meta property="og:url" content="https://blog.minbox.org/spring-boot-basic-developing-first-application.html"><meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta property="og:description" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.minbox.org/img/og_image.png"><meta property="article:published_time" content="2020-02-18T14:34:58.000Z"><meta property="article:modified_time" content="2022-10-10T09:22:37.798Z"><meta property="article:author" content="恒宇少年 - 于起宇"><meta property="article:tag" content="SpringBoot2.x"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://blog.minbox.org/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.minbox.org/spring-boot-basic-developing-first-application.html"},"headline":"SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序","image":["https://blog.minbox.org/img/og_image.png"],"datePublished":"2020-02-18T14:34:58.000Z","dateModified":"2022-10-10T09:22:37.798Z","author":{"@type":"Person","name":"恒宇少年 - 于起宇"},"publisher":{"@type":"Organization","name":"程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客","logo":{"@type":"ImageObject","url":"https://blog.minbox.org/images/avatar.png"}},"description":"SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序"}</script><link rel="canonical" href="https://blog.minbox.org/spring-boot-basic-developing-first-application.html"><link rel="icon" href="/images/favicon.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
 
-<meta name="generator" content="Hexo 3.9.0" />
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
 
-<title>SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
-
-
-    <meta name="description" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序">
-<meta name="keywords" content="springboot,应用程序,恒宇少年">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序">
-<meta property="og:url" content="https://blog.minbox.org/spring-boot-basic-developing-first-application.html">
-<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
-<meta property="og:description" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
-<meta property="og:updated_time" content="2022-09-29T04:18:51.351Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序">
-<meta name="twitter:description" content="SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序">
-<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
-
-
-
-
-
-
-
-<link rel="icon" href="/images/favicon.jpg">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
-
-
-    
-    
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
-
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
-
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/css/back-to-top.css">
-
-
-    
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-127746557-1');
-</script>
-
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-
-<link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="is-2-column">
-    <nav class="navbar navbar-main">
-  <div class="container">
-    <div class="navbar-brand is-flex-center">
-      <a class="navbar-item navbar-logo" href="/">
-        <div class="logo"></div>
-        <span class="site_title">恒宇少年 - 于起宇</span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      
-      <div class="navbar-start nav-link">
-        
-        <a class="navbar-item"
-          href="/interview-strategy.html" target="_blank">面试攻略</a>
-        
-        <a class="navbar-item"
-          href="/welfare/" target="_blank">签到送书</a>
-        
-        <a class="navbar-item"
-          href="/geektime/" target="_blank">推荐课程</a>
-        
-        <a class="navbar-item"
-          href="/opensource/" target="_blank">我的开源</a>
-        
-        <a class="navbar-item"
-          href="/openbooks/" target="_blank">免费书籍</a>
-        
-        <a class="navbar-item"
-          href="/years/2019.html" target="_blank">我的2019</a>
-        
-        <a class="navbar-item"
-          href="/archives/" target="_blank">归档</a>
-        
-      </div>
-      
-      <div class="navbar-end">
-        
-        
-        
-        <a class="navbar-item search" title="搜索" href="javascript:;">
-          <i class="fas fa-search"></i>
-        </a>
-        
-      </div>
-    </div>
-  </div>
-</nav>
-    
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
-<div id="container">
-  
-  <div class="card" style="margin-bottom: 10px">
-    
-    <div class="card-content article ">
-      <!--文章标题-->
-      
-      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-        
-        <span class="article_title">SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序</span>
-        
-      </h1>
-      <!--完全自定义页面显示的访问次数-->
-      
-      
-      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
-        <div class="level-left">
-          <!--文章类型-->
-          
-          
-          
-          <span
-            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
-            原创</span>
-          
-          
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--发布时间-->
-          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
-          &nbsp;
-          <span class="article-meta-element">2020-02-18</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--作者-->
-          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
-
-          <span class="article-meta-element">于起宇</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--目录列表-->
-          
-          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
-          &nbsp;
-          <div class="level-item article-meta-element">
-            <!--读取config.yml文件内的目录配置-->
-            
-            
-              
-                
-                  <!--跳转文章目录地址-->
-                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
-                
-              
-                
-              
-                
-              
-                
-              
-            
-          </div>
-          
-          <!--不蒜子统计阅读量-->
-          <!--
-          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
-            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
-          </span>
-          -->
-        </div>
-      </div>
-      
-      
-      <!--推荐阅读 - 新闻-->
-      
-      
-      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
-        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
-      </div>
-      
-      
-      <!--文章内容-->
-      <div class="content">
-        <p><strong>本篇文章是2020年的开篇之作，希望能带给你不一样的阅读体验，能带给给你清晰的阅读思路。</strong></p>
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28">  <p class="site_title">恒宇少年 - 于起宇</p></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/interview-strategy.html">面试攻略</a><a class="navbar-item" href="/geektime/">推荐课程</a><a class="navbar-item" href="/opensource/">我的开源</a><a class="navbar-item" href="/openbooks/">免费书籍</a><a class="navbar-item" href="/archives/">时间轴</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile"><span class="article_title">SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序</span></h1><div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px"><div class="level-left"><span style="float: left;padding: 1px 4px 1px 4px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">原创</span>    <img src="/images/date_time.png" style="width: 27px;" title="发布时间"> <span class="article-meta-element">2020-02-18</span>    <img src="/images/author.svg" style="width: 23px" title="文章作者"> <span class="article-meta-element">于起宇</span>    <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表">  <a class="category-link article-meta-element" href="/categories/SpringBoot/">SpringBoot </a></div></div><div style="height: 50px;padding-top: 10px;vertical-align: middle;"><a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a></div><br><div class="content"><p><strong>本篇文章是2020年的开篇之作，希望能带给你不一样的阅读体验，能带给给你清晰的阅读思路。</strong></p>
 <h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
-<li><a href="http://blog.yuqiyu.com/spring-boot-2-x-articles.html" target="_blank" rel="noopener">SpringBoot2.x 教程汇总</a></li>
+<li><a href="http://blog.minbox.org/spring-boot-2-x-articles.html">SpringBoot2.x 教程汇总</a></li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 
 <blockquote>
 <p>我从2017年开始一直在编写相关<code>SpringBoot</code>的技术点使用文章，最开始的版本还是<code>1.5.2</code>，由于<code>SpringBoot</code>大小版本发布的速度太快，旧版本的文章与新版本<code>SpringBoot</code>构建的应用程序存在一定差异，为了让大家更快的入门学习<code>SpringBoot 2.x</code>版本的核心技术点，会陆续更新一些基础知识点的使用文章，基础文章命名格式：<code>SpringBoot2.x基础篇：文章标题...</code></p>
 </blockquote>
 <h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p><code>SpringBoot2.x</code>版本是基于<code>Java8</code>来编写的，由于内部使用到了很多新的特性，比如：<code>lambda</code>、<code>interface default</code>…，所以需要本地开发环境有<code>java8</code>的支持。</p>
 <p>不仅如此，<code>SpringBoot</code>在构建项目时默认使用<code>Maven</code>方式，所以本地开发环境也需要配置<code>Maven</code>环境变量。</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~ java -version</span><br><span class="line">java version <span class="hljs-string">"1.8.0_231"</span></span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_231-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.231-b11, mixed mode)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~ java -version</span><br><span class="line">java version <span class="string">&quot;1.8.0_231&quot;</span></span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_231-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.231-b11, mixed mode)</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ mvn -version          </span><br><span class="line">Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)</span><br><span class="line">Maven home: /Users/yuqiyu/soft/apache-maven-3.6.3</span><br><span class="line">Java version: 1.8.0_231, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="hljs-string">"mac os x"</span>, version: <span class="hljs-string">"10.15.3"</span>, arch: <span class="hljs-string">"x86_64"</span>, family: <span class="hljs-string">"mac"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ mvn -version          </span><br><span class="line">Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)</span><br><span class="line">Maven home: /Users/yuqiyu/soft/apache-maven-3.6.3</span><br><span class="line">Java version: 1.8.0_231, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/jdk1.8.0_231.jdk/Contents/Home/jre</span><br><span class="line">Default locale: zh_CN, platform encoding: UTF-8</span><br><span class="line">OS name: <span class="string">&quot;mac os x&quot;</span>, version: <span class="string">&quot;10.15.3&quot;</span>, <span class="built_in">arch</span>: <span class="string">&quot;x86_64&quot;</span>, family: <span class="string">&quot;mac&quot;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>如果你更喜欢使用<code>Gradle</code>方式来构建项目，那么本地就应该<code>Gradle</code>环境变量支持。</p>
@@ -273,618 +67,115 @@
 <ol>
 <li>使用IDEA内置的<code>Spring Initializr</code>创建（File -&gt; New -&gt; Project -&gt; Spring Initializr）</li>
 <li>创建基础Maven项目，修改<code>pom.xml</code>添加<code>spring-boot-parent</code></li>
-<li>访问 <a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io</a> 选择依赖后，生成项目并下载</li>
+<li>访问 <a target="_blank" rel="noopener" href="https://start.spring.io/">https://start.spring.io</a> 选择依赖后，生成项目并下载</li>
 </ol>
-<p>我一般采用第一种方式，这种方式比较快捷，<code>IDEA</code>内部也是通过 <a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io</a> 这种方式将构建完成的<code>zip</code>文件下载到本地然后解压，所以你需要连接互联网才可以创建项目。</p>
+<p>我一般采用第一种方式，这种方式比较快捷，<code>IDEA</code>内部也是通过 <a target="_blank" rel="noopener" href="https://start.spring.io/">https://start.spring.io</a> 这种方式将构建完成的<code>zip</code>文件下载到本地然后解压，所以你需要连接互联网才可以创建项目。</p>
 <p>新项目的<code>pom.xml</code>文件内容如下所示：</p>
-<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0"</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.4.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">relativePath</span>/&gt;</span> <span class="hljs-comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.minbox.chapter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>developing-first-application<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>developing-first-application<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">description</span>&gt;</span>Demo project for Spring Boot<span class="hljs-tag">&lt;/<span class="hljs-name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>1.8<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">    <span class="hljs-comment">&lt;!--添加你需要的依赖...--&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.junit.vintage<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">          <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit-vintage-engine<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span></span><br><span class="line">    <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.4.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.minbox.chapter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>developing-first-application<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>developing-first-application<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--添加你需要的依赖...--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.vintage<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-vintage-engine<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 
 <p>新创建的应用程序会自动<code>spring-boot-parent</code>作为<code>父项目</code>，这时我们就拥有了一些默认的资源配置、默认的依赖版本、默认的插件配置等。</p>
 <h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>当我们需要项目支持<code>SpringMvc</code>时，修改<code>pom.xml</code>文件在添加如下依赖即可：</p>
-<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">  <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>添加<code>spring-boot-starter-web</code>依赖主要目的是演示<code>Hello World</code>输出。</p>
 </blockquote>
 <h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><p>要完成我们的应用程序，需要来创建一个<code>Java</code>文件，默认情况下<code>Maven</code>会编译<code>src/main/java</code>目录下的源代码，我们可以在该目录下创建<code>package</code>来进行源代码的归类，下面我们来创建一个名为<code>HelloExample.java</code>的示例源代码文件，内容如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> org.minbox.chapter.developing.first.application;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Hello Example</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@GetMapping</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">hello</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"hello world!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.minbox.chapter.developing.first.application;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Hello Example</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloExample</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hello</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 
 <h2 id="运行示例"><a href="#运行示例" class="headerlink" title="运行示例"></a>运行示例</h2><p>到目前为止，我们新创建的应用程序应该可以工作了，由于应用程序的<code>parent</code>是<code>spring-boot-parent</code>，因此具有了可运行的内置环境支持，可以直接通过命令行的方式来运行应用程序，当我们在应用程序的根目录下输入命令：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ developing-first-application ✗ mvn spring-boot:run</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~ developing-first-application ✗ mvn spring-boot:run</span><br></pre></td></tr></table></figure>
 
-<p>通过<code>Maven</code>会将相关的依赖下载到本地默认的依赖仓库（~/.m2/repository），编译通过后自动运行项目，控制台输出如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> .   ____          _            __ _ _</span><br><span class="line"> /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</span><br><span class="line">( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</span><br><span class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</span><br><span class="line">  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</span><br><span class="line"> =========|_|==============|___/=/_/_/_/</span><br><span class="line"> :: Spring Boot ::  (v2.2.4.RELEASE)</span><br><span class="line">....... . . .</span><br><span class="line">....... . . . (log output here)</span><br><span class="line">....... . . .</span><br><span class="line">........ Started Example in 2.222 seconds (JVM running for 6.514)</span><br></pre></td></tr></table></figure>
+<p>通过<code>Maven</code>会将相关的依赖下载到本地默认的依赖仓库（~&#x2F;.m2&#x2F;repository），编译通过后自动运行项目，控制台输出如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> .   ____          _            __ _ _</span><br><span class="line"> /\\ / ___&#x27;_ __ _ _(_)_ __  __ _ \ \ \ \</span><br><span class="line">( ( )\___ | &#x27;_ | &#x27;_| | &#x27;_ \/ _` | \ \ \ \</span><br><span class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</span><br><span class="line">  &#x27;  |____| .__|_| |_|_| |_\__, | / / / /</span><br><span class="line"> =========|_|==============|___/=/_/_/_/</span><br><span class="line"> :: Spring Boot ::  (v2.2.4.RELEASE)</span><br><span class="line">....... . . .</span><br><span class="line">....... . . . (log output here)</span><br><span class="line">....... . . .</span><br><span class="line">........ Started Example in 2.222 seconds (JVM running for 6.514)</span><br></pre></td></tr></table></figure>
 
-<p>当看到上面的内容在控制台输出时，我们的应用程序就已经运行成功了，在浏览器访问 <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 地址可以看到如下输出内容：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world!</span><br></pre></td></tr></table></figure>
+
+
+<p>当看到上面的内容在控制台输出时，我们的应用程序就已经运行成功了，在浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 地址可以看到如下输出内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello world!</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>如果想要退出运行中的应用程序，使用<code>Crtl + C</code>。</p>
 </blockquote>
 <h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>如果您喜欢本篇文章请为源码仓库点个<code>Star</code>，谢谢！！！<br>本篇文章示例源码可以通过以下途径获取，源码分支为<code>2.x</code>，目录为<code>developing-first-application</code>：</p>
 <ul>
-<li>Gitee：<a href="https://gitee.com/hengboy/spring-boot-chapter" target="_blank" rel="noopener">https://gitee.com/hengboy/spring-boot-chapter</a></li>
+<li>Gitee：<a target="_blank" rel="noopener" href="https://gitee.com/hengboy/spring-boot-chapter">https://gitee.com/hengboy/spring-boot-chapter</a></li>
 </ul>
-
-        
-        <!--原创-->
-        
-        <div class="alert alert-success">
-          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
-              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
-              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
-        </div>
-        
-        <!--转载标注-->
-        
-        
-      </div>
-      <!--文章标签-->
-      
-      <div class="level is-size-7">
-        <div class="level-start">
-          <div class="level-item">
-            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
-            <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-    </div>
-  </div>
-
-  
-  
-
-  
-  <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-      <!--上一篇-->
-      
-      <div class="level-start">
-        <a class="level level-item has-link-grey  article-nav-prev"
-          href="/spring-boot-basic-packaging-executable-jar.html">
-          <i class="level-item fas fa-chevron-left"></i>
-          <span class="level-item">上一篇：SpringBoot2.x基础篇：将应用程序打包为可执行Jar</span>
-        </a>
-      </div>
-      
-      <!--下一篇-->
-      
-      <div class="level-end">
-        <a class="level level-item has-link-grey  article-nav-next"
-          href="/apiboot-quartz-job-storage-away.html">
-          <span class="level-item">下一篇：分布式任务调度框架ApiBoot Quartz内的两种任务存储方式</span>
-          <i class="level-item fas fa-chevron-right"></i>
-        </a>
-      </div>
-      
-    </div>
-  </div>
-  
-  <!--评论-->
-  
-  <div class="card">
-    <div class="card-content">
-      <h3 class="title is-5 has-text-weight-normal">评论</h3>
-      
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: 'c6d9a9addcb940fef06f',
-        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
-        id: 'd776aaa3f33f2fef96dc3c6a8a2682f9',
-        repo: 'learning-tutorials',
-        owner: 'hengboy',
-        admin: "hengboy",
-        createIssueManually: false,
-        distractionFreeMode: false
-    })
-    gitalk.render('comment-container')
-</script>
-
-    </div>
-  </div>
-  
-  
-</div>
-
-<script src="/js/readmore.js" type="text/javascript"></script>
-<script>
-  const btw = new BTWPlugin();
-  btw.init({
-    id: 'container',
-    blogId: '10034-1569731208928-426',
-    name: '恒宇少年',
-    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
-    keyword: 'free',
-  });
-</script>
-
-<!--<script src="/js/layui.js"></script>
-<script>
-  layui.use(['layer'], function () {
-    var layer = layui.layer;
-    var isShowOnce = localStorage.getItem('isShowHistory');
-    if (!isShowOnce) {
-      localStorage.setItem('isShowHistory',true);
-      layer.open({
-          type: 1
-          ,title: false //不显示标题栏
-          ,closeBtn: false
-          ,area: '350px;'
-          ,shade: 0.8
-          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-          ,btn: ['带朕去看看', '给朕退下']
-          ,btnAlign: 'c'
-          ,moveType: 1 //拖拽模式，0或者1
-          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
-          ,success: function(layero){
-            var btn = layero.find('.layui-layer-btn');
-            btn.find('.layui-layer-btn0').attr({
-              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
-              ,target: '_blank'
+</div><div class="article-licensing box"><div class="licensing-title"><p>SpringBoot2.x基础篇：开发你的第一个SpringBoot应用程序</p><p><a href="https://blog.minbox.org/spring-boot-basic-developing-first-application.html">https://blog.minbox.org/spring-boot-basic-developing-first-application.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>恒宇少年 - 于起宇</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2020-02-18</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">文章标签：</span><a class="link-muted mr-2" rel="tag" href="/tags/SpringBoot2-x/">SpringBoot2.x</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/spring-boot-basic-packaging-executable-jar.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">SpringBoot2.x基础篇：将应用程序打包为可执行Jar</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/apiboot-quartz-job-storage-away.html"><span class="level-item">分布式任务调度框架ApiBoot Quartz内的两种任务存储方式</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "d776aaa3f33f2fef96dc3c6a8a2682f9",
+            repo: "learning-tutorials",
+            owner: "hengboy",
+            clientID: "c6d9a9addcb940fef06f",
+            clientSecret: "0c209053121187dd685030c01cfa10a7861afd27",
+            admin: "hengboy",
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content" style="padding:0px"><img src="/images/profile2.png"><div class="article-platform"><span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png" width="25"></a></span><span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg" width="25"></a></span><span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img src="/images/juejin-logo.svg" width="25"></a></span><span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img src="/images/思否.png" width="25"></a></span><span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img src="/images/知乎.svg" width="25"></a></span><span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png" width="25"></a></span><span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg" width="25"></a></span></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://apiboot.minbox.org" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">ApiBoot官网</span></span><span class="level-right"><span class="level-item tag">apiboot.minbox.org</span></span></a></li></ul></div></div></div><div class="card widget"><div><h1 class="widget-title">热门文章</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div class="card-content" style="font-size: 14px;font-weight:500;line-height: 35px"><p class="p-overflow"><a href="fish-fast-switch-jdk.html"><img src="/images/hot.gif"> fish终端快速切换JDK版本</a></p><p class="p-overflow"><a href="oauth2-always-create-token.html"><img src="/images/hot.gif"> OAuth2 始终获取新的令牌</a></p><p class="p-overflow"><a href="import-osm-data-into-mysql.html"><img src="/images/hot.gif"> 将OSM数据导入MySQL</a></p><p class="p-overflow"><a href="redis-geo-practice.html"><img src="/images/hot.gif"> 了解Redis Geo范围查询</a></p><p class="p-overflow"><a href="spring-security-flexible-password-encoder.html"><img src="/images/hot.gif"> Spring Security密码加密方式</a></p><p class="p-overflow"><a href="github-action-publish-jar-to-maven-central.html"><img src="/images/hot.gif"> 使用GitHub Actions发布Jar到Maven Central</a></p></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="/apiboot-all-articles.html" target="_blank"><img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="http://gk.link/a/10f7u" target="_blank"><img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget"><div><h1 class="widget-title">热门专题</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v1.x 基础教程"></div><div class="project-right"><a href="/spring-boot-1-x-articles.html" target="_blank"><p class="title">SpringBoot v1.x 基础教程</p><p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v2.x 基础教程"></div><div class="project-right"><a href="/spring-boot-2-x-articles.html" target="_blank"><p class="title">SpringBoot v2.x 基础教程</p><p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-cloud.svg" alt="SpringCloud 基础教程"></div><div class="project-right"><a href="/spring-cloud-all-articles.html" target="_blank"><p class="title">SpringCloud 基础教程</p><p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/api-boot.svg" alt="ApiBoot 基础教程"></div><div class="project-right"><a href="/apiboot-all-articles.html" target="_blank"><p class="title">ApiBoot 基础教程</p><p class="desc">新一代的接口服务落地解决方案，助力你成为服务架构师.</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/技术杂谈.svg" alt="技术杂谈"></div><div class="project-right"><a href="/technical-talk.html" target="_blank"><p class="title">技术杂谈</p><p class="desc">涵盖Java基础，数据结构与算法，Linux，代码规范，消息队列...</p></a></div></li></ul></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/ApiBoot/"><span class="level-start"><span class="level-item">ApiBoot</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/MongoDB/"><span class="level-start"><span class="level-item">MongoDB</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Quartz/"><span class="level-start"><span class="level-item">Quartz</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/SpringBoot/"><span class="level-start"><span class="level-item">SpringBoot</span></span><span class="level-end"><span class="level-item tag">39</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">地图服务</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">微服务</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">技术杂谈</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><span class="level-start"><span class="level-item">消息队列</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28"></a><p class="is-size-7"><span>&copy; 2022 恒宇少年 - 于起宇</span>  鲁ICP备14029686号<br>希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！</p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><form class="searchbox-input-container"><input class="searchbox-input" name="wd" type="text" placeholder="想要查找什么..."></form><a class="searchbox-close" href="javascript:;">×</a></div></div></div><script>(function ($) {
+            $('.searchbox-input-container').on('submit', function (e) {
+                var keyword = $('.searchbox-input[name="wd"]').val();
+                window.location = 'https://www.baidu.com/s?wd=site:blog.minbox.org ' + keyword;
+                return false;
             });
-          }
-        });
-    }
-  });
-</script>-->
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    </script></div>
-                
-                
-
-
-
-
-<!--展示块 布局-->
-<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
-    
-        <div class="card widget">
-  <div class="card-content" style="padding: 0%">
-    <!--个人信息-->
-    <img src="/images/profile2.png" />
-    <!--第三方文章发布平台-->
-    <div class="article-platform">
-      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
-            width="25" /></a></span>
-      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
-            width="25" /></a></span>
-      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
-            src="/images/juejin-logo.svg" width="25" /></a></span>
-      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
-            src="/images/思否.png" width="25" /></a></span>
-      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
-            src="/images/知乎.svg" width="25" /></a></span>
-      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
-            width="25" /></a></span>
-      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
-            width="25" /></a></span>
-    </div>
-  </div>
-</div>
-    
-        <!--热门文章列表，在文章详情显示，首页不显示-->
-
-<div class="card widget">
-  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
-    
-    
-    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        fish终端快速切换JDK版本
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        OAuth2 始终获取新的令牌
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        将OSM数据导入MySQL
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/redis-geo-practice.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        了解Redis Geo范围查询
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        Spring Security密码加密方式
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        使用GitHub Actions发布Jar到Maven Central
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-
-  </div>
-</div>
-
-    
-        
-
-
-<div class="card widget">
-  <div class="card-content" style="padding: 0">
-    <a href="/apiboot-all-articles.html" target="_blank">
-      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
-    </a>
-  </div>
-</div>
-
-
-    
-        
-
-
-<div class="card widget" style="margin-top: 1rem;">
-
-  <div class="card-content" style="padding: 0">
-
-    <a href="http://gk.link/a/10f7u" target="_blank">
-      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
-    </a>
-
-  </div>
-
-</div>
-
-
-    
-        <!--学习专题列表-->
-
-
-  <div class="card widget" id="topic">
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-1-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v1.x 基础教程</p>
-
-            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-2-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v2.x 基础教程</p>
-
-            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-cloud.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-cloud-all-articles.html" target="_blank">
-            <p class="title">SpringCloud 基础教程</p>
-
-            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/api-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/apiboot-all-articles.html" target="_blank">
-            <p class="title">ApiBoot 基础教程</p>
-
-            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/技术杂谈.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/technical-talk.html" target="_blank">
-            <p class="title">技术杂谈</p>
-
-            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-</div>
-<script src="/js/lay/modules/jquery.js"></script>
-<script>
-  var scrollTop = $("#topic").offset().top;
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > scrollTop) {
-      $("#topic").addClass("quoteSticky");
-      $("#profile").show();
-    } else {
-      $("#topic").removeClass("quoteSticky");
-      $("#profile").hide();
-    }
-  });
-</script>
-
-
-    
-    
-</div>
-
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-  <div class="container">
-    <div class="level">
-      <div class="level-start has-text-centered-mobile">
-        <p class="is-size-7">
-          &copy; 2018 - 2022
-          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
-          <br />
-          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
-        </p>
-      </div>
-      <div class="level-end">
-        
-      </div>
-    </div>
-  </div>
-</footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("zh-CN");</script>
-
-<script>
-var IcarusThemeSettings = {
-    article: {
-        highlight: {
-            clipboard: true,
-            fold: 'unfolded'
-        }
-    }
-};
-</script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-
-
-
-    
-    
-    
-    <script src="/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
-
-
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="回到顶端" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/js/back-to-top.js" defer></script>
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-
-
-<script src="/js/main.js" defer></script>
-
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
-            },
-            CONTENT_URL: '/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
-    
-</body>
-</html>
+        })(jQuery);
+        (function (document, $) {
+            $(document).on('click', '.navbar-main .search', function () {
+                $('.searchbox').toggleClass('show');
+            }).on('click', '.searchbox .searchbox-mask', function () {
+                $('.searchbox').removeClass('show');
+            }).on('click', '.searchbox-close', function () {
+                $('.searchbox').removeClass('show');
+            });
+        })(document, jQuery);</script></body></html>

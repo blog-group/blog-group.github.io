@@ -1,241 +1,35 @@
-<!DOCTYPE html>
-<html  lang="zh">
-<head>
-    <meta charset="utf-8" />
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Quartz分布式集群多节点实现任务漂移 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="msapplication-TileImage" content="/images/favicon.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Quartz分布式集群多节点实现任务漂移"><meta property="og:type" content="blog"><meta property="og:title" content="Quartz分布式集群多节点实现任务漂移"><meta property="og:url" content="https://blog.minbox.org/quartz-cluster-node.html"><meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta property="og:description" content="Quartz分布式集群多节点实现任务漂移"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.minbox.org/img/og_image.png"><meta property="article:published_time" content="2019-09-29T15:55:24.000Z"><meta property="article:modified_time" content="2022-10-10T09:22:37.798Z"><meta property="article:author" content="恒宇少年 - 于起宇"><meta property="article:tag" content="ApiBoot"><meta property="article:tag" content="Quartz"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://blog.minbox.org/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.minbox.org/quartz-cluster-node.html"},"headline":"Quartz分布式集群多节点实现任务漂移","image":["https://blog.minbox.org/img/og_image.png"],"datePublished":"2019-09-29T15:55:24.000Z","dateModified":"2022-10-10T09:22:37.798Z","author":{"@type":"Person","name":"恒宇少年 - 于起宇"},"publisher":{"@type":"Organization","name":"程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客","logo":{"@type":"ImageObject","url":"https://blog.minbox.org/images/avatar.png"}},"description":"Quartz分布式集群多节点实现任务漂移"}</script><link rel="canonical" href="https://blog.minbox.org/quartz-cluster-node.html"><link rel="icon" href="/images/favicon.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
 
-<meta name="generator" content="Hexo 3.9.0" />
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
 
-<title>Quartz分布式集群多节点实现任务漂移 - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
-
-
-    <meta name="description" content="Quartz分布式集群多节点实现任务漂移">
-<meta name="keywords" content="quartz,springboot,恒宇少年">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Quartz分布式集群多节点实现任务漂移">
-<meta property="og:url" content="https://blog.minbox.org/quartz-cluster-node.html">
-<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
-<meta property="og:description" content="Quartz分布式集群多节点实现任务漂移">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
-<meta property="og:updated_time" content="2022-09-29T04:18:51.347Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Quartz分布式集群多节点实现任务漂移">
-<meta name="twitter:description" content="Quartz分布式集群多节点实现任务漂移">
-<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
-
-
-
-
-
-
-
-<link rel="icon" href="/images/favicon.jpg">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
-
-
-    
-    
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
-
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
-
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/css/back-to-top.css">
-
-
-    
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-127746557-1');
-</script>
-
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-
-<link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="is-2-column">
-    <nav class="navbar navbar-main">
-  <div class="container">
-    <div class="navbar-brand is-flex-center">
-      <a class="navbar-item navbar-logo" href="/">
-        <div class="logo"></div>
-        <span class="site_title">恒宇少年 - 于起宇</span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      
-      <div class="navbar-start nav-link">
-        
-        <a class="navbar-item"
-          href="/interview-strategy.html" target="_blank">面试攻略</a>
-        
-        <a class="navbar-item"
-          href="/welfare/" target="_blank">签到送书</a>
-        
-        <a class="navbar-item"
-          href="/geektime/" target="_blank">推荐课程</a>
-        
-        <a class="navbar-item"
-          href="/opensource/" target="_blank">我的开源</a>
-        
-        <a class="navbar-item"
-          href="/openbooks/" target="_blank">免费书籍</a>
-        
-        <a class="navbar-item"
-          href="/years/2019.html" target="_blank">我的2019</a>
-        
-        <a class="navbar-item"
-          href="/archives/" target="_blank">归档</a>
-        
-      </div>
-      
-      <div class="navbar-end">
-        
-        
-        
-        <a class="navbar-item search" title="搜索" href="javascript:;">
-          <i class="fas fa-search"></i>
-        </a>
-        
-      </div>
-    </div>
-  </div>
-</nav>
-    
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
-<div id="container">
-  
-  <div class="card" style="margin-bottom: 10px">
-    
-    <div class="card-content article ">
-      <!--文章标题-->
-      
-      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-        
-        <span class="article_title">Quartz分布式集群多节点实现任务漂移</span>
-        
-      </h1>
-      <!--完全自定义页面显示的访问次数-->
-      
-      
-      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
-        <div class="level-left">
-          <!--文章类型-->
-          
-          
-          
-          <span
-            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
-            原创</span>
-          
-          
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--发布时间-->
-          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
-          &nbsp;
-          <span class="article-meta-element">2019-09-29</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--作者-->
-          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
-
-          <span class="article-meta-element">于起宇</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--目录列表-->
-          
-          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
-          &nbsp;
-          <div class="level-item article-meta-element">
-            <!--读取config.yml文件内的目录配置-->
-            
-            
-              
-                
-                  <!--跳转文章目录地址-->
-                  <a class="category-link" href="/spring-boot-all-articles.html">SpringBoot</a>&nbsp;
-                
-              
-                
-              
-                
-              
-                
-              
-            
-          </div>
-          
-          <!--不蒜子统计阅读量-->
-          <!--
-          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
-            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
-          </span>
-          -->
-        </div>
-      </div>
-      
-      
-      <!--推荐阅读 - 新闻-->
-      
-      
-      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
-        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
-      </div>
-      
-      
-      <!--文章内容-->
-      <div class="content">
-        <p>在上一章中我们已经完成了任务的持久化，当我们创建一个任务时任务会被<code>quartz</code>定时任务框架自动持久化到数据库，我们采用的是<code>SpringBoot</code>项目托管的<code>dataSource</code>来完成的数据源提供，当然也可以使用<code>quartz</code>内部配置数据源方式，我们的标题既然是提到了定时任务的分布式多节点，那么怎么才算是多节点呢？当有节点故障或者手动停止运行后是否可以自动漂移任务到可用的分布式节点呢？</p>
-<a id="more"></a>
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28">  <p class="site_title">恒宇少年 - 于起宇</p></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/interview-strategy.html">面试攻略</a><a class="navbar-item" href="/geektime/">推荐课程</a><a class="navbar-item" href="/opensource/">我的开源</a><a class="navbar-item" href="/openbooks/">免费书籍</a><a class="navbar-item" href="/archives/">时间轴</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile"><span class="article_title">Quartz分布式集群多节点实现任务漂移</span></h1><div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px"><div class="level-left"><span style="float: left;padding: 1px 4px 1px 4px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">原创</span>    <img src="/images/date_time.png" style="width: 27px;" title="发布时间"> <span class="article-meta-element">2019-09-29</span>    <img src="/images/author.svg" style="width: 23px" title="文章作者"> <span class="article-meta-element">于起宇</span>    <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表">  <a class="category-link article-meta-element" href="/categories/Quartz/">Quartz </a></div></div><div style="height: 50px;padding-top: 10px;vertical-align: middle;"><a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a></div><br><div class="content"><p>在上一章中我们已经完成了任务的持久化，当我们创建一个任务时任务会被<code>quartz</code>定时任务框架自动持久化到数据库，我们采用的是<code>SpringBoot</code>项目托管的<code>dataSource</code>来完成的数据源提供，当然也可以使用<code>quartz</code>内部配置数据源方式，我们的标题既然是提到了定时任务的分布式多节点，那么怎么才算是多节点呢？当有节点故障或者手动停止运行后是否可以自动漂移任务到可用的分布式节点呢？</p>
+<span id="more"></span>
 <h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><blockquote>
 <ol>
 <li>完成定时任务分布式多节点配置，当单个节点关闭时其他节点自动接管定时任务。</li>
@@ -250,634 +44,113 @@
 <p><code>1. org.quartz.scheduler.instanceId</code> ： 定时任务的实例编号，如果手动指定需要保证每个节点的唯一性，因为<code>quartz</code>不允许出现两个相同<code>instanceId</code>的节点，我们这里指定为<code>Auto</code>就可以了，我们把生成编号的任务交给<code>quartz</code>。</p>
 <p><code>2. org.quartz.jobStore.isClustered</code>： 这个属性才是真正的开启了定时任务的分布式配置，当我们配置为<code>true</code>时<code>quartz</code>框架就会调用<code>ClusterManager</code>来初始化分布式节点。</p>
 <p><code>3. org.quartz.jobStore.clusterCheckinInterval</code>：配置了分布式节点的检查时间间隔，单位：毫秒。<br>下面是<code>quartz.properties</code>配置文件配置信息：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#调度器实例名称</span><br><span class="line">org.quartz.scheduler.instanceName = quartzScheduler</span><br><span class="line"></span><br><span class="line">#调度器实例编号自动生成</span><br><span class="line">org.quartz.scheduler.instanceId = AUTO</span><br><span class="line"></span><br><span class="line">#持久化方式配置</span><br><span class="line">org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX</span><br><span class="line"></span><br><span class="line">#持久化方式配置数据驱动，MySQL数据库</span><br><span class="line">org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span><br><span class="line"></span><br><span class="line">#quartz相关数据表前缀名</span><br><span class="line">org.quartz.jobStore.tablePrefix = QRTZ_</span><br><span class="line"></span><br><span class="line">#开启分布式部署</span><br><span class="line">org.quartz.jobStore.isClustered = true</span><br><span class="line">#配置是否使用</span><br><span class="line">org.quartz.jobStore.useProperties = false</span><br><span class="line"></span><br><span class="line">#分布式节点有效性检查时间间隔，单位：毫秒</span><br><span class="line">org.quartz.jobStore.clusterCheckinInterval = 10000</span><br><span class="line"></span><br><span class="line">#线程池实现类</span><br><span class="line">org.quartz.threadPool.class = org.quartz.simpl.SimpleThreadPool</span><br><span class="line"></span><br><span class="line">#执行最大并发线程数量</span><br><span class="line">org.quartz.threadPool.threadCount = 10</span><br><span class="line"></span><br><span class="line">#线程优先级</span><br><span class="line">org.quartz.threadPool.threadPriority = 5</span><br><span class="line"></span><br><span class="line">#配置为守护线程，设置后任务将不会执行</span><br><span class="line">#org.quartz.threadPool.makeThreadsDaemons=true</span><br><span class="line"></span><br><span class="line">#配置是否启动自动加载数据库内的定时任务，默认true</span><br><span class="line">org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread = true</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调度器实例名称</span></span><br><span class="line"><span class="attr">org.quartz.scheduler.instanceName</span> = <span class="string">quartzScheduler</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#调度器实例编号自动生成</span></span><br><span class="line"><span class="attr">org.quartz.scheduler.instanceId</span> = <span class="string">AUTO</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#持久化方式配置</span></span><br><span class="line"><span class="attr">org.quartz.jobStore.class</span> = <span class="string">org.quartz.impl.jdbcjobstore.JobStoreTX</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#持久化方式配置数据驱动，MySQL数据库</span></span><br><span class="line"><span class="attr">org.quartz.jobStore.driverDelegateClass</span> = <span class="string">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#quartz相关数据表前缀名</span></span><br><span class="line"><span class="attr">org.quartz.jobStore.tablePrefix</span> = <span class="string">QRTZ_</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#开启分布式部署</span></span><br><span class="line"><span class="attr">org.quartz.jobStore.isClustered</span> = <span class="string">true</span></span><br><span class="line"><span class="comment">#配置是否使用</span></span><br><span class="line"><span class="attr">org.quartz.jobStore.useProperties</span> = <span class="string">false</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#分布式节点有效性检查时间间隔，单位：毫秒</span></span><br><span class="line"><span class="attr">org.quartz.jobStore.clusterCheckinInterval</span> = <span class="string">10000</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#线程池实现类</span></span><br><span class="line"><span class="attr">org.quartz.threadPool.class</span> = <span class="string">org.quartz.simpl.SimpleThreadPool</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#执行最大并发线程数量</span></span><br><span class="line"><span class="attr">org.quartz.threadPool.threadCount</span> = <span class="string">10</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#线程优先级</span></span><br><span class="line"><span class="attr">org.quartz.threadPool.threadPriority</span> = <span class="string">5</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#配置为守护线程，设置后任务将不会执行</span></span><br><span class="line"><span class="comment">#org.quartz.threadPool.makeThreadsDaemons=true</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#配置是否启动自动加载数据库内的定时任务，默认true</span></span><br><span class="line"><span class="attr">org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread</span> = <span class="string">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>当我们启动任务节点时，会根据<code>org.quartz.threadPool.threadsInheritContextClassLoaderOfInitializingThread</code>属性配置进行是否自动加载任务，默认<code>true</code>自动加载数据库内的任务到节点。</p>
 <h3 id="测试分布式"><a href="#测试分布式" class="headerlink" title="测试分布式"></a>测试分布式</h3><p>上一章项目节点名称：<code>quartz-cluster-node-first</code><br>本章项目节点名称：<code>quartz-cluster-node-second</code></p>
 <p>由于我们<code>quartz-cluster-node-first</code>的商品库存检查定时任务是每隔30秒执行一次，所以任务除非手动清除否则是不会被清空的，在运行项目测试之前需要将<code>application.yml</code>配置文件的端口号、项目名称修改下，保证<code>quartz-cluster-node-second</code>与<code>quartz-cluster-node-first</code>端口号不一致，可以同时运行，修改后为：</p>
-<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">spring:</span></span><br><span class="line">    <span class="hljs-attr">application:</span></span><br><span class="line">        <span class="hljs-attr">name:</span> <span class="hljs-string">quzrtz-cluster-node-second</span></span><br><span class="line"><span class="hljs-attr">server:</span></span><br><span class="line">  <span class="hljs-attr">port:</span> <span class="hljs-number">8082</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">    <span class="attr">application:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">quzrtz-cluster-node-second</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8082</span></span><br></pre></td></tr></table></figure>
 <p>然后修改相应控制台输出，为了能够区分任务执行者是具体的节点。</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Chapter40Application启动类修改日志输出：</span><br><span class="line">logger.info(&quot;【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】&quot;);</span><br><span class="line"></span><br><span class="line">GoodAddTimer商品添加任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-second，商品添加完成后执行任务，任务时间：&#123;&#125;&quot;,new Date());</span><br><span class="line"></span><br><span class="line">GoodStockCheckTimer商品库存检查任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：&#123;&#125;&quot;,new Date());</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Chapter40Application启动类修改日志输出：</span><br><span class="line">logger.info(&quot;【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】&quot;);</span><br><span class="line"></span><br><span class="line">GoodAddTimer商品添加任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-second，商品添加完成后执行任务，任务时间：&#123;&#125;&quot;,new Date());</span><br><span class="line"></span><br><span class="line">GoodStockCheckTimer商品库存检查任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：&#123;&#125;&quot;,new Date());</span><br></pre></td></tr></table></figure>
 <p>下面我们启动本章项目，查看控制台输出内容，如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:28:39.969  INFO 11048 --- [           main] c.hengyu.chapter39.Chapter40Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】</span><br><span class="line">2017-11-12 10:28:41.930  INFO 11048 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:28:41.959  INFO 11048 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510453719308 started.</span><br><span class="line">2017-11-12 10:28:51.963  INFO 11048 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: detected 1 failed or restarted instances.</span><br><span class="line">2017-11-12 10:28:51.963  INFO 11048 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: Scanning for instance &quot;yuqiyu1510450938654&quot;&apos;s failed in-progress jobs.</span><br><span class="line">2017-11-12 10:28:51.967  INFO 11048 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: ......Freed 1 acquired trigger(s).</span><br><span class="line">2017-11-12 10:29:00.024  INFO 11048 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 10:29:00 CST 2017</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:28:39.969  INFO 11048 --- [           main] c.hengyu.chapter39.Chapter40Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】</span><br><span class="line">2017-11-12 10:28:41.930  INFO 11048 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:28:41.959  INFO 11048 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510453719308 started.</span><br><span class="line">2017-11-12 10:28:51.963  INFO 11048 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: detected 1 failed or restarted instances.</span><br><span class="line">2017-11-12 10:28:51.963  INFO 11048 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: Scanning for instance &quot;yuqiyu1510450938654&quot;&#x27;s failed in-progress jobs.</span><br><span class="line">2017-11-12 10:28:51.967  INFO 11048 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: ......Freed 1 acquired trigger(s).</span><br><span class="line">2017-11-12 10:29:00.024  INFO 11048 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 10:29:00 CST 2017</span><br></pre></td></tr></table></figure>
 <p>可以看到项目启动完成后自动分配的<code>instanceId</code>为<code>yuqiyu1510450938654</code>，生成的规则是当前用户的名称+时间戳。然后<code>ClusterManager</code>分布式管理者自动介入进行扫描是否存在匹配的触发器任务，如果存在则会自动执行任务逻辑，而商品库存检查定时任务确实由<code>quartz-cluster-node-second</code>进行输出的。</p>
 <h3 id="测试任务自动漂移"><a href="#测试任务自动漂移" class="headerlink" title="测试任务自动漂移"></a>测试任务自动漂移</h3><p>下面我们也需要把<code>quartz-cluster-node-first</code>的输出进行修改，如下所示：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Chapter39Application启动类修改日志输出：</span><br><span class="line">logger.info(&quot;【【【【【【定时任务分布式节点 - quartz-cluster-node-first 已启动】】】】】】&quot;);</span><br><span class="line"></span><br><span class="line">GoodAddTimer商品添加任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-first，商品添加完成后执行任务，任务时间：&#123;&#125;&quot;,new Date());</span><br><span class="line"></span><br><span class="line">GoodStockCheckTimer商品库存检查任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-first，执行库存检查定时任务，执行时间：&#123;&#125;&quot;,new Date());</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Chapter39Application启动类修改日志输出：</span><br><span class="line">logger.info(&quot;【【【【【【定时任务分布式节点 - quartz-cluster-node-first 已启动】】】】】】&quot;);</span><br><span class="line"></span><br><span class="line">GoodAddTimer商品添加任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-first，商品添加完成后执行任务，任务时间：&#123;&#125;&quot;,new Date());</span><br><span class="line"></span><br><span class="line">GoodStockCheckTimer商品库存检查任务类修改日志输出：</span><br><span class="line">logger.info(&quot;分布式节点quartz-cluster-node-first，执行库存检查定时任务，执行时间：&#123;&#125;&quot;,new Date());</span><br></pre></td></tr></table></figure>
 <p>接下来我们启动<code>quartz-cluster-node-first</code>，并查看控制台的输出内容：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:34:09.750  INFO 192 --- [           main] c.hengyu.chapter39.Chapter39Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-first 已启动】】】】】】</span><br><span class="line">2017-11-12 10:34:11.690  INFO 192 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:34:11.714  INFO 192 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510454049066 started.</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:34:09.750  INFO 192 --- [           main] c.hengyu.chapter39.Chapter39Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-first 已启动】】】】】】</span><br><span class="line">2017-11-12 10:34:11.690  INFO 192 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:34:11.714  INFO 192 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510454049066 started.</span><br></pre></td></tr></table></figure>
 <p>项目启动完成后，定时节点并没有实例化<code>ClusterManager</code>来完成分布式节点的初始化，因为<code>quartz</code>检测到有其他的节点正在处理任务，这样也是保证了任务执行的唯一性。</p>
 <h4 id="关闭quartz-cluster-node-second"><a href="#关闭quartz-cluster-node-second" class="headerlink" title="关闭quartz-cluster-node-second"></a>关闭quartz-cluster-node-second</h4><p>我们关闭<code>quartz-cluster-node-second</code>运行的项目，预计的目的可以达到<code>quartz-cluster-node-first</code>会自动接管数据库内的任务，完成任务执行的自动漂移，我们来查看<code>quartz-cluster-node-first</code>的控制台输出内容：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:34:09.750  INFO 192 --- [           main] c.hengyu.chapter39.Chapter39Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-first 已启动】】】】】】</span><br><span class="line">2017-11-12 10:34:11.690  INFO 192 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:34:11.714  INFO 192 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510454049066 started.</span><br><span class="line">2017-11-12 10:41:11.793  INFO 192 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: detected 1 failed or restarted instances.</span><br><span class="line">2017-11-12 10:41:11.793  INFO 192 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: Scanning for instance &quot;yuqiyu1510453719308&quot;&apos;s failed in-progress jobs.</span><br><span class="line">2017-11-12 10:41:11.797  INFO 192 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: ......Freed 1 acquired trigger(s).</span><br><span class="line">2017-11-12 10:41:11.834  INFO 192 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-first，执行库存检查定时任务，执行时间：Sun Nov 12 10:41:11 CST 2017</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:34:09.750  INFO 192 --- [           main] c.hengyu.chapter39.Chapter39Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-first 已启动】】】】】】</span><br><span class="line">2017-11-12 10:34:11.690  INFO 192 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:34:11.714  INFO 192 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510454049066 started.</span><br><span class="line">2017-11-12 10:41:11.793  INFO 192 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: detected 1 failed or restarted instances.</span><br><span class="line">2017-11-12 10:41:11.793  INFO 192 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: Scanning for instance &quot;yuqiyu1510453719308&quot;&#x27;s failed in-progress jobs.</span><br><span class="line">2017-11-12 10:41:11.797  INFO 192 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: ......Freed 1 acquired trigger(s).</span><br><span class="line">2017-11-12 10:41:11.834  INFO 192 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-first，执行库存检查定时任务，执行时间：Sun Nov 12 10:41:11 CST 2017</span><br></pre></td></tr></table></figure>
 <p>控制台已经输出了持久的定时任务，输出节点是<code>quartz-cluster-node-first</code>，跟我们预计的一样，节点<code>quartz-cluster-node-first</code>完成了自动接管<code>quartz-cluster-node-second</code>的工作，而这个过程肯定有一段时间间隔，而这个间隔可以修改<code>quartz.properties</code>配置文件内的属性<code>org.quartz.jobStore.clusterCheckinInterval</code>进行调节。</p>
 <h4 id="关闭quartz-cluster-node-first"><a href="#关闭quartz-cluster-node-first" class="headerlink" title="关闭quartz-cluster-node-first"></a>关闭quartz-cluster-node-first</h4><p>我们同样可以测试启动任务节点<code>quartz-cluster-node-second</code>后，再关闭<code>quartz-cluster-node-first</code>任务节点，查看<code>quartz-cluster-node-second</code>控制台的输出内容：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:53:31.010  INFO 3268 --- [           main] c.hengyu.chapter39.Chapter40Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】</span><br><span class="line">2017-11-12 10:53:32.967  INFO 3268 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:53:32.992  INFO 3268 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510455210493 started.</span><br><span class="line">2017-11-12 10:53:52.999  INFO 3268 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: detected 1 failed or restarted instances.</span><br><span class="line">2017-11-12 10:53:52.999  INFO 3268 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: Scanning for instance &quot;yuqiyu1510454049066&quot;&apos;s failed in-progress jobs.</span><br><span class="line">2017-11-12 10:53:53.003  INFO 3268 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: ......Freed 1 acquired trigger(s).</span><br><span class="line">2017-11-12 10:54:00.020  INFO 3268 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 10:54:00 CST 2017</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 10:53:31.010  INFO 3268 --- [           main] c.hengyu.chapter39.Chapter40Application  : 【【【【【【定时任务分布式节点 - quartz-cluster-node-second 已启动】】】】】】</span><br><span class="line">2017-11-12 10:53:32.967  INFO 3268 --- [lerFactoryBean]] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now, after delay of 2 seconds</span><br><span class="line">2017-11-12 10:53:32.992  INFO 3268 --- [lerFactoryBean]] org.quartz.core.QuartzScheduler          : Scheduler schedulerFactoryBean_$_yuqiyu1510455210493 started.</span><br><span class="line">2017-11-12 10:53:52.999  INFO 3268 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: detected 1 failed or restarted instances.</span><br><span class="line">2017-11-12 10:53:52.999  INFO 3268 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: Scanning for instance &quot;yuqiyu1510454049066&quot;&#x27;s failed in-progress jobs.</span><br><span class="line">2017-11-12 10:53:53.003  INFO 3268 --- [_ClusterManager] o.s.s.quartz.LocalDataSourceJobStore     : ClusterManager: ......Freed 1 acquired trigger(s).</span><br><span class="line">2017-11-12 10:54:00.020  INFO 3268 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 10:54:00 CST 2017</span><br></pre></td></tr></table></figure>
 <p>得到的结果是同样可以完成任务的自动漂移。</p>
 <blockquote>
 <p>如果两个节点同时启动，哪个节点先把节点信息注册到数据库就获得了优先执行权。</p>
 </blockquote>
 <h3 id="传递参数到任务"><a href="#传递参数到任务" class="headerlink" title="传递参数到任务"></a>传递参数到任务</h3><p>我们平时在使用任务时，如果是针对性比较强的业务逻辑，肯定需要特定的参数来完成业务逻辑的实现。</p>
 <p>下面我们来模拟商品秒杀的场景，当我们添加商品后自动添加一个商品提前五分钟的秒杀提醒，为关注该商品的用户发送提醒消息。<br>我们在节点<code>quartz-cluster-node-first</code>中添加秒杀提醒任务，如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.hengyu.chapter39.timers;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> org.quartz.JobDataMap;</span><br><span class="line"><span class="hljs-keyword">import</span> org.quartz.JobExecutionContext;</span><br><span class="line"><span class="hljs-keyword">import</span> org.quartz.JobExecutionException;</span><br><span class="line"><span class="hljs-keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.scheduling.quartz.QuartzJobBean;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 商品秒杀提醒定时器</span></span><br><span class="line"><span class="hljs-comment"> * 为关注该秒杀商品的用户进行推送提醒</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> *</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/11/12</span></span><br><span class="line"><span class="hljs-comment"> * Time：9:23</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GoodSecKillRemindTimer</span></span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">extends</span> <span class="hljs-title">QuartzJobBean</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * logback</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-keyword">private</span> Logger logger = LoggerFactory.getLogger(GoodSecKillRemindTimer<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 任务指定逻辑</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> jobExecutionContext</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> JobExecutionException</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">executeInternal</span><span class="hljs-params">(JobExecutionContext jobExecutionContext)</span> <span class="hljs-keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//获取任务详情内的数据集合</span></span><br><span class="line">        JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();</span><br><span class="line">        <span class="hljs-comment">//获取商品编号</span></span><br><span class="line">        Long goodId = dataMap.getLong(<span class="hljs-string">"goodId"</span>);</span><br><span class="line">        </span><br><span class="line">        logger.info(<span class="hljs-string">"分布式节点quartz-cluster-node-first，开始处理秒杀商品：&#123;&#125;，关注用户推送消息."</span>,goodId);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//.../</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hengyu.chapter39.timers;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.quartz.JobDataMap;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionContext;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionException;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.scheduling.quartz.QuartzJobBean;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 商品秒杀提醒定时器</span></span><br><span class="line"><span class="comment"> * 为关注该秒杀商品的用户进行推送提醒</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 恒宇少年</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * Date：2017/11/12</span></span><br><span class="line"><span class="comment"> * Time：9:23</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GoodSecKillRemindTimer</span></span><br><span class="line"><span class="keyword">extends</span> <span class="title class_">QuartzJobBean</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * logback</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(GoodSecKillRemindTimer.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 任务指定逻辑</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> jobExecutionContext</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> JobExecutionException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">executeInternal</span><span class="params">(JobExecutionContext jobExecutionContext)</span> <span class="keyword">throws</span> JobExecutionException &#123;</span><br><span class="line">        <span class="comment">//获取任务详情内的数据集合</span></span><br><span class="line">        <span class="type">JobDataMap</span> <span class="variable">dataMap</span> <span class="operator">=</span> jobExecutionContext.getJobDetail().getJobDataMap();</span><br><span class="line">        <span class="comment">//获取商品编号</span></span><br><span class="line">        <span class="type">Long</span> <span class="variable">goodId</span> <span class="operator">=</span> dataMap.getLong(<span class="string">&quot;goodId&quot;</span>);</span><br><span class="line">        </span><br><span class="line">        logger.info(<span class="string">&quot;分布式节点quartz-cluster-node-first，开始处理秒杀商品：&#123;&#125;，关注用户推送消息.&quot;</span>,goodId);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//.../</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在秒杀提醒任务逻辑中，我们通过获取<code>JobDetail</code>的<code>JobDataMap</code>集合来获取在创建任务的时候传递的参数集合，我们这里约定了<code>goodId</code>为商品的编号，在创建任务的时候传递到<code>JobDataMap</code>内，这样<code>quartz</code>在执行该任务的时候就会自动将参数传递到任务逻辑中，我们也就可以通过<code>JobDataMap</code>获取到对应的参数值。</p>
 <h4 id="设置秒杀提醒任务"><a href="#设置秒杀提醒任务" class="headerlink" title="设置秒杀提醒任务"></a>设置秒杀提醒任务</h4><p>我们找到节点项目<code>quartz-cluster-node-first</code>中的<code>GoodInfoService</code>，编写方法<code>buildGoodSecKillRemindTimer</code>设置秒杀提醒任务，如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 构建商品秒杀提醒定时任务</span></span><br><span class="line"><span class="hljs-comment">     * 设置五分钟后执行</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Exception</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">buildGoodSecKillRemindTimer</span><span class="hljs-params">(Long goodId)</span> <span class="hljs-keyword">throws</span> Exception</span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//任务名称</span></span><br><span class="line">        String name = UUID.randomUUID().toString();</span><br><span class="line">        <span class="hljs-comment">//任务所属分组</span></span><br><span class="line">        String group = GoodSecKillRemindTimer<span class="hljs-class">.<span class="hljs-keyword">class</span>.<span class="hljs-title">getName</span>()</span>;</span><br><span class="line">        <span class="hljs-comment">//秒杀开始时间</span></span><br><span class="line">        <span class="hljs-keyword">long</span> startTime = System.currentTimeMillis() + <span class="hljs-number">1000</span> * <span class="hljs-number">5</span> * <span class="hljs-number">60</span>;</span><br><span class="line">        JobDetail jobDetail = JobBuilder</span><br><span class="line">                .newJob(GoodSecKillRemindTimer<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span></span><br><span class="line"><span class="hljs-class">                .<span class="hljs-title">withIdentity</span>(<span class="hljs-title">name</span>,<span class="hljs-title">group</span>)</span></span><br><span class="line"><span class="hljs-class">                .<span class="hljs-title">build</span>()</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//设置任务传递商品编号参数</span></span><br><span class="line">        jobDetail.getJobDataMap().put(<span class="hljs-string">"goodId"</span>,goodId);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//创建任务触发器</span></span><br><span class="line">        Trigger trigger = TriggerBuilder.newTrigger().withIdentity(name,group).startAt(<span class="hljs-keyword">new</span> Date(startTime)).build();</span><br><span class="line">        <span class="hljs-comment">//将触发器与任务绑定到调度器内</span></span><br><span class="line">        scheduler.scheduleJob(jobDetail,trigger);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们模拟秒杀提醒时间是添加商品后的5分钟，我们通过调用<code>jobDetail</code>实例的<code>getJobDataMap</code>方法就可以获取该任务数据集合，直接调用<code>put</code>方法就可以进行设置指定key的值，该集合继承了<code>StringKeyDirtyFlagMap</code>并且实现了<code>Serializable</code>序列化，因为需要将数据序列化到数据库的<code>qrtz_job_details</code>表内。<br>修改保存商品方法，添加调用秒杀提醒任务：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 保存商品基本信息</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> good 商品实例</span></span><br><span class="line"><span class="hljs-comment"> * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">public</span> Long <span class="hljs-title">saveGood</span><span class="hljs-params">(GoodInfoEntity good)</span> <span class="hljs-keyword">throws</span> Exception</span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    goodInfoRepository.save(good);</span><br><span class="line">    <span class="hljs-comment">//构建创建商品定时任务</span></span><br><span class="line">    buildCreateGoodTimer();</span><br><span class="line">    <span class="hljs-comment">//构建商品库存定时任务</span></span><br><span class="line">    buildGoodStockTimer();</span><br><span class="line">    <span class="hljs-comment">//构建商品描述提醒定时任务</span></span><br><span class="line">    buildGoodSecKillRemindTimer(good.getId());</span><br><span class="line">    <span class="hljs-keyword">return</span> good.getId();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 构建商品秒杀提醒定时任务</span></span><br><span class="line"><span class="comment">     * 设置五分钟后执行</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">buildGoodSecKillRemindTimer</span><span class="params">(Long goodId)</span> <span class="keyword">throws</span> Exception</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//任务名称</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> UUID.randomUUID().toString();</span><br><span class="line">        <span class="comment">//任务所属分组</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">group</span> <span class="operator">=</span> GoodSecKillRemindTimer.class.getName();</span><br><span class="line">        <span class="comment">//秒杀开始时间</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">startTime</span> <span class="operator">=</span> System.currentTimeMillis() + <span class="number">1000</span> * <span class="number">5</span> * <span class="number">60</span>;</span><br><span class="line">        <span class="type">JobDetail</span> <span class="variable">jobDetail</span> <span class="operator">=</span> JobBuilder</span><br><span class="line">                .newJob(GoodSecKillRemindTimer.class)</span><br><span class="line">                .withIdentity(name,group)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//设置任务传递商品编号参数</span></span><br><span class="line">        jobDetail.getJobDataMap().put(<span class="string">&quot;goodId&quot;</span>,goodId);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建任务触发器</span></span><br><span class="line">        <span class="type">Trigger</span> <span class="variable">trigger</span> <span class="operator">=</span> TriggerBuilder.newTrigger().withIdentity(name,group).startAt(<span class="keyword">new</span> <span class="title class_">Date</span>(startTime)).build();</span><br><span class="line">        <span class="comment">//将触发器与任务绑定到调度器内</span></span><br><span class="line">        scheduler.scheduleJob(jobDetail,trigger);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们模拟秒杀提醒时间是添加商品后的5分钟，我们通过调用<code>jobDetail </code>实例的<code>getJobDataMap</code>方法就可以获取该任务数据集合，直接调用<code>put</code>方法就可以进行设置指定key的值，该集合继承了<code>StringKeyDirtyFlagMap</code>并且实现了<code>Serializable</code>序列化，因为需要将数据序列化到数据库的<code>qrtz_job_details</code>表内。<br>修改保存商品方法，添加调用秒杀提醒任务：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 保存商品基本信息</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> good 商品实例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Long <span class="title function_">saveGood</span><span class="params">(GoodInfoEntity good)</span> <span class="keyword">throws</span> Exception</span><br><span class="line">&#123;</span><br><span class="line">    goodInfoRepository.save(good);</span><br><span class="line">    <span class="comment">//构建创建商品定时任务</span></span><br><span class="line">    buildCreateGoodTimer();</span><br><span class="line">    <span class="comment">//构建商品库存定时任务</span></span><br><span class="line">    buildGoodStockTimer();</span><br><span class="line">    <span class="comment">//构建商品描述提醒定时任务</span></span><br><span class="line">    buildGoodSecKillRemindTimer(good.getId());</span><br><span class="line">    <span class="keyword">return</span> good.getId();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="添加测试商品"><a href="#添加测试商品" class="headerlink" title="添加测试商品"></a>添加测试商品</h4><p>下面我们调用节点<code>quartz-cluster-node-first</code>的测试<code>Chapter39ApplicationTests.addGood</code>方法完成商品的添加，由于我们的<code>quartz-cluster-node-second</code>项目并没有停止，所以我们在<code>quartz-cluster-node-second</code>项目的控制台查看输出内容：</p>
-<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 11:45:00.008  INFO 11652 --- [ryBean_Worker-5] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:45:00 CST 2017</span><br><span class="line">2017-11-12 11:45:30.013  INFO 11652 --- [ryBean_Worker-6] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:45:30 CST 2017</span><br><span class="line">2017-11-12 11:45:48.230  INFO 11652 --- [ryBean_Worker-7] c.hengyu.chapter39.timers.GoodAddTimer   : 分布式节点quartz-cluster-node-second，商品添加完成后执行任务，任务时间：Sun Nov 12 11:45:48 CST 2017</span><br><span class="line">2017-11-12 11:46:00.008  INFO 11652 --- [ryBean_Worker-8] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:46:00 CST 2017</span><br><span class="line">2017-11-12 11:46:30.016  INFO 11652 --- [ryBean_Worker-9] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:46:30 CST 2017</span><br><span class="line">2017-11-12 11:47:00.011  INFO 11652 --- [yBean_Worker-10] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:47:00 CST 2017</span><br><span class="line">2017-11-12 11:47:30.028  INFO 11652 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:47:30 CST 2017</span><br><span class="line">2017-11-12 11:48:00.014  INFO 11652 --- [ryBean_Worker-2] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:48:00 CST 2017</span><br><span class="line">2017-11-12 11:48:30.013  INFO 11652 --- [ryBean_Worker-3] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:48:30 CST 2017</span><br><span class="line">2017-11-12 11:49:00.010  INFO 11652 --- [ryBean_Worker-4] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:49:00 CST 2017</span><br><span class="line">2017-11-12 11:49:30.028  INFO 11652 --- [ryBean_Worker-5] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:49:30 CST 2017</span><br><span class="line">2017-11-12 11:49:48.290  INFO 11652 --- [ryBean_Worker-6] c.h.c.timers.GoodSecKillRemindTimer      : 分布式节点quartz-cluster-node-second，开始处理秒杀商品：15，关注用户推送消息.</span><br><span class="line">2017-11-12 11:50:00.008  INFO 11652 --- [ryBean_Worker-7] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:50:00 CST 2017</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">2017-11-12 11:45:00.008  INFO 11652 --- [ryBean_Worker-5] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:45:00 CST 2017</span><br><span class="line">2017-11-12 11:45:30.013  INFO 11652 --- [ryBean_Worker-6] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:45:30 CST 2017</span><br><span class="line">2017-11-12 11:45:48.230  INFO 11652 --- [ryBean_Worker-7] c.hengyu.chapter39.timers.GoodAddTimer   : 分布式节点quartz-cluster-node-second，商品添加完成后执行任务，任务时间：Sun Nov 12 11:45:48 CST 2017</span><br><span class="line">2017-11-12 11:46:00.008  INFO 11652 --- [ryBean_Worker-8] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:46:00 CST 2017</span><br><span class="line">2017-11-12 11:46:30.016  INFO 11652 --- [ryBean_Worker-9] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:46:30 CST 2017</span><br><span class="line">2017-11-12 11:47:00.011  INFO 11652 --- [yBean_Worker-10] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:47:00 CST 2017</span><br><span class="line">2017-11-12 11:47:30.028  INFO 11652 --- [ryBean_Worker-1] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:47:30 CST 2017</span><br><span class="line">2017-11-12 11:48:00.014  INFO 11652 --- [ryBean_Worker-2] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:48:00 CST 2017</span><br><span class="line">2017-11-12 11:48:30.013  INFO 11652 --- [ryBean_Worker-3] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:48:30 CST 2017</span><br><span class="line">2017-11-12 11:49:00.010  INFO 11652 --- [ryBean_Worker-4] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:49:00 CST 2017</span><br><span class="line">2017-11-12 11:49:30.028  INFO 11652 --- [ryBean_Worker-5] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:49:30 CST 2017</span><br><span class="line">2017-11-12 11:49:48.290  INFO 11652 --- [ryBean_Worker-6] c.h.c.timers.GoodSecKillRemindTimer      : 分布式节点quartz-cluster-node-second，开始处理秒杀商品：15，关注用户推送消息.</span><br><span class="line">2017-11-12 11:50:00.008  INFO 11652 --- [ryBean_Worker-7] c.h.c.timers.GoodStockCheckTimer         : 分布式节点quartz-cluster-node-second，执行库存检查定时任务，执行时间：Sun Nov 12 11:50:00 CST 2017</span><br></pre></td></tr></table></figure>
 <p>秒杀任务在添加完成商品后的五分钟开始执行的，而我们也正常的输出了传递过去的<code>goodId</code>商品编号的参数，而秒杀提醒任务执行一次后也被自动释放了。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>本章主要是结合上一章完成了分布式任务的讲解，完成了测试持久化的定时任务自动漂移，以及如何向定时任务传递参数。当然在实际的开发过程中，任务创建是需要进行封装的，目的也是为了减少一些冗余代码以及方面后期统一维护定时任务。</p>
-
-        
-        <!--原创-->
-        
-        <div class="alert alert-success">
-          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
-              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
-              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
-        </div>
-        
-        <!--转载标注-->
-        
-        
-      </div>
-      <!--文章标签-->
-      
-      <div class="level is-size-7">
-        <div class="level-start">
-          <div class="level-item">
-            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
-            <a class="has-link-grey-link" href="/tags/Quartz/">Quartz</a>, <a class="has-link-grey-link" href="/tags/SpringBoot/">SpringBoot</a>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-    </div>
-  </div>
-
-  
-  
-
-  
-  <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-      <!--上一篇-->
-      
-      <div class="level-start">
-        <a class="level level-item has-link-grey  article-nav-prev"
-          href="/rabbitmq-direct-exchange.html">
-          <i class="level-item fas fa-chevron-left"></i>
-          <span class="level-item">上一篇：消息队列RabbitMQ的Direct类型消息消费</span>
-        </a>
-      </div>
-      
-      <!--下一篇-->
-      
-      <div class="level-end">
-        <a class="level level-item has-link-grey  article-nav-next"
-          href="/quartz-single-node.html">
-          <span class="level-item">下一篇：Quartz分布式单节点持久化任务</span>
-          <i class="level-item fas fa-chevron-right"></i>
-        </a>
-      </div>
-      
-    </div>
-  </div>
-  
-  <!--评论-->
-  
-  <div class="card">
-    <div class="card-content">
-      <h3 class="title is-5 has-text-weight-normal">评论</h3>
-      
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: 'c6d9a9addcb940fef06f',
-        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
-        id: 'fda905ed527df8b97884c67ab3b9a2a5',
-        repo: 'learning-tutorials',
-        owner: 'hengboy',
-        admin: "hengboy",
-        createIssueManually: false,
-        distractionFreeMode: false
-    })
-    gitalk.render('comment-container')
-</script>
-
-    </div>
-  </div>
-  
-  
-</div>
-
-<script src="/js/readmore.js" type="text/javascript"></script>
-<script>
-  const btw = new BTWPlugin();
-  btw.init({
-    id: 'container',
-    blogId: '10034-1569731208928-426',
-    name: '恒宇少年',
-    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
-    keyword: 'free',
-  });
-</script>
-
-<!--<script src="/js/layui.js"></script>
-<script>
-  layui.use(['layer'], function () {
-    var layer = layui.layer;
-    var isShowOnce = localStorage.getItem('isShowHistory');
-    if (!isShowOnce) {
-      localStorage.setItem('isShowHistory',true);
-      layer.open({
-          type: 1
-          ,title: false //不显示标题栏
-          ,closeBtn: false
-          ,area: '350px;'
-          ,shade: 0.8
-          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-          ,btn: ['带朕去看看', '给朕退下']
-          ,btnAlign: 'c'
-          ,moveType: 1 //拖拽模式，0或者1
-          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
-          ,success: function(layero){
-            var btn = layero.find('.layui-layer-btn');
-            btn.find('.layui-layer-btn0').attr({
-              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
-              ,target: '_blank'
+</div><div class="article-licensing box"><div class="licensing-title"><p>Quartz分布式集群多节点实现任务漂移</p><p><a href="https://blog.minbox.org/quartz-cluster-node.html">https://blog.minbox.org/quartz-cluster-node.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>恒宇少年 - 于起宇</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-29</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">文章标签：</span><a class="link-muted mr-2" rel="tag" href="/tags/ApiBoot/">ApiBoot</a><a class="link-muted mr-2" rel="tag" href="/tags/Quartz/">Quartz</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/rabbitmq-direct-exchange.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">消息队列RabbitMQ的Direct类型消息消费</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/quartz-single-node.html"><span class="level-item">Quartz分布式单节点持久化任务</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "fda905ed527df8b97884c67ab3b9a2a5",
+            repo: "learning-tutorials",
+            owner: "hengboy",
+            clientID: "c6d9a9addcb940fef06f",
+            clientSecret: "0c209053121187dd685030c01cfa10a7861afd27",
+            admin: "hengboy",
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content" style="padding:0px"><img src="/images/profile2.png"><div class="article-platform"><span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png" width="25"></a></span><span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg" width="25"></a></span><span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img src="/images/juejin-logo.svg" width="25"></a></span><span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img src="/images/思否.png" width="25"></a></span><span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img src="/images/知乎.svg" width="25"></a></span><span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png" width="25"></a></span><span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg" width="25"></a></span></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://apiboot.minbox.org" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">ApiBoot官网</span></span><span class="level-right"><span class="level-item tag">apiboot.minbox.org</span></span></a></li></ul></div></div></div><div class="card widget"><div><h1 class="widget-title">热门文章</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div class="card-content" style="font-size: 14px;font-weight:500;line-height: 35px"><p class="p-overflow"><a href="fish-fast-switch-jdk.html"><img src="/images/hot.gif"> fish终端快速切换JDK版本</a></p><p class="p-overflow"><a href="oauth2-always-create-token.html"><img src="/images/hot.gif"> OAuth2 始终获取新的令牌</a></p><p class="p-overflow"><a href="import-osm-data-into-mysql.html"><img src="/images/hot.gif"> 将OSM数据导入MySQL</a></p><p class="p-overflow"><a href="redis-geo-practice.html"><img src="/images/hot.gif"> 了解Redis Geo范围查询</a></p><p class="p-overflow"><a href="spring-security-flexible-password-encoder.html"><img src="/images/hot.gif"> Spring Security密码加密方式</a></p><p class="p-overflow"><a href="github-action-publish-jar-to-maven-central.html"><img src="/images/hot.gif"> 使用GitHub Actions发布Jar到Maven Central</a></p></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="/apiboot-all-articles.html" target="_blank"><img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="http://gk.link/a/10f7u" target="_blank"><img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget"><div><h1 class="widget-title">热门专题</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v1.x 基础教程"></div><div class="project-right"><a href="/spring-boot-1-x-articles.html" target="_blank"><p class="title">SpringBoot v1.x 基础教程</p><p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v2.x 基础教程"></div><div class="project-right"><a href="/spring-boot-2-x-articles.html" target="_blank"><p class="title">SpringBoot v2.x 基础教程</p><p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-cloud.svg" alt="SpringCloud 基础教程"></div><div class="project-right"><a href="/spring-cloud-all-articles.html" target="_blank"><p class="title">SpringCloud 基础教程</p><p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/api-boot.svg" alt="ApiBoot 基础教程"></div><div class="project-right"><a href="/apiboot-all-articles.html" target="_blank"><p class="title">ApiBoot 基础教程</p><p class="desc">新一代的接口服务落地解决方案，助力你成为服务架构师.</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/技术杂谈.svg" alt="技术杂谈"></div><div class="project-right"><a href="/technical-talk.html" target="_blank"><p class="title">技术杂谈</p><p class="desc">涵盖Java基础，数据结构与算法，Linux，代码规范，消息队列...</p></a></div></li></ul></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/ApiBoot/"><span class="level-start"><span class="level-item">ApiBoot</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/MongoDB/"><span class="level-start"><span class="level-item">MongoDB</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Quartz/"><span class="level-start"><span class="level-item">Quartz</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/SpringBoot/"><span class="level-start"><span class="level-item">SpringBoot</span></span><span class="level-end"><span class="level-item tag">39</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">地图服务</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">微服务</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">技术杂谈</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><span class="level-start"><span class="level-item">消息队列</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28"></a><p class="is-size-7"><span>&copy; 2022 恒宇少年 - 于起宇</span>  鲁ICP备14029686号<br>希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！</p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><form class="searchbox-input-container"><input class="searchbox-input" name="wd" type="text" placeholder="想要查找什么..."></form><a class="searchbox-close" href="javascript:;">×</a></div></div></div><script>(function ($) {
+            $('.searchbox-input-container').on('submit', function (e) {
+                var keyword = $('.searchbox-input[name="wd"]').val();
+                window.location = 'https://www.baidu.com/s?wd=site:blog.minbox.org ' + keyword;
+                return false;
             });
-          }
-        });
-    }
-  });
-</script>-->
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    </script></div>
-                
-                
-
-
-
-
-<!--展示块 布局-->
-<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
-    
-        <div class="card widget">
-  <div class="card-content" style="padding: 0%">
-    <!--个人信息-->
-    <img src="/images/profile2.png" />
-    <!--第三方文章发布平台-->
-    <div class="article-platform">
-      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
-            width="25" /></a></span>
-      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
-            width="25" /></a></span>
-      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
-            src="/images/juejin-logo.svg" width="25" /></a></span>
-      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
-            src="/images/思否.png" width="25" /></a></span>
-      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
-            src="/images/知乎.svg" width="25" /></a></span>
-      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
-            width="25" /></a></span>
-      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
-            width="25" /></a></span>
-    </div>
-  </div>
-</div>
-    
-        <!--热门文章列表，在文章详情显示，首页不显示-->
-
-<div class="card widget">
-  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
-    
-    
-    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        fish终端快速切换JDK版本
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        OAuth2 始终获取新的令牌
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        将OSM数据导入MySQL
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/redis-geo-practice.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        了解Redis Geo范围查询
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        Spring Security密码加密方式
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        使用GitHub Actions发布Jar到Maven Central
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-
-  </div>
-</div>
-
-    
-        
-
-
-<div class="card widget">
-  <div class="card-content" style="padding: 0">
-    <a href="/apiboot-all-articles.html" target="_blank">
-      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
-    </a>
-  </div>
-</div>
-
-
-    
-        
-
-
-<div class="card widget" style="margin-top: 1rem;">
-
-  <div class="card-content" style="padding: 0">
-
-    <a href="http://gk.link/a/10f7u" target="_blank">
-      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
-    </a>
-
-  </div>
-
-</div>
-
-
-    
-        <!--学习专题列表-->
-
-
-  <div class="card widget" id="topic">
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-1-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v1.x 基础教程</p>
-
-            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-2-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v2.x 基础教程</p>
-
-            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-cloud.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-cloud-all-articles.html" target="_blank">
-            <p class="title">SpringCloud 基础教程</p>
-
-            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/api-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/apiboot-all-articles.html" target="_blank">
-            <p class="title">ApiBoot 基础教程</p>
-
-            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/技术杂谈.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/technical-talk.html" target="_blank">
-            <p class="title">技术杂谈</p>
-
-            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-</div>
-<script src="/js/lay/modules/jquery.js"></script>
-<script>
-  var scrollTop = $("#topic").offset().top;
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > scrollTop) {
-      $("#topic").addClass("quoteSticky");
-      $("#profile").show();
-    } else {
-      $("#topic").removeClass("quoteSticky");
-      $("#profile").hide();
-    }
-  });
-</script>
-
-
-    
-    
-</div>
-
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-  <div class="container">
-    <div class="level">
-      <div class="level-start has-text-centered-mobile">
-        <p class="is-size-7">
-          &copy; 2018 - 2022
-          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
-          <br />
-          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
-        </p>
-      </div>
-      <div class="level-end">
-        
-      </div>
-    </div>
-  </div>
-</footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("zh-CN");</script>
-
-<script>
-var IcarusThemeSettings = {
-    article: {
-        highlight: {
-            clipboard: true,
-            fold: 'unfolded'
-        }
-    }
-};
-</script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-
-
-
-    
-    
-    
-    <script src="/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
-
-
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="回到顶端" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/js/back-to-top.js" defer></script>
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-
-
-<script src="/js/main.js" defer></script>
-
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
-            },
-            CONTENT_URL: '/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
-    
-</body>
-</html>
+        })(jQuery);
+        (function (document, $) {
+            $(document).on('click', '.navbar-main .search', function () {
+                $('.searchbox').toggleClass('show');
+            }).on('click', '.searchbox .searchbox-mask', function () {
+                $('.searchbox').removeClass('show');
+            }).on('click', '.searchbox-close', function () {
+                $('.searchbox').removeClass('show');
+            });
+        })(document, jQuery);</script></body></html>

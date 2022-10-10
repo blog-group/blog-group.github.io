@@ -1,901 +1,170 @@
-<!DOCTYPE html>
-<html  lang="zh">
-<head>
-    <meta charset="utf-8" />
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>业务解耦利器Event/Listener - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="msapplication-TileImage" content="/images/favicon.jpg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="业务解耦利器Event&amp;#x2F;Listener"><meta property="og:type" content="blog"><meta property="og:title" content="业务解耦利器Event/Listener"><meta property="og:url" content="https://blog.minbox.org/spring-event-listener.html"><meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客"><meta property="og:description" content="业务解耦利器Event&amp;#x2F;Listener"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://blog.minbox.org/img/og_image.png"><meta property="article:published_time" content="2019-09-29T14:39:50.000Z"><meta property="article:modified_time" content="2022-10-10T09:22:37.798Z"><meta property="article:author" content="恒宇少年 - 于起宇"><meta property="article:tag" content="SpringBoot"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://blog.minbox.org/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://blog.minbox.org/spring-event-listener.html"},"headline":"业务解耦利器Event/Listener","image":["https://blog.minbox.org/img/og_image.png"],"datePublished":"2019-09-29T14:39:50.000Z","dateModified":"2022-10-10T09:22:37.798Z","author":{"@type":"Person","name":"恒宇少年 - 于起宇"},"publisher":{"@type":"Organization","name":"程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客","logo":{"@type":"ImageObject","url":"https://blog.minbox.org/images/avatar.png"}},"description":"业务解耦利器Event&#x2F;Listener"}</script><link rel="canonical" href="https://blog.minbox.org/spring-event-listener.html"><link rel="icon" href="/images/favicon.jpg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
 
-<meta name="generator" content="Hexo 3.9.0" />
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
 
-<title>业务解耦利器Event/Listener - 程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客</title>
-
-
-    <meta name="description" content="业务解耦利器Event/Listener">
-<meta name="keywords" content="event,listener,springboot">
-<meta property="og:type" content="article">
-<meta property="og:title" content="业务解耦利器Event&#x2F;Listener">
-<meta property="og:url" content="https://blog.minbox.org/spring-event-listener.html">
-<meta property="og:site_name" content="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客">
-<meta property="og:description" content="业务解耦利器Event/Listener">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://blog.minbox.org/images/og_image.png">
-<meta property="og:updated_time" content="2022-09-29T04:18:51.351Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="业务解耦利器Event&#x2F;Listener">
-<meta name="twitter:description" content="业务解耦利器Event/Listener">
-<meta name="twitter:image" content="https://blog.minbox.org/images/og_image.png">
-
-
-
-
-
-
-
-<link rel="icon" href="/images/favicon.jpg">
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
-<link rel="stylesheet" href="/css/font-awesome-5.4.1-all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/ocean.css">
-
-
-    
-    
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
-
-    
-    
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
-
-    
-    
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
-
-
-    
-    
-    
-    
-
-<link rel="stylesheet" href="/css/back-to-top.css">
-
-
-    
-    
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-127746557-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-127746557-1');
-</script>
-
-
-    
-    
-    
-    
-
-    
-    
-<link rel="stylesheet" href="/css/progressbar.css">
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-        <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-
-<link rel="stylesheet" href="/css/style.css">
-</head>
-<body class="is-2-column">
-    <nav class="navbar navbar-main">
-  <div class="container">
-    <div class="navbar-brand is-flex-center">
-      <a class="navbar-item navbar-logo" href="/">
-        <div class="logo"></div>
-        <span class="site_title">恒宇少年 - 于起宇</span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      
-      <div class="navbar-start nav-link">
-        
-        <a class="navbar-item"
-          href="/interview-strategy.html" target="_blank">面试攻略</a>
-        
-        <a class="navbar-item"
-          href="/welfare/" target="_blank">签到送书</a>
-        
-        <a class="navbar-item"
-          href="/geektime/" target="_blank">推荐课程</a>
-        
-        <a class="navbar-item"
-          href="/opensource/" target="_blank">我的开源</a>
-        
-        <a class="navbar-item"
-          href="/openbooks/" target="_blank">免费书籍</a>
-        
-        <a class="navbar-item"
-          href="/years/2019.html" target="_blank">我的2019</a>
-        
-        <a class="navbar-item"
-          href="/archives/" target="_blank">归档</a>
-        
-      </div>
-      
-      <div class="navbar-end">
-        
-        
-        
-        <a class="navbar-item search" title="搜索" href="javascript:;">
-          <i class="fas fa-search"></i>
-        </a>
-        
-      </div>
-    </div>
-  </div>
-</nav>
-    
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-8-tablet is-9-desktop is-9-widescreen has-order-2 column-main">
-<div id="container">
-  
-  <div class="card" style="margin-bottom: 10px">
-    
-    <div class="card-content article ">
-      <!--文章标题-->
-      
-      <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-        
-        <span class="article_title">业务解耦利器Event/Listener</span>
-        
-      </h1>
-      <!--完全自定义页面显示的访问次数-->
-      
-      
-      <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
-        <div class="level-left">
-          <!--文章类型-->
-          
-          
-          
-          <span
-            style="float: left;padding: 1px 2px 1px 2px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">
-            原创</span>
-          
-          
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--发布时间-->
-          <img src="/images/date_time.png" style="width: 25px;" title="发布时间"/>
-          &nbsp;
-          <span class="article-meta-element">2019-09-29</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--作者-->
-          <img src="/images/author.svg" style="width: 23px" title="文章作者"/>
-
-          <span class="article-meta-element">于起宇</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <!--目录列表-->
-          
-          <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表"/>
-          &nbsp;
-          <div class="level-item article-meta-element">
-            <!--读取config.yml文件内的目录配置-->
-            
-            
-              
-                
-              
-                
-              
-                
-              
-                
-                  <!--跳转文章目录地址-->
-                  <a class="category-link" href="/technical-talk.html">技术杂谈</a>&nbsp;
-                
-              
-            
-          </div>
-          
-          <!--不蒜子统计阅读量-->
-          <!--
-          <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-            &lt;!&ndash; <i class="far fa-eye"></i> &ndash;&gt;
-            被访问<span id="busuanzi_value_page_pv" style="color: #ff7300;font-weight: bold">0</span>次
-          </span>
-          -->
-        </div>
-      </div>
-      
-      
-      <!--推荐阅读 - 新闻-->
-      
-      
-      <div style="height: 50px;padding-top: 10px;vertical-align: middle;">
-        <a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a>
-      </div>
-      
-      
-      <!--文章内容-->
-      <div class="content">
-        <p><code>ApplicationEvent</code>以及<code>Listener</code>是Spring为我们提供的一个事件监听、订阅的实现，内部实现原理是观察者设计模式，设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。事件发布者并不需要考虑谁去监听，监听具体的实现内容是什么，发布者的工作只是为了发布事件而已。</p>
-<a id="more"></a>
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28">  <p class="site_title">恒宇少年 - 于起宇</p></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/interview-strategy.html">面试攻略</a><a class="navbar-item" href="/geektime/">推荐课程</a><a class="navbar-item" href="/opensource/">我的开源</a><a class="navbar-item" href="/openbooks/">免费书籍</a><a class="navbar-item" href="/archives/">时间轴</a></div><div class="navbar-end"><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-9-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><h1 class="title is-3 is-size-4-mobile"><span class="article_title">业务解耦利器Event/Listener</span></h1><div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px"><div class="level-left"><span style="float: left;padding: 1px 4px 1px 4px;margin-right: 5px;background-color: #5cb85c;color: white;text-align: center;border-radius:0.25em;font-size: 14px">原创</span>    <img src="/images/date_time.png" style="width: 27px;" title="发布时间"> <span class="article-meta-element">2019-09-29</span>    <img src="/images/author.svg" style="width: 23px" title="文章作者"> <span class="article-meta-element">于起宇</span>    <img src="/images/categories.svg" style="width: 20px;" title="文章所属目录列表">  <a class="category-link article-meta-element" href="/categories/SpringBoot/">SpringBoot </a></div></div><div style="height: 50px;padding-top: 10px;vertical-align: middle;"><a href="https://gitee.com/minbox-projects/api-boot" target="_blank">🔥 🔥 🔥 ApiBoot 为组件化构建Api服务而生，是接口服务的落地解决方案，提供了一系列开箱即用的组件。</a></div><br><div class="content"><p><code>ApplicationEvent</code>以及<code>Listener</code>是Spring为我们提供的一个事件监听、订阅的实现，内部实现原理是观察者设计模式，设计初衷也是为了系统业务逻辑之间的解耦，提高可扩展性以及可维护性。事件发布者并不需要考虑谁去监听，监听具体的实现内容是什么，发布者的工作只是为了发布事件而已。</p>
+<span id="more"></span>
 <blockquote>
 <p>我们平时日常生活中也是经常会有这种情况存在，如：我们在平时拔河比赛中，裁判员给我们吹响了开始的信号，也就是给我们发布了一个开始的事件，而拔河双方人员都在监听着这个事件，一旦事件发布后双方人员就开始往自己方使劲。而裁判并不关心你比赛的过程，只是给你发布事件你执行就可以了。</p>
 </blockquote>
 <h1 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h1><p>我们本章在<code>SpringBoot</code>平台上通过ApplicationEvents以及Listener来完成简单的注册事件流程。</p>
 <h1 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h1><p>我们本章只是简单的讲解如何使用ApplicationEvent以及Listener来完成业务逻辑的解耦，不涉及到数据交互所以依赖需要引入的也比较少，项目pom.xml配置文件如下所示：</p>
-<figure class="highlight xml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">.....//省略</span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="hljs-comment">&lt;!--web--&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">		<span class="hljs-comment">&lt;!--lombok--&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.projectlombok<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>lombok<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.16.16<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">		<span class="hljs-comment">&lt;!--test--&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span></span><br><span class="line">.....//省略</span><br></pre></td></tr></table></figure>
-
-<p>其中lombok依赖大家有兴趣可以去深研究下，这是一个很好的工具，它可以结合Idea开发工具完成对实体的动态添加构造函数、Getter/Setter方法、toString方法等。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">.....//省略</span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--web--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--lombok--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.16.16<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--test--&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">.....//省略</span><br></pre></td></tr></table></figure>
+<p>其中lombok依赖大家有兴趣可以去深研究下，这是一个很好的工具，它可以结合Idea开发工具完成对实体的动态添加构造函数、Getter&#x2F;Setter方法、toString方法等。</p>
 <h3 id="创建UserRegisterEvent事件"><a href="#创建UserRegisterEvent事件" class="headerlink" title="创建UserRegisterEvent事件"></a>创建UserRegisterEvent事件</h3><p>我们先来创建一个事件，监听都是围绕着事件来挂起的。事件代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.event;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="hljs-keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.ApplicationEvent;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：10:08</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Getter</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRegisterEvent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ApplicationEvent</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">//注册用户对象</span></span><br><span class="line">    <span class="hljs-keyword">private</span> UserBean user;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 重写构造函数</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> source 发生事件的对象</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> user 注册用户对象</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserRegisterEvent</span><span class="hljs-params">(Object source,UserBean user)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">super</span>(source);</span><br><span class="line">        <span class="hljs-keyword">this</span>.user = user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.event;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationEvent;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：10:08</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserRegisterEvent</span> <span class="keyword">extends</span> <span class="title class_">ApplicationEvent</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//注册用户对象</span></span><br><span class="line">    <span class="keyword">private</span> UserBean user;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 重写构造函数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> source 发生事件的对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user 注册用户对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UserRegisterEvent</span><span class="params">(Object source,UserBean user)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(source);</span><br><span class="line">        <span class="built_in">this</span>.user = user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们自定义事件UserRegisterEvent继承了ApplicationEvent，继承后必须重载构造函数，构造函数的参数可以任意指定，其中source参数指的是发生事件的对象，一般我们在发布事件时使用的是this关键字代替本类对象，而user参数是我们自定义的注册用户对象，该对象可以在监听内被获取。</p>
 <blockquote>
 <p>在Spring内部中有多种方式实现监听如：@EventListener注解、实现ApplicationListener泛型接口、实现SmartApplicationListener接口等，我们下面来讲解下这三种方式分别如何实现。</p>
 </blockquote>
 <h3 id="创建UserBean"><a href="#创建UserBean" class="headerlink" title="创建UserBean"></a>创建UserBean</h3><p>我们简单创建一个用户实体，并添加两个字段：用户名、密码。实体代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.bean;</span><br><span class="line"><span class="hljs-keyword">import</span> lombok.Data;</span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：10:05</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Data</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserBean</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">//用户名</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String name;</span><br><span class="line">    <span class="hljs-comment">//密码</span></span><br><span class="line">    <span class="hljs-keyword">private</span> String password;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.bean;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：10:05</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserBean</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//用户名</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">//密码</span></span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="创建UserService"><a href="#创建UserService" class="headerlink" title="创建UserService"></a>创建UserService</h3><p>UserService内添加一个注册方法，该方法只是实现注册事件发布功能，代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.service;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：10:11</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Service</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    ApplicationContext applicationContext;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 用户注册方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> user</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register</span><span class="hljs-params">(UserBean user)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//../省略其他逻辑</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//发布UserRegisterEvent事件</span></span><br><span class="line">        applicationContext.publishEvent(<span class="hljs-keyword">new</span> UserRegisterEvent(<span class="hljs-keyword">this</span>,user));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：10:11</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    ApplicationContext applicationContext;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 用户注册方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">register</span><span class="params">(UserBean user)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//../省略其他逻辑</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//发布UserRegisterEvent事件</span></span><br><span class="line">        applicationContext.publishEvent(<span class="keyword">new</span> <span class="title class_">UserRegisterEvent</span>(<span class="built_in">this</span>,user));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>事件发布是由ApplicationContext对象管控的，我们发布事件前需要注入ApplicationContext对象调用publishEvent方法完成事件发布。</p>
 <h3 id="创建UserController"><a href="#创建UserController" class="headerlink" title="创建UserController"></a>创建UserController</h3><p>创建一个@RestController控制器，对应添加一个注册方法简单实现，代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.controller;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.service.UserService;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户控制器</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：10:05</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@RestController</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">//用户业务逻辑实现</span></span><br><span class="line">    <span class="hljs-meta">@Autowired</span></span><br><span class="line">    <span class="hljs-keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 注册控制方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> user 用户对象</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@RequestMapping</span>(value = <span class="hljs-string">"/register"</span>)</span><br><span class="line">    <span class="hljs-keyword">public</span> String register</span><br><span class="line">            (</span><br><span class="line">                    UserBean user</span><br><span class="line">            )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-comment">//调用注册业务逻辑</span></span><br><span class="line">        userService.register(user);</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-string">"注册成功."</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户控制器</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：10:05</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//用户业务逻辑实现</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注册控制方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> user 用户对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/register&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">register</span></span><br><span class="line">            <span class="params">(</span></span><br><span class="line"><span class="params">                    UserBean user</span></span><br><span class="line"><span class="params">            )</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//调用注册业务逻辑</span></span><br><span class="line">        userService.register(user);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;注册成功.&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="EventListener实现监听"><a href="#EventListener实现监听" class="headerlink" title="@EventListener实现监听"></a>@EventListener实现监听</h3><p>注解方式比较简单，并不需要实现任何接口，具体代码实现如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.event.EventListener;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 使用<span class="hljs-doctag">@EventListener</span>方法实现注册事件监听</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：10:50</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnnotationRegisterListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 注册监听实现方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userRegisterEvent 用户注册事件</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@EventListener</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">register</span><span class="hljs-params">(UserRegisterEvent userRegisterEvent)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//获取注册用户对象</span></span><br><span class="line">        UserBean user = userRegisterEvent.getUser();</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//../省略逻辑</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//输出注册用户信息</span></span><br><span class="line">        System.out.println(<span class="hljs-string">"@EventListener注册信息，用户名："</span>+user.getName()+<span class="hljs-string">"，密码："</span>+user.getPassword());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.event.EventListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用<span class="doctag">@EventListener</span>方法实现注册事件监听</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：10:50</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationRegisterListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 注册监听实现方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userRegisterEvent 用户注册事件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">register</span><span class="params">(UserRegisterEvent userRegisterEvent)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获取注册用户对象</span></span><br><span class="line">        <span class="type">UserBean</span> <span class="variable">user</span> <span class="operator">=</span> userRegisterEvent.getUser();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//../省略逻辑</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//输出注册用户信息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;@EventListener注册信息，用户名：&quot;</span>+user.getName()+<span class="string">&quot;，密码：&quot;</span>+user.getPassword());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们只需要让我们的监听类被Spring所管理即可，在我们用户注册监听实现方法上添加@EventListener注解，该注解会根据方法内配置的事件完成监听。下面我们启动项目来测试下我们事件发布时是否被监听者所感知。</p>
-<h4 id="测试事件监听"><a href="#测试事件监听" class="headerlink" title="测试事件监听"></a>测试事件监听</h4><p>使用SpringBootApplication方式启动成功后，我们来访问下地址：<a href="http://127.0.0.1:8080/register?name=admin&password=123456" target="_blank" rel="noopener">http://127.0.0.1:8080/register?name=admin&amp;password=123456</a>，界面输出内容肯定是“注册成功”，这个是没有问题的，我们直接查看控制台输出内容，如下所示：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 11:09:52.532  INFO 10460 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span></span><br><span class="line">2017-07-21 11:09:52.532  INFO 10460 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization started</span><br><span class="line">2017-07-21 11:09:52.545  INFO 10460 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization completed <span class="hljs-keyword">in</span> 13 ms</span><br><span class="line">@EventListener注册信息，用户名：admin，密码：123456</span><br></pre></td></tr></table></figure>
-
+<h4 id="测试事件监听"><a href="#测试事件监听" class="headerlink" title="测试事件监听"></a>测试事件监听</h4><p>使用SpringBootApplication方式启动成功后，我们来访问下地址：<a target="_blank" rel="noopener" href="http://127.0.0.1:8080/register?name=admin&password=123456">http://127.0.0.1:8080/register?name=admin&password=123456</a>，界面输出内容肯定是“注册成功”，这个是没有问题的，我们直接查看控制台输出内容，如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 11:09:52.532  INFO 10460 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span></span><br><span class="line">2017-07-21 11:09:52.532  INFO 10460 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization started</span><br><span class="line">2017-07-21 11:09:52.545  INFO 10460 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization completed <span class="keyword">in</span> 13 ms</span><br><span class="line">@EventListener注册信息，用户名：admin，密码：123456</span><br></pre></td></tr></table></figure>
 <p>可以看到我们使用@EventListener注解配置的监听已经生效了，当我们在UserService内发布了注册事件时，监听方法自动被调用并且输出内信息到控制台。</p>
 <h3 id="ApplicationListener实现监听"><a href="#ApplicationListener实现监听" class="headerlink" title="ApplicationListener实现监听"></a>ApplicationListener实现监听</h3><p>这种方式也是Spring之前比较常用的监听事件方式，在实现ApplicationListener接口时需要将监听事件作为泛型传递，监听实现代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.ApplicationListener;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 原始方式实现</span></span><br><span class="line"><span class="hljs-comment"> * 用户注册监听</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：10:24</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RegisterListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">ApplicationListener</span>&lt;<span class="hljs-title">UserRegisterEvent</span>&gt;</span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 实现监听</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userRegisterEvent</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(UserRegisterEvent userRegisterEvent)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//获取注册用户对象</span></span><br><span class="line">        UserBean user = userRegisterEvent.getUser();</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//../省略逻辑</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//输出注册用户信息</span></span><br><span class="line">        System.out.println(<span class="hljs-string">"注册信息，用户名："</span>+user.getName()+<span class="hljs-string">"，密码："</span>+user.getPassword());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 原始方式实现</span></span><br><span class="line"><span class="comment"> * 用户注册监听</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：10:24</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegisterListener</span> <span class="keyword">implements</span> <span class="title class_">ApplicationListener</span>&lt;UserRegisterEvent&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 实现监听</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userRegisterEvent</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(UserRegisterEvent userRegisterEvent)</span> &#123;</span><br><span class="line">        <span class="comment">//获取注册用户对象</span></span><br><span class="line">        <span class="type">UserBean</span> <span class="variable">user</span> <span class="operator">=</span> userRegisterEvent.getUser();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//../省略逻辑</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//输出注册用户信息</span></span><br><span class="line">        System.out.println(<span class="string">&quot;注册信息，用户名：&quot;</span>+user.getName()+<span class="string">&quot;，密码：&quot;</span>+user.getPassword());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们实现接口后需要使用@Component注解来声明该监听需要被Spring注入管理，当有UserRegisterEvent事件发布时监听程序会自动调用onApplicationEvent方法并且将UserRegisterEvent对象作为参数传递。<br>我们UserService内的发布事件不需要修改，我们重启下项目再次访问之前的地址查看控制台输出的内容如下所示：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 13:03:35.399  INFO 4324 --- [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span></span><br><span class="line">2017-07-21 13:03:35.399  INFO 4324 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization started</span><br><span class="line">2017-07-21 13:03:35.411  INFO 4324 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization completed <span class="hljs-keyword">in</span> 12 ms</span><br><span class="line">注册信息，用户名：admin，密码：123456</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 13:03:35.399  INFO 4324 --- [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span></span><br><span class="line">2017-07-21 13:03:35.399  INFO 4324 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization started</span><br><span class="line">2017-07-21 13:03:35.411  INFO 4324 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization completed <span class="keyword">in</span> 12 ms</span><br><span class="line">注册信息，用户名：admin，密码：123456</span><br></pre></td></tr></table></figure>
 <p>我们看到了控制台打印了我们监听内输出用户信息，事件发布后就不会考虑具体哪个监听去处理业务，甚至可以存在多个监听同时需要处理业务逻辑。</p>
 <blockquote>
 <p>我们在注册时如果不仅仅是记录注册信息到数据库，还需要发送邮件通知用户，当然我们可以创建多个监听同时监听UserRegisterEvent事件，接下来我们先来实现这个需求。</p>
 </blockquote>
 <h3 id="邮件通知监听"><a href="#邮件通知监听" class="headerlink" title="邮件通知监听"></a>邮件通知监听</h3><p>我们使用注解的方式来完成邮件发送监听实现，代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.event.EventListener;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 注册用户事件发送邮件监听</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：13:08</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RegisterUserEmailListener</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 发送邮件监听实现</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> userRegisterEvent 用户注册事件</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@EventListener</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sendMail</span><span class="hljs-params">(UserRegisterEvent userRegisterEvent)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        System.out.println(<span class="hljs-string">"用户注册成功，发送邮件。"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.event.EventListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 注册用户事件发送邮件监听</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：13:08</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegisterUserEmailListener</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送邮件监听实现</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> userRegisterEvent 用户注册事件</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@EventListener</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">sendMail</span><span class="params">(UserRegisterEvent userRegisterEvent)</span></span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;用户注册成功，发送邮件。&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>监听编写完成后，我们重启项目，再次访问注册请求地址查看控制台输出内容如下所示：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 13:09:20.671  INFO 7808 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span></span><br><span class="line">2017-07-21 13:09:20.671  INFO 7808 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization started</span><br><span class="line">2017-07-21 13:09:20.685  INFO 7808 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization completed <span class="hljs-keyword">in</span> 14 ms</span><br><span class="line">用户注册成功，发送邮件。</span><br><span class="line">注册信息，用户名：admin，密码：123456</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 13:09:20.671  INFO 7808 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span></span><br><span class="line">2017-07-21 13:09:20.671  INFO 7808 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization started</span><br><span class="line">2017-07-21 13:09:20.685  INFO 7808 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization completed <span class="keyword">in</span> 14 ms</span><br><span class="line">用户注册成功，发送邮件。</span><br><span class="line">注册信息，用户名：admin，密码：123456</span><br></pre></td></tr></table></figure>
 <p>我们看到控制台输出的内容感到比较疑惑，我注册时用户信息写入数据库应该在发送邮件前面，为什么没有在第一步执行呢？<br>好了，证明了一点，事件监听是无序的，监听到的事件先后顺序完全随机出现的。我们接下来使用SmartApplicationListener实现监听方式来实现该逻辑。</p>
 <h3 id="SmartApplicationListener实现有序监听"><a href="#SmartApplicationListener实现有序监听" class="headerlink" title="SmartApplicationListener实现有序监听"></a>SmartApplicationListener实现有序监听</h3><p>我们对注册用户以及发送邮件的监听重新编写，注册用户写入数据库监听代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.service.UserService;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.ApplicationEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.event.SmartApplicationListener;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 用户注册&gt;&gt;&gt;保存用户信息监听</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：10:09</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRegisterListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">SmartApplicationListener</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     *  该方法返回true&amp;supportsSourceType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> aClass 接收到的监听事件类型</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">supportsEventType</span><span class="hljs-params">(Class&lt;? extends ApplicationEvent&gt; aClass)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//只有UserRegisterEvent监听类型才会执行下面逻辑</span></span><br><span class="line">        <span class="hljs-keyword">return</span> aClass == UserRegisterEvent<span class="hljs-class">.<span class="hljs-keyword">class</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     *  该方法返回true&amp;supportsEventType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> aClass</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">supportsSourceType</span><span class="hljs-params">(Class&lt;?&gt; aClass)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//只有在UserService内发布的UserRegisterEvent事件时才会执行下面逻辑</span></span><br><span class="line">        <span class="hljs-keyword">return</span> aClass == UserService<span class="hljs-class">.<span class="hljs-keyword">class</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     *  supportsEventType &amp; supportsSourceType 两个方法返回true时调用该方法执行业务逻辑</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> applicationEvent 具体监听实例，这里是UserRegisterEvent</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(ApplicationEvent applicationEvent)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//转换事件类型</span></span><br><span class="line">        UserRegisterEvent userRegisterEvent = (UserRegisterEvent) applicationEvent;</span><br><span class="line">        <span class="hljs-comment">//获取注册用户对象信息</span></span><br><span class="line">        UserBean user = userRegisterEvent.getUser();</span><br><span class="line">        <span class="hljs-comment">//.../完成注册业务逻辑</span></span><br><span class="line">        System.out.println(<span class="hljs-string">"注册信息，用户名："</span>+user.getName()+<span class="hljs-string">"，密码："</span>+user.getPassword());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 同步情况下监听执行的顺序</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getOrder</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.listener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationEvent;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.event.SmartApplicationListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户注册&gt;&gt;&gt;保存用户信息监听</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：10:09</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserRegisterListener</span> <span class="keyword">implements</span> <span class="title class_">SmartApplicationListener</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  该方法返回true&amp;supportsSourceType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aClass 接收到的监听事件类型</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsEventType</span><span class="params">(Class&lt;? extends ApplicationEvent&gt; aClass)</span> &#123;</span><br><span class="line">        <span class="comment">//只有UserRegisterEvent监听类型才会执行下面逻辑</span></span><br><span class="line">        <span class="keyword">return</span> aClass == UserRegisterEvent.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  该方法返回true&amp;supportsEventType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aClass</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsSourceType</span><span class="params">(Class&lt;?&gt; aClass)</span> &#123;</span><br><span class="line">        <span class="comment">//只有在UserService内发布的UserRegisterEvent事件时才会执行下面逻辑</span></span><br><span class="line">        <span class="keyword">return</span> aClass == UserService.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  supportsEventType &amp; supportsSourceType 两个方法返回true时调用该方法执行业务逻辑</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> applicationEvent 具体监听实例，这里是UserRegisterEvent</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(ApplicationEvent applicationEvent)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//转换事件类型</span></span><br><span class="line">        <span class="type">UserRegisterEvent</span> <span class="variable">userRegisterEvent</span> <span class="operator">=</span> (UserRegisterEvent) applicationEvent;</span><br><span class="line">        <span class="comment">//获取注册用户对象信息</span></span><br><span class="line">        <span class="type">UserBean</span> <span class="variable">user</span> <span class="operator">=</span> userRegisterEvent.getUser();</span><br><span class="line">        <span class="comment">//.../完成注册业务逻辑</span></span><br><span class="line">        System.out.println(<span class="string">&quot;注册信息，用户名：&quot;</span>+user.getName()+<span class="string">&quot;，密码：&quot;</span>+user.getPassword());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 同步情况下监听执行的顺序</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getOrder</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>SmartApplicationListener接口继承了全局监听ApplicationListener，并且泛型对象使用的ApplicationEvent来作为全局监听，可以理解为使用SmartApplicationListener作为监听父接口的实现，监听所有事件发布。</p>
 </blockquote>
 <p>既然是监听所有的事件发布，那么SmartApplicationListener接口添加了两个方法supportsEventType、supportsSourceType来作为区分是否是我们监听的事件，只有这两个方法同时返回true时才会执行onApplicationEvent方法。</p>
 <p>可以看到除了上面的方法，还提供了一个getOrder方法，这个方法就可以解决执行监听的顺序问题，return的数值越小证明优先级越高，执行顺序越靠前。</p>
 <p>注册成功发送邮件通知监听代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27.listener.order;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> com.yuqiyu.chapter27.service.UserService;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.ApplicationEvent;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.event.SmartApplicationListener;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：13:38</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Component</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRegisterSendMailListener</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">SmartApplicationListener</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     *  该方法返回true&amp;supportsSourceType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> aClass 接收到的监听事件类型</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">supportsEventType</span><span class="hljs-params">(Class&lt;? extends ApplicationEvent&gt; aClass)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//只有UserRegisterEvent监听类型才会执行下面逻辑</span></span><br><span class="line">        <span class="hljs-keyword">return</span> aClass == UserRegisterEvent<span class="hljs-class">.<span class="hljs-keyword">class</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     *  该方法返回true&amp;supportsEventType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> aClass</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">supportsSourceType</span><span class="hljs-params">(Class&lt;?&gt; aClass)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//只有在UserService内发布的UserRegisterEvent事件时才会执行下面逻辑</span></span><br><span class="line">        <span class="hljs-keyword">return</span> aClass == UserService<span class="hljs-class">.<span class="hljs-keyword">class</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     *  supportsEventType &amp; supportsSourceType 两个方法返回true时调用该方法执行业务逻辑</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> applicationEvent 具体监听实例，这里是UserRegisterEvent</span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(ApplicationEvent applicationEvent)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//转换事件类型</span></span><br><span class="line">        UserRegisterEvent userRegisterEvent = (UserRegisterEvent) applicationEvent;</span><br><span class="line">        <span class="hljs-comment">//获取注册用户对象信息</span></span><br><span class="line">        UserBean user = userRegisterEvent.getUser();</span><br><span class="line">        System.out.println(<span class="hljs-string">"用户："</span>+user.getName()+<span class="hljs-string">"，注册成功，发送邮件通知。"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 同步情况下监听执行的顺序</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getOrder</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27.listener.order;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.bean.UserBean;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.event.UserRegisterEvent;</span><br><span class="line"><span class="keyword">import</span> com.yuqiyu.chapter27.service.UserService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationEvent;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.event.SmartApplicationListener;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：13:38</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserRegisterSendMailListener</span> <span class="keyword">implements</span> <span class="title class_">SmartApplicationListener</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  该方法返回true&amp;supportsSourceType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aClass 接收到的监听事件类型</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsEventType</span><span class="params">(Class&lt;? extends ApplicationEvent&gt; aClass)</span> &#123;</span><br><span class="line">        <span class="comment">//只有UserRegisterEvent监听类型才会执行下面逻辑</span></span><br><span class="line">        <span class="keyword">return</span> aClass == UserRegisterEvent.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  该方法返回true&amp;supportsEventType同样返回true时，才会调用该监听内的onApplicationEvent方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aClass</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supportsSourceType</span><span class="params">(Class&lt;?&gt; aClass)</span> &#123;</span><br><span class="line">        <span class="comment">//只有在UserService内发布的UserRegisterEvent事件时才会执行下面逻辑</span></span><br><span class="line">        <span class="keyword">return</span> aClass == UserService.class;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  supportsEventType &amp; supportsSourceType 两个方法返回true时调用该方法执行业务逻辑</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> applicationEvent 具体监听实例，这里是UserRegisterEvent</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(ApplicationEvent applicationEvent)</span> &#123;</span><br><span class="line">        <span class="comment">//转换事件类型</span></span><br><span class="line">        <span class="type">UserRegisterEvent</span> <span class="variable">userRegisterEvent</span> <span class="operator">=</span> (UserRegisterEvent) applicationEvent;</span><br><span class="line">        <span class="comment">//获取注册用户对象信息</span></span><br><span class="line">        <span class="type">UserBean</span> <span class="variable">user</span> <span class="operator">=</span> userRegisterEvent.getUser();</span><br><span class="line">        System.out.println(<span class="string">&quot;用户：&quot;</span>+user.getName()+<span class="string">&quot;，注册成功，发送邮件通知。&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 同步情况下监听执行的顺序</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getOrder</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在getOrder方法内我们返回的数值为“1”，这就证明了需要在保存注册用户信息监听后执行，下面我们重启项目访问注册地址查看控制台输出内容如下所示：</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 13:40:43.104  INFO 10128 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span></span><br><span class="line">2017-07-21 13:40:43.104  INFO 10128 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization started</span><br><span class="line">2017-07-21 13:40:43.119  INFO 10128 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="hljs-string">'dispatcherServlet'</span>: initialization completed <span class="hljs-keyword">in</span> 15 ms</span><br><span class="line">注册信息，用户名：admin，密码：123456</span><br><span class="line">用户：admin，注册成功，发送邮件通知。</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2017-07-21 13:40:43.104  INFO 10128 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span></span><br><span class="line">2017-07-21 13:40:43.104  INFO 10128 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization started</span><br><span class="line">2017-07-21 13:40:43.119  INFO 10128 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet <span class="string">&#x27;dispatcherServlet&#x27;</span>: initialization completed <span class="keyword">in</span> 15 ms</span><br><span class="line">注册信息，用户名：admin，密码：123456</span><br><span class="line">用户：admin，注册成功，发送邮件通知。</span><br></pre></td></tr></table></figure>
 <p>这次我们看到了输出的顺序就是正确的了，先保存信息然后再发送邮件通知。</p>
 <blockquote>
 <p>如果说我们不希望在执行监听时等待监听业务逻辑耗时，发布监听后立即要对接口或者界面做出反映，我们该怎么做呢？</p>
 </blockquote>
 <h3 id="使用-Async实现异步监听"><a href="#使用-Async实现异步监听" class="headerlink" title="使用@Async实现异步监听"></a>使用@Async实现异步监听</h3><p>@Aysnc其实是Spring内的一个组件，可以完成对类内单个或者多个方法实现异步调用，这样可以大大的节省等待耗时。内部实现机制是线程池任务ThreadPoolTaskExecutor，通过线程池来对配置@Async的方法或者类做出执行动作。</p>
 <h4 id="线程任务池配置"><a href="#线程任务池配置" class="headerlink" title="线程任务池配置"></a>线程任务池配置</h4><p>我们创建一个ListenerAsyncConfiguration，并且使用@EnableAsync注解开启支持异步处理，具体代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">package</span> com.yuqiyu.chapter27;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.scheduling.annotation.AsyncConfigurer;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.scheduling.annotation.EnableAsync;</span><br><span class="line"><span class="hljs-keyword">import</span> org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">import</span> java.util.concurrent.Executor;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * 异步监听配置</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="hljs-comment"> * User：恒宇少年</span></span><br><span class="line"><span class="hljs-comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="hljs-comment"> * Time：14:04</span></span><br><span class="line"><span class="hljs-comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="hljs-comment"> * ========================</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-meta">@Configuration</span></span><br><span class="line"><span class="hljs-meta">@EnableAsync</span></span><br><span class="line"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ListenerAsyncConfiguration</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AsyncConfigurer</span></span></span><br><span class="line"><span class="hljs-class"></span>&#123;</span><br><span class="line">    <span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">     * 获取异步线程池执行对象</span></span><br><span class="line"><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span></span><br><span class="line"><span class="hljs-comment">     */</span></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> Executor <span class="hljs-title">getAsyncExecutor</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//使用Spring内置线程池任务对象</span></span><br><span class="line">        ThreadPoolTaskExecutor taskExecutor = <span class="hljs-keyword">new</span> ThreadPoolTaskExecutor();</span><br><span class="line">        <span class="hljs-comment">//设置线程池参数</span></span><br><span class="line">        taskExecutor.setCorePoolSize(<span class="hljs-number">5</span>);</span><br><span class="line">        taskExecutor.setMaxPoolSize(<span class="hljs-number">10</span>);</span><br><span class="line">        taskExecutor.setQueueCapacity(<span class="hljs-number">25</span>);</span><br><span class="line">        taskExecutor.initialize();</span><br><span class="line">        <span class="hljs-keyword">return</span> taskExecutor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-meta">@Override</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">public</span> AsyncUncaughtExceptionHandler <span class="hljs-title">getAsyncUncaughtExceptionHandler</span><span class="hljs-params">()</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yuqiyu.chapter27;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.scheduling.annotation.AsyncConfigurer;</span><br><span class="line"><span class="keyword">import</span> org.springframework.scheduling.annotation.EnableAsync;</span><br><span class="line"><span class="keyword">import</span> org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executor;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 异步监听配置</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> * Created with IntelliJ IDEA.</span></span><br><span class="line"><span class="comment"> * User：恒宇少年</span></span><br><span class="line"><span class="comment"> * Date：2017/7/21</span></span><br><span class="line"><span class="comment"> * Time：14:04</span></span><br><span class="line"><span class="comment"> * 码云：http://git.oschina.net/jnyqy</span></span><br><span class="line"><span class="comment"> * ========================</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableAsync</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ListenerAsyncConfiguration</span> <span class="keyword">implements</span> <span class="title class_">AsyncConfigurer</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取异步线程池执行对象</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Executor <span class="title function_">getAsyncExecutor</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//使用Spring内置线程池任务对象</span></span><br><span class="line">        <span class="type">ThreadPoolTaskExecutor</span> <span class="variable">taskExecutor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ThreadPoolTaskExecutor</span>();</span><br><span class="line">        <span class="comment">//设置线程池参数</span></span><br><span class="line">        taskExecutor.setCorePoolSize(<span class="number">5</span>);</span><br><span class="line">        taskExecutor.setMaxPoolSize(<span class="number">10</span>);</span><br><span class="line">        taskExecutor.setQueueCapacity(<span class="number">25</span>);</span><br><span class="line">        taskExecutor.initialize();</span><br><span class="line">        <span class="keyword">return</span> taskExecutor;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> AsyncUncaughtExceptionHandler <span class="title function_">getAsyncUncaughtExceptionHandler</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们自定义的监听异步配置类实现了AsyncConfigurer接口并且实现内getAsyncExecutor方法以提供线程任务池对象的获取。<br>我们只需要在异步方法上添加@Async注解就可以实现方法的异步调用，为了证明这一点，我们在发送邮件onApplicationEvent方法内添加线程阻塞3秒，修改后的代码如下所示：</p>
-<figure class="highlight java hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    * supportsEventType &amp; supportsSourceType 两个方法返回true时调用该方法执行业务逻辑</span></span><br><span class="line"><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> applicationEvent 具体监听实例，这里是UserRegisterEvent</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">   <span class="hljs-meta">@Override</span></span><br><span class="line">   <span class="hljs-meta">@Async</span></span><br><span class="line">   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onApplicationEvent</span><span class="hljs-params">(ApplicationEvent applicationEvent)</span> </span>&#123;</span><br><span class="line">       <span class="hljs-keyword">try</span> &#123;</span><br><span class="line">           Thread.sleep(<span class="hljs-number">3000</span>);<span class="hljs-comment">//静静的沉睡3秒钟</span></span><br><span class="line">       &#125;<span class="hljs-keyword">catch</span> (Exception e)</span><br><span class="line">       &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="hljs-comment">//转换事件类型</span></span><br><span class="line">       UserRegisterEvent userRegisterEvent = (UserRegisterEvent) applicationEvent;</span><br><span class="line">       <span class="hljs-comment">//获取注册用户对象信息</span></span><br><span class="line">       UserBean user = userRegisterEvent.getUser();</span><br><span class="line">       System.out.println(<span class="hljs-string">"用户："</span>+user.getName()+<span class="hljs-string">"，注册成功，发送邮件通知。"</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * supportsEventType &amp; supportsSourceType 两个方法返回true时调用该方法执行业务逻辑</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> applicationEvent 具体监听实例，这里是UserRegisterEvent</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="meta">@Async</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onApplicationEvent</span><span class="params">(ApplicationEvent applicationEvent)</span> &#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           Thread.sleep(<span class="number">3000</span>);<span class="comment">//静静的沉睡3秒钟</span></span><br><span class="line">       &#125;<span class="keyword">catch</span> (Exception e)</span><br><span class="line">       &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//转换事件类型</span></span><br><span class="line">       <span class="type">UserRegisterEvent</span> <span class="variable">userRegisterEvent</span> <span class="operator">=</span> (UserRegisterEvent) applicationEvent;</span><br><span class="line">       <span class="comment">//获取注册用户对象信息</span></span><br><span class="line">       <span class="type">UserBean</span> <span class="variable">user</span> <span class="operator">=</span> userRegisterEvent.getUser();</span><br><span class="line">       System.out.println(<span class="string">&quot;用户：&quot;</span>+user.getName()+<span class="string">&quot;，注册成功，发送邮件通知。&quot;</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <p>下面我们重启下项目，访问注册地址，查看界面反映是否也有延迟。<br>我们测试发现访问界面时反映速度要不之前还要快一些，我们去查看控制台时，可以看到注册信息输出后等待3秒后再才输出邮件发送通知，而在这之前界面已经做出了反映。</p>
 <blockquote>
 <p>注意：如果存在多个监听同一个事件时，并且存在异步与同步同时存在时则不存在执行顺序。</p>
 </blockquote>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我们在传统项目中往往各个业务逻辑之间耦合性较强，因为我们在service都是直接引用的关联service或者jpa来作为协作处理逻辑，然而这种方式在后期更新、维护性难度都是大大提高了。然而我们采用事件通知、事件监听形式来处理逻辑时耦合性则是可以降到最小。</p>
-
-        
-        <!--原创-->
-        
-        <div class="alert alert-success">
-          <p>本文由<a href="https://blog.yuqiyu.com">恒宇少年 - 于起宇</a>编写，遵循<a
-              href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC 4.0
-              BY-SA</a>版权协议，转载请注明文章出处，如需公众号转载，请联系「<a href="/images/hengboy-wx.jpeg" target="_blank">微信</a>」</p>
-        </div>
-        
-        <!--转载标注-->
-        
-        
-      </div>
-      <!--文章标签-->
-      
-      <div class="level is-size-7">
-        <div class="level-start">
-          <div class="level-item">
-            <span class="is-size-6 has-text-grey has-mr-7">文章标签：</span>
-            <a class="has-link-grey-link" href="/tags/技术杂谈/">技术杂谈</a>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-    </div>
-  </div>
-
-  
-  
-
-  
-  <div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-      <!--上一篇-->
-      
-      <div class="level-start">
-        <a class="level level-item has-link-grey  article-nav-prev"
-          href="/springboot-create-starter.html">
-          <i class="level-item fas fa-chevron-left"></i>
-          <span class="level-item">上一篇：自定义你的业务Starter</span>
-        </a>
-      </div>
-      
-      <!--下一篇-->
-      
-      <div class="level-end">
-        <a class="level level-item has-link-grey  article-nav-next"
-          href="/linux-without-password.html">
-          <span class="level-item">下一篇：Mac/Linux下配置远程Linux服务器免密登录</span>
-          <i class="level-item fas fa-chevron-right"></i>
-        </a>
-      </div>
-      
-    </div>
-  </div>
-  
-  <!--评论-->
-  
-  <div class="card">
-    <div class="card-content">
-      <h3 class="title is-5 has-text-weight-normal">评论</h3>
-      
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.0/dist/gitalk.min.js"></script>
-<script>
-    var gitalk = new Gitalk({
-        clientID: 'c6d9a9addcb940fef06f',
-        clientSecret: '0c209053121187dd685030c01cfa10a7861afd27',
-        id: '48120adb026f9cc352af2e6af77ae9bf',
-        repo: 'learning-tutorials',
-        owner: 'hengboy',
-        admin: "hengboy",
-        createIssueManually: false,
-        distractionFreeMode: false
-    })
-    gitalk.render('comment-container')
-</script>
-
-    </div>
-  </div>
-  
-  
-</div>
-
-<script src="/js/readmore.js" type="text/javascript"></script>
-<script>
-  const btw = new BTWPlugin();
-  btw.init({
-    id: 'container',
-    blogId: '10034-1569731208928-426',
-    name: '恒宇少年',
-    qrcode: 'https://blog.yuqiyu.com/images/mp.jpg',
-    keyword: 'free',
-  });
-</script>
-
-<!--<script src="/js/layui.js"></script>
-<script>
-  layui.use(['layer'], function () {
-    var layer = layui.layer;
-    var isShowOnce = localStorage.getItem('isShowHistory');
-    if (!isShowOnce) {
-      localStorage.setItem('isShowHistory',true);
-      layer.open({
-          type: 1
-          ,title: false //不显示标题栏
-          ,closeBtn: false
-          ,area: '350px;'
-          ,shade: 0.8
-          ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
-          ,btn: ['带朕去看看', '给朕退下']
-          ,btnAlign: 'c'
-          ,moveType: 1 //拖拽模式，0或者1
-          ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-size:13px; font-weight: 300;">你知道吗？阿里云的采购季来了！！！<br/><br/>云产品低至<b>0.75折</b> </br></br>ECS服务器最低 <b>¥74.43</b>/年 ...<br><br>MySQL云数据库最低 <b>¥188</b>/年 ...<br><br>1.5万条的短信只需要 <b>¥540</b> <br/><br/>500G的CDN流量包更是优惠到极致了...</div>'
-          ,success: function(layero){
-            var btn = layero.find('.layui-layer-btn');
-            btn.find('.layui-layer-btn0').attr({
-              href: 'https://www.aliyun.com/minisite/goods?userCode=rqxni4zt&share_source=copy_link'
-              ,target: '_blank'
+</div><div class="article-licensing box"><div class="licensing-title"><p>业务解耦利器Event/Listener</p><p><a href="https://blog.minbox.org/spring-event-listener.html">https://blog.minbox.org/spring-event-listener.html</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>恒宇少年 - 于起宇</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-09-29</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-10-10</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">文章标签：</span><a class="link-muted mr-2" rel="tag" href="/tags/SpringBoot/">SpringBoot</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/springboot-create-starter.html"><i class="level-item fas fa-chevron-left"></i><span class="level-item">自定义你的业务Starter</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/linux-without-password.html"><span class="level-item">Mac/Linux下配置远程Linux服务器免密登录</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "48120adb026f9cc352af2e6af77ae9bf",
+            repo: "learning-tutorials",
+            owner: "hengboy",
+            clientID: "c6d9a9addcb940fef06f",
+            clientSecret: "0c209053121187dd685030c01cfa10a7861afd27",
+            admin: "hengboy",
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 10,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-right is-4-tablet is-3-desktop is-3-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content" style="padding:0px"><img src="/images/profile2.png"><div class="article-platform"><span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png" width="25"></a></span><span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg" width="25"></a></span><span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img src="/images/juejin-logo.svg" width="25"></a></span><span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img src="/images/思否.png" width="25"></a></span><span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img src="/images/知乎.svg" width="25"></a></span><span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png" width="25"></a></span><span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg" width="25"></a></span></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://apiboot.minbox.org" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">ApiBoot官网</span></span><span class="level-right"><span class="level-item tag">apiboot.minbox.org</span></span></a></li></ul></div></div></div><div class="card widget"><div><h1 class="widget-title">热门文章</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div class="card-content" style="font-size: 14px;font-weight:500;line-height: 35px"><p class="p-overflow"><a href="fish-fast-switch-jdk.html"><img src="/images/hot.gif"> fish终端快速切换JDK版本</a></p><p class="p-overflow"><a href="oauth2-always-create-token.html"><img src="/images/hot.gif"> OAuth2 始终获取新的令牌</a></p><p class="p-overflow"><a href="import-osm-data-into-mysql.html"><img src="/images/hot.gif"> 将OSM数据导入MySQL</a></p><p class="p-overflow"><a href="redis-geo-practice.html"><img src="/images/hot.gif"> 了解Redis Geo范围查询</a></p><p class="p-overflow"><a href="spring-security-flexible-password-encoder.html"><img src="/images/hot.gif"> Spring Security密码加密方式</a></p><p class="p-overflow"><a href="github-action-publish-jar-to-maven-central.html"><img src="/images/hot.gif"> 使用GitHub Actions发布Jar到Maven Central</a></p></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="/apiboot-all-articles.html" target="_blank"><img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget" style="margin-top: 1rem;"><div class="card-content" style="padding: 0"><a href="http://gk.link/a/10f7u" target="_blank"><img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%"></a></div></div><div class="card widget"><div><h1 class="widget-title">热门专题</h1><p style="border:0.5px solid #eee;width:100%"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v1.x 基础教程"></div><div class="project-right"><a href="/spring-boot-1-x-articles.html" target="_blank"><p class="title">SpringBoot v1.x 基础教程</p><p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-boot.svg" alt="SpringBoot v2.x 基础教程"></div><div class="project-right"><a href="/spring-boot-2-x-articles.html" target="_blank"><p class="title">SpringBoot v2.x 基础教程</p><p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/spring-cloud.svg" alt="SpringCloud 基础教程"></div><div class="project-right"><a href="/spring-cloud-all-articles.html" target="_blank"><p class="title">SpringCloud 基础教程</p><p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/api-boot.svg" alt="ApiBoot 基础教程"></div><div class="project-right"><a href="/apiboot-all-articles.html" target="_blank"><p class="title">ApiBoot 基础教程</p><p class="desc">新一代的接口服务落地解决方案，助力你成为服务架构师.</p></a></div></li></ul></div><p style="border:0.2px solid #eee;width:70%;margin:0 auto;"></p></div><div><div class="card-content" style="font-size: 14px;"><ul class="project"><li><div class="project-left"><img src="/images/技术杂谈.svg" alt="技术杂谈"></div><div class="project-right"><a href="/technical-talk.html" target="_blank"><p class="title">技术杂谈</p><p class="desc">涵盖Java基础，数据结构与算法，Linux，代码规范，消息队列...</p></a></div></li></ul></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/ApiBoot/"><span class="level-start"><span class="level-item">ApiBoot</span></span><span class="level-end"><span class="level-item tag">27</span></span></a></li><li><a class="level is-mobile" href="/categories/Git/"><span class="level-start"><span class="level-item">Git</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile" href="/categories/Linux/"><span class="level-start"><span class="level-item">Linux</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/MongoDB/"><span class="level-start"><span class="level-item">MongoDB</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Quartz/"><span class="level-start"><span class="level-item">Quartz</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Redis/"><span class="level-start"><span class="level-item">Redis</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/SpringBoot/"><span class="level-start"><span class="level-item">SpringBoot</span></span><span class="level-end"><span class="level-item tag">39</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">地图服务</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/"><span class="level-start"><span class="level-item">微服务</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/"><span class="level-start"><span class="level-item">技术杂谈</span></span><span class="level-end"><span class="level-item tag">24</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><span class="level-start"><span class="level-item">消息队列</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/images/avatar.png" alt="程序员恒宇少年 | SpringBoot | SpringCloud | Java - 个人博客" height="28"></a><p class="is-size-7"><span>&copy; 2022 恒宇少年 - 于起宇</span>  鲁ICP备14029686号<br>希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！</p></div><div class="level-end"></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><form class="searchbox-input-container"><input class="searchbox-input" name="wd" type="text" placeholder="想要查找什么..."></form><a class="searchbox-close" href="javascript:;">×</a></div></div></div><script>(function ($) {
+            $('.searchbox-input-container').on('submit', function (e) {
+                var keyword = $('.searchbox-input[name="wd"]').val();
+                window.location = 'https://www.baidu.com/s?wd=site:blog.minbox.org ' + keyword;
+                return false;
             });
-          }
-        });
-    }
-  });
-</script>-->
-
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-    </script></div>
-                
-                
-
-
-
-
-<!--展示块 布局-->
-<div class="column is-4-tablet is-3-desktop is-3-widescreen  has-order-3 column-right ">
-    
-        <div class="card widget">
-  <div class="card-content" style="padding: 0%">
-    <!--个人信息-->
-    <img src="/images/profile2.png" />
-    <!--第三方文章发布平台-->
-    <div class="article-platform">
-      <span><a href="https://www.jianshu.com/u/092df3f77bca" title="简书" target="_blank"><img src="/images/简书.png"
-            width="25" /></a></span>
-      <span><a href="https://me.csdn.net/weixin_42033269" title="CSDN" target="_blank"><img src="/images/csdn.svg"
-            width="25" /></a></span>
-      <span><a href="https://juejin.im/user/5a0aaeecf265da43163c96b7" title="掘金" target="_blank"><img
-            src="/images/juejin-logo.svg" width="25" /></a></span>
-      <span><a href="https://segmentfault.com/u/hengyushaonian/articles" title="思否" target="_blank"><img
-            src="/images/思否.png" width="25" /></a></span>
-      <span><a href="https://www.zhihu.com/people/heng-yu-shao-nian/posts" title="知乎" target="_blank"><img
-            src="/images/知乎.svg" width="25" /></a></span>
-      <span><a href="https://gitee.com/hengboy" title="源码托管平台：码云" target="_blank"><img src="/images/gitee.png"
-            width="25" /></a></span>
-      <span><a href="https://github.com/hengboy" title="源码托管平台：GitHub" target="_blank"><img src="/images/GitHub.svg"
-            width="25" /></a></span>
-    </div>
-  </div>
-</div>
-    
-        <!--热门文章列表，在文章详情显示，首页不显示-->
-
-<div class="card widget">
-  <div class="card-content" style="font-size: 14px;font-weight:500;line-height: 30px">
-    
-    
-    <p class="p-overflow"><a href="/fish-fast-switch-jdk.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        fish终端快速切换JDK版本
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/oauth2-always-create-token.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        OAuth2 始终获取新的令牌
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/import-osm-data-into-mysql.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        将OSM数据导入MySQL
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/redis-geo-practice.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        了解Redis Geo范围查询
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/spring-security-flexible-password-encoder.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        Spring Security密码加密方式
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-    
-    <p class="p-overflow"><a href="/github-action-publish-jar-to-maven-central.html">
-        <!--热门-->
-        
-        <img src="/images/hot.gif" />
-        
-        <!--如果存在短标题，使用短标题-->
-        
-        使用GitHub Actions发布Jar到Maven Central
-        
-        <!--如果不存在短标题，使用文章标题-->
-        
-      </a></p>
-    
-    
-
-  </div>
-</div>
-
-    
-        
-
-
-<div class="card widget">
-  <div class="card-content" style="padding: 0">
-    <a href="/apiboot-all-articles.html" target="_blank">
-      <img src="/images/cover/ApiBoot推广封面.png" style="padding: 0px;height: 150px;width:100%" />
-    </a>
-  </div>
-</div>
-
-
-    
-        
-
-
-<div class="card widget" style="margin-top: 1rem;">
-
-  <div class="card-content" style="padding: 0">
-
-    <a href="http://gk.link/a/10f7u" target="_blank">
-      <img src="/images/极客时间199礼包.png" style="padding: 0px;height: 130px;width:100%" />
-    </a>
-
-  </div>
-
-</div>
-
-
-    
-        <!--学习专题列表-->
-
-
-  <div class="card widget" id="topic">
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-1-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v1.x 基础教程</p>
-
-            <p class="desc">全网单篇文章阅读量超30万的SpringBoot免费基础教程</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-boot-2-x-articles.html" target="_blank">
-            <p class="title">SpringBoot v2.x 基础教程</p>
-
-            <p class="desc">持续基于SpringBoot v2.3.x版本更新各个组件的使用以及源码分析</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/spring-cloud.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/spring-cloud-all-articles.html" target="_blank">
-            <p class="title">SpringCloud 基础教程</p>
-
-            <p class="desc">全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/api-boot.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/apiboot-all-articles.html" target="_blank">
-            <p class="title">ApiBoot 基础教程</p>
-
-            <p class="desc">新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-  <div class="card-content" style="font-size: 14px;padding-top: 1rem;">
-    <ul class="project">
-      <li>
-        <div class="project-left">
-          <img src="/images/技术杂谈.svg" width="55" />
-        </div>
-        <div class="project-right">
-          <a href="/technical-talk.html" target="_blank">
-            <p class="title">技术杂谈</p>
-
-            <p class="desc">涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...</p>
-          </a>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <hr>
-  
-</div>
-<script src="/js/lay/modules/jquery.js"></script>
-<script>
-  var scrollTop = $("#topic").offset().top;
-  $(window).scroll(function() {
-    if ($(window).scrollTop() > scrollTop) {
-      $("#topic").addClass("quoteSticky");
-      $("#profile").show();
-    } else {
-      $("#topic").removeClass("quoteSticky");
-      $("#profile").hide();
-    }
-  });
-</script>
-
-
-    
-    
-</div>
-
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-  <div class="container">
-    <div class="level">
-      <div class="level-start has-text-centered-mobile">
-        <p class="is-size-7">
-          &copy; 2018 - 2022
-          恒宇少年 - 于起宇&nbsp;鲁ICP备14029686号
-          <br />
-          希望每一篇文章都可以给你带来启发，都可以让你不再感到迷茫！
-        </p>
-      </div>
-      <div class="level-end">
-        
-      </div>
-    </div>
-  </div>
-</footer>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
-<script>moment.locale("zh-CN");</script>
-
-<script>
-var IcarusThemeSettings = {
-    article: {
-        highlight: {
-            clipboard: true,
-            fold: 'unfolded'
-        }
-    }
-};
-</script>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-
-
-
-    
-    
-    
-    <script src="/js/animation.js"></script>
-    
-
-    
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/js/gallery.js" defer></script>
-    
-
-    
-    
-
-<div id="outdated">
-    <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
-            my browser now </a></p>
-    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        outdatedBrowser({
-            bgColor: '#f25648',
-            color: '#ffffff',
-            lowerThan: 'flex'
-        });
-    });
-</script>
-
-
-    
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    MathJax.Hub.Config({
-        'HTML-CSS': {
-            matchFontHeight: false
-        },
-        SVG: {
-            matchFontHeight: false
-        },
-        CommonHTML: {
-            matchFontHeight: false
-        },
-        tex2jax: {
-            inlineMath: [
-                ['$','$'],
-                ['\\(','\\)']
-            ]
-        }
-    });
-});
-</script>
-
-    
-    
-
-<a id="back-to-top" title="回到顶端" href="javascript:;">
-    <i class="fas fa-chevron-up"></i>
-</a>
-<script src="/js/back-to-top.js" defer></script>
-
-
-    
-    
-
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
-
-    
-
-
-<script src="/js/main.js" defer></script>
-
-    
-    <div class="searchbox ins-search">
-    <div class="searchbox-container ins-search-container">
-        <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
-            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="searchbox-result-wrapper ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-    (function (window) {
-        var INSIGHT_CONFIG = {
-            TRANSLATION: {
-                POSTS: '文章',
-                PAGES: '页面',
-                CATEGORIES: '分类',
-                TAGS: '标签',
-                UNTITLED: '(无标题)',
-            },
-            CONTENT_URL: '/content.json',
-        };
-        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-    })(window);
-</script>
-<script src="/js/insight.js" defer></script>
-<link rel="stylesheet" href="/css/search.css">
-<link rel="stylesheet" href="/css/insight.css">
-    
-</body>
-</html>
+        })(jQuery);
+        (function (document, $) {
+            $(document).on('click', '.navbar-main .search', function () {
+                $('.searchbox').toggleClass('show');
+            }).on('click', '.searchbox .searchbox-mask', function () {
+                $('.searchbox').removeClass('show');
+            }).on('click', '.searchbox-close', function () {
+                $('.searchbox').removeClass('show');
+            });
+        })(document, jQuery);</script></body></html>

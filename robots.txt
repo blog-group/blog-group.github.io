@@ -10,4 +10,4 @@ Disallow: /css/
 Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
-Sitemap: https://blog.yuqiyu.com/sitemap.xml
+Sitemap: https://blog.minbox.org/sitemap.xml

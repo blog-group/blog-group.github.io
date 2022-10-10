@@ -49,10 +49,6 @@ navbar:
         免费书籍: /openbooks/
         #我的2019: /years/2019.html
         时间轴: /archives/
-    links:
-        作者GitHub开源组织:
-            icon: fab fa-github
-            url: https://github.com/minbox-projects
 # 底部
 footer:
     links:
@@ -153,17 +149,17 @@ widgets:
                 title: SpringCloud 基础教程
                 url: /spring-cloud-all-articles.html
                 image: /images/spring-cloud.svg
-                desc: 全面的涵盖SpringCloud各个组件的免费使用基础教程，持续更新SpringCloud Alibaba系列文章
+                desc: 全面的涵盖SpringCloud各个组件的免费使用基础教程
             -
                 title: ApiBoot 基础教程
                 url: /apiboot-all-articles.html
                 image: /images/api-boot.svg
-                desc: 新一代的接口服务落地解决方案，提供ApiBoot内的每一个组件的使用系列文章，助力你成为服务架构师.
+                desc: 新一代的接口服务落地解决方案，助力你成为服务架构师.
             -
                 title: 技术杂谈
                 url: /technical-talk.html
                 image: /images/技术杂谈.svg
-                desc: 涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...
+                desc: 涵盖Java基础，数据结构与算法，Linux，代码规范，消息队列...
     -
         type: toc
         position: right

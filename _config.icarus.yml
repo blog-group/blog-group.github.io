@@ -43,12 +43,12 @@ head:
 navbar:
     menu:
         面试攻略: /interview-strategy.html
-        签到送书: /welfare/
+        #签到送书: /welfare/
         推荐课程: /geektime/
         我的开源: /opensource/
         免费书籍: /openbooks/
-        我的2019: /years/2019.html
-        归档: /archives/
+        #我的2019: /years/2019.html
+        时间轴: /archives/
     links:
         作者GitHub开源组织:
             icon: fab fa-github
@@ -85,29 +85,6 @@ comment:
     client_id: c6d9a9addcb940fef06f
     client_secret: 0c209053121187dd685030c01cfa10a7861afd27
     admin: hengboy
-donates:
-    -
-        type: afdian
-        url: ''
-    -
-        type: alipay
-        qrcode: ''
-    -
-        type: buymeacoffee
-        url: ''
-    -
-        type: patreon
-        url: ''
-    -
-        type: paypal
-        business: ''
-        currency_code: USD
-    -
-        type: wechat
-        qrcode: ''
-share:
-    type: sharethis
-    install_url: ''
 sidebar:
     left:
         sticky: false
@@ -142,6 +119,17 @@ widgets:
         # 根据时间倒序展示的热门文章数量
         show_count: 6
     -
+        # 广告 & 推广
+        type: advertising
+        position: right
+        adverts:
+            -
+                image_url: /images/cover/ApiBoot推广封面.png
+                jump_url: /apiboot-all-articles.html
+            -
+                image_url: /images/极客时间199礼包.png
+                jump_url: http://gk.link/a/10f7u
+    -
         # 专题列表
         type: topic
         position: right
@@ -171,6 +159,13 @@ widgets:
                 url: /technical-talk.html
                 image: /images/技术杂谈.svg
                 desc: 涵盖Java基础，数据结构与算法，Linux基础使用，代码规范，消息队列基础使用...
+    -
+        type: toc
+        position: right
+        index: true
+    -
+        type: categories
+        position: right
 plugins:
     animejs: true
     back_to_top: true

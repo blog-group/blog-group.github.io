@@ -18,7 +18,6 @@ description: spring-config-import-use-aways
 date: 2022-04-10 08:41:29
 article_url:
 ---
-## 简介
 
 `SpringBoot`从2.4.x版本开始支持了导入文件的方式来加载配置参数，与`spring.config.additional-location`不同的是不用提前设置而且支持导入的文件类型相对来说要丰富很多。
 
@@ -26,6 +25,7 @@ article_url:
 
 通过`spring.config.import`属性支持导入多种途径的配置文件，下面简单介绍几种。
 
+<!--more-->
 ## 导入classpath下的配置文件
 
 可以导入`classpath`下任意目录的文件，使用方式如下所示：

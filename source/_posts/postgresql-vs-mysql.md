@@ -19,7 +19,7 @@ date: 2021-11-19 13:48:48
 article_url: https://nimapinfotech.com/blog/postgresql-vs-mysql/
 ---
 ![](/images/post/postgresql-vs-mysql.png)
-
+<!--more-->
 ## PostgreSQL VS MySQL
 
 | VS           | PostgreSQL                                                   | MySQL                                                        |

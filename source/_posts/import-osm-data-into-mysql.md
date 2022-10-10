@@ -19,12 +19,11 @@ date: 2021-04-16 14:18:15
 article_url:
 ---
 
-## OpenStreetMap
-
 `OpenStreetMap`是一个所有人都可以编辑并自由使用的世界地图。
 
 其中的大部分内容由志愿者从无到有地构建起来，并以开放授权发布， OpenStreetMap版权协议允许所有人自由且免费使用我们的地图图像与地图数据，而且本项目鼓励把数据用于有趣崭新的用途。
 
+<!--more-->
 **OpenStreetMap：** [https://www.openstreetmap.org](https://www.openstreetmap.org/)
 
 ## 导出osm数据

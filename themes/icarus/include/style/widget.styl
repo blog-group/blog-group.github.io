@@ -1,0 +1,114 @@
+.widget
+    .menu-list
+        li
+            ul
+                margin-right: 0
+
+        .level
+            margin-bottom: 0
+
+            .level-left, .level-right, .level-item
+                flex-shrink: 1
+
+            .level-left, .level-right
+                align-items: flex-start
+
+        .tag
+            background: $light-grey
+            color: $white-invert
+
+    .tags
+        .tag:first-child
+            background: $primary
+            color: $primary-invert
+
+        .tag:last-child
+            background: $light-grey
+            color: $white-invert
+
+.level.is-multiline
+    flex-wrap: wrap
+
+.article-platform
+    width: 100%;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    span
+        margin-left: 15px
+.p-overflow
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+.project
+    width: 100%;
+    height: 65px;
+    padding: 0;
+.project-left
+    img
+        width: 50px;
+        display: block;
+    width: 20%;
+    height: 100%;
+    float: left;
+.project-right
+    a:visited
+        color: #333
+    a:hover
+        color: #333
+        text-decoration: underline
+    .title
+        color: #0681d0;
+        font-weight: bold;
+        font-size: 17px;
+        margin-bottom: 10px;
+    .desc
+        padding-top: 0;
+        color: grey;
+        padding-bottom: 10px;
+    width: 80%;
+    float: left;
+    padding-left: 10px;
+    font-size: 13px;
+    height: 100%;
+
+.widget-title
+    font-size: 1.2em;
+    font-weight: 700;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px
+/* ---------------------------------
+ *      Table of Content Widget
+ * --------------------------------- */
++mobile()
+    .widget.card#toc
+        display: none
+        position: fixed
+        margin: 1rem
+        left: 0
+        right: 0
+        bottom: 0
+        z-index: 100
+
+        .card-content
+            padding: 0
+
+        .menu
+            padding: 1.5rem
+            max-height: calc(100vh - 2rem)
+            overflow-y: auto
+
+    #toc-mask
+        display: none
+        position: fixed
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        z-index: 99
+        background: rgba(0, 0, 0, .7)
+
+    .widget.card#toc, #toc-mask
+        &.is-active
+            display: block

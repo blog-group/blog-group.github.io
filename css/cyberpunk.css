@@ -10762,6 +10762,7 @@ body > .section {
 .card {
   overflow: visible;
   border-radius: 0;
+  margin-bottom: 20px;
 }
 .card + .card,
 .card + .column-right-shadow {

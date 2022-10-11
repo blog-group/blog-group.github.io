@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://blog.minbox.org/springboot-actuator-exposure-include.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-actuator-remote-shutdown.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-constructor-binding-properties.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-create-starter.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-exception-handler-advice.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-failure-analyzer.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-how-to-load-outside-config.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-integration-using-flyway.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-mvc-configuration.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot-mvc-configurer.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springboot2.2-configuration-binding-bit-pitted.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springcloud-gateway-eureka.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springcloud-gateway-route.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springcloud-nacos-config-namespace.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springcloud-nacos-config-profile.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/springmvc-rewrite-parameter-loader.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/technical-talk.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/use_aop_to_prevent_duplicate_submissions.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/use-consumer-banner.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/use-gitbook-export-pdf.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
     <loc>https://blog.minbox.org/use-lombok.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
@@ -22,6 +102,62 @@
   </url>
   <url>
     <loc>https://blog.minbox.org/your-microservice-can-deploy-single.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/quartz-single-node.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/quartz-springboot2-starter.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-delay-consumer.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-direct-exchange-cluster.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-direct-exchange.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-topic-exchange.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-trust-package.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/redis-geo-practice.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/redis-springboot2-starter.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/restful-api-uri.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/rocketmq-message-use-away.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/seata-first-application.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/seata-init-env.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/several_ways_to_activate_springboot_profiles.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
@@ -133,83 +269,43 @@
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-actuator-exposure-include.html</loc>
+    <loc>https://blog.minbox.org/apiboot-unified-manage-request-logs.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-actuator-remote-shutdown.html</loc>
+    <loc>https://blog.minbox.org/bff-first-meet.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-constructor-binding-properties.html</loc>
+    <loc>https://blog.minbox.org/cache-lru-principle-of-impl.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-create-starter.html</loc>
+    <loc>https://blog.minbox.org/chrome-plugin-git-history.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-exception-handler-advice.html</loc>
+    <loc>https://blog.minbox.org/customize-eureka-manage-page.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-failure-analyzer.html</loc>
+    <loc>https://blog.minbox.org/eureka-cluster-high.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-how-to-load-outside-config.html</loc>
+    <loc>https://blog.minbox.org/eureka-service-consumer.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-integration-using-flyway.html</loc>
+    <loc>https://blog.minbox.org/eureka-preservation.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-mvc-configuration.html</loc>
+    <loc>https://blog.minbox.org/eureka-register-away-code.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/springboot-mvc-configurer.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springboot2.2-configuration-binding-bit-pitted.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springcloud-gateway-eureka.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springcloud-gateway-route.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springcloud-nacos-config-namespace.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springcloud-nacos-config-profile.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/springmvc-rewrite-parameter-loader.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/technical-talk.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/use_aop_to_prevent_duplicate_submissions.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/use-consumer-banner.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/use-gitbook-export-pdf.html</loc>
+    <loc>https://blog.minbox.org/eureka-register-away.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
@@ -341,62 +437,6 @@
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
-    <loc>https://blog.minbox.org/quartz-single-node.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/quartz-springboot2-starter.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-delay-consumer.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-direct-exchange-cluster.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-direct-exchange.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-topic-exchange.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-trust-package.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/redis-geo-practice.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/redis-springboot2-starter.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/restful-api-uri.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/rocketmq-message-use-away.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/seata-first-application.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/seata-init-env.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/several_ways_to_activate_springboot_profiles.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
     <loc>https://blog.minbox.org/alibaba-java-project-layering.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
@@ -494,46 +534,6 @@
   </url>
   <url>
     <loc>https://blog.minbox.org/apiboot-swagger-integrated-oauth.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/apiboot-unified-manage-request-logs.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/bff-first-meet.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/cache-lru-principle-of-impl.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/chrome-plugin-git-history.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/customize-eureka-manage-page.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/eureka-cluster-high.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/eureka-service-consumer.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/eureka-preservation.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/eureka-register-away-code.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/eureka-register-away.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
 </urlset> 

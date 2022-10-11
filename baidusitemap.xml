@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://blog.minbox.org/spring-boot-basic-placeholders-in-config-file.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-cloud-all-articles.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-cloud-gateway-not-compatible.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/spring-cloud-look.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
     <loc>https://blog.minbox.org/spring-config-import-use-aways.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
@@ -154,30 +130,6 @@
   </url>
   <url>
     <loc>https://blog.minbox.org/your-microservice-can-deploy-single.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/git-gitolite-client.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/git-gitolite-manage.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/git-gitolite-server.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/github-action-getting-started.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/github-action-publish-jar-to-maven-central.html</loc>
-    <lastmod>2022-10-11</lastmod>
-  </url>
-  <url>
-    <loc>https://blog.minbox.org/github-app-release.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
@@ -373,6 +325,30 @@
     <lastmod>2022-10-11</lastmod>
   </url>
   <url>
+    <loc>https://blog.minbox.org/spring-boot-basic-placeholders-in-config-file.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-cloud-all-articles.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-cloud-gateway-not-compatible.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/spring-cloud-look.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
     <loc>https://blog.minbox.org/alibaba-java-project-layering.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
@@ -534,6 +510,30 @@
   </url>
   <url>
     <loc>https://blog.minbox.org/git-chapter-core-directory.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/git-gitolite-client.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/git-gitolite-manage.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/git-gitolite-server.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/github-action-getting-started.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/github-action-publish-jar-to-maven-central.html</loc>
+    <lastmod>2022-10-11</lastmod>
+  </url>
+  <url>
+    <loc>https://blog.minbox.org/github-app-release.html</loc>
     <lastmod>2022-10-11</lastmod>
   </url>
 </urlset> 

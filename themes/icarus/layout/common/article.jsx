@@ -80,9 +80,28 @@ module.exports = class extends Component {
                                         }
                                         &nbsp;&nbsp;
                                         {page.categories && page.categories.length ?
-                                            page.categories.map(category => {
+                                            page.categories.map((category,index) => {
                                                 return <a class="category-link article-meta-element"
-                                                          href={url_for(category.path)}>{category.name}&nbsp;</a>
+                                                          href={url_for(category.path)}>{category.name}{
+                                                    index == page.categories.length-1 ?null:'，'
+                                                }</a>
+                                            })
+                                            : null}
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        {/* 标签列表 */}
+                                        {
+                                            page.tags && page.tags.length ?
+                                                <img src="/images/tag.svg" style="width: 23px;"
+                                                     title="文章标签列表"/>
+                                                : null
+                                        }
+                                        &nbsp;&nbsp;
+                                        {page.tags && page.tags.length ?
+                                            page.tags.map((tag,index) => {
+                                                return <a class="category-link article-meta-element"
+                                                          href={url_for(tag.path)}>{tag.name}{
+                                                              index == page.tags.length-1 ?null:'，'
+                                                }</a>
                                             })
                                             : null}
                                     </div>
@@ -101,13 +120,6 @@ module.exports = class extends Component {
                         {/* Licensing block */}
                         {!index && page.article_type == '原创' && article && article.licenses && Object.keys(article.licenses)
                             ? <ArticleLicensing.Cacheable page={page} config={config} helper={helper}/> : null}
-                        {/* Tags */}
-                        {!index && page.tags && page.tags.length ? <div class="article-tags is-size-7 mb-4">
-                            <span class="mr-2">文章标签：</span>
-                            {page.tags.map(tag => {
-                                return <a class="link-muted mr-2" rel="tag" href={url_for(tag.path)}>{tag.name}</a>;
-                            })}
-                        </div> : null}
                         {/* "Read more" button */}
                         {index && page.excerpt ? <a class="article-more button is-small is-size-7"
                                                     href={`${url_for(page.link || page.path)}#more`}>{__('article.more')}</a> : null}

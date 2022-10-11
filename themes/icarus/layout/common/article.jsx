@@ -47,7 +47,7 @@ module.exports = class extends Component {
                         </h1> : null}
                         {/* 自定义文章信息 */}
                         {
-                            !index && !page.customize ?
+                            !page.customize ?
                                 <div class="level article-meta is-mobile is-overflow-x-auto" style="font-size: 15px">
                                     <div class="level-left">
                                         {/* 原创 or 转载 */}
@@ -74,12 +74,12 @@ module.exports = class extends Component {
                                         &nbsp;&nbsp;&nbsp;&nbsp;
                                         {/* 目录列表 */}
                                         {
-                                            !index && page.categories && page.categories.length ?
+                                            page.categories && page.categories.length ?
                                                 <img src="/images/categories.svg" style="width: 20px;"
                                                      title="文章所属目录列表"/> : null
                                         }
                                         &nbsp;&nbsp;
-                                        {!index && page.categories && page.categories.length ?
+                                        {page.categories && page.categories.length ?
                                             page.categories.map(category => {
                                                 return <a class="category-link article-meta-element"
                                                           href={url_for(category.path)}>{category.name}&nbsp;</a>

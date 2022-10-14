@@ -149,7 +149,7 @@ module.exports = class extends Component {
                 </div> : null}
             </nav> : null}
             {/* Comment */}
-            {!index ? <Comment config={config} page={page} helper={helper}/> : null}
+            {!index && page.enable_comment ? <Comment config={config} page={page} helper={helper}/> : null}
             {/* 引流插件，readmore */}
             <script src={url_for('/js/readmore.js')}></script>
             <script src={url_for('/js/readmore-use.js')}></script>

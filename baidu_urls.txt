@@ -1,3 +1,4 @@
+https://blog.minbox.org/git-branches-management-normative-idea.html
 https://blog.minbox.org/technical-talk.html
 https://blog.minbox.org/know-openj9-jvm.html
 https://blog.minbox.org/git-chapter-core-directory.html
@@ -17,4 +18,3 @@ https://blog.minbox.org/spring-boot-basic-packaging-webjars.html
 https://blog.minbox.org/spring-boot-basic-configure-binding-away.html
 https://blog.minbox.org/interview-strategy.html
 https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html
-https://blog.minbox.org/spring-boot-basic-placeholders-in-config-file.html

@@ -17,13 +17,9 @@ description: deploy-drone-with-docker
 date: 2022-10-19 17:24:52
 ---
 
-## Drone简介
-
 [Drone](https://drone.io) 是一个现代化的持续集成平台，能够使用强大的云原生管道引擎自动化他们的构建、测试和发布工作流程，让我们不再关注程序如何发布而是如何去实现，去更好的实现。
 
-### Drone运行架构
-
-`Drone`并不是一个服务组成的，分为管理端（`Drone UI`）、运行节点（`Drone Runner`），管理端只需要部署一套即可，而运行节点可以部署多套，这个根据实际业务场景而定，如果在使用过程中同时构建的项目较多可以考虑增加运行节点。
+`Drone`并不是一个服务组成的，它分为管理端（`Drone UI`）、运行节点（`Drone Runner`），需要部署一套管理端，而运行节点可以部署多套，这个根据实际业务场景而定，如果在使用过程中同时构建的项目较多可以考虑增加运行节点。
 
 <!--more-->
 
@@ -148,11 +144,50 @@ time="2022-08-16T01:51:13Z" level=info msg="polling the remote server" arch=amd6
 
 ## Drone自动构建项目
 
-### 配置Drone
+在上面我们已经将`Drone`的管理端以及运行节点配置好了，下面我们来根据步骤实现项目的自动构建。
 
-### 激活Drone项目
+### 步骤1：期望触发构建条件
+
+我们期望项目源码一旦`Push`到远程`git`仓库后自动触发编译，而且仅限于`develop`分支。
+
+### 步骤2：配置Drone
+
+如果想要项目支持`Drone`，那么我们需要再项目根目录下新增`.drone.yml`配置文件，内容如下所示：
+
+```yaml
+kind: pipeline
+name: minbox-datasource-switch
+steps:
+  - name: build
+    image: maven:3.6.3-jdk-11
+    commands:
+      - mvn clean
+    when:
+      branch: develop
+      event: [ push ]
+```
+
+上面的配置就可以满足我们的期望，当检测到代码`push`后会自动触发`minbox-datasource-switch`流水线的全部满足条件的`steps`，`steps`允许配置多个步骤，会根据配置步骤的顺序依次执行。
+
+### 步骤3：激活Drone项目
+
+还剩下最重要的一步，我们需要再`Drone`管理端激活项目，才可以进行处理构建项目，如下图所示：
+
+![](/images/post/deploy-drone-with-docker-5.png)
+
+项目激活后，一旦收到符合条件的变动通知就会进行构建，如下图所示：
+
+![](/images/post/deploy-drone-with-docker-6.png)
+
+点击每条构建记录时都可以查看详细的构建日志，如下图所示：
+
+![](/images/post/deploy-drone-with-docker-7.png)
 
 ## Drone Cloud
 
+`Drone Cloud`是部署在云端在线的管理端，该管理端是免费的，可以授权`GitHub`来实现项目的构建，不过`GitHub`也推出了自己的构建工具`GitHub Action`，对于`GitHub`代码库而言所支持的功能应该会比`Drone`更多、更细，但是`Drone`不仅面向`GitHub`还有多个平台可供选择，如有需要可以访问：[https://cloud.drone.io/](https://cloud.drone.io/)，了解并使用。
 
+## 总结
+
+程序员最可贵的是编写高质量的代码，对于持续部署这种事情交由一个放心的工具去做，可以很大的提高编码效率，从而有更多的时间去学习新的知识，`Drone`搭配私有化部署的代码平台很完美，它所能做的还远远不止上述描述的那样。
 

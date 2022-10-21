@@ -4,7 +4,7 @@
   <url>
     <loc>https://blog.minbox.org/openbooks/index.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -13,7 +13,7 @@
   <url>
     <loc>https://blog.minbox.org/opensource/index.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -22,7 +22,7 @@
   <url>
     <loc>https://blog.minbox.org/welfare/index.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -31,133 +31,7 @@
   <url>
     <loc>https://blog.minbox.org/years/2019.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/springcloud-gateway-eureka.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/springcloud-gateway-route.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/springcloud-nacos-config-namespace.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/springcloud-nacos-config-profile.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/springmvc-rewrite-parameter-loader.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/technical-talk.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/use_aop_to_prevent_duplicate_submissions.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/use-consumer-banner.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/use-gitbook-export-pdf.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/use-lombok.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/use-mapstruct.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/use-nginx-loadbalance-upgrade-service.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/use-swagger2-build-restful-api.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/why_doesnot_spring_declarative_transactions_roll_back.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -166,7 +40,7 @@
   <url>
     <loc>https://blog.minbox.org/your-microservice-can-deploy-single.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -175,7 +49,7 @@
   <url>
     <loc>https://blog.minbox.org/about/index.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -184,7 +58,7 @@
   <url>
     <loc>https://blog.minbox.org/friends-link/index.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -193,61 +67,7 @@
   <url>
     <loc>https://blog.minbox.org/geektime/index.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-direct-exchange.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-topic-exchange.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/rabbitmq-trust-package.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/redis-geo-practice.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/redis-springboot2-starter.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/restful-api-uri.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -256,7 +76,7 @@
   <url>
     <loc>https://blog.minbox.org/rocketmq-message-use-away.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -265,7 +85,7 @@
   <url>
     <loc>https://blog.minbox.org/seata-first-application.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -274,7 +94,7 @@
   <url>
     <loc>https://blog.minbox.org/seata-init-env.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -283,7 +103,7 @@
   <url>
     <loc>https://blog.minbox.org/several_ways_to_activate_springboot_profiles.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -292,7 +112,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-1-x-articles.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -301,7 +121,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-2-x-articles.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -310,7 +130,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-all-articles.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -319,7 +139,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-accessing-application-arguments.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -328,7 +148,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-back-run-jar.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -337,7 +157,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-configure-binding-away.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -346,7 +166,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-configuring-random-values.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -355,7 +175,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-default-scan-package.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -364,7 +184,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-developing-first-application.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -373,7 +193,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-events-and-listeners.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -382,7 +202,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-externalized-configuration.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -391,7 +211,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-load-order-of-config-files.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -400,7 +220,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-packaging-executable-jar.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -409,7 +229,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-packaging-webjars.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -418,7 +238,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-placeholders-in-config-file.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -427,7 +247,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -436,7 +256,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-boot-basic-using-yaml-instead-of-properties.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -445,7 +265,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-cloud-all-articles.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -454,7 +274,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-cloud-gateway-not-compatible.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -463,7 +283,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-cloud-look.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -472,7 +292,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-config-import-use-aways.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -481,7 +301,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-event-listener.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -490,7 +310,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-get-application-context.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -499,7 +319,7 @@
   <url>
     <loc>https://blog.minbox.org/spring-security-flexible-password-encoder.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -508,7 +328,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-active-profiles.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -517,7 +337,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-actuator-change-mapping.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -526,7 +346,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-actuator-default.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -535,7 +355,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-actuator-exposure-include.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -544,7 +364,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-actuator-remote-shutdown.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -553,7 +373,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-constructor-binding-properties.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -562,7 +382,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-create-starter.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -571,7 +391,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-exception-handler-advice.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -580,7 +400,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-failure-analyzer.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -589,7 +409,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-how-to-load-outside-config.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -598,7 +418,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-integration-using-flyway.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -607,7 +427,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-mvc-configuration.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -616,7 +436,7 @@
   <url>
     <loc>https://blog.minbox.org/springboot-mvc-configurer.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -625,7 +445,133 @@
   <url>
     <loc>https://blog.minbox.org/springboot2.2-configuration-binding-bit-pitted.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/springcloud-gateway-eureka.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/springcloud-gateway-route.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/springcloud-nacos-config-namespace.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/springcloud-nacos-config-profile.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/springmvc-rewrite-parameter-loader.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/technical-talk.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/use_aop_to_prevent_duplicate_submissions.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/use-consumer-banner.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/use-gitbook-export-pdf.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/use-lombok.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/use-mapstruct.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/use-nginx-loadbalance-upgrade-service.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/use-swagger2-build-restful-api.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/why_doesnot_spring_declarative_transactions_roll_back.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -634,7 +580,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-swagger-describe-the-interface.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -643,7 +589,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-swagger-integrated-oauth.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -652,7 +598,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-unified-manage-request-logs.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -661,7 +607,7 @@
   <url>
     <loc>https://blog.minbox.org/bff-first-meet.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -670,7 +616,7 @@
   <url>
     <loc>https://blog.minbox.org/cache-lru-principle-of-impl.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -679,7 +625,7 @@
   <url>
     <loc>https://blog.minbox.org/chrome-plugin-git-history.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -688,7 +634,16 @@
   <url>
     <loc>https://blog.minbox.org/customize-eureka-manage-page.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/deploy-drone-with-docker.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -697,7 +652,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-cluster-high.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -706,7 +661,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-service-consumer.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -715,7 +670,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-preservation.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -724,7 +679,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-register-away-code.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -733,7 +688,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-register-away.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -742,7 +697,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-register-service.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -751,7 +706,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-rest.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -760,7 +715,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-security.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -769,7 +724,7 @@
   <url>
     <loc>https://blog.minbox.org/eureka-server.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -778,7 +733,7 @@
   <url>
     <loc>https://blog.minbox.org/fish-fast-switch-jdk.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -787,7 +742,7 @@
   <url>
     <loc>https://blog.minbox.org/git-branches-management-normative-idea.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -796,7 +751,7 @@
   <url>
     <loc>https://blog.minbox.org/git-chapter-core-directory.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -805,7 +760,7 @@
   <url>
     <loc>https://blog.minbox.org/git-gitolite-client.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -814,7 +769,7 @@
   <url>
     <loc>https://blog.minbox.org/git-gitolite-manage.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -823,7 +778,7 @@
   <url>
     <loc>https://blog.minbox.org/git-gitolite-server.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -832,7 +787,7 @@
   <url>
     <loc>https://blog.minbox.org/github-action-getting-started.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -841,7 +796,7 @@
   <url>
     <loc>https://blog.minbox.org/github-action-publish-jar-to-maven-central.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -850,7 +805,7 @@
   <url>
     <loc>https://blog.minbox.org/github-app-release.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -859,7 +814,7 @@
   <url>
     <loc>https://blog.minbox.org/ignore-apiboot-logging-collection-path.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -868,7 +823,7 @@
   <url>
     <loc>https://blog.minbox.org/import-osm-data-into-mysql.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -877,7 +832,7 @@
   <url>
     <loc>https://blog.minbox.org/interview-strategy.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -886,7 +841,7 @@
   <url>
     <loc>https://blog.minbox.org/know-openj9-jvm.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -895,7 +850,7 @@
   <url>
     <loc>https://blog.minbox.org/know-qps-tps-uv-pv.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -904,7 +859,7 @@
   <url>
     <loc>https://blog.minbox.org/linux-knowledge-you-should-know.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -913,7 +868,7 @@
   <url>
     <loc>https://blog.minbox.org/linux-most-commonly-used-commands.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -922,7 +877,7 @@
   <url>
     <loc>https://blog.minbox.org/linux-without-password.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -931,7 +886,7 @@
   <url>
     <loc>https://blog.minbox.org/mac-studio-installed.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -940,7 +895,7 @@
   <url>
     <loc>https://blog.minbox.org/modify-apiboot-logging-collection-prefix.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -949,7 +904,7 @@
   <url>
     <loc>https://blog.minbox.org/mongodb-springboot2-rest.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -958,7 +913,7 @@
   <url>
     <loc>https://blog.minbox.org/mongodb-springboot2-starter.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -967,7 +922,7 @@
   <url>
     <loc>https://blog.minbox.org/mp4-convert-to-gif.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -976,7 +931,7 @@
   <url>
     <loc>https://blog.minbox.org/nacos-config-properties.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -985,7 +940,7 @@
   <url>
     <loc>https://blog.minbox.org/nacos-config-yaml.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -994,7 +949,7 @@
   <url>
     <loc>https://blog.minbox.org/oauth2-always-create-token.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1003,7 +958,7 @@
   <url>
     <loc>https://blog.minbox.org/open-eureka-server.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1012,7 +967,7 @@
   <url>
     <loc>https://blog.minbox.org/open-nacos-server.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1021,7 +976,7 @@
   <url>
     <loc>https://blog.minbox.org/postgresql-vs-mysql.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1030,7 +985,7 @@
   <url>
     <loc>https://blog.minbox.org/program-downgrade.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1039,7 +994,7 @@
   <url>
     <loc>https://blog.minbox.org/quartz-cluster-node.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1048,7 +1003,7 @@
   <url>
     <loc>https://blog.minbox.org/quartz-single-node.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1057,7 +1012,7 @@
   <url>
     <loc>https://blog.minbox.org/quartz-springboot2-starter.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1066,7 +1021,7 @@
   <url>
     <loc>https://blog.minbox.org/rabbitmq-delay-consumer.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1075,7 +1030,61 @@
   <url>
     <loc>https://blog.minbox.org/rabbitmq-direct-exchange-cluster.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-direct-exchange.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-topic-exchange.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/rabbitmq-trust-package.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/redis-geo-practice.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/redis-springboot2-starter.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/restful-api-uri.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1084,7 +1093,7 @@
   <url>
     <loc>https://blog.minbox.org/alibaba-java-project-layering.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1093,7 +1102,7 @@
   <url>
     <loc>https://blog.minbox.org/aop-resource-load.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1102,7 +1111,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-all-articles.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1111,7 +1120,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-custom-logging-traceid.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1120,7 +1129,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-define-oauth-grant-type.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1129,7 +1138,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-logging-admin-visual-interface-management-log.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1138,7 +1147,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-logging-integrates-eureka-report-logs.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1147,7 +1156,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-logging-integrates-spring-security.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1156,7 +1165,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-logging-use-global-log.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1165,7 +1174,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-logging-using-openfeign-transparent-traceid.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1174,7 +1183,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-logging-using-resttemplate-transparent-traceid.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1183,7 +1192,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-oauth-multiple-client-config.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1192,7 +1201,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-oauth-set-token-expire-time.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1201,7 +1210,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-oauth-use-redis-storage.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1210,7 +1219,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-quartz-integrated-away.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1219,7 +1228,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-quartz-job-storage-away.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1228,7 +1237,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-quartz-job-types.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1237,7 +1246,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-report-logs-by-logging-to-admin.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1246,16 +1255,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-security-customize-select-user.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.minbox.org/apiboot-security-oauth-custom-certification-user.html</loc>
-    
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1264,7 +1264,16 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-security-oauth-use-jwt.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/apiboot-security-oauth-custom-certification-user.html</loc>
+    
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1273,7 +1282,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-security-oauth-zero-code-integration.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1282,7 +1291,7 @@
   <url>
     <loc>https://blog.minbox.org/apiboot-security-open-paths-without-intercept.html</loc>
     
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1291,7 +1300,7 @@
 
   <url>
     <loc>https://blog.minbox.org/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -1299,280 +1308,294 @@
   
   <url>
     <loc>https://blog.minbox.org/tags/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/SpringBoot/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/ApiBoot/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E6%97%A5%E5%BF%97%E7%BB%84%E4%BB%B6/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/OAuth2/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Spring-Security/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Quartz/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Swagger2/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/BFF/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E7%BC%93%E5%AD%98/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Spring-Cloud/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Eureka/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/tags/CI-CD/</loc>
+    <lastmod>2022-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/tags/Drone/</loc>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/SpringCloud/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Git/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/GitHub/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/GitHub-Action/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Map/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/OpenStreet/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E9%9D%A2%E8%AF%95/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Jvm/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Linux/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/MongoDB/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Nacos/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/RabbitMQ/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Redis/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Geo/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/RocketMQ/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/Seata/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/SpringBoot1-x/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/SpringBoot2-x/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/tags/%E7%BD%91%E5%85%B3/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -1581,77 +1604,84 @@
   
   <url>
     <loc>https://blog.minbox.org/categories/%E6%8A%80%E6%9C%AF%E6%9D%82%E8%B0%88/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/SpringBoot/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/ApiBoot/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.minbox.org/categories/Docker/</loc>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/Git/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/Linux/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/MongoDB/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/Quartz/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.minbox.org/categories/Redis/</loc>
-    <lastmod>2022-10-19</lastmod>
+    <lastmod>2022-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

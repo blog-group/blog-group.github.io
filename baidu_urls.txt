@@ -1,3 +1,4 @@
+https://blog.minbox.org/oauth2-vs-openid-vs-saml.html
 https://blog.minbox.org/technical-talk.html
 https://blog.minbox.org/deploy-drone-with-docker.html
 https://blog.minbox.org/mac-studio-installed.html
@@ -17,4 +18,3 @@ https://blog.minbox.org/mp4-convert-to-gif.html
 https://blog.minbox.org/spring-boot-basic-use-commandlinerunner-or-applicationrunner.html
 https://blog.minbox.org/spring-cloud-gateway-not-compatible.html
 https://blog.minbox.org/spring-boot-basic-packaging-webjars.html
-https://blog.minbox.org/spring-boot-basic-configure-binding-away.html
